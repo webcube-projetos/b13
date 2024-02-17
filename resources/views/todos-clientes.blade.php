@@ -7,13 +7,15 @@
         'route' => 'cadastrar-cliente.index',
       ],
       'search' => [
+        'container_tag' => 'div',
+        'container_class' => 'col-md-4',
         'id' => 'search',
         'name' => 'search',
         'placeholder' => 'Pesquisar por Razão/Apelido',
         'function' => false,
       ],
     ],
-    'table' => [
+    'cliente' => [
       'header' => [
         'Razão Social',
         'Apelido',
@@ -52,17 +54,18 @@
     ],
   ];
 
-  $data2 = [
+  /*$data = [
     'page_info' => [
       'title' => 'Todos os motoristas',
       'button_top' => [
-        'name' => '+ Cadastrar Motorista',
+        'name' => '+ Cadastrar motorista',
         'route' => 'cadastrar-motorista.index',
       ],
       'search' => [
         'id' => 'search',
         'name' => 'search',
-        'placeholder' => 'Pesquisar por Nome/Apelido',
+        'placeholder' => 'Pesquisar por Razão/Apelido',
+        'function' => false,
       ],
     ],
     'table' => [
@@ -70,24 +73,39 @@
         'Nome',
         'Empresa',
         'Cidade',
-        'Estado',
         'Status',
         'Ações',
       ],
-      'data' => [
-        'nome' => 'Henrique Bruno Oliveira',
-        'empresa' => 'Autônomo',
-        'cidade' => 'São José dos Campos',
-        'estado' => 'SP',
-        'status' => 'Ativo',
-        'botoes' => [
-          'id' => 1,
-          'cadastrar-motorista',
-          'editar-motorista',
+      'botoes' => [
+        [
+          'route' => 'editar-motorista.index',
+          'icon' => 'fa fa-pencil',
+          'class' => 'table-action edit',
+          'function' => false,
+        ],
+        [
+          'route' => 'deletar-motorista.index',
+          'icon' => 'fa fa-trash',
+          'class' => 'table-action delete',
+          'function' => false,
         ]
-      ]
-    ]
-  ];
+      ],
+      'data' => [
+        1 => [
+          'nome' => 'Henrique Bruno Oliveira',
+          'empresa' => 'Autônomo',
+          'cidade' => 'São José dos Campos - SP',
+          'status' => 1,
+        ],
+        2 => [
+          'razao_social' => 'Henrique Bruno Oliveira',
+          'empresa' => 'Autônomo',
+          'cidade' => 'São José dos Campos - SP',
+          'status' => 0,
+        ],
+      ],
+    ],
+  ];*/
 @endphp
 
 @extends('layouts.user_type.auth')
@@ -101,32 +119,39 @@
           <div class="card mb-4">
             <div class="row align-items-center mb-4">
               <!-- TÍTULO TABELA -->
-              <div class="col-lg-6">
+              <div class="col-md-6">
                 <div class="card-header pb-0">
-                  <h6>Todos os clientes</h6>
+                  <h6>{{ $data['page_info']['title'] }}</h6>
                 </div>
               </div>
               <!-- FIM TÍTULO TABELA -->
               <!-- BOTÃO CADASTRAR -->
-              <div class="col-lg-6 text-end">
-                <div class="card-header pb-0">
-                  <a href="#" class="btn bg-gradient-info mt-4 mb-0">+ Cadastrar Cliente</a>
-                </div>
-              </div>
-              <!-- FIM BOTÃO CADASTRAR -->
-              <div class="col-lg-6">
+              @if ( $data['page_info']['button_top']) 
+                <div class="col-md-6 text-end">
+                  <div class="card-header pb-0">
+                    <a href="#" class="btn bg-gradient-info mt-4 mb-0">+ Cadastrar Cliente</a>
+                  </div>
+                </div> 
+              @endif
+            </div>
+            <div class="row">
+              <!-- FIM BOTÃO FILTRO -->
+              <div class="col-md-6">
                 <div class="card-header pb-0 pt-0">
                   <a href="#" class="btn bg-dark mt-4 mb-0 text-white"><i class="fa fa-bars"></i> FILTROS</a>
                 </div>
               </div>
-              <!-- FIM TÍTULO TABELA -->
-              <!-- BOTÃO CADASTRAR -->
-              <div class="col-lg-6 text-end">
-                <div class="card-header pb-0">
-                  <input class="form-control" type="text" placeholder="Pesquisar por Razão/Apelido" id="search" name="search" onfocus="focused(this)" onfocusout="defocused(this)">
+              <!-- FIM FILTRO -->
+              <!-- BOTÃO SEARCH -->
+              @if ( $data['page_info']['search'] ) 
+                <div class="col-md-6 text-end">
+                  <div class="card-header pb-0">
+                    <input class="form-control" type="text" placeholder="{{ $data['page_info']['search']['placeholder'] }}" id="{{ $data['page_info']['search']['id'] }}" name="{{ $data['page_info']['search']['name'] }}" onfocus="focused(this)" onfocusout="defocused(this)">
+                  </div>
                 </div>
-              </div>
-              <!-- FIM BOTÃO CADASTRAR -->
+              @endif
+              
+              <!-- FIM SEARCH -->
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -142,19 +167,24 @@
                   <!-- FIM TOPO TABELA -->
                   <!-- REGISTROS TABELA -->
                   <tbody>
-                    @foreach($data['table']['data'] as $key => $client)
+                    @foreach($data['table']['data'] as $client)
                       <tr>
-                        <td><h6 class="mb-0 text-sm">{{ $client['razao_social'] }}</h6></td>
-                        <td><h6 class="mb-0 text-sm">{{ $client['apelido'] }}</h6></td>
-                        <td><h6 class="mb-0 text-sm">{{ $client['cidade'] }}</h6></td>
-                        <td><h6 class="mb-0 text-sm">{{ $client['pais'] }}</h6></td>
-                        <td>
-                        @foreach($data['table']['botoes'] as $botao)
-                          <a href="" class="text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" data-toggle="tooltip" data-original-title="Edit user">
-                            <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
-                          </a>
+                        @foreach($client as $key => $clientInfos)
+                          @if ($key === 'status') 
+                            <td class="ps-4"><span class="ball {{ ($clientInfos) ? 'active' : 'inactive' }}"></span></td>                             
+                          @else
+                            <td><h6 class="mb-0 text-sm">{{ $clientInfos }}</h6></td>
+                          @endif
                         @endforeach
-                        <td>
+                        @if ($data['table']['botoes'])
+                          <td>
+                            @foreach($data['table']['botoes'] as $botao)
+                              <a href="" class="text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" data-toggle="tooltip" data-original-title="Edit user">
+                                <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
+                              </a>
+                            @endforeach
+                          <td>
+                        @endif
                       </tr>
                     @endforeach
                   </tbody>
