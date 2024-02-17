@@ -15,6 +15,8 @@
   color: #FF9921;
 }
 
-.primaryBg {
+.primaryBg, .bg-gradient-primary {
   background-color: #FF9921 !important;
+  background-image: none;
+  color: #fff;
 }

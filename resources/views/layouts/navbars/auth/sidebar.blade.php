@@ -4,83 +4,98 @@
       [
         'title' => 'Orçamentos',
         'route' => 'orcamentos.index',
-        'icon' => 'fa fa-list-alt'
+        'icon' => 'fa fa-list-alt',
+        'permission' => 1,
       ],
       [
         'title' => 'Ordens de Serviço',
         'route' => 'os.index',
-        'icon' => 'fa fa-bar-chart'
+        'icon' => 'fa fa-bar-chart',
+        'permission' => 1,
       ],
       [
         'title' => 'Clientes',
         'route' => 'clientes.index',
-        'icon' => 'fa fa-users'
+        'icon' => 'fa fa-users',
+        'permission' => 1,
       ],
     ],
     'Ativos e Parceiros' => [
       [
         'title' => 'Veiculos',
         'route' => 'veiculos.index',
-        'icon' => 'fa fa-car'
+        'icon' => 'fa fa-car',
+        'permission' => 1,
       ],
       [
         'title' => 'Motoristas',
         'route' => 'motoristas.index',
-        'icon' => 'fa fa-id-card-o'
+        'icon' => 'fa fa-id-card-o',
+        'permission' => 1,
       ],
       [
         'title' => 'Seguranças',
         'route' => 'Seguranças.index',
-        'icon' => 'fa fa-shield'
+        'icon' => 'fa fa-shield',
+        'permission' => 1,
       ],
       [
         'title' => 'Empresas',
         'route' => 'Empresas.index',
-        'icon' => 'fa fa-briefcase'
+        'icon' => 'fa fa-briefcase',
+        'permission' => 1,
       ],
     ],
     'Gestão' => [
       [
         'title' => 'Financeiro',
         'route' => 'Financeiro.index',
-        'icon' => 'fa fa-money'
+        'icon' => 'fa fa-money',
+        'permission' => 1,
       ],
       [
         'title' => 'Serviços',
         'route' => 'Serviços.index',
-        'icon' => 'fa fa-plus-square-o'
+        'icon' => 'fa fa-plus-square-o',
+        'permission' => 1,
       ],
       [
         'title' => 'Categoria de Serviços',
         'route' => 'categorias.servicos.index',
-        'icon' => 'fa fa-filter'
+        'icon' => 'fa fa-filter',
+        'permission' => 1,
       ],
       [
         'title' => 'Adicionais',
         'route' => 'Adicionais.index',
-        'icon' => 'fa fa-plus-square'
+        'icon' => 'fa fa-plus-square',
+        'permission' => 1,
       ],
       [
         'title' => 'Categorias de Veciulos',
         'route' => 'Categorias.veiculos.index',
-        'icon' => 'fa fa-bus'
+        'icon' => 'fa fa-bus',
+        'permission' => 1,
       ],
       [
         'title' => 'Procedimentos',
         'route' => 'procedimentos.index',
-        'icon' => 'fa fa-align-left'
+        'icon' => 'fa fa-align-left',
+        'permission' => 1,
       ],
       [
         'title' => 'Especializações',
         'route' => 'Especializações.index',
-        'icon' => 'fa fa-star'
+        'icon' => 'fa fa-star',
+        'permission' => 1,
       ],
     ],
     'Usuarios' => [
       [
         'title' => 'Editar Perfil',
         'route' => 'editar.perfil.index',
-        'icon' => 'fa fa-user-circle-o'
+        'icon' => 'fa fa-user-circle-o',
+        'permission' => 1,
       ],
     ],
 
