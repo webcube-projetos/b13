@@ -16,3 +16,22 @@
     font-size: 16px;
     color: #fff;
 }
+
+span.ball {
+    display: block; 
+    height: 8px; 
+    width: 8px; 
+    border-radius: 10px;
+}
+
+span.ball.active {
+    background-color: #0da100;
+}
+
+span.ball.inactive {
+    background-color: #d90707;
+}
+
+.table tbody td {
+    padding: 0.75rem 1.5rem;
+}
