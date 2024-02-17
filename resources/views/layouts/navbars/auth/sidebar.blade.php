@@ -35,13 +35,13 @@
       ],
       [
         'title' => 'Seguranças',
-        'route' => 'Seguranças.index',
+        'route' => 'seguranças.index',
         'icon' => 'fa fa-shield',
         'permission' => 1,
       ],
       [
         'title' => 'Empresas',
-        'route' => 'Empresas.index',
+        'route' => 'empresas.index',
         'icon' => 'fa fa-briefcase',
         'permission' => 1,
       ],
@@ -49,13 +49,13 @@
     'Gestão' => [
       [
         'title' => 'Financeiro',
-        'route' => 'Financeiro.index',
+        'route' => 'financeiro.index',
         'icon' => 'fa fa-money',
         'permission' => 1,
       ],
       [
         'title' => 'Serviços',
-        'route' => 'Serviços.index',
+        'route' => 'servicos.index',
         'icon' => 'fa fa-plus-square-o',
         'permission' => 1,
       ],
@@ -67,13 +67,13 @@
       ],
       [
         'title' => 'Adicionais',
-        'route' => 'Adicionais.index',
+        'route' => 'adicionais.index',
         'icon' => 'fa fa-plus-square',
         'permission' => 1,
       ],
       [
         'title' => 'Categorias de Veciulos',
-        'route' => 'Categorias.veiculos.index',
+        'route' => 'categorias.veiculos.index',
         'icon' => 'fa fa-bus',
         'permission' => 1,
       ],
@@ -85,7 +85,7 @@
       ],
       [
         'title' => 'Especializações',
-        'route' => 'Especializações.index',
+        'route' => 'especializações.index',
         'icon' => 'fa fa-star',
         'permission' => 1,
       ],

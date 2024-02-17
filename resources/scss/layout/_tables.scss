@@ -1,0 +1,18 @@
+.table-action {
+    background-color: #ccc;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.table-action.edit {
+    background-color: green;
+}
+
+.table-action.delete {
+    background-color: red;
+}
+
+.table-action i{
+    font-size: 16px;
+    color: #fff;
+}
