@@ -7,6 +7,11 @@
   opacity: 1;
 }
 
+.bg-gradient-primary.icon-shape i, .bg-gradient-info.icon-shape i, .bg-gradient-warning.icon-shape i, .bg-gradient-danger.icon-shape i {
+  color: #fff;
+  opacity: 1;
+}
+
 .icon-sm i {
   font-size: 12px;
 }
