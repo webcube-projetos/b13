@@ -95,6 +95,7 @@
         <span class="ms-3 font-weight-bold">B13 Company</span>
     </a>
   </div>
+  teste
   <hr class="horizontal dark mt-0">
   <div class="collapse navbar-collapse  w-auto" id="sidenav-collapse-main">
     <ul class="navbar-nav">
