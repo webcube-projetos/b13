@@ -1,0 +1,13 @@
+#inputComponent {
+  border-radius: 8px;
+  border: 1px solid #D2D6DA;
+  color: #ADB5BD;
+  font-size: 12px;
+  padding: 6px 16px;
+  min-width: 165px;
+}
+
+#inputComponent::placeholder {
+  color: #ADB5BD;
+  font-size: 12px;
+}

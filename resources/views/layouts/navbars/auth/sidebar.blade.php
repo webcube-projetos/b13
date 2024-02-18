@@ -35,7 +35,7 @@
       ],
       [
         'title' => 'Seguranças',
-        'route' => 'seguranças.index',
+        'route' => 'segurancas.index',
         'icon' => 'fa fa-shield',
         'permission' => 1,
       ],
@@ -110,7 +110,7 @@
         <span class="ms-3 font-weight-bold">B13 Company</span>
     </a>
   </div>
-  teste
+
   <hr class="horizontal dark mt-0">
   <div class="collapse navbar-collapse  w-auto" id="sidenav-collapse-main">
     <ul class="navbar-nav">
@@ -142,8 +142,12 @@
 
         @foreach ($menuItens as $menu)
           <li class="nav-item">
-            <a class="nav-link" href="{{ $menu['route'] }}">
-                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            @if(Route::has($menu['route']))
+            <a class="nav-link" href="{{ route($menu['route']) }}">
+            @else
+                <a class="nav-link" href="#">
+            @endif
+        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i class="{{ $menu['icon'] }}"></i>
                 </div>
                 <span class="nav-link-text ms-1">{{ $menu['title'] }}</span>
