@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('dashboard');
 	})->name('dashboard');
 
+	//LISTAGEM
 	Route::prefix('clientes')->group(function () {
 		Route::get('/', [ClientesController::class, 'index'])->name('clientes.index');
 		Route::get('/listar', [ClientesController::class, 'listar'])->name('clientes.listar');
@@ -58,6 +59,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('segurancas')->group(function () {
 		Route::get('/', [SegurancasController::class, 'index'])->name('segurancas.index');
 		Route::get('/listar', [SegurancasController::class, 'listar'])->name('segurancas.listar');
+	});
+
+	Route::prefix('clientes')->group(function () {
+		Route::get('/', [ClientesController::class, 'index'])->name('clientes.index');
+		Route::get('/listar', [ClientesController::class, 'listar'])->name('clientes.listar');
+		Route::get('/cadastro', [ClientesController::class, 'cadastro'])->name('clientes.cadastro');
 	});
 
 
@@ -92,6 +99,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('static-sign-up', function () {
 		return view('static-sign-up');
 	})->name('sign-up');
+
+	Route::get('auto-register', function () {
+		return view('auto-register');
+	})->name('auto-register');
 
 	Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);

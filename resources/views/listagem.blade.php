@@ -76,10 +76,10 @@
               </div>
               <!-- FIM TÍTULO TABELA -->
               <!-- BOTÃO CADASTRAR -->
-              @if ( $config->buttonTop ) 
+              @if ( $config->button_top ) 
                 <div class="col-md-6 text-end">
                   <div class="card-header pb-0">
-                    <a href="#" class="btn bg-gradient-info mt-4 mb-0">+ Cadastrar</a>
+                    <a href="{{ route($config->button_top['route']) }}" class="btn bg-gradient-info mt-4 mb-0">{{ $config->button_top['name'] }}</a>
                   </div>
                 </div> 
               @endif

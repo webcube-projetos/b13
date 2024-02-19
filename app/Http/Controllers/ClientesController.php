@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FakeModel;
 use App\Traits\MontarPagina;
+use App\Traits\MontarForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Fluent;
 use Faker\Factory as Faker;
@@ -13,6 +14,7 @@ class ClientesController extends Controller
 	protected $prefix;
 
 	use MontarPagina;
+	use MontarForm;
 
 	public function __construct()
 	{
@@ -53,5 +55,12 @@ class ClientesController extends Controller
 		[$config, $header] = $this->montarPagina('cliente');
 
 		return view('listagem.tableList', compact('dados', 'config', 'header'));
+	}
+
+	public function cadastro(){
+
+		$dados = $this->montarForm('cliente');
+
+		return view('cadastro', compact('dados'));
 	}
 }

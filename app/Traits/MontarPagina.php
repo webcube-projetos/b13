@@ -52,7 +52,10 @@ trait MontarPagina
 
     $config = new Fluent([
       'title' => 'Todos os clientes',
-      'buttonTop' => true,
+      'button_top' => [
+        'name' => '+ Cadastrar clientes',
+        'route' => 'clientes.cadastro',
+      ],
       'search' => $search,
       'actions' => $actions,
     ]);
@@ -96,7 +99,7 @@ trait MontarPagina
 
     $config = new Fluent([
       'title' => 'Todos as Empresas',
-      'buttonTop' => true,
+      'buttonTop' => false,
       'search' => $search,
       'actions' => $actions,
     ]);
@@ -140,7 +143,7 @@ trait MontarPagina
 
     $config = new Fluent([
       'title' => 'Todos os Veiculos',
-      'buttonTop' => true,
+      'buttonTop' => false,
       'search' => $search,
       'actions' => $actions,
     ]);
@@ -183,7 +186,7 @@ trait MontarPagina
 
     $config = new Fluent([
       'title' => 'Todos os Motoristas',
-      'buttonTop' => true,
+      'buttonTop' => false,
       'search' => $search,
       'actions' => $actions,
     ]);
@@ -227,7 +230,7 @@ trait MontarPagina
 
     $config = new Fluent([
       'title' => 'Todos os Segurancas',
-      'buttonTop' => true,
+      'buttonTop' => false,
       'search' => $search,
       'actions' => $actions,
     ]);
