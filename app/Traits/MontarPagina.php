@@ -16,6 +16,10 @@ trait MontarPagina
       'veiculos' => $this->montarVeiculos(),
       'motoristas' => $this->montarMotoristas(),
       'segurancas' => $this->montarSegurancas(),
+      'servicos' => $this->montarServicos(),
+      'financeiro' => $this->montarFinanceiro(),
+      'orcamento' => $this->montarOrcamento(),
+      'os' => $this->montarOs(),
     };
   }
 
@@ -147,7 +151,10 @@ trait MontarPagina
 
     $config = new Fluent([
       'title' => 'Todos os Veiculos',
-      'buttonTop' => false,
+      'button_top' => [
+        'name' => '+ Cadastrar veículos',
+        'route' => 'veiculos.cadastro',
+      ],
       'search' => $search,
       'actions' => $actions,
     ]);
@@ -190,7 +197,10 @@ trait MontarPagina
 
     $config = new Fluent([
       'title' => 'Todos os Motoristas',
-      'buttonTop' => false,
+      'button_top' => [
+        'name' => '+ Cadastrar motorista',
+        'route' => 'motoristas.cadastro',
+      ],
       'search' => $search,
       'actions' => $actions,
     ]);
@@ -234,12 +244,200 @@ trait MontarPagina
 
     $config = new Fluent([
       'title' => 'Todos os Segurancas',
-      'buttonTop' => false,
+      'button_top' => [
+        'name' => '+ Cadastrar seguranças',
+        'route' => 'segurancas.cadastro',
+      ],
       'search' => $search,
       'actions' => $actions,
     ]);
 
     $header = collect(['Nome', 'Empresa', 'Cidade', 'Status', 'Ações']);
+
+
+    return [$config, $header];
+  }
+
+  private function montarServicos()
+  {
+    $search = new Fluent([
+      'placeholder' => 'Pesquisar por Nome',
+      'route' => 'pesquisar.servicos',
+      'label' => false,
+      'name' => 'search',
+      'id' => 'search',
+    ]);
+
+    $editar = collect([
+      'title' => 'Editar',
+      'route' => 'editar',
+      'icon' => 'fa fa-pencil',
+      'onClick' => 'editar(this)',
+      'class' => '',
+    ]);
+
+    $deletar = collect([
+      'title' => 'Deletar',
+      'route' => 'delete',
+      'icon' => 'fa fa-trash',
+      'onClick' => 'deletar(this)',
+      'class' => '',
+    ]);
+
+    $actions = collect([
+      $editar,
+      $deletar,
+    ]);
+
+    $config = new Fluent([
+      'title' => 'Todos os Serviços',
+      'button_top' => false,
+      'search' => $search,
+      'actions' => $actions,
+    ]);
+
+    $header = collect(['Tipo', 'Nome', 'Categoria', 'Preço Base', 'Ações']);
+
+
+    return [$config, $header];
+  }
+
+  private function montarFinanceiro()
+  {
+    $search = new Fluent([
+      'placeholder' => 'Pesquisar por Empresa',
+      'route' => 'pesquisar.financeiro',
+      'label' => false,
+      'name' => 'search',
+      'id' => 'search',
+    ]);
+
+    $editar = collect([
+      'title' => 'Editar',
+      'route' => 'editar',
+      'icon' => 'fa fa-pencil',
+      'onClick' => 'editar(this)',
+      'class' => '',
+    ]);
+
+    $deletar = collect([
+      'title' => 'Deletar',
+      'route' => 'delete',
+      'icon' => 'fa fa-trash',
+      'onClick' => 'deletar(this)',
+      'class' => '',
+    ]);
+
+    $actions = collect([
+      $editar,
+      $deletar,
+    ]);
+
+    $config = new Fluent([
+      'title' => 'Todos os lançamentos',
+      'button_top' => false,
+      'search' => $search,
+      'actions' => $actions,
+    ]);
+
+    $header = collect(['Tipo', 'Data Prevista', 'Empresa', 'Apelido', 'Valor', 'Status', 'Ações']);
+
+
+    return [$config, $header];
+  }
+
+  private function montarOrcamento()
+  {
+    $search = new Fluent([
+      'placeholder' => 'Pesquisar por Nome',
+      'route' => 'pesquisar.orcamento',
+      'label' => false,
+      'name' => 'search',
+      'id' => 'search',
+    ]);
+
+    $editar = collect([
+      'title' => 'Editar',
+      'route' => 'editar',
+      'icon' => 'fa fa-pencil',
+      'onClick' => 'editar(this)',
+      'class' => '',
+    ]);
+
+    $deletar = collect([
+      'title' => 'Deletar',
+      'route' => 'delete',
+      'icon' => 'fa fa-trash',
+      'onClick' => 'deletar(this)',
+      'class' => '',
+    ]);
+
+    $duplicar = collect([
+      'title' => 'Duplicar',
+      'route' => 'duplicar',
+      'icon' => 'fa fa-clone',
+      'onClick' => 'duplicar(this)',
+      'class' => '',
+    ]);
+
+    $actions = collect([
+      $editar,
+      $deletar,
+      $duplicar,
+    ]);
+
+    $config = new Fluent([
+      'title' => 'Todos os orçamentos',
+      'button_top' => false,
+      'search' => $search,
+      'actions' => $actions,
+    ]);
+
+    $header = collect(['#', 'Data abertura', 'Empresa', 'Apelido', 'Valor', 'Ações']);
+
+
+    return [$config, $header];
+  }
+
+  private function montarOs()
+  {
+    $search = new Fluent([
+      'placeholder' => 'Pesquisar por Nome',
+      'route' => 'pesquisar.servicos',
+      'label' => false,
+      'name' => 'search',
+      'id' => 'search',
+    ]);
+
+    $editar = collect([
+      'title' => 'Editar',
+      'route' => 'editar',
+      'icon' => 'fa fa-pencil',
+      'onClick' => 'editar(this)',
+      'class' => '',
+    ]);
+
+    $deletar = collect([
+      'title' => 'Deletar',
+      'route' => 'delete',
+      'icon' => 'fa fa-trash',
+      'onClick' => 'deletar(this)',
+      'class' => '',
+    ]);
+
+    $actions = collect([
+      $editar,
+      $deletar,
+    ]);
+
+    $config = new Fluent([
+      'title' => 'Todas as O.S',
+      'button_top' => false,
+      'search' => $search,
+      'actions' => $actions,
+    ]);
+
+    $header = collect(['#', 'Data abertura', 'Empresa', 'Apelido', 'Valor', 'Ações']);
 
 
     return [$config, $header];
