@@ -1,7 +1,6 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-
 <div>
     <div class="container-fluid py-4">
         <div class="card">
@@ -16,7 +15,7 @@
                         @foreach ($dados['sessions'] as $key => $group)
                             <p class="fw-bold">{{ $key }}</p>
 
-                            @include('register.formRegister');
+                            @include('register.formRegister')
                         @endforeach
                     </div>
                     <div class="d-flex justify-content-end">

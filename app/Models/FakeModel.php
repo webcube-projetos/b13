@@ -28,4 +28,9 @@ class FakeModel extends Model
             $currentPage
         );
     }
+
+    public function first()
+    {
+        return $this->data[0];
+    }
 }
