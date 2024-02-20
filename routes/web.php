@@ -9,6 +9,10 @@ use App\Http\Controllers\MotoristasController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SegurancasController;
+use App\Http\Controllers\ServicosController;
+use App\Http\Controllers\FinanceiroController;
+use App\Http\Controllers\OrcamentosController;
+use App\Http\Controllers\OrdemDeServicoController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\VeiculosController;
 use Illuminate\Http\Request;
@@ -66,6 +70,39 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [SegurancasController::class, 'listar'])->name('segurancas.listar');
 	});
 
+	Route::prefix('servicos')->group(function () {
+		Route::get('/', [ServicosController::class, 'index'])->name('servicos.index');
+		Route::get('/listar', [ServicosController::class, 'listar'])->name('servicos.listar');
+	});
+
+	Route::prefix('financeiro')->group(function () {
+		Route::get('/', [FinanceiroController::class, 'index'])->name('financeiro.index');
+		Route::get('/listar', [FinanceiroController::class, 'listar'])->name('financeiro.listar');
+	});
+
+	Route::prefix('orcamentos')->group(function () {
+		Route::get('/', [OrcamentosController::class, 'index'])->name('orcamentos.index');
+		Route::get('/listar', [OrcamentosController::class, 'listar'])->name('orcamentos.listar');
+	});
+
+	Route::prefix('os')->group(function () {
+		Route::get('/', [OrdemDeServicoController::class, 'index'])->name('os.index');
+		Route::get('/listar', [OrdemDeServicoController::class, 'listar'])->name('os.listar');
+	});
+
+	/** LINHAS COMPONENTES */
+	Route::get('row-contact', function () {
+		return view('components.row-contact');
+	})->name('row.contact');
+
+	Route::get('row-adicional', function () {
+		return view('components.row-adicionais');
+	})->name('row.adicionais');
+
+	Route::get('row-especializacao', function () {
+		return view('components.row-especializacao');
+	})->name('row.especializacao');
+	/** FIM LINHAS COMPONENTES */
 
 	Route::get('billing', function () {
 		return view('billing');

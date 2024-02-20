@@ -10,6 +10,7 @@ trait MontarForm
     {
         return match ($tipo) {
             'cliente' => $this->montarFormCliente($dado),
+            'empersa' => $this->montarFormEmpresa($dado),
         };
     }
 
@@ -21,6 +22,11 @@ trait MontarForm
                 'form_action' => '',
                 'form_method' => '',
                 'label_button' => $dado ? 'Editar cliente' : 'Cadastrar cliente',
+                //Aqui a ideia é passar um array com todos os dados bancários e montar ele no formBank
+                'dados_bancarios' => $dado['dados_bancarios'] ?? true,
+                'cadastro_contatos' => true,
+                'cadastro_adicionais' => false,
+                'cadastro_especializacoes' => false,
             ],
             'sessions' => [
                 'Dados da Empresa' => [
@@ -87,8 +93,8 @@ trait MontarForm
                         'id' => 'cep',
                         'name' => 'cep',
                         'function' => [
-                            'type' => 'onChange',
-                            'name' => 'pesquisaCep()',
+                            'type' => 'onblur',
+                            'name' => 'pesquisaCep(this.value)',
                         ],
                         'dado' => $dado['cep'] ?? null,
                     ],

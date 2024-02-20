@@ -3,7 +3,7 @@
   <thead>
     <tr>
       @foreach($header as $key => $item)
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7{{ $loop->last ? ' text-right' : '' }}">
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7{{ $loop->last ? ' text-center' : '' }}">
               {{ $item }}
           </th>
       @endforeach
@@ -66,7 +66,7 @@
                   >
                     <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
                 </button>
-                @else
+                @elseif ($botao['route'])
                 <a 
                   href="{{ route($botao['route']) }}"
                   class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
