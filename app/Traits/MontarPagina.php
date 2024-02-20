@@ -31,15 +31,15 @@ trait MontarPagina
 
     $editar = collect([
       'title' => 'Editar',
-      'route' => 'editar',
+      'route' => 'clientes.editar',
       'icon' => 'fa fa-pencil',
-      'onClick' => 'editar(this)',
+      'onClick' => false,
       'class' => '',
     ]);
 
     $deletar = collect([
       'title' => 'Deletar',
-      'route' => 'delete',
+      'route' => 'clientes.delete',
       'icon' => 'fa fa-trash',
       'onClick' => 'deletar(this)',
       'class' => '',
@@ -80,7 +80,8 @@ trait MontarPagina
       'title' => 'Editar',
       'route' => 'editar',
       'icon' => 'fa fa-pencil',
-      'onClick' => 'editar(this)',
+      'onClick' => false,
+      'route' => 'empresas.editar',
       'class' => '',
     ]);
 
@@ -99,7 +100,10 @@ trait MontarPagina
 
     $config = new Fluent([
       'title' => 'Todos as Empresas',
-      'buttonTop' => false,
+      'button_top' => [
+        'name' => '+ Cadastrar empresas',
+        'route' => 'empresas.cadastro',
+      ],
       'search' => $search,
       'actions' => $actions,
     ]);

@@ -14,6 +14,7 @@
                 id="{{ $fields['id'] }}"
                 name="{{ $fields['name'] }}" 
                 maxlength="{{ $fields['maxlength'] }}" 
+                value="{{ $fields['dado'] ?? '' }}"
                 {{ $fields['function'] ? $fields['function']['type'] . '=' . $fields['function']['name'] : '' }}
                 {{ $fields['required'] ? 'required' : '' }}
             >

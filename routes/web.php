@@ -36,14 +36,19 @@ Route::group(['middleware' => 'auth'], function () {
 	})->name('dashboard');
 
 	//LISTAGEM
-	Route::prefix('clientes')->group(function () {
-		Route::get('/', [ClientesController::class, 'index'])->name('clientes.index');
-		Route::get('/listar', [ClientesController::class, 'listar'])->name('clientes.listar');
+	Route::prefix('clientes')->name('clientes.')->group(function () {
+		Route::get('/', [ClientesController::class, 'index'])->name('index');
+		Route::get('/listar', [ClientesController::class, 'listar'])->name('listar');
+		Route::get('/cadastro', [ClientesController::class, 'cadastro'])->name('cadastro');
+		//O parametro id do item pra editar devera ser enviado na rota
+		Route::get('/editar', [ClientesController::class, 'editar'])->name('editar');
 	});
 
-	Route::prefix('empresas')->group(function () {
-		Route::get('/', [EmpresasController::class, 'index'])->name('empresas.index');
-		Route::get('/listar', [EmpresasController::class, 'listar'])->name('empresas.listar');
+	Route::prefix('empresas')->name('empresas.')->group(function () {
+		Route::get('/', [EmpresasController::class, 'index'])->name('index');
+		Route::get('/listar', [EmpresasController::class, 'listar'])->name('listar');
+		Route::get('/cadastro', [EmpresasController::class, 'cadastro'])->name('cadastro');
+		Route::get('/editar', [EmpresasController::class, 'editar'])->name('editar');
 	});
 
 	Route::prefix('veiculos')->group(function () {
@@ -59,12 +64,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('segurancas')->group(function () {
 		Route::get('/', [SegurancasController::class, 'index'])->name('segurancas.index');
 		Route::get('/listar', [SegurancasController::class, 'listar'])->name('segurancas.listar');
-	});
-
-	Route::prefix('clientes')->group(function () {
-		Route::get('/', [ClientesController::class, 'index'])->name('clientes.index');
-		Route::get('/listar', [ClientesController::class, 'listar'])->name('clientes.listar');
-		Route::get('/cadastro', [ClientesController::class, 'cadastro'])->name('clientes.cadastro');
 	});
 
 

@@ -57,6 +57,7 @@
         @endforeach
         <td class="text-right">
             @foreach($config->actions as $botao)
+              @if ($botao['onClick'])
                 <button 
                     class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
                     data-toggle="tooltip" 
@@ -65,6 +66,17 @@
                   >
                     <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
                 </button>
+                @else
+                <a 
+                  href="{{ route($botao['route']) }}"
+                  class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
+                  data-toggle="tooltip" 
+                  data-original-title="{{ $botao['title'] ?? ''}}"
+                  @if($botao['onClick']) onclick="{{ $botao['onClick'] }}" @endif
+                >
+                  <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
+              </a>
+              @endif
             @endforeach
         </td>
     </tr>
