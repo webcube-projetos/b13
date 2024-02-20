@@ -83,8 +83,8 @@ trait MontarForm
                     'id' => 'cep',
                     'name' => 'cep',
                     'function' => [
-                        'type' => 'onChange',
-                        'name' => 'pesquisaCep()',
+                        'type' => 'onblur',
+                        'name' => 'pesquisaCep();',
                     ],
                 ],
                 'logradouro' => [
