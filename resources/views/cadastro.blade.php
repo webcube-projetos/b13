@@ -2,7 +2,7 @@
 
 @section('content')
 
-@push('bottomPagina')
+@push('headPagina')
 	@vite(['resources/js/app.js'])
     @vite(['resources/js/addLines.js'])
 @endpush
@@ -63,13 +63,12 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-         <!-- SE DADOS BANCÁRIOS É TRUE, IMPRIME O CONTEÚDO DE DADOS BANCÁRIOS -->
-        @if ($dados['pageInfo']['dados_bancarios'])
-            @include('register.formBank')
-        @endif
-        
+            <!-- SE DADOS BANCÁRIOS É TRUE, IMPRIME O CONTEÚDO DE DADOS BANCÁRIOS -->
+            @if ($dados['pageInfo']['dados_bancarios'])
+                @include('register.formBank')
+            @endif
+        </div>
     </div>
 </div>
 @endsection

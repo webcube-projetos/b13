@@ -55,9 +55,11 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/editar', [EmpresasController::class, 'editar'])->name('editar');
 	});
 
-	Route::prefix('veiculos')->group(function () {
+	Route::prefix('veiculos')->name('veiculos.')->group(function () {
 		Route::get('/', [VeiculosController::class, 'index'])->name('veiculos.index');
 		Route::get('/listar', [VeiculosController::class, 'listar'])->name('veiculos.listar');
+		Route::get('/cadastro', [VeiculosController::class, 'cadastro'])->name('cadastro');
+		Route::get('/editar', [VeiculosController::class, 'editar'])->name('editar');
 	});
 
 	Route::prefix('motoristas')->group(function () {
