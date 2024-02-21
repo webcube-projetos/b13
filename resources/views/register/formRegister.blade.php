@@ -7,7 +7,7 @@
             >
                 {{ $fields['label'] }}{{ $fields['required'] ? '*' : '' }}
             </label>
-            @if (($fields['type'] === 'select') )
+            @if ( $fields['type'] === 'select' )
                 <select 
                     class="form-control" 
                     name="{{ $fields['name'] }}" 
@@ -15,7 +15,7 @@
                     {{ $fields['function'] ? $fields['function']['type'] . '=' . $fields['function']['name'] : '' }}
                     {{ $fields['required'] ? 'required' : '' }}
                 >
-                    
+
                 </select>
             @else
                 <input 

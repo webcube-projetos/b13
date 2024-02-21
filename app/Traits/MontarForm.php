@@ -562,6 +562,20 @@ trait MontarForm
                         'function' => false,
                         'dado' => $dado['parceira'] ?? null,
                     ],
+
+                    'documento' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-md-4 offset-md-8',
+                        'label' => 'Foto do documento',
+                        'type' => 'file',
+                        'placeholder' => 'Foto do documento',
+                        'maxlength' => '',
+                        'required' => true,
+                        'id' => 'documento',
+                        'name' => 'documento',
+                        'function' => false,
+                        'dado' => $dado['documento'] ?? null,
+                    ],
                 ],
             ],
         ]);

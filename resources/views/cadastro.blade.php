@@ -2,7 +2,7 @@
 
 @section('content')
 
-@push('bottomPagina')
+@push('headPagina')
 	@vite(['resources/js/app.js'])
     @vite(['resources/js/addLines.js'])
 @endpush
