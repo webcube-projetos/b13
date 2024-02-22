@@ -57,7 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [EmpresasController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [EmpresasController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [EmpresasController::class, 'editar'])->name('editar');
-		Route::get('/select-empresa', [EmpresasController::class, 'select'])->name('select');
+		Route::get('/select-empresa', [EmpresasController::class, 'select'])->name('selectEmpresa');
 	});
 
 	Route::prefix('veiculos')->name('veiculos.')->group(function () {
@@ -97,10 +97,10 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [OrdemDeServicoController::class, 'listar'])->name('listar');
 	});
 
-	Route::get('select-tipo-veiculo', [TipoVeiculoController::class, 'select']);
-	Route::get('select-marca', [MarcaController::class, 'select']);
-	Route::get('select-modelo', [ModeloController::class, 'select']);
-	Route::get('select-categoria', [CategoriaController::class, 'select']);
+	Route::get('select-tipo-veiculo', [TipoVeiculoController::class, 'select'])->name('selectTipoVeiculo');
+	Route::get('select-marca', [MarcaController::class, 'select'])->name('selectMarca');
+	Route::get('select-modelo', [ModeloController::class, 'select'])->name('selectModelo');
+	Route::get('select-categoria', [CategoriaController::class, 'select'])->name('selectCategoria');
 
 	/** LINHAS COMPONENTES */
 	Route::get('row-contact', function () {
