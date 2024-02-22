@@ -6,8 +6,6 @@ use Illuminate\Support\Fluent;
 
 trait MontarPagina
 {
-  //Isso tudo da pra deixar bem melhor, só uma ideia de como fazer isso
-  //Estou chamando montarPagina nas principais, mas daria pra chamar direto o metodo
   public function montarPagina($tipo)
   {
     return match ($tipo) {

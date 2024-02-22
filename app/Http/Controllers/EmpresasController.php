@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\FakeModel;
-use App\Traits\MontarForm;
 use App\Traits\MontarPagina;
+use App\Traits\MontarForm;
 use Faker\Factory as Faker;
 
 class EmpresasController extends Controller
