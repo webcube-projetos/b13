@@ -85,7 +85,7 @@
       ],
       [
         'title' => 'Especializações',
-        'route' => 'especializações.index',
+        'route' => 'especializacoes.index',
         'icon' => 'fa fa-star',
         'permission' => 1,
       ],

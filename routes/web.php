@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\EmpresasController;
+use App\Http\Controllers\EspecializacoesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\MotoristasController;
@@ -56,8 +57,8 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 
 	Route::prefix('veiculos')->name('veiculos.')->group(function () {
-		Route::get('/', [VeiculosController::class, 'index'])->name('veiculos.index');
-		Route::get('/listar', [VeiculosController::class, 'listar'])->name('veiculos.listar');
+		Route::get('/', [VeiculosController::class, 'index'])->name('index');
+		Route::get('/listar', [VeiculosController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [VeiculosController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [VeiculosController::class, 'editar'])->name('editar');
 	});
@@ -90,6 +91,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('os')->group(function () {
 		Route::get('/', [OrdemDeServicoController::class, 'index'])->name('os.index');
 		Route::get('/listar', [OrdemDeServicoController::class, 'listar'])->name('os.listar');
+	});
+
+	Route::prefix('especializacoes')->name('especializacoes.')->group(function () {
+		Route::get('/', [EspecializacoesController::class, 'index'])->name('index');
+		// Route::get('/listar', [EspecializacoesController::class, 'listar'])->name('listar');
+		// Route::get('/cadastro', [EspecializacoesController::class, 'cadastro'])->name('cadastro');
+		Route::get('/editar', [EspecializacoesController::class, 'editar'])->name('editar');
 	});
 
 	/** LINHAS COMPONENTES */

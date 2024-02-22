@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\FakeModel;
+use Faker\Factory as Faker;
 use App\Traits\MontarPagina;
 use App\Traits\MontarForm;
-use Faker\Factory as Faker;
 
 class VeiculosController extends Controller
 {

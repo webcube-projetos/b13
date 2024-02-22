@@ -12,6 +12,7 @@ trait MontarForm
             'cliente' => $this->montarFormCliente($dado),
             'empresas' => $this->montarFormEmpresa($dado),
             'veiculos' => $this->montarFormVeiculos($dado),
+            'especializacao' => $this->montarFormEspecializacao($dado),
         };
     }
 
@@ -575,6 +576,67 @@ trait MontarForm
                         'name' => 'documento',
                         'function' => false,
                         'dado' => $dado['documento'] ?? null,
+                    ],
+                ],
+            ],
+        ]);
+        return $data;
+    }
+
+    private function montarFormEspecializacao($dado = null)
+    {
+        $data = new Fluent([
+            'pageInfo' => [
+                'title' => $dado ? 'Editar Especialização' : 'Cadastrar Especialização',
+                'form_action' => '',
+                'form_method' => '',
+                'label_button' => $dado ? 'Editar Especialização' : 'Cadastrar Especialização',
+                //Aqui a ideia é passar um array com todos os dados bancários e montar ele no formBank
+                'dados_bancarios' => false,
+                'cadastro_contatos' => false,
+                'cadastro_adicionais' => false,
+                'cadastro_especializacoes' => false,
+            ],
+            'sessions' => [
+                'Cadastrar especialização' => [
+                    'Nome' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Nome',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlength' => 50,
+                        'required' => false,
+                        'id' => 'nome',
+                        'name' => 'nome',
+                        'function' => false,
+                        'dado' => $dado['nome'] ?? null,
+                    ],
+                    'Name in English' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Name in English',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlength' => 70,
+                        'required' => true,
+                        'id' => 'name_english',
+                        'name' => 'name_english',
+                        'function' => false,
+                        'dado' => $dado['name_english'] ?? null,
+                    ],
+                    'Descrição' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Descrição',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlength' => 70,
+                        'required' => true,
+                        'id' => 'descricao',
+                        'name' => 'descricao',
+                        'function' => false,
+                        'dado' => $dado['descricao'] ?? null,
                     ],
                 ],
             ],
