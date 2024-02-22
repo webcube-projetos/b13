@@ -8,15 +8,15 @@
                 {{ $fields['label'] }}{{ $fields['required'] ? '*' : '' }}
             </label>
             @if ( $fields['type'] === 'select' )
-                <select 
-                    class="form-control" 
-                    name="{{ $fields['name'] }}" 
-                    id="{{ $fields['id'] }}"
-                    {{ $fields['function'] ? $fields['function']['type'] . '=' . $fields['function']['name'] : '' }}
-                    {{ $fields['required'] ? 'required' : '' }}
-                >
-
-                </select>
+                <livewire:select-component 
+                    name="{{ $fields['name'] }}"
+                    componentId="{{ $fields['id'] }}"
+                    label="{{ $fields['label'] }}"
+                    route="{{ $fields['maxlenghtRoute'] }}"
+                    required="{{ $fields['required'] }}"
+                    function="{{ $fields['function'] }}"
+                    value="{{ $fields['value'] }}"
+                />
             @else
                 <input 
                     class="form-control" 
@@ -24,8 +24,8 @@
                     placeholder="{{ $fields['placeholder'] }}" 
                     id="{{ $fields['id'] }}"
                     name="{{ $fields['name'] }}" 
-                    maxlength="{{ $fields['maxlength'] }}" 
-                    value="{{ $fields['dado'] ?? '' }}"
+                    maxlength="{{ $fields['maxlenghtRoute'] }}" 
+                    value="{{ $fields['value'] ?? '' }}"
                     {{ $fields['function'] ? $fields['function']['type'] . '=' . $fields['function']['name'] : '' }}
                     {{ $fields['required'] ? 'required' : '' }}
                 >

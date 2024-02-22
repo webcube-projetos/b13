@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\EmpresasController;
@@ -11,9 +12,12 @@ use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SegurancasController;
 use App\Http\Controllers\ServicosController;
 use App\Http\Controllers\FinanceiroController;
+use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\OrcamentosController;
 use App\Http\Controllers\OrdemDeServicoController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\TipoVeiculoController;
 use App\Http\Controllers\VeiculosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -53,44 +57,50 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [EmpresasController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [EmpresasController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [EmpresasController::class, 'editar'])->name('editar');
+		Route::get('/select-empresa', [EmpresasController::class, 'select'])->name('select');
 	});
 
 	Route::prefix('veiculos')->name('veiculos.')->group(function () {
-		Route::get('/', [VeiculosController::class, 'index'])->name('veiculos.index');
-		Route::get('/listar', [VeiculosController::class, 'listar'])->name('veiculos.listar');
+		Route::get('/', [VeiculosController::class, 'index'])->name('index');
+		Route::get('/listar', [VeiculosController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [VeiculosController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [VeiculosController::class, 'editar'])->name('editar');
 	});
 
-	Route::prefix('motoristas')->group(function () {
-		Route::get('/', [MotoristasController::class, 'index'])->name('motoristas.index');
-		Route::get('/listar', [MotoristasController::class, 'listar'])->name('motoristas.listar');
+	Route::prefix('motoristas')->name('motoristas.')->group(function () {
+		Route::get('/', [MotoristasController::class, 'index'])->name('index');
+		Route::get('/listar', [MotoristasController::class, 'listar'])->name('listar');
 	});
 
-	Route::prefix('segurancas')->group(function () {
-		Route::get('/', [SegurancasController::class, 'index'])->name('segurancas.index');
-		Route::get('/listar', [SegurancasController::class, 'listar'])->name('segurancas.listar');
+	Route::prefix('segurancas')->name('segurancas.')->group(function () {
+		Route::get('/', [SegurancasController::class, 'index'])->name('index');
+		Route::get('/listar', [SegurancasController::class, 'listar'])->name('listar');
 	});
 
-	Route::prefix('servicos')->group(function () {
-		Route::get('/', [ServicosController::class, 'index'])->name('servicos.index');
-		Route::get('/listar', [ServicosController::class, 'listar'])->name('servicos.listar');
+	Route::prefix('servicos')->name('servicos.')->group(function () {
+		Route::get('/', [ServicosController::class, 'index'])->name('index');
+		Route::get('/listar', [ServicosController::class, 'listar'])->name('listar');
 	});
 
-	Route::prefix('financeiro')->group(function () {
-		Route::get('/', [FinanceiroController::class, 'index'])->name('financeiro.index');
-		Route::get('/listar', [FinanceiroController::class, 'listar'])->name('financeiro.listar');
+	Route::prefix('financeiro')->name('financeiro.')->group(function () {
+		Route::get('/', [FinanceiroController::class, 'index'])->name('index');
+		Route::get('/listar', [FinanceiroController::class, 'listar'])->name('listar');
 	});
 
-	Route::prefix('orcamentos')->group(function () {
-		Route::get('/', [OrcamentosController::class, 'index'])->name('orcamentos.index');
-		Route::get('/listar', [OrcamentosController::class, 'listar'])->name('orcamentos.listar');
+	Route::prefix('orcamentos')->name('orcamentos.')->group(function () {
+		Route::get('/', [OrcamentosController::class, 'index'])->name('index');
+		Route::get('/listar', [OrcamentosController::class, 'listar'])->name('listar');
 	});
 
-	Route::prefix('os')->group(function () {
-		Route::get('/', [OrdemDeServicoController::class, 'index'])->name('os.index');
-		Route::get('/listar', [OrdemDeServicoController::class, 'listar'])->name('os.listar');
+	Route::prefix('os')->name('os.')->group(function () {
+		Route::get('/', [OrdemDeServicoController::class, 'index'])->name('index');
+		Route::get('/listar', [OrdemDeServicoController::class, 'listar'])->name('listar');
 	});
+
+	Route::get('select-tipo-veiculo', [TipoVeiculoController::class, 'select']);
+	Route::get('select-marca', [MarcaController::class, 'select']);
+	Route::get('select-modelo', [ModeloController::class, 'select']);
+	Route::get('select-categoria', [CategoriaController::class, 'select']);
 
 	/** LINHAS COMPONENTES */
 	Route::get('row-contact', function () {
