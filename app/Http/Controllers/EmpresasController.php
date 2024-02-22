@@ -29,6 +29,21 @@ class EmpresasController extends Controller
         return view('listagem', compact('prefix', 'dados', 'config', 'header'));
     }
 
+    public function select()
+    {
+        $faker = Faker::create('pt_BR');
+        $data = [];
+
+        for ($i = 0; $i < 30; $i++) {
+            $data[] = [
+                'id' => $i,
+                'nome' => $faker->company
+            ];
+        }
+
+        return $data;
+    }
+
     public function query()
     {
         $faker = Faker::create('pt_BR');
@@ -45,6 +60,7 @@ class EmpresasController extends Controller
 
         return new FakeModel($data);
     }
+
     public function queryCompleta()
     {
         $faker = Faker::create('pt_BR');
