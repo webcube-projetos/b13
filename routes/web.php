@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\EmpresasController;
+use App\Http\Controllers\EspecializacoesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\MotoristasController;
@@ -101,6 +102,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('select-marca', [MarcaController::class, 'select'])->name('selectMarca');
 	Route::get('select-modelo', [ModeloController::class, 'select'])->name('selectModelo');
 	Route::get('select-categoria', [CategoriaController::class, 'select'])->name('selectCategoria');
+
+	Route::prefix('especializacoes')->name('especializacoes.')->group(function () {
+		Route::get('/', [EspecializacoesController::class, 'index'])->name('index');
+		// Route::get('/listar', [EspecializacoesController::class, 'listar'])->name('listar');
+		// Route::get('/cadastro', [EspecializacoesController::class, 'cadastro'])->name('cadastro');
+		Route::get('/editar', [EspecializacoesController::class, 'editar'])->name('editar');
+	});
 
 	/** LINHAS COMPONENTES */
 	Route::get('row-contact', function () {
