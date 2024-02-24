@@ -41,7 +41,7 @@
                                         </div>
                                         <div class="col-lg-6 mb-4">
                                             <input 
-                                                class="form-control" 
+                                                class="{{$dados['sessions']['Dados da Empresa']['foto']['class'] ?? ''}}" 
                                                 type="{{ $dados['sessions']['Dados da Empresa']['foto']['type'] }}" 
                                                 placeholder="{{ $dados['sessions']['Dados da Empresa']['foto']['placeholder'] }}" 
                                                 id="{{ $dados['sessions']['Dados da Empresa']['foto']['id'] }}"
@@ -91,3 +91,4 @@
     </div>
 </div>
 @endsection
+

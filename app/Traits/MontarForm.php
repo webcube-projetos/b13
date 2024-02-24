@@ -848,6 +848,7 @@ trait MontarForm
                         'container_class' => 'col-md-3',
                         'label' => 'Foto',
                         'type' => 'file',
+                        'class' => 'filepond',
                         'placeholder' => '',
                         'maxlenghtRoute' => '',
                         'required' => true,
@@ -1078,6 +1079,7 @@ trait MontarForm
             'sessions' => [
                 'Dados da Empresa' => [
                     'foto' => [
+                        'class' => 'filepond',
                         'container_tag' => 'div',
                         'container_class' => 'col-md-3',
                         'label' => 'Foto',
