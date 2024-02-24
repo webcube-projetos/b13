@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FakeModel;
 use App\Traits\MontarPagina;
+use App\Traits\MontarForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Fluent;
 use Faker\Factory as Faker;
@@ -13,6 +14,7 @@ class MotoristasController extends Controller
     protected $prefix;
 
     use MontarPagina;
+    use MontarForm;
 
     public function __construct()
     {
@@ -69,9 +71,9 @@ class MotoristasController extends Controller
             'pais' => 'Brasil',
             'telefone' => 516,
             'email' => 'Vila Rosa',
-            'empresa' => 'São Paulo',
+            'empresa' => 3,
             'observacao' => 'SP',
-            'cnh' => 'Brasil',
+            'cnh' => false,
             'dadosBancarios' => [
                 'nomeBanco' => 'Itau',
                 'numeroBanco' => '0341',
