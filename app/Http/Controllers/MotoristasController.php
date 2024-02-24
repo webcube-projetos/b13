@@ -44,7 +44,7 @@ class MotoristasController extends Controller
                 ],
                 'empresa' => $faker->company,
                 'cidade' => $faker->city . ' - ' . $faker->stateAbbr,
-                'status' => $faker->boolean,
+                'status' => true,
             ];
         }
 
