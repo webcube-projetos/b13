@@ -14,6 +14,9 @@ trait MontarForm
             'veiculos' => $this->montarFormVeiculos($value),
             'motoristas' => $this->montarFormMotoristas($value),
             'especializacao' => $this->montarFormEspecializacao($value),
+            'adicionais' => $this->montarFormAdicionais($value),
+            'categorias' => $this->montarFormCategorias($value),
+            'categorias-servicos' => $this->montarFormCategoriasServicos($value),
             'segurancas' => $this->montarFormSegurancas($value),
         };
     }
@@ -584,14 +587,14 @@ trait MontarForm
         return $data;
     }
 
-    private function montarFormEspecializacao($dado = null)
+    private function montarFormEspecializacao($value = null)
     {
         $data = new Fluent([
             'pageInfo' => [
-                'title' => $dado ? 'Editar Especialização' : 'Cadastrar Especialização',
+                'title' => $value ? 'Editar Especialização' : 'Cadastrar Especialização',
                 'form_action' => '',
                 'form_method' => '',
-                'label_button' => $dado ? 'Editar Especialização' : 'Cadastrar Especialização',
+                'label_button' => $value ? 'Editar Especialização' : 'Cadastrar Especialização',
                 //Aqui a ideia é passar um array com todos os dados bancários e montar ele no formBank
                 'dados_bancarios' => false,
                 'cadastro_contatos' => false,
@@ -606,12 +609,12 @@ trait MontarForm
                         'label' => 'Nome',
                         'type' => 'text',
                         'placeholder' => '',
-                        'maxlength' => 50,
-                        'required' => false,
+                        'maxlenghtRoute' => 50,
+                        'required' => true,
                         'id' => 'nome',
                         'name' => 'nome',
                         'function' => false,
-                        'dado' => $dado['nome'] ?? null,
+                        'dado' => $value['nome'] ?? null,
                     ],
                     'Name in English' => [
                         'container_tag' => 'div',
@@ -619,12 +622,12 @@ trait MontarForm
                         'label' => 'Name in English',
                         'type' => 'text',
                         'placeholder' => '',
-                        'maxlength' => 70,
+                        'maxlenghtRoute' => 70,
                         'required' => true,
                         'id' => 'name_english',
                         'name' => 'name_english',
                         'function' => false,
-                        'dado' => $dado['name_english'] ?? null,
+                        'dado' => $value['name_english'] ?? null,
                     ],
                     'Descrição' => [
                         'container_tag' => 'div',
@@ -632,12 +635,192 @@ trait MontarForm
                         'label' => 'Descrição',
                         'type' => 'text',
                         'placeholder' => '',
-                        'maxlength' => 70,
+                        'maxlenghtRoute' => 70,
                         'required' => true,
                         'id' => 'descricao',
                         'name' => 'descricao',
                         'function' => false,
-                        'dado' => $dado['descricao'] ?? null,
+                        'dado' => $value['descricao'] ?? null,
+                    ],
+                    'especializacoes' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-md-12',
+                        'label' => 'Especialiazação ascendente',
+                        'type' => 'select',
+                        'placeholder' => '',
+                        'route' => 'EspecializacoesController',
+                        'required' => false,
+                        'id' => 'especializacao',
+                        'name' => 'especializacao',
+                        'function' => false,
+                        'value' => $value['especializacao'] ?? null,
+                    ],
+                ],
+            ],
+        ]);
+        return $data;
+    }
+
+    private function montarFormAdicionais($value = null)
+    {
+        $data = new Fluent([
+            'pageInfo' => [
+                'title' => $value ? 'Editar Adicional' : 'Cadastrar Adicional',
+                'form_action' => '',
+                'form_method' => '',
+                'label_button' => $value ? 'Editar Adicional' : 'Cadastrar Adicional',
+                'dados_bancarios' => false,
+                'cadastro_contatos' => false,
+                'cadastro_adicionais' => false,
+                'cadastro_especializacoes' => false,
+            ],
+            'sessions' => [
+                'Cadastrar Adicional' => [
+                    'Nome' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Nome',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlenghtRoute' => 50,
+                        'required' => true,
+                        'id' => 'nome',
+                        'name' => 'nome',
+                        'function' => false,
+                        'dado' => $value['nome'] ?? null,
+                    ],
+                    'Name in English' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Name in English',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlenghtRoute' => 70,
+                        'required' => true,
+                        'id' => 'name_english',
+                        'name' => 'name_english',
+                        'function' => false,
+                        'dado' => $value['name_english'] ?? null,
+                    ],
+                    'Descrição' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Descrição',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlenghtRoute' => 70,
+                        'required' => true,
+                        'id' => 'descricao',
+                        'name' => 'descricao',
+                        'function' => false,
+                        'dado' => $value['descricao'] ?? null,
+                    ],
+                ],
+            ],
+        ]);
+        return $data;
+    }
+
+    private function montarFormCategorias($value = null)
+    {
+        $data = new Fluent([
+            'pageInfo' => [
+                'title' => $value ? 'Editar Categoria' : 'Cadastrar Categoria',
+                'form_action' => '',
+                'form_method' => '',
+                'label_button' => $value ? 'Editar Categoria' : 'Cadastrar Categoria',
+                'dados_bancarios' => false,
+                'cadastro_contatos' => false,
+                'cadastro_adicionais' => false,
+                'cadastro_especializacoes' => false,
+            ],
+            'sessions' => [
+                'Cadastrar Categoria' => [
+                    'Nome' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Nome',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlenghtRoute' => 50,
+                        'required' => true,
+                        'id' => 'nome',
+                        'name' => 'nome',
+                        'function' => false,
+                        'dado' => $value['nome'] ?? null,
+                    ],
+                    'Name in English' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Name in English',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlenghtRoute' => 70,
+                        'required' => true,
+                        'id' => 'name_english',
+                        'name' => 'name_english',
+                        'function' => false,
+                        'dado' => $value['name_english'] ?? null,
+                    ],
+                    'Descrição' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Descrição',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlenghtRoute' => 70,
+                        'required' => true,
+                        'id' => 'descricao',
+                        'name' => 'descricao',
+                        'function' => false,
+                        'dado' => $value['descricao'] ?? null,
+                    ],
+                ],
+            ],
+        ]);
+        return $data;
+    }
+
+    private function montarFormCategoriasServicos($value = null)
+    {
+        $data = new Fluent([
+            'pageInfo' => [
+                'title' => $value ? 'Editar Categoria' : 'Cadastrar Categoria',
+                'form_action' => '',
+                'form_method' => '',
+                'label_button' => $value ? 'Editar Categoria' : 'Cadastrar Categoria',
+                'dados_bancarios' => false,
+                'cadastro_contatos' => false,
+                'cadastro_adicionais' => false,
+                'cadastro_especializacoes' => false,
+            ],
+            'sessions' => [
+                'Categoria de Serviço' => [
+                    'Nome' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Nome',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlenghtRoute' => 50,
+                        'required' => true,
+                        'id' => 'nome',
+                        'name' => 'nome',
+                        'function' => false,
+                        'dado' => $value['nome'] ?? null,
+                    ],
+                    'Name in English' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Name in English',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlenghtRoute' => 70,
+                        'required' => true,
+                        'id' => 'name_english',
+                        'name' => 'name_english',
+                        'function' => false,
+                        'dado' => $value['name_english'] ?? null,
                     ],
                 ],
             ],

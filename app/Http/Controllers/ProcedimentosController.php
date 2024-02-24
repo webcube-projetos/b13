@@ -8,7 +8,7 @@ use App\Models\FakeModel;
 use App\Traits\MontarForm;
 use Faker\Factory as Faker;
 
-class CategoriaController extends Controller
+class ProcedimentosController extends Controller
 {
     use MontarPaginaDupla;
     use MontarForm;
@@ -17,14 +17,14 @@ class CategoriaController extends Controller
 
     public function __construct()
     {
-        $this->prefix = 'categorias.veiculos';
+        $this->prefix = 'categorias.servicos';
     }
     public function index()
     {
         $prefix = $this->prefix;
-        $config = $this->montarPaginaDupla('categorias');
+        $config = $this->montarPaginaDupla('procedimentos');
         $lista = $this->query()->paginate(10);
-        $dados = $this->montarForm('categorias');
+        $dados = false;
 
         return view('paginaDupla', compact('prefix', 'config', 'lista', 'dados'));
     }
@@ -37,36 +37,23 @@ class CategoriaController extends Controller
         $data = [];
 
         $data[] = [
-            'categorias' => 'Executivo',
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
+            'categorias' => 'Motorista C/ Segurança',
             'ascendente' => false
         ];
 
         $data[] = [
-            'categorias' => 'Luxo',
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
+            'categorias' => 'Motorista S/ Segurança',
             'ascendente' => false
         ];
         $data[] = [
-            'categorias' => 'Cargo',
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
+            'categorias' => 'Segurança I',
+            'ascendente' => false
+        ];
+        $data[] = [
+            'categorias' => 'Segurança II',
             'ascendente' => false
         ];
 
         return new FakeModel($data);
-    }
-
-    public function select()
-    {
-        $data = [
-            ['id' => 1, 'nome' => 'Executivo'],
-            ['id' => 2, 'nome' => 'Luxo'],
-            ['id' => 3, 'nome' => 'Cargo'],
-        ];
-
-        return $data;
     }
 }
