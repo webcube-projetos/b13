@@ -72,5 +72,12 @@
 
 .deletarLinha {
     position: absolute;
-    right: 20px;
+    right: 5px;
+    top: 35px;
+}
+
+#box-linhas-contato,
+#box-linhas-adicional,
+#box-linhas-especializacao {
+    position: relative;
 }
