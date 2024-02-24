@@ -10,16 +10,28 @@ class TipoVeiculoController extends Controller
 {
     public function select()
     {
-        $faker = Faker::create('pt_BR');
-        $faker->addProvider(new \Faker\Provider\FakeCar($faker));
-        $data = [];
-
-        for ($i = 0; $i < 30; $i++) {
-            $data[] =  [
-                'id' => $i,
-                'nome' => $faker->randomElement(['SUV', 'Van', 'Sedan', 'Hatch', 'Mini Van']),
-            ];
-        }
+        $data =  [
+            [
+                'id' => 1,
+                'nome' => 'SUV',
+            ],
+            [
+                'id' => 2,
+                'nome' => 'Van',
+            ],
+            [
+                'id' => 3,
+                'nome' => 'Sedan',
+            ],
+            [
+                'id' => 4,
+                'nome' => 'Hatch',
+            ],
+            [
+                'id' => 5,
+                'nome' => 'Mini Van',
+            ],
+        ];
 
         return $data;
     }

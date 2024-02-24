@@ -14,6 +14,6 @@ class CategoriaController extends Controller
             ['id' => 3, 'nome' => 'Cargo'],
         ];
 
-        return new $data;
+        return $data;
     }
 }
