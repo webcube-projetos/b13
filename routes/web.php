@@ -74,11 +74,15 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('motoristas')->name('motoristas.')->group(function () {
 		Route::get('/', [MotoristasController::class, 'index'])->name('index');
 		Route::get('/listar', [MotoristasController::class, 'listar'])->name('listar');
+		Route::get('/cadastro', [MotoristasController::class, 'cadastro'])->name('cadastro');
+		Route::get('/editar', [MotoristasController::class, 'editar'])->name('editar');
 	});
 
 	Route::prefix('segurancas')->name('segurancas.')->group(function () {
 		Route::get('/', [SegurancasController::class, 'index'])->name('index');
 		Route::get('/listar', [SegurancasController::class, 'listar'])->name('listar');
+		Route::get('/cadastro', [SegurancasController::class, 'cadastro'])->name('cadastro');
+		Route::get('/editar', [SegurancasController::class, 'editar'])->name('editar');
 	});
 
 	Route::prefix('servicos')->name('servicos.')->group(function () {
