@@ -35,8 +35,27 @@
                             @csrf
                             <div class="row">
                                 @foreach ($dados['sessions'] as $key => $group)
-                                    <p class="fw-bold">{{ $key }}</p>
-        
+                                    @if (isset($dados['sessions']['Dados da Empresa']['foto']) && $key === 'Dados da Empresa')
+                                        <div class="col-lg-6 mb-4">
+                                            <p class="fw-bold">{{ $key }}</p>
+                                        </div>
+                                        <div class="col-lg-6 mb-4">
+                                            <input 
+                                                class="form-control" 
+                                                type="{{ $dados['sessions']['Dados da Empresa']['foto']['type'] }}" 
+                                                placeholder="{{ $dados['sessions']['Dados da Empresa']['foto']['placeholder'] }}" 
+                                                id="{{ $dados['sessions']['Dados da Empresa']['foto']['id'] }}"
+                                                name="{{ $dados['sessions']['Dados da Empresa']['foto']['name'] }}" 
+                                                maxlength="{{ $dados['sessions']['Dados da Empresa']['foto']['maxlenghtRoute'] }}" 
+                                                value="{{ $dados['sessions']['Dados da Empresa']['foto']['value'] ?? '' }}"
+                                                {{ $dados['sessions']['Dados da Empresa']['foto']['function'] ? $dados['sessions']['Dados da Empresa']['foto']['function']['type'] . '=' . $dados['sessions']['Dados da Empresa']['foto']['function']['name'] : '' }}
+                                                {{ $dados['sessions']['Dados da Empresa']['foto']['required'] ? 'required' : '' }}
+                                            >
+                                        </div>
+                                    @else 
+                                        <p class="fw-bold mt-4">{{ $key }}</p>
+                                    @endif
+
                                     @include('register.formRegister')
                                 @endforeach
 
