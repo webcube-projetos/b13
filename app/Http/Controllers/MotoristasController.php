@@ -40,11 +40,11 @@ class MotoristasController extends Controller
             $data[] = [
                 'pessoa-foto' => [
                     'nome' => $faker->firstName . ' ' . $faker->lastName,
-                    'foto' => $faker->imageUrl($width = 640, $height = 480, 'people'),
+                    'foto' => 'https://xsgames.co/randomusers/avatar.php?g=male',
                 ],
                 'empresa' => $faker->company,
                 'cidade' => $faker->city . ' - ' . $faker->stateAbbr,
-                'status' => $faker->boolean,
+                'status' => true,
             ];
         }
 

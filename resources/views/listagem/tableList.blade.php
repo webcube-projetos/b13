@@ -14,7 +14,7 @@
   <!-- REGISTROS TABELA -->
   <tbody>
     @foreach($dados as $itens)
-    <tr>
+    <tr class="@if(isset($itens['status']) &&$itens['status'] == 0) inactive @endif">
         @foreach($itens as $coluna => $dado)
             @if ($coluna === 'status') 
                 <td class="ps-4">
@@ -52,7 +52,7 @@
                       $dado = $dado ? 'Sim' : 'Não';
                   }
                 @endphp
-                <td><h6 class="mb-0 text-sm">{{ $dado }}</h6></td>
+                <td class="@if($dado == 'Entrada')text-success @elseif($dado == 'Saida')text-danger @endif"><h6 class="mb-0 text-sm">{{ $dado }}</h6></td>
             @endif
         @endforeach
         <td class="text-right">
