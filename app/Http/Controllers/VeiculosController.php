@@ -90,9 +90,10 @@ class VeiculosController extends Controller
 
     public function cadastro()
     {
+        $prefix = $this->prefix;
         $dados = $this->montarForm('veiculos');
 
-        return view('cadastro', compact('dados'));
+        return view('cadastro', compact('dados', 'prefix'));
     }
 
     public function editar()

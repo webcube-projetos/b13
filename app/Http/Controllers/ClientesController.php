@@ -80,16 +80,17 @@ class ClientesController extends Controller
 	{
 		$dados = $this->query()->paginate(10);
 
-		[$config, $header] = $this->montarPagina('cliente');
+		[$config, $header] = $this->montarPagina('clientes');
 
 		return view('listagem.tableList', compact('dados', 'config', 'header'));
 	}
 
 	public function cadastro()
 	{
-		$dados = $this->montarForm('cliente');
+		$prefix = $this->prefix;
+		$dados = $this->montarForm('clientes');
 
-		return view('cadastro', compact('dados'));
+		return view('cadastro', compact('dados', 'prefix'));
 	}
 
 	public function editar()

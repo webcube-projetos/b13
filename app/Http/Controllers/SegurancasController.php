@@ -111,9 +111,10 @@ class SegurancasController extends Controller
 
     public function cadastro()
     {
+        $prefix = $this->prefix;
         $dados = $this->montarForm('segurancas');
 
-        return view('cadastro', compact('dados'));
+        return view('cadastro', compact('dados', 'prefix'));
     }
 
     public function editar()
