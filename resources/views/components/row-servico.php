@@ -111,6 +111,6 @@
         <input type="number" class="form-control" name="horaExtraMotorista[]" id="horaExtraMotorista" required>
     </div>
     <div class="col-12 text-end mt-3">
-        <h2>Total: <span id="total-linha">0,00</span></h2>
+        <h3>Total: <span id="total-linha">0,00</span></h3>
     </div>
 </div>

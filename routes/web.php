@@ -106,6 +106,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('os')->name('os.')->group(function () {
 		Route::get('/', [OrdemDeServicoController::class, 'index'])->name('index');
 		Route::get('/listar', [OrdemDeServicoController::class, 'listar'])->name('listar');
+		Route::get('/cadastro', [OrdemDeServicoController::class, 'cadastro'])->name('cadastro');
+		Route::get('/editar', [OrdemDeServicoController::class, 'editar'])->name('editar');
 	});
 
 	Route::get('select-tipo-veiculo', [TipoVeiculoController::class, 'select'])->name('selectTipoVeiculo');
@@ -164,6 +166,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('row-saida', function () {
 		return view('components.row-saida');
 	})->name('row.saida');
+
+	Route::get('row-servico-os', function () {
+		return view('components.row-servico-os');
+	})->name('row.servico-os');
+
+	Route::get('row-rota', function () {
+		return view('components.row-rota');
+	})->name('row.rota');
 	/** FIM LINHAS COMPONENTES */
 
 	Route::get('billing', function () {

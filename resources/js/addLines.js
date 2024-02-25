@@ -84,7 +84,7 @@ $(document).ready(function () {
                 $('#box-linhas-entrada .row:last-child input').val('');
             },
             error: function () {
-                alert('Erro ao carregar a linha de serviço.');
+                alert('Erro ao carregar a linha de entrada.');
             }
         });
     });
@@ -100,7 +100,40 @@ $(document).ready(function () {
                 $('#box-linhas-saida .row:last-child input').val('');
             },
             error: function () {
-                alert('Erro ao carregar a linha de serviço.');
+                alert('Erro ao carregar a linha de saída.');
+            }
+        });
+    });
+
+    $('#addLinhaServicoOs').on('click', function () {
+        let url =  window.location.href.split('/')[1] + '/row-servico-os';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                $('#box-linhas-servico-os').append(data);
+
+                $('#box-linhas-servico-os .row:last-child input').val('');
+            },
+            error: function () {
+                alert('Erro ao carregar a linha de O.S.');
+            }
+        });
+    });
+
+    $('#addLinhaRota').on('click', function () {
+        console.log('okss')
+        let url =  window.location.href.split('/')[1] + '/row-rota';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                $('#box-linhas-rota').append(data);
+
+                $('#box-linhas-rota .row:last-child input').val('');
+            },
+            error: function () {
+                alert('Erro ao carregar a linha de rota.');
             }
         });
     });
