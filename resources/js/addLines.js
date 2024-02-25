@@ -57,6 +57,54 @@ $(document).ready(function () {
         });
     });
 
+    $('#addLinhaServico').on('click', function () {
+        let url =  window.location.href.split('/')[1] + '/row-servico';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                $('#box-linhas-servico').append(data);
+
+                $('#box-linhas-servico .row:last-child input').val('');
+            },
+            error: function () {
+                alert('Erro ao carregar a linha de serviço.');
+            }
+        });
+    });
+
+    $('#addLinhaEntrada').on('click', function () {
+        let url =  window.location.href.split('/')[1] + '/row-entrada';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                $('#box-linhas-entrada').append(data);
+
+                $('#box-linhas-entrada .row:last-child input').val('');
+            },
+            error: function () {
+                alert('Erro ao carregar a linha de serviço.');
+            }
+        });
+    });
+
+    $('#addLinhaSaida').on('click', function () {
+        let url =  window.location.href.split('/')[1] + '/row-saida';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                $('#box-linhas-saida').append(data);
+
+                $('#box-linhas-saida .row:last-child input').val('');
+            },
+            error: function () {
+                alert('Erro ao carregar a linha de serviço.');
+            }
+        });
+    });
+
     $(document).on('click', '.deletarLinha', function () {
         // Encontrar a linha mais próxima e removê-la
         var linha = $(this).closest('.linha-add');

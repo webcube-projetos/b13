@@ -389,7 +389,10 @@ trait MontarPagina
 
     $config = new Fluent([
       'title' => 'Todos os orçamentos',
-      'button_top' => false,
+      'button_top' => [
+        'name' => '+ Cadastrar orçamento',
+        'route' => 'orcamentos.cadastro',
+      ],
       'search' => $search,
       'actions' => $actions,
     ]);
