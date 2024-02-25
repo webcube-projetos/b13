@@ -52,7 +52,6 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/', [ClientesController::class, 'index'])->name('index');
 		Route::get('/listar', [ClientesController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [ClientesController::class, 'cadastro'])->name('cadastro');
-		//O parametro id do item pra editar devera ser enviado na rota
 		Route::get('/editar', [ClientesController::class, 'editar'])->name('editar');
 	});
 
@@ -88,6 +87,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('servicos')->name('servicos.')->group(function () {
 		Route::get('/', [ServicosController::class, 'index'])->name('index');
 		Route::get('/listar', [ServicosController::class, 'listar'])->name('listar');
+		Route::get('/cadastro', [ServicosController::class, 'cadastro'])->name('cadastro');
+		Route::get('/editar', [ServicosController::class, 'editar'])->name('editar');
 	});
 
 	Route::prefix('financeiro')->name('financeiro.')->group(function () {

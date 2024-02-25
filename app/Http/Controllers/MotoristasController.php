@@ -109,9 +109,10 @@ class MotoristasController extends Controller
 
     public function cadastro()
     {
+        $prefix = $this->prefix;
         $dados = $this->montarForm('motoristas');
 
-        return view('cadastro', compact('dados'));
+        return view('cadastro', compact('dados', 'prefix'));
     }
 
     public function editar()

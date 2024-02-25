@@ -24,7 +24,7 @@ class EmpresasController extends Controller
 
         $dados = $this->query()->paginate(10);
 
-        [$config, $header] = $this->montarPagina('empresas');
+        [$config, $header] = $this->montarPagina('empresas', 'prefix');
 
         return view('listagem', compact('prefix', 'dados', 'config', 'header'));
     }
@@ -98,9 +98,10 @@ class EmpresasController extends Controller
 
     public function cadastro()
     {
-        $dados = $this->montarForm('cliente');
+        $prefix = $this->prefix;
+        $dados = $this->montarForm('empresas');
 
-        return view('cadastro', compact('dados'));
+        return view('cadastro', compact('dados', 'prefix'));
     }
 
     public function editar()

@@ -289,7 +289,10 @@ trait MontarPagina
 
     $config = new Fluent([
       'title' => 'Todos os Serviços',
-      'button_top' => false,
+      'button_top' => [
+        'name' => '+ Cadastrar serviços',
+        'route' => 'servicos.cadastro',
+      ],
       'search' => $search,
       'actions' => $actions,
     ]);
