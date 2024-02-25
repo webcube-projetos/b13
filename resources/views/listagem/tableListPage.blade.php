@@ -3,7 +3,7 @@
   <thead>
     <tr>
       @foreach($config['infoRight']['head'] as $key => $item)
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7{{ $loop->last ? ' text-center' : '' }}">
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7{{ $loop->last ? ' text-right' : '' }}">
               {{ $item }}
           </th>
       @endforeach

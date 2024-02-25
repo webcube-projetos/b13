@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdicionaisController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CategoriaServicoController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\EmpresasController;
@@ -17,6 +19,7 @@ use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\OrcamentosController;
 use App\Http\Controllers\OrdemDeServicoController;
+use App\Http\Controllers\ProcedimentosController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\TipoVeiculoController;
 use App\Http\Controllers\VeiculosController;
@@ -49,7 +52,6 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/', [ClientesController::class, 'index'])->name('index');
 		Route::get('/listar', [ClientesController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [ClientesController::class, 'cadastro'])->name('cadastro');
-		//O parametro id do item pra editar devera ser enviado na rota
 		Route::get('/editar', [ClientesController::class, 'editar'])->name('editar');
 	});
 
@@ -71,16 +73,22 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('motoristas')->name('motoristas.')->group(function () {
 		Route::get('/', [MotoristasController::class, 'index'])->name('index');
 		Route::get('/listar', [MotoristasController::class, 'listar'])->name('listar');
+		Route::get('/cadastro', [MotoristasController::class, 'cadastro'])->name('cadastro');
+		Route::get('/editar', [MotoristasController::class, 'editar'])->name('editar');
 	});
 
 	Route::prefix('segurancas')->name('segurancas.')->group(function () {
 		Route::get('/', [SegurancasController::class, 'index'])->name('index');
 		Route::get('/listar', [SegurancasController::class, 'listar'])->name('listar');
+		Route::get('/cadastro', [SegurancasController::class, 'cadastro'])->name('cadastro');
+		Route::get('/editar', [SegurancasController::class, 'editar'])->name('editar');
 	});
 
 	Route::prefix('servicos')->name('servicos.')->group(function () {
 		Route::get('/', [ServicosController::class, 'index'])->name('index');
 		Route::get('/listar', [ServicosController::class, 'listar'])->name('listar');
+		Route::get('/cadastro', [ServicosController::class, 'cadastro'])->name('cadastro');
+		Route::get('/editar', [ServicosController::class, 'editar'])->name('editar');
 	});
 
 	Route::prefix('financeiro')->name('financeiro.')->group(function () {
@@ -105,10 +113,30 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::prefix('especializacoes')->name('especializacoes.')->group(function () {
 		Route::get('/', [EspecializacoesController::class, 'index'])->name('index');
-		// Route::get('/listar', [EspecializacoesController::class, 'listar'])->name('listar');
-		// Route::get('/cadastro', [EspecializacoesController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [EspecializacoesController::class, 'editar'])->name('editar');
+		Route::get('/select-especializacao', [EspecializacoesController::class, 'select'])->name('selectEspecializacao');
 	});
+
+	Route::prefix('adicionais')->name('adicionais.')->group(function () {
+		Route::get('/', [AdicionaisController::class, 'index'])->name('index');
+		Route::get('/editar', [AdicionaisController::class, 'editar'])->name('editar');
+	});
+
+	Route::prefix('categorias-veiculos')->name('categorias.veiculos.')->group(function () {
+		Route::get('/', [CategoriaController::class, 'index'])->name('index');
+		Route::get('/editar', [CategoriaController::class, 'editar'])->name('editar');
+	});
+
+	Route::prefix('categorias-servicos')->name('categorias.servicos.')->group(function () {
+		Route::get('/', [CategoriaServicoController::class, 'index'])->name('index');
+		Route::get('/editar', [CategoriaServicoController::class, 'editar'])->name('editar');
+	});
+
+	Route::prefix('procedimentos')->name('procedimentos.')->group(function () {
+		Route::get('/', [ProcedimentosController::class, 'index'])->name('index');
+		Route::get('/editar', [ProcedimentosController::class, 'editar'])->name('editar');
+	});
+
 
 	/** LINHAS COMPONENTES */
 	Route::get('row-contact', function () {

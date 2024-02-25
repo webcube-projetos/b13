@@ -11,6 +11,10 @@ trait MontarPaginaDupla
   {
     return match ($tipo) {
       'especializacao' => $this->montarEspecializacao(),
+      'adicionais' => $this->montarAdicionais(),
+      'categorias' => $this->montarCategorias(),
+      'categorias-servicos' => $this->montarCategoriasServicos(),
+      'procedimentos' => $this->montarProcedimentos(),
     };
   }
 
@@ -31,6 +35,70 @@ trait MontarPaginaDupla
 
     return ['infoLeft' => $infoLeft, 'infoRight' => $infoRight];
   }
+
+  public function montarAdicionais()
+  {
+    $infoLeft = collect([
+      'title' => 'Cadastrar Adicional',
+      'fields' => collect(['Nome do adicional', 'Name in English', 'Descrição']),
+    ]);
+
+
+    $infoRight = collect([
+      'title' => 'Adicionais',
+      'head' => collect(['Nome', 'Descrição', 'Veiculos', 'Ações']),
+      'actions' => $this->botoes(['editar', 'delete']),
+    ]);
+
+    return ['infoLeft' => $infoLeft, 'infoRight' => $infoRight];
+  }
+
+  public function montarCategorias()
+  {
+    $infoLeft = collect([
+      'title' => 'Cadastrar Categoria',
+      'fields' => collect(['Nome da categoria', 'Name in English', 'Descrição']),
+    ]);
+
+
+    $infoRight = collect([
+      'title' => 'Categorias',
+      'head' => collect(['Nome', 'Descrição', 'Veiculos', 'Ações']),
+      'actions' => $this->botoes(['editar', 'delete']),
+    ]);
+
+    return ['infoLeft' => $infoLeft, 'infoRight' => $infoRight];
+  }
+
+  public function montarCategoriasServicos()
+  {
+    $infoLeft = collect([
+      'title' => 'Categoria de Serviços',
+      'fields' => collect(['Nome da categoria', 'Name in English']),
+    ]);
+
+    $infoRight = collect([
+      'title' => 'Categorias',
+      'head' => collect(['Nome', 'Serviços', 'Ações']),
+      'actions' => $this->botoes(['editar', 'delete']),
+    ]);
+
+    return ['infoLeft' => $infoLeft, 'infoRight' => $infoRight];
+  }
+
+  public function montarProcedimentos()
+  {
+    $infoLeft = false;
+
+    $infoRight = collect([
+      'title' => 'Procedimentos',
+      'head' => collect(['Nome', 'Ações']),
+      'actions' => $this->botoes(['editar', 'delete']),
+    ]);
+
+    return ['infoLeft' => $infoLeft, 'infoRight' => $infoRight];
+  }
+
 
   public function botoes(array $botoes)
   {

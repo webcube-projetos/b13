@@ -36,12 +36,12 @@ class FinanceiroController extends Controller
 
         for ($i = 0; $i < 30; $i++) {
             $data[] = [
-                'tipo' => 'Entrada',
+                'tipo' => $faker->randomElement(['Entrada', 'Saida']),
                 'data_previsao' => $faker->date('d/m/Y'),
                 'empresa' => $faker->company,
                 'apelido' => '-',
                 'valor' => 'R$800,00',
-                'status' => $faker->boolean,
+                'status' => $faker->randomElement([true, true, true, false]),
             ];
         }
 

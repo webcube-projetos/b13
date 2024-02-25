@@ -8,7 +8,7 @@ use App\Models\FakeModel;
 use App\Traits\MontarForm;
 use Faker\Factory as Faker;
 
-class EspecializacoesController extends Controller
+class CategoriaServicoController extends Controller
 {
     use MontarPaginaDupla;
     use MontarForm;
@@ -17,14 +17,14 @@ class EspecializacoesController extends Controller
 
     public function __construct()
     {
-        $this->prefix = 'especializacoes';
+        $this->prefix = 'categorias.servicos';
     }
     public function index()
     {
         $prefix = $this->prefix;
-        $config = $this->montarPaginaDupla('especializacao');
+        $config = $this->montarPaginaDupla('categorias-servicos');
         $lista = $this->query()->paginate(10);
-        $dados = $this->montarForm('especializacao');
+        $dados = $this->montarForm('categorias-servicos');
 
         return view('paginaDupla', compact('prefix', 'config', 'lista', 'dados'));
     }
@@ -37,29 +37,18 @@ class EspecializacoesController extends Controller
         $data = [];
 
         $data[] = [
-            'especializacoes' => 'Idiomas',
-            'descricao' => 'Descrição',
+            'categorias' => 'Transfer',
             'motoristas_id' => $faker->numberBetween(1, 20),
             'ascendente' => false
         ];
 
         $data[] = [
-            'especializacoes' => $faker->randomElement(['- Inglês']),
-            'descricao' => 'Descrição',
+            'categorias' => 'Diária',
             'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => 'Idiomas'
+            'ascendente' => false
         ];
-
         $data[] = [
-            'especializacoes' => $faker->randomElement(['- Espanhol']),
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => 'Idiomas'
-        ];
-
-        $data[] = [
-            'especializacoes' => 'Direção Defensiva',
-            'descricao' => 'Descrição',
+            'categorias' => 'Travel',
             'motoristas_id' => $faker->numberBetween(1, 20),
             'ascendente' => false
         ];
@@ -69,15 +58,11 @@ class EspecializacoesController extends Controller
 
     public function select()
     {
-        $faker = Faker::create('pt_BR');
-        $data = [];
-
-        for ($i = 0; $i < 4; $i++) {
-            $data[] = [
-                'id' => $i,
-                'nome' => $faker->randomElement(['Idioma', 'Transporte executivo', 'Direção Defensiva', 'Transporte de veículos especiais']),
-            ];
-        }
+        $data = [
+            ['id' => 1, 'nome' => 'Executivo'],
+            ['id' => 2, 'nome' => 'Luxo'],
+            ['id' => 3, 'nome' => 'Cargo'],
+        ];
 
         return $data;
     }

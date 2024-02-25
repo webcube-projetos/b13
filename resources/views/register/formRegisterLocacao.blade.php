@@ -1,4 +1,4 @@
-@foreach ($dados['sessions'][$key] as $fields)
+@foreach ($dados['sessions']['locacao'][$key] as $fields)
     @if ($fields['name'] !== 'foto') 
         <{{ $fields['container_tag'] }} class="{{ $fields['container_class'] }}">
             <div class="form-group">

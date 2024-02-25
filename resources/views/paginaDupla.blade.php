@@ -9,6 +9,7 @@
   <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
     <div class="container-fluid py-4">
       <div class="row">
+        @if($config['infoLeft'])
         <div class="col-5">
           <div class="card mb-4">
             <div class="row align-items-center mb-4">
@@ -38,6 +39,7 @@
             </div>
           </div>
         </div>
+        @endif
         <div class="col-7">
           <div class="card mb-4">
             <div class="row align-items-center mb-4">

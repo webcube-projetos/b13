@@ -8,7 +8,7 @@ use App\Models\FakeModel;
 use App\Traits\MontarForm;
 use Faker\Factory as Faker;
 
-class EspecializacoesController extends Controller
+class AdicionaisController extends Controller
 {
     use MontarPaginaDupla;
     use MontarForm;
@@ -17,14 +17,14 @@ class EspecializacoesController extends Controller
 
     public function __construct()
     {
-        $this->prefix = 'especializacoes';
+        $this->prefix = 'adicionais';
     }
     public function index()
     {
         $prefix = $this->prefix;
-        $config = $this->montarPaginaDupla('especializacao');
+        $config = $this->montarPaginaDupla('adicionais');
         $lista = $this->query()->paginate(10);
-        $dados = $this->montarForm('especializacao');
+        $dados = $this->montarForm('adicionais');
 
         return view('paginaDupla', compact('prefix', 'config', 'lista', 'dados'));
     }
@@ -37,28 +37,26 @@ class EspecializacoesController extends Controller
         $data = [];
 
         $data[] = [
-            'especializacoes' => 'Idiomas',
+            'adicionais' => 'Banco de couro',
             'descricao' => 'Descrição',
             'motoristas_id' => $faker->numberBetween(1, 20),
             'ascendente' => false
         ];
 
         $data[] = [
-            'especializacoes' => $faker->randomElement(['- Inglês']),
+            'adicionais' => 'GPS',
             'descricao' => 'Descrição',
             'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => 'Idiomas'
+            'ascendente' => false
         ];
-
         $data[] = [
-            'especializacoes' => $faker->randomElement(['- Espanhol']),
+            'adicionais' => 'ABS',
             'descricao' => 'Descrição',
             'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => 'Idiomas'
+            'ascendente' => false
         ];
-
         $data[] = [
-            'especializacoes' => 'Direção Defensiva',
+            'adicionais' => 'Blindado',
             'descricao' => 'Descrição',
             'motoristas_id' => $faker->numberBetween(1, 20),
             'ascendente' => false

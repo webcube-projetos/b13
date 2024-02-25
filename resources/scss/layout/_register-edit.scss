@@ -1,14 +1,83 @@
-.nav-wrapper .nav-pills{
-    background-color: #DADADB;;
+.nav-wrapper .nav-pills {
+    background-color: #DADADB;
+    ;
 }
 
-.nav-wrapper .nav-pills a{
+.nav-wrapper .nav-pills a {
     color: #575758;
     font-size: 12px;
 }
 
 .linha-add {
-    padding: 16px; 
+    padding: 16px;
     background-color: #EEEEEE;
     border-radius: 8px;
+}
+
+.filepond--drop-label {
+    color: #4c4e53;
+}
+
+.filepond--label-action {
+    text-decoration-color: #babdc0;
+}
+
+.filepond--panel-root {
+    background-color: #edf0f4;
+}
+
+.filepond--root {
+    width: 100px;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.filepond--root#cnh,
+.filepond--root#cnv,
+.filepond--root#documento {
+    width: 100%;
+    margin-left: auto;
+}
+
+#cnh .filepond--drip,
+#cnv .filepond--drip,
+#documento .filepond--drip {
+    background: #FF9921;
+    opacity: 1;
+}
+
+#cnh .filepond--drop-label label,
+#cnv .filepond--drop-label label,
+#documento .filepond--drop-label label {
+    color: #FAFCFF;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.filepond--drop-label label {
+    color: #4c4e53;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.filepond--credits {
+    display: none;
+}
+
+.bi-cloud-arrow-up {
+    font-size: 15px !important;
+    margin-right: 6px;
+}
+
+.deletarLinha {
+    position: absolute;
+    right: 5px;
+    top: 35px;
+}
+
+#box-linhas-contato,
+#box-linhas-adicional,
+#box-linhas-especializacao {
+    position: relative;
 }
