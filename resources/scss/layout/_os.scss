@@ -1,0 +1,16 @@
+#box-linhas-servico-os .nav-tabs .nav-link {
+    background-color: #eee;
+    border-color: #dee2e6 #dee2e6 #dee2e6;
+    color: #495057;
+    margin-right: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 12px 32px;
+}
+
+#box-linhas-servico-os .nav-tabs .nav-link.active {
+    background-color: #FF9921;
+    color: #fff;
+    margin-right: 16px;
+}

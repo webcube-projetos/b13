@@ -436,7 +436,10 @@ trait MontarPagina
 
     $config = new Fluent([
       'title' => 'Todas as O.S',
-      'button_top' => false,
+      'button_top' => [
+        'name' => '+ Cadastrar OS',
+        'route' => 'os.cadastro',
+      ],
       'search' => $search,
       'actions' => $actions,
     ]);

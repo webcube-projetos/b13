@@ -20,6 +20,7 @@ trait MontarForm
             'segurancas' => $this->montarFormSegurancas($value),
             'servicos' => $this->montarFormServicos($value),
             'orcamentos' => $this->montarFormOrcamento($value),
+            'os' => $this->montarFormOS($value),
         };
     }
 
@@ -1687,6 +1688,55 @@ trait MontarForm
                 'form_action' => '',
                 'form_method' => '',
                 'label_button' => $value ? 'Editar orçamento' : 'Cadastrar orçamento',
+                'dados_bancarios' => false,
+                'cadastro_contatos' => false,
+                'cadastro_adicionais' => false,
+                'cadastro_especializacoes' => false,
+                'cadastro_servicos' => true,
+            ],
+            'sessions' => [
+                'Dados do Cliente' => [
+                    'cliente' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-md-6',
+                        'label' => 'Cliente',
+                        'type' => 'select',
+                        'placeholder' => '',
+                        'route' => 'ClientesController',
+                        'required' => true,
+                        'id' => 'cliente',
+                        'name' => 'cliente',
+                        'function' => false,
+                        'value' => $value['cliente'] ?? null,
+                    ],
+                    'contato' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-md-6',
+                        'label' => 'Contato',
+                        'type' => 'select',
+                        'placeholder' => '',
+                        'route' => 'ClientesController',
+                        'required' => true,
+                        'id' => 'contato',
+                        'name' => 'contato',
+                        'function' => false,
+                        'value' => $value['contato'] ?? null,
+                    ],
+                ]
+            ]
+        ]);
+
+        return $data;
+    }
+
+    private function montarFormOS($value = null)
+    {
+        $data = new Fluent([
+            'pageInfo' => [
+                'title' => $value ? 'Editar OS' : 'Cadastrar OS',
+                'form_action' => '',
+                'form_method' => '',
+                'label_button' => $value ? 'Editar OS' : 'Cadastrar OS',
                 'dados_bancarios' => false,
                 'cadastro_contatos' => false,
                 'cadastro_adicionais' => false,
