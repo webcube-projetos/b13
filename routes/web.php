@@ -99,6 +99,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('orcamentos')->name('orcamentos.')->group(function () {
 		Route::get('/', [OrcamentosController::class, 'index'])->name('index');
 		Route::get('/listar', [OrcamentosController::class, 'listar'])->name('listar');
+		Route::get('/cadastro', [OrcamentosController::class, 'cadastro'])->name('cadastro');
+		Route::get('/editar', [OrcamentosController::class, 'editar'])->name('editar');
 	});
 
 	Route::prefix('os')->name('os.')->group(function () {
@@ -150,6 +152,18 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('row-especializacao', function () {
 		return view('components.row-especializacao');
 	})->name('row.especializacao');
+
+	Route::get('row-servico', function () {
+		return view('components.row-servico');
+	})->name('row.servico');
+
+	Route::get('row-entrada', function () {
+		return view('components.row-entrada');
+	})->name('row.entrada');
+
+	Route::get('row-saida', function () {
+		return view('components.row-saida');
+	})->name('row.saida');
 	/** FIM LINHAS COMPONENTES */
 
 	Route::get('billing', function () {

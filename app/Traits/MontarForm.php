@@ -19,6 +19,7 @@ trait MontarForm
             'categorias-servicos' => $this->montarFormCategoriasServicos($value),
             'segurancas' => $this->montarFormSegurancas($value),
             'servicos' => $this->montarFormServicos($value),
+            'orcamentos' => $this->montarFormOrcamento($value),
         };
     }
 
@@ -35,6 +36,7 @@ trait MontarForm
                 'cadastro_contatos' => true,
                 'cadastro_adicionais' => false,
                 'cadastro_especializacoes' => false,
+                'cadastro_servicos' => true,
             ],
             'sessions' => [
                 'Dados da Empresa' => [
@@ -229,6 +231,7 @@ trait MontarForm
                 'cadastro_contatos' => false,
                 'cadastro_adicionais' => false,
                 'cadastro_especializacoes' => false,
+                'cadastro_servicos' => true,
             ],
             'sessions' => [
                 'Dados da Empresa' => [
@@ -423,6 +426,7 @@ trait MontarForm
                 'cadastro_contatos' => false,
                 'cadastro_adicionais' => true,
                 'cadastro_especializacoes' => false,
+                'cadastro_servicos' => true,
             ],
             'sessions' => [
                 'Dados do Veículo' => [
@@ -601,6 +605,7 @@ trait MontarForm
                 'cadastro_contatos' => false,
                 'cadastro_adicionais' => false,
                 'cadastro_especializacoes' => false,
+                'cadastro_servicos' => true,
             ],
             'sessions' => [
                 'Cadastrar especialização' => [
@@ -674,6 +679,7 @@ trait MontarForm
                 'cadastro_contatos' => false,
                 'cadastro_adicionais' => false,
                 'cadastro_especializacoes' => false,
+                'cadastro_servicos' => true,
             ],
             'sessions' => [
                 'Cadastrar Adicional' => [
@@ -734,6 +740,7 @@ trait MontarForm
                 'cadastro_contatos' => false,
                 'cadastro_adicionais' => false,
                 'cadastro_especializacoes' => false,
+                'cadastro_servicos' => true,
             ],
             'sessions' => [
                 'Cadastrar Categoria' => [
@@ -794,6 +801,7 @@ trait MontarForm
                 'cadastro_contatos' => false,
                 'cadastro_adicionais' => false,
                 'cadastro_especializacoes' => false,
+                'cadastro_servicos' => true,
             ],
             'sessions' => [
                 'Categoria de Serviço' => [
@@ -841,6 +849,7 @@ trait MontarForm
                 'cadastro_contatos' => false,
                 'cadastro_adicionais' => false,
                 'cadastro_especializacoes' => true,
+                'cadastro_servicos' => true,
             ],
             'sessions' => [
                 'Dados da Empresa' => [
@@ -1076,6 +1085,7 @@ trait MontarForm
                 'cadastro_contatos' => false,
                 'cadastro_adicionais' => false,
                 'cadastro_especializacoes' => true,
+                'cadastro_servicos' => true,
             ],
             'sessions' => [
                 'Dados da Empresa' => [
@@ -1350,6 +1360,7 @@ trait MontarForm
                 'cadastro_contatos' => false,
                 'cadastro_adicionais' => false,
                 'cadastro_especializacoes' => false,
+                'cadastro_servicos' => true,
             ],
             'sessions' => [
                 'locacao' => [
@@ -1665,6 +1676,55 @@ trait MontarForm
                 ]
             ],
         ]);
+        return $data;
+    }
+
+    private function montarFormOrcamento($value = null)
+    {
+        $data = new Fluent([
+            'pageInfo' => [
+                'title' => $value ? 'Editar orçamento' : 'Cadastrar orçamento',
+                'form_action' => '',
+                'form_method' => '',
+                'label_button' => $value ? 'Editar orçamento' : 'Cadastrar orçamento',
+                'dados_bancarios' => false,
+                'cadastro_contatos' => false,
+                'cadastro_adicionais' => false,
+                'cadastro_especializacoes' => false,
+                'cadastro_servicos' => true,
+            ],
+            'sessions' => [
+                'Dados do Cliente' => [
+                    'cliente' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-md-6',
+                        'label' => 'Cliente',
+                        'type' => 'select',
+                        'placeholder' => '',
+                        'route' => 'ClientesController',
+                        'required' => true,
+                        'id' => 'cliente',
+                        'name' => 'cliente',
+                        'function' => false,
+                        'value' => $value['cliente'] ?? null,
+                    ],
+                    'contato' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-md-6',
+                        'label' => 'Contato',
+                        'type' => 'select',
+                        'placeholder' => '',
+                        'route' => 'ClientesController',
+                        'required' => true,
+                        'id' => 'contato',
+                        'name' => 'contato',
+                        'function' => false,
+                        'value' => $value['contato'] ?? null,
+                    ],
+                ]
+            ]
+        ]);
+
         return $data;
     }
 }

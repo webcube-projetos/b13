@@ -102,4 +102,19 @@ class ClientesController extends Controller
 
 		return view('cadastro', compact('dados'));
 	}
+
+	public function select()
+    {
+        $faker = Faker::create('pt_BR');
+        $data = [];
+
+        for ($i = 0; $i < 30; $i++) {
+            $data[] = [
+                'id' => $i,
+                'nome' => $faker->firstName . ' ' . $faker->lastName,
+            ];
+        }
+
+        return $data;
+    }
 }

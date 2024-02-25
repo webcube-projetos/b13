@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FakeModel;
 use App\Traits\MontarPagina;
+use App\Traits\MontarForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Fluent;
 use Faker\Factory as Faker;
@@ -13,6 +14,7 @@ class OrcamentosController extends Controller
     protected $prefix;
 
     use MontarPagina;
+    use MontarForm;
 
     public function __construct()
     {
@@ -55,5 +57,23 @@ class OrcamentosController extends Controller
         [$config, $header] = $this->montarPagina('orcamento');
 
         return view('listagem.tableList', compact('dados', 'config', 'header'));
+    }
+
+    public function cadastro()
+    {
+        $prefix = $this->prefix;
+        $dados = $this->montarForm('orcamentos');
+
+        return view('orcamento', compact('dados', 'prefix'));
+    }
+
+    public function editar()
+    {
+        $id = request()->route('id');
+
+        $cliente = $this->queryCompleta()->first() ?? null;
+        $dados = $this->montarForm('orcamento', $cliente);
+
+        return view('orcamento', compact('dados'));
     }
 }
