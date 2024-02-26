@@ -6,9 +6,7 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css',
                 'resources/scss/app.scss',
-                'soft-ui-dashboard.scss',
                 'resources/js/app.js',
-                'resources/views/**/*.blade.php'
             ],
             refresh: true,
         }),
