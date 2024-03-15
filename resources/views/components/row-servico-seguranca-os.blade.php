@@ -1,13 +1,16 @@
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="servicos-tab" data-bs-toggle="tab" data-bs-target="#servicos" type="button" role="tab" aria-controls="servicos" aria-selected="true">Serviços</button>
+        <button class="nav-link active" id="seguranca-tab" data-bs-toggle="tab" data-bs-target="#seguranca" type="button" role="tab" aria-controls="seguranca" aria-selected="true">Serviços</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="precos-tab" data-bs-toggle="tab" data-bs-target="#precos" type="button" role="tab" aria-controls="precos" aria-selected="false">Preços</button>
+        <button class="nav-link" id="operacao-tab" data-bs-toggle="tab" data-bs-target="#operacao" type="button" role="tab" aria-controls="operacao" aria-selected="false">Operação</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="custo-tab" data-bs-toggle="tab" data-bs-target="#custo" type="button" role="tab" aria-controls="custo" aria-selected="false">Preços</button>
     </li>
 </ul>
 <div class="tab-content mb-4" id="myTabContent">
-    <div class="tab-pane fade show active" id="servicos" role="tabpanel" aria-labelledby="servicos-tab">
+    <div class="tab-pane fade show active" id="seguranca" role="tabpanel" aria-labelledby="seguranca-tab">
         <div class="row linha-add position-relative">
             <div class="col-md-1 mb-3">
                 <label for="quantidade">Qtd. Dias</label>
@@ -46,14 +49,48 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="precos" role="tabpanel" aria-labelledby="precos-tab">
+    <div class="tab-pane fade" id="operacao" role="tabpanel" aria-labelledby="operacao-tab">
         <div class="row linha-add position-relative">
             <div class="col-md-3 mb-3">
-                <label for="precoBase">Preço base</label>
+                <label for="execucacao">Data de execução</label>
+                <input type="date" class="form-control" name="execucacao[]" id="execucacao" maxlength="30" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="tipoSeguranca">Tipo de segurança</label>
+                <select name="tipoSeguranca[]" id="tipoSeguranca"  class="form-control">
+                    <option value="">Patrimonial</option>
+                    <option value="">Evento</option>
+                </select>
+            </div>
+            <div class="col-md-5 mb-3">
+                <label for="seguranca">Seguranca</label>
+                <select name="seguranca[]" id="seguranca"  class="form-control">
+                    <option value="">Jorge Afonso</option>
+                    <option value="">Armando Aloízio</option>
+                </select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="horarioInicio">Horário Início</label>
+                <input type="number" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="horarioTermino">Horário Término</label>
+                <input type="number" class="form-control" name="horarioTermino[]" id="horarioTermino" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="pedagio">Alimentação</label>
+                <input type="number" class="form-control" name="alimentacao[]" id="alimentacao" required>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="custo" role="tabpanel" aria-labelledby="custo-tab">
+        <div class="row linha-add position-relative">
+            <div class="col-md-3 mb-3">
+                <label for="precoBase">Preço franquia</label>
                 <input type="number" class="form-control" name="precoBase[]" id="precoBase" required>
             </div>
             <div class="col-md-2 mb-3">
-                <label for="horaBase">Hora base</label>
+                <label for="horaBase">Hora franquia</label>
                 <input type="number" class="form-control" name="horaBase[]" id="horaBase" required>
             </div>
             <div class="col-md-2 mb-3">

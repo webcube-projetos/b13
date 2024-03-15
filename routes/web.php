@@ -177,14 +177,13 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('components.row-saida');
 	})->name('row.saida');
 
-	Route::get('row-servico-os', function () {
+	Route::get('row-servico-locacao-os', function () {
 		return view('components.row-servico-locacao-os');
-	})->name('row.servico-os');
-
-	Route::get('row-servico-os', function () {
-		return view('components.row-servico-seguraca-os');
-	})->name('row.servico-os');
-
+	})->name('row.servico-locacao-os');
+	
+	Route::get('row-servico-seguranca-os', function () {
+		return view('components.row-servico-seguranca-os');
+	})->name('row.servico-seguranca-os');
 
 	Route::get('row-rota', function () {
 		return view('components.row-rota');
