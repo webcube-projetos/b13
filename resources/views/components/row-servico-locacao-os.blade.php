@@ -13,7 +13,7 @@
     <div class="tab-pane fade show active" id="servicos" role="tabpanel" aria-labelledby="servicos-tab">
         <div class="row linha-add position-relative">
             <div class="col-md-1 mb-3">
-                <label for="quantidade">Qtd</label>
+                <label for="quantidade">Qtd. Dias</label>
                 <input type="text" class="form-control" name="quantidade[]" id="quantidade" required>
             </div>
             <div class="col-md-2 mb-3">
@@ -114,11 +114,11 @@
     <div class="tab-pane fade" id="precos" role="tabpanel" aria-labelledby="precos-tab">
         <div class="row linha-add position-relative">
             <div class="col-md-3 mb-3">
-                <label for="precoBase">Preço base</label>
+                <label for="precoBase">Preço franquia</label>
                 <input type="number" class="form-control" name="precoBase[]" id="precoBase" required>
             </div>
             <div class="col-md-2 mb-3">
-                <label for="horaBase">Hora base</label>
+                <label for="horaBase">Hora franquia</label>
                 <input type="number" class="form-control" name="horaBase[]" id="horaBase" required>
             </div>
             <div class="col-md-2 mb-3">
@@ -126,7 +126,7 @@
                 <input type="number" class="form-control" name="horaExtra[]" id="horaExtra" required>
             </div>
             <div class="col-md-2 mb-3">
-                <label for="kmBase">KM base</label>
+                <label for="kmBase">KM franquia</label>
                 <input type="number" class="form-control" name="kmBase[]" id="kmBase" required>
             </div>
             <div class="col-md-3 mb-3">

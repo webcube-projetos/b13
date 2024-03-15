@@ -33,7 +33,12 @@
                         <form action="{{ $dados['pageInfo']['form_action'] }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left">
                             @csrf
                             <div class="row align-items-end">
-                                <p class="fw-bold mt-4">Orçamento</p>
+                                <div class="col-lg-6 mb-4">
+                                    <p class="fw-bold mt-4">Orçamento</p>
+                                </div>
+                                <div class="col-lg-6 text-end mb-4">
+                                    <a href="#" class="btn btn-dark">Converter para O.S</a>
+                                </div>
                                 @foreach ($dados['sessions'] as $key => $group)
                                     @include('register.formRegister')
                                 @endforeach
