@@ -121,8 +121,25 @@ $(document).ready(function () {
         });
     });
 
-    $('#addLinhaServicoOs').on('click', function () {
-        let url =  window.location.href.split('/')[1] + '/row-servico-os';
+    $('#addLinhaRota').on('click', function () {
+        let url =  window.location.href.split('/')[1] + '/row-rota';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                $('#box-linhas-rota').append(data);
+
+                $('#box-linhas-rota .row:last-child input').val('');
+            },
+            error: function () {
+                alert('Erro ao carregar a linha de rota.');
+            }
+        });
+    });
+
+
+    $('#addLinhaServicoLocacaoOs').on('click', function () {
+        let url =  window.location.href.split('/')[1] + '/row-servico-locacao-os';
         $.ajax({
             url: url,
             type: 'GET',
@@ -136,20 +153,19 @@ $(document).ready(function () {
             }
         });
     });
-
-    $('#addLinhaRota').on('click', function () {
-        console.log('okss')
-        let url =  window.location.href.split('/')[1] + '/row-rota';
+    
+    $('#addLinhaServicoSegurancaOs').on('click', function () {
+        let url =  window.location.href.split('/')[1] + '/row-servico-seguranca-os';
         $.ajax({
             url: url,
             type: 'GET',
             success: function (data) {
-                $('#box-linhas-rota').append(data);
+                $('#box-linhas-servico-os').append(data);
 
-                $('#box-linhas-rota .row:last-child input').val('');
+                $('#box-linhas-servico-os .row:last-child input').val('');
             },
             error: function () {
-                alert('Erro ao carregar a linha de rota.');
+                alert('Erro ao carregar a linha de O.S.');
             }
         });
     });

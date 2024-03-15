@@ -1,4 +1,4 @@
-require('./bootstrap');
+require('bootstrap');
 
 import './utils';
 import './imageUpload';

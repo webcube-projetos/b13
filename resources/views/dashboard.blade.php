@@ -38,7 +38,7 @@
         <div class="card-body p-2 px-3">
           <div class="row">
             <div class="col-12">
-              <a href="#">
+              <a href="{{ route('orcamentos.cadastro') }}">
                 <p class="text-white text-uppercase">cadastrar novo orçamento</p>
               </a>
             </div>
@@ -127,7 +127,7 @@
               <div class="numbers">
                 <p class="text-sm mb-0 text-capitalize font-weight-bold">A receber</p>
                 <h5 class="font-weight-bolder mb-0">
-                  {{ $info['a_receber'] }}
+                  {{ 'R$ '.number_format($info['a_receber'], 2, ',', '.') }}
                 </h5>
               </div>
             </div>
@@ -150,7 +150,7 @@
               <div class="numbers">
                 <p class="text-sm mb-0 text-capitalize font-weight-bold">A pagar</p>
                 <h5 class="font-weight-bolder mb-0">
-                  {{ $info['a_pagar'] }}
+                  {{ 'R$ '.number_format($info['a_pagar'], 2, ',', '.') }}
                 </h5>
               </div>
             </div>
@@ -173,7 +173,7 @@
               <div class="numbers">
                 <p class="text-sm mb-0 text-capitalize font-weight-bold">Total</p>
                 <h5 class="font-weight-bolder mb-0">
-                  {{ $info['total'] }}
+                  {{ 'R$ '.number_format($info['total'], 2, ',', '.') }}
                 </h5>
               </div>
             </div>

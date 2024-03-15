@@ -58,23 +58,15 @@
             <div class="col-md-4 mb-3">
                 <label for="modeloVeiculo">Modelo de veículo</label>
                 <select name="modeloVeiculo[]" id="modeloVeiculo"  class="form-control">
-                    <option value="">Modelo 1</option>
-                    <option value="">Modelo 2</option>
-                    <option value="">Modelo 3</option>
-                    <option value="">Modelo 4</option>
-                    <option value="">Modelo 5</option>
-                    <option value="">Modelo 6</option>
+                    <option value="">Toyota Etios</option>
+                    <option value="">Jeep Renegade</option>
                 </select>
             </div>
             <div class="col-md-3 mb-3">
                 <label for="motoristaVeiculo">Motorista</label>
                 <select name="motoristaVeiculo[]" id="motoristaVeiculo"  class="form-control">
-                    <option value="">Motorista 1</option>
-                    <option value="">Motorista 2</option>
-                    <option value="">Motorista 3</option>
-                    <option value="">Motorista 4</option>
-                    <option value="">Motorista 5</option>
-                    <option value="">Motorista 6</option>
+                    <option value="">Jorge Lucas</option>
+                    <option value="">Antonio Juarez</option>
                 </select>
             </div>
             <div class="col-md-3 mb-3">
@@ -105,7 +97,7 @@
                 <label for="estacionamento">Estacionamento</label>
                 <input type="number" class="form-control" name="estacionamento[]" id="estacionamento" required>
             </div>
-
+            
             <div class="col-12 box-rota" id="box-linhas-rota">
                 
             </div>
