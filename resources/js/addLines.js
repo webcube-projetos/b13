@@ -57,8 +57,24 @@ $(document).ready(function () {
         });
     });
 
-    $('#addLinhaServico').on('click', function () {
-        let url =  window.location.href.split('/')[1] + '/row-servico';
+    $('#addLinhaServicoLocacao').on('click', function () {
+        let url =  window.location.href.split('/')[1] + '/row-servico-locacao';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                $('#box-linhas-servico').append(data);
+
+                $('#box-linhas-servico .row:last-child input').val('');
+            },
+            error: function () {
+                alert('Erro ao carregar a linha de serviço.');
+            }
+        });
+    });
+
+    $('#addLinhaServicoSeguranca').on('click', function () {
+        let url =  window.location.href.split('/')[1] + '/row-servico-seguranca';
         $.ajax({
             url: url,
             type: 'GET',

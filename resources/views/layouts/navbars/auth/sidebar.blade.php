@@ -78,6 +78,12 @@
         'permission' => 1,
       ],
       [
+        'title' => 'Categorias de Seguranças',
+        'route' => 'categorias.segurancas.index',
+        'icon' => 'fa fa-shield',
+        'permission' => 1,
+      ],
+      [
         'title' => 'Procedimentos',
         'route' => 'procedimentos.index',
         'icon' => 'fa fa-align-left',

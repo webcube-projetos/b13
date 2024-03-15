@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdicionaisController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CategoriaSegurancaController;
 use App\Http\Controllers\CategoriaServicoController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\ClientesController;
@@ -131,6 +132,11 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/editar', [CategoriaController::class, 'editar'])->name('editar');
 	});
 
+	Route::prefix('categorias-segurancas')->name('categorias.segurancas.')->group(function () {
+		Route::get('/', [CategoriaSegurancaController::class, 'index'])->name('index');
+		Route::get('/editar', [CategoriaSegurancaController::class, 'editar'])->name('editar');
+	});
+
 	Route::prefix('categorias-servicos')->name('categorias.servicos.')->group(function () {
 		Route::get('/', [CategoriaServicoController::class, 'index'])->name('index');
 		Route::get('/editar', [CategoriaServicoController::class, 'editar'])->name('editar');
@@ -155,9 +161,13 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('components.row-especializacao');
 	})->name('row.especializacao');
 
-	Route::get('row-servico', function () {
-		return view('components.row-servico');
-	})->name('row.servico');
+	Route::get('row-servico-locacao', function () {
+		return view('components.row-servico-locacao');
+	})->name('row.servico-locacao');
+
+	Route::get('row-servico-seguranca', function () {
+		return view('components.row-servico-seguranca');
+	})->name('row.servico-seguranca');
 
 	Route::get('row-entrada', function () {
 		return view('components.row-entrada');
@@ -168,8 +178,13 @@ Route::group(['middleware' => 'auth'], function () {
 	})->name('row.saida');
 
 	Route::get('row-servico-os', function () {
-		return view('components.row-servico-os');
+		return view('components.row-servico-locacao-os');
 	})->name('row.servico-os');
+
+	Route::get('row-servico-os', function () {
+		return view('components.row-servico-seguraca-os');
+	})->name('row.servico-os');
+
 
 	Route::get('row-rota', function () {
 		return view('components.row-rota');
