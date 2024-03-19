@@ -8,7 +8,7 @@ function deletarLine(element) {
 $(document).ready(function () {
     //Adicionando linha a box de contato
     $('#addLinhaContato').on('click', function () {
-        let url =  window.location.href.split('/')[1] + '/row-contact';
+        let url = window.location.href.split('/')[1] + '/row-contact';
         $.ajax({
             url: url,
             type: 'GET',
@@ -25,7 +25,7 @@ $(document).ready(function () {
 
     //Adicionando linha a box de adicionais
     $('#addLinhaAdicionais').on('click', function () {
-        let url =  window.location.href.split('/')[1] + '/row-adicional';
+        let url = window.location.href.split('/')[1] + '/row-adicional';
         $.ajax({
             url: url,
             type: 'GET',
@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     //Adicionando linha a box de especializações
     $('#addLinhaEspecializacao').on('click', function () {
-        let url =  window.location.href.split('/')[1] + '/row-especializacao';
+        let url = window.location.href.split('/')[1] + '/row-especializacao';
         $.ajax({
             url: url,
             type: 'GET',
@@ -58,7 +58,7 @@ $(document).ready(function () {
     });
 
     $('#addLinhaServicoLocacao').on('click', function () {
-        let url =  window.location.href.split('/')[1] + '/row-servico-locacao';
+        let url = window.location.href.split('/')[1] + '/row-servico-locacao';
         $.ajax({
             url: url,
             type: 'GET',
@@ -74,7 +74,7 @@ $(document).ready(function () {
     });
 
     $('#addLinhaServicoSeguranca').on('click', function () {
-        let url =  window.location.href.split('/')[1] + '/row-servico-seguranca';
+        let url = window.location.href.split('/')[1] + '/row-servico-seguranca';
         $.ajax({
             url: url,
             type: 'GET',
@@ -90,7 +90,7 @@ $(document).ready(function () {
     });
 
     $('#addLinhaEntrada').on('click', function () {
-        let url =  window.location.href.split('/')[1] + '/row-entrada';
+        let url = window.location.href.split('/')[1] + '/row-entrada';
         $.ajax({
             url: url,
             type: 'GET',
@@ -106,7 +106,7 @@ $(document).ready(function () {
     });
 
     $('#addLinhaSaida').on('click', function () {
-        let url =  window.location.href.split('/')[1] + '/row-saida';
+        let url = window.location.href.split('/')[1] + '/row-saida';
         $.ajax({
             url: url,
             type: 'GET',
@@ -121,25 +121,8 @@ $(document).ready(function () {
         });
     });
 
-    $('#addLinhaRota').on('click', function () {
-        let url =  window.location.href.split('/')[1] + '/row-rota';
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: function (data) {
-                $('#box-linhas-rota').append(data);
-
-                $('#box-linhas-rota .row:last-child input').val('');
-            },
-            error: function () {
-                alert('Erro ao carregar a linha de rota.');
-            }
-        });
-    });
-
-
     $('#addLinhaServicoLocacaoOs').on('click', function () {
-        let url =  window.location.href.split('/')[1] + '/row-servico-locacao-os';
+        let url = window.location.href.split('/')[1] + '/row-servico-locacao-os';
         $.ajax({
             url: url,
             type: 'GET',
@@ -147,15 +130,16 @@ $(document).ready(function () {
                 $('#box-linhas-servico-os').append(data);
 
                 $('#box-linhas-servico-os .row:last-child input').val('');
+                addLinhasRotas()
             },
             error: function () {
                 alert('Erro ao carregar a linha de O.S.');
             }
         });
     });
-    
+
     $('#addLinhaServicoSegurancaOs').on('click', function () {
-        let url =  window.location.href.split('/')[1] + '/row-servico-seguranca-os';
+        let url = window.location.href.split('/')[1] + '/row-servico-seguranca-os';
         $.ajax({
             url: url,
             type: 'GET',
@@ -175,4 +159,24 @@ $(document).ready(function () {
         var linha = $(this).closest('.linha-add');
         linha.remove();
     });
+
+    addLinhasRotas()
 });
+
+function addLinhasRotas() {
+    $('#addLinhaRota').on('click', function () {
+        let url = window.location.href.split('/')[1] + '/row-rota';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                $('#box-linhas-rota').append(data);
+
+                $('#box-linhas-rota .row:last-child input').val('');
+            },
+            error: function () {
+                alert('Erro ao carregar a linha de rota.');
+            }
+        });
+    });
+}

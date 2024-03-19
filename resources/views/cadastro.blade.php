@@ -41,21 +41,21 @@
                                 @csrf
                                 <div class="row">
                                     @foreach ($dados['sessions'] as $key => $group)
-                                        @if (isset($dados['sessions']['Dados da Empresa']['foto']) && $key === 'Dados da Empresa')
+                                        @if (data_get($dados, "sessions.$key.foto"))
                                             <div class="col-lg-6 mb-4">
                                                 <p class="fw-bold">{{ $key }}</p>
                                             </div>
                                             <div class="col-lg-6 mb-4">
                                                 <input 
-                                                    class="form-control" 
-                                                    type="{{ $dados['sessions']['Dados da Empresa']['foto']['type'] }}" 
-                                                    placeholder="{{ $dados['sessions']['Dados da Empresa']['foto']['placeholder'] }}" 
-                                                    id="{{ $dados['sessions']['Dados da Empresa']['foto']['id'] }}"
-                                                    name="{{ $dados['sessions']['Dados da Empresa']['foto']['name'] }}" 
-                                                    maxlength="{{ $dados['sessions']['Dados da Empresa']['foto']['maxlenghtRoute'] }}" 
-                                                    value="{{ $dados['sessions']['Dados da Empresa']['foto']['value'] ?? '' }}"
-                                                    {{ $dados['sessions']['Dados da Empresa']['foto']['function'] ? $dados['sessions']['Dados da Empresa']['foto']['function']['type'] . '=' . $dados['sessions']['Dados da Empresa']['foto']['function']['name'] : '' }}
-                                                    {{ $dados['sessions']['Dados da Empresa']['foto']['required'] ? 'required' : '' }}
+                                                    class="form-control filepond" 
+                                                    type="{{ data_get($dados, "sessions.$key.foto.type") }}" 
+                                                    placeholder="{{ data_get($dados, "sessions.$key.foto.placeholder") }}" 
+                                                    id="{{ data_get($dados, "sessions.$key.foto.id") }}"
+                                                    name="{{ data_get($dados, "sessions.$key.foto.name") }}" 
+                                                    maxlength="{{ data_get($dados, "sessions.$key.foto.maxlenghtRoute")}}" 
+                                                    value="{{ data_get($dados, "sessions.$key.foto.value") ?? '' }}"
+                                                    {{ data_get($dados, "sessions.$key.foto.function") ? data_get($dados, "sessions.$key.foto.function.type") . '=' . data_get($dados, "sessions.$key.foto.function.name") : '' }}
+                                                    {{ data_get($dados, "sessions.$key.foto.required") ? 'required' : '' }}
                                                 >
                                             </div>
                                         @else 

@@ -74,3 +74,20 @@ FilePond.create(
     styleButtonProcessItemPosition: 'right bottom',
   }
 );
+
+FilePond.create(
+  document.querySelector('#imagem'),
+  {
+    labelIdle: `<i class="bi bi-cloud-arrow-up"></i> Foto do veiculo`,
+    imagePreviewHeight: 100,
+    imageCropAspectRatio: '1:1',
+    imageResizeTargetWidth: 100,
+    imageResizeTargetHeight: 100,
+    stylePanelLayout: 'compact square',
+    styleLoadIndicatorPosition: 'center bottom',
+    styleProgressIndicatorPosition: 'right bottom',
+    styleButtonRemoveItemPosition: 'left bottom',
+    styleButtonProcessItemPosition: 'right bottom',
+  }
+);
+
