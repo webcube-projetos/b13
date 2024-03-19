@@ -34,21 +34,24 @@
 
 .filepond--root#cnh,
 .filepond--root#cnv,
-.filepond--root#documento {
+.filepond--root#documento,
+.filepond--root#imagem {
     width: 100%;
     margin-left: auto;
 }
 
 #cnh .filepond--drip,
 #cnv .filepond--drip,
-#documento .filepond--drip {
+#documento .filepond--drip,
+#imagem .filepond--drip {
     background: #FF9921;
     opacity: 1;
 }
 
 #cnh .filepond--drop-label label,
 #cnv .filepond--drop-label label,
-#documento .filepond--drop-label label {
+#documento .filepond--drop-label label,
+#imagem .filepond--drop-label label {
     color: #FAFCFF;
     font-weight: bold;
     font-size: 12px;

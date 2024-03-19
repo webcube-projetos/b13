@@ -10,53 +10,53 @@ function limpa_formulario_cep() {
   let logradouro = document.getElementById('logradouro');
   let bairro = document.getElementById('bairro');
   let cidade = document.getElementById('cidade');
-  let uf = document.getElementById('uf');
-  logradouro.value=("");
-  logradouro.disabled=false;
-  bairro.value=("");
-  bairro.disabled=false;
-  cidade.value=("");
-  cidade.disabled=false;
-  uf.value=("");
-  uf.disabled=false;
+  let uf = document.getElementById('estado');
+  logradouro.value = ("");
+  logradouro.disabled = false;
+  bairro.value = ("");
+  bairro.disabled = false;
+  cidade.value = ("");
+  cidade.disabled = false;
+  uf.value = ("");
+  uf.disabled = false;
 }
 
-function meu_callback(conteudo) {
+window.meu_callback = function (conteudo) {
   if (!("erro" in conteudo)) {
-      let logradouro = document.getElementById('logradouro');
-      let bairro = document.getElementById('bairro');
-      let cidade = document.getElementById('cidade');
-      let uf = document.getElementById('uf');
-      logradouro.value=(conteudo.logradouro);
-      logradouro.readOnly=true;
-      bairro.value=(conteudo.bairro);
-      bairro.readOnly=true;
-      cidade.value=(conteudo.localidade);
-      cidade.readOnly=true;
-      uf.value=(conteudo.uf);
-      uf.readOnly=true;
+    let logradouro = document.getElementById('logradouro');
+    let bairro = document.getElementById('bairro');
+    let cidade = document.getElementById('cidade');
+    let uf = document.getElementById('estado');
+    logradouro.value = (conteudo.logradouro);
+    logradouro.readOnly = true;
+    bairro.value = (conteudo.bairro);
+    bairro.readOnly = true;
+    cidade.value = (conteudo.localidade);
+    cidade.readOnly = true;
+    uf.value = (conteudo.uf);
+    uf.readOnly = true;
   }
   else {
-      limpa_formulario_cep();
-      alert("CEP não encontrado.");
+    limpa_formulario_cep();
+    alert("CEP não encontrado.");
   }
 }
 
-function pesquisaCep(valor) {
+window.pesquisaCep = function (valor) {
   var cep = valor.replace(/\D/g, '');
 
   if (cep != "") {
     var validacep = /^[0-9]{8}$/;
 
-    if(validacep.test(cep)) {
-      document.getElementById('logradouro').value="...";
-      document.getElementById('bairro').value="...";
-      document.getElementById('cidade').value="...";
-      document.getElementById('uf').value="...";
+    if (validacep.test(cep)) {
+      document.getElementById('logradouro').value = "...";
+      document.getElementById('bairro').value = "...";
+      document.getElementById('cidade').value = "...";
+      document.getElementById('estado').value = "...";
 
       var script = document.createElement('script');
 
-      script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+      script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
 
       document.body.appendChild(script);
     }
