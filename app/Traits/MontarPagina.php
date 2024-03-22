@@ -128,15 +128,15 @@ trait MontarPagina
 
     $editar = collect([
       'title' => 'Editar',
-      'route' => 'editar',
+      'route' => 'veiculos.editar',
       'icon' => 'fa fa-pencil',
-      'onClick' => 'editar(this)',
+      'onClick' => false,
       'class' => '',
     ]);
 
     $deletar = collect([
       'title' => 'Deletar',
-      'route' => 'delete',
+      'route' => 'veiculos.delete',
       'icon' => 'fa fa-trash',
       'onClick' => 'deletar(this)',
       'class' => '',
@@ -174,9 +174,9 @@ trait MontarPagina
 
     $editar = collect([
       'title' => 'Editar',
-      'route' => 'editar',
+      'route' => 'motoristas.editar',
       'icon' => 'fa fa-pencil',
-      'onClick' => 'editar(this)',
+      'onClick' => false,
       'class' => '',
     ]);
 
@@ -221,9 +221,9 @@ trait MontarPagina
 
     $editar = collect([
       'title' => 'Editar',
-      'route' => 'editar',
+      'route' => 'segurancas.editar',
       'icon' => 'fa fa-pencil',
-      'onClick' => 'editar(this)',
+      'onClick' => false,
       'class' => '',
     ]);
 

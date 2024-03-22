@@ -98,11 +98,13 @@ class VeiculosController extends Controller
 
     public function editar()
     {
+        $prefix = $this->prefix;
         $id = request()->route('id');
 
-        $cliente = $this->queryCompleta()->first() ?? null;
-        $dados = $this->montarForm('veiculos', $cliente);
+        $veiculo = $this->queryCompleta()->first() ?? null;
+        $dados = $this->montarForm('veiculos', $veiculo);
 
-        return view('cadastro', compact('dados'));
+        return view('cadastro', compact('dados', 'prefix'));
     }
+
 }

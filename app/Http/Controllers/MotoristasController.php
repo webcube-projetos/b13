@@ -55,7 +55,7 @@ class MotoristasController extends Controller
     {
         $faker = Faker::create('pt_BR');
 
-        $data = array(
+        $data[] = [
             'id' => 20,
             'cpfCnpj' => '10.123.456/0001-99',
             'apelido' => 'Jorge da Van',
@@ -93,7 +93,7 @@ class MotoristasController extends Controller
                     'id_valor' => 5,
                 ],
             ]
-        );
+        ];
 
         return new FakeModel($data);
     }
@@ -117,11 +117,12 @@ class MotoristasController extends Controller
 
     public function editar()
     {
+        $prefix = $this->prefix;
         $id = request()->route('id');
 
-        $cliente = $this->queryCompleta()->first() ?? null;
-        $dados = $this->montarForm('motoristas', $cliente);
+        $motorista = $this->queryCompleta()->first() ?? null;
+        $dados = $this->montarForm('motoristas', $motorista);
 
-        return view('cadastro', compact('dados'));
+        return view('cadastro', compact('dados', 'prefix'));
     }
 }

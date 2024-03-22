@@ -95,12 +95,13 @@ class ClientesController extends Controller
 
 	public function editar()
 	{
+		$prefix = $this->prefix;
 		$id = request()->route('id');
 
 		$cliente = $this->queryCompleta()->first() ?? null;
-		$dados = $this->montarForm('cliente', $cliente);
+		$dados = $this->montarForm('clientes', $cliente);
 
-		return view('cadastro', compact('dados'));
+		return view('cadastro', compact('dados', 'prefix'));
 	}
 
 	public function select()

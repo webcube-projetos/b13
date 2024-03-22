@@ -56,7 +56,7 @@ class SegurancasController extends Controller
     {
         $faker = Faker::create('pt_BR');
 
-        $data = array(
+        $data[] = [
             'id' => 20,
             'cpfCnpj' => '10.123.456/0001-99',
             'apelido' => 'Jorge da Van',
@@ -95,7 +95,7 @@ class SegurancasController extends Controller
                     'id_valor' => 5,
                 ],
             ]
-        );
+        ];
 
         return new FakeModel($data);
     }
@@ -119,11 +119,12 @@ class SegurancasController extends Controller
 
     public function editar()
     {
+        $prefix = $this->prefix;
         $id = request()->route('id');
 
-        $cliente = $this->queryCompleta()->first() ?? null;
-        $dados = $this->montarForm('segurancas', $cliente);
+        $seguranca = $this->queryCompleta()->first() ?? null;
+        $dados = $this->montarForm('segurancas', $seguranca);
 
-        return view('cadastro', compact('dados'));
+        return view('cadastro', compact('dados', 'prefix'));
     }
 }
