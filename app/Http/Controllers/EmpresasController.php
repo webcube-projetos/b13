@@ -106,11 +106,12 @@ class EmpresasController extends Controller
 
     public function editar()
     {
+        $prefix = $this->prefix;
         $id = request()->route('id');
 
         $cliente = $this->queryCompleta()->first() ?? null;
-        $dados = $this->montarForm('cliente', $cliente);
+        $dados = $this->montarForm('empresas', $cliente);
 
-        return view('cadastro', compact('dados'));
+        return view('cadastro', compact('dados', 'prefix'));
     }
 }

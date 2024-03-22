@@ -1057,7 +1057,7 @@ trait MontarForm
                     ],
                     'observacao' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-8',
+                        'container_class' => 'col-md-5',
                         'label' => 'Observação',
                         'type' => 'text',
                         'placeholder' => '',
@@ -1069,6 +1069,19 @@ trait MontarForm
                         'function' => false,
                         'value' => $value['observacao'] ?? null,
                     ],
+                    'cnh' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-md-3',
+                        'label' => 'Foto CNH',
+                        'type' => 'file',
+                        'placeholder' => '',
+                        'maxlenghtRoute' => '',
+                        'required' => false,
+                        'id' => 'cnh',
+                        'name' => 'cnh',
+                        'function' => false,
+                        'value' => $value['cnh'] ?? null,
+                    ]
                 ],
                 'Contatos da Empresa' => [
                     'phone' => [
@@ -1463,7 +1476,7 @@ trait MontarForm
                         'precoBase' => [
                             'container_tag' => 'div',
                             'container_class' => 'col-md-3',
-                            'label' => 'Preço base',
+                            'label' => 'Preço franquia',
                             'type' => 'number',
                             'placeholder' => '500',
                             'maxlenghtRoute' => '',
@@ -1475,7 +1488,7 @@ trait MontarForm
                         'horasBase' => [
                             'container_tag' => 'div',
                             'container_class' => 'col-md-2',
-                            'label' => 'Horas base',
+                            'label' => 'Horas franquia',
                             'type' => 'number',
                             'placeholder' => '500',
                             'maxlenghtRoute' => '',
@@ -1499,7 +1512,7 @@ trait MontarForm
                         'kmBase' => [
                             'container_tag' => 'div',
                             'container_class' => 'col-md-2',
-                            'label' => 'KM base',
+                            'label' => 'KM franquia',
                             'type' => 'number',
                             'placeholder' => '50',
                             'maxlenghtRoute' => '',
@@ -1588,7 +1601,7 @@ trait MontarForm
                     'Identificacao' => [
                         'categoriaServico' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-5',
+                            'container_class' => 'col-md-4',
                             'label' => 'Categoria do Serviço',
                             'type' => 'select',
                             'placeholder' => '',
@@ -1601,7 +1614,7 @@ trait MontarForm
                         ],
                         'nome' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-5',
+                            'container_class' => 'col-md-4',
                             'label' => 'Nome do serviço',
                             'type' => 'text',
                             'placeholder' => '',
@@ -1611,6 +1624,19 @@ trait MontarForm
                             'name' => 'nome',
                             'function' => false,
                             'value' => $value['nome'] ?? null,
+                        ],
+                        'tipo' => [
+                            'container_tag' => 'div',
+                            'container_class' => 'col-md-2',
+                            'label' => 'Tipo do segurança',
+                            'type' => 'select',
+                            'placeholder' => '',
+                            'route' => 'TipoSegurancaController',
+                            'required' => false,
+                            'id' => 'tipo',
+                            'name' => 'tipo',
+                            'function' => false,
+                            'value' => $value['tipo'] ?? null,
                         ],
                         'armado' => [
                             'container_tag' => 'div',
@@ -1630,7 +1656,7 @@ trait MontarForm
                         'precoBase' => [
                             'container_tag' => 'div',
                             'container_class' => 'col-md-4',
-                            'label' => 'Preço base',
+                            'label' => 'Preço franquia',
                             'type' => 'number',
                             'placeholder' => '500',
                             'maxlenghtRoute' => '',
@@ -1642,7 +1668,7 @@ trait MontarForm
                         'horasBase' => [
                             'container_tag' => 'div',
                             'container_class' => 'col-md-4',
-                            'label' => 'Horas base',
+                            'label' => 'Horas franquia',
                             'type' => 'number',
                             'placeholder' => '500',
                             'maxlenghtRoute' => '',
