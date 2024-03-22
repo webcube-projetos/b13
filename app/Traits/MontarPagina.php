@@ -313,25 +313,15 @@ trait MontarPagina
       'id' => 'search',
     ]);
 
-    $editar = collect([
-      'title' => 'Editar',
-      'route' => 'editar',
-      'icon' => 'fa fa-pencil',
-      'onClick' => 'editar(this)',
-      'class' => '',
-    ]);
-
-    $deletar = collect([
-      'title' => 'Deletar',
-      'route' => 'delete',
-      'icon' => 'fa fa-trash',
-      'onClick' => 'deletar(this)',
+    $modal = collect([
+      'name' => 'modal',
+      'target' => 'financeiroModal',
+      'icon' => 'fa fa-eye',
       'class' => '',
     ]);
 
     $actions = collect([
-      $editar,
-      $deletar,
+      $modal,
     ]);
 
     $config = new Fluent([
@@ -339,6 +329,7 @@ trait MontarPagina
       'button_top' => false,
       'search' => $search,
       'actions' => $actions,
+      'modal' => true
     ]);
 
     $header = collect(['Tipo', 'Data Prevista', 'Empresa', 'Apelido', 'Valor', 'Status', 'Ações']);
