@@ -158,7 +158,6 @@
             <p class="font-weight-bold">Valor: </p>
             <p class="font-weight-bold text-success">R$800,00</p>
           </div>
-          <hr>
         </div>
       </div>
       <div class="modal-footer justify-content-between">
