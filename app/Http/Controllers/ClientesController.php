@@ -12,13 +12,15 @@ use Faker\Factory as Faker;
 class ClientesController extends Controller
 {
 	protected $prefix;
+	protected $request;
 
 	use MontarPagina;
 	use MontarForm;
 
-	public function __construct()
+	public function __construct(Request $request)
 	{
 		$this->prefix = 'clientes';
+		$this->request = $request;
 	}
 	public function index()
 	{
@@ -105,17 +107,22 @@ class ClientesController extends Controller
 	}
 
 	public function select()
-    {
-        $faker = Faker::create('pt_BR');
-        $data = [];
+	{
+		$faker = Faker::create('pt_BR');
+		$data = [];
 
-        for ($i = 0; $i < 30; $i++) {
-            $data[] = [
-                'id' => $i,
-                'nome' => $faker->firstName . ' ' . $faker->lastName,
-            ];
-        }
+		for ($i = 0; $i < 30; $i++) {
+			$data[] = [
+				'id' => $i,
+				'nome' => $faker->firstName . ' ' . $faker->lastName,
+			];
+		}
 
-        return $data;
-    }
+		return $data;
+	}
+
+	public function salvar()
+	{
+		dd($this->request->all());
+	}
 }

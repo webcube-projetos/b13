@@ -37,7 +37,7 @@
                 <div class="tab-pane fade show active" id="cadastro" role="tabpanel" aria-labelledby="cadastro-tab">
                     <div class="card">
                         <div class="card-body pt-4 p-3">
-                            <form action="{{ $dados['pageInfo']['form_action'] }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left">
+                            <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left">
                                 @csrf
                                 <div class="row">
                                     @foreach ($dados['sessions'] as $key => $group)

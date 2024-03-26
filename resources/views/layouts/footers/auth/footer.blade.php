@@ -12,3 +12,11 @@
         </div>
     </div>
 </footer>
+
+<div id="loading">
+    <img src="{{ asset('assets/img/loading.gif') }}" alt="Loading..." />
+</div>
+
+@include('modals.modalErrorHandle')
+@livewireScripts
+@stack('scripts')
