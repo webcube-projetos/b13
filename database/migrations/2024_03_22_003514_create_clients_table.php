@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_bank')->nullable();
             $table->foreign('id_bank')->references('id')->on('bank_accounts');
 
-            $table->integer('document');
+            $table->string('document');
             $table->string('name', 100);
             $table->string('fantasy_name', 100)->nullable();
             $table->string('nickname', 100)->nullable();

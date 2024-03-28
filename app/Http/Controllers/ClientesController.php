@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
+use App\Models\Client;
+use App\Models\Contact;
 use App\Models\FakeModel;
 use App\Traits\MontarPagina;
 use App\Traits\MontarForm;
@@ -123,6 +126,39 @@ class ClientesController extends Controller
 
 	public function salvar()
 	{
-		dd($this->request->all());
+		$endereco = Address::create([
+			'cep' => $this->request->cep,
+			'street' => $this->request->logradouro,
+			'number' => $this->request->numero,
+			'neighborhood' => $this->request->bairro,
+			'city' => $this->request->cidade,
+			'state' => $this->request->estado,
+			'country' => $this->request->pais,
+		]);
+
+		foreach ($this->request->nome_contato as $index => $contato) {
+			$contato = Contact::create([
+				'name' => $contato,
+				'email' => $this->request->email_contato[$index],
+				'phone' => $this->request->telefone_contato[$index],
+				'document' => $this->request->cpf_contato[$index],
+				'whatsapp' => $this->request->whatsapp_contato[$index],
+				'role' => $this->request->cargo_contato[$index],
+			]);
+		}
+
+		$client = Client::create([
+			'id_address' => $endereco->id,
+			'id_contact' => $contato->id,
+			'document' => $this->request->cpfcnpj,
+			'name' => $this->request->razao,
+			'fantasy_name' => $this->request->nome_fantasia,
+			'nickname' => $this->request->apelido,
+		]);
+
+		return [
+			'prefix' => $this->prefix,
+			'client' => $client,
+		];
 	}
 }

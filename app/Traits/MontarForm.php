@@ -31,7 +31,7 @@ trait MontarForm
                 'title' => $value ? 'Editar cliente' : 'Cadastrar cliente',
                 'form_action' => 'clientes.salvar',
                 'form_method' => 'post',
-                'id' => '',
+                'id' => 'formRegister',
                 'label_button' => $value ? 'Editar cliente' : 'Cadastrar cliente',
                 //Aqui a ideia é passar um array com todos os dados bancários e montar ele no formBank
                 'dados_bancarios' => $value['dados_bancarios'] ?? true,
