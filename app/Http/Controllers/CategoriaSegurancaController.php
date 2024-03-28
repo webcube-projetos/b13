@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Traits\MontarPaginaDupla;
 use Illuminate\Http\Request;
 use App\Models\FakeModel;
@@ -14,10 +15,12 @@ class CategoriaSegurancaController extends Controller
     use MontarForm;
 
     public $prefix;
+    public $request;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->prefix = 'categorias.veiculos';
+        $this->prefix = 'categorias.seguranca';
+        $this->request = $request;
     }
     public function index()
     {
@@ -29,36 +32,47 @@ class CategoriaSegurancaController extends Controller
         return view('paginaDupla', compact('prefix', 'config', 'lista', 'dados'));
     }
 
-    public function query()
+    public function form()
     {
-        $faker = Faker::create('pt_BR');
-        $faker->addProvider(new \Faker\Provider\FakeCar($faker));
-
-        $data = [];
-
-        $data[] = [
-            'categorias' => 'Patrimonial',
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => false
-        ];
-
-        $data[] = [
-            'categorias' => 'Evento',
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => false
-        ];
-        return new FakeModel($data);
+        $dados = $this->montarForm('categorias');
+        return view('register.formRegister', compact('dados'));
     }
 
-    public function select()
+    public function list()
     {
-        $data = [
-            ['id' => 1, 'nome' => 'Patrimonial'],
-            ['id' => 2, 'nome' => 'Evento'],
-        ];
+        $prefix = $this->prefix;
+        $config = $this->montarPaginaDupla('categorias');
+        $lista = $this->query()->paginate(10);
 
-        return $data;
+        return view('listagem.tableListPage', compact('prefix', 'config', 'lista'));
+    }
+
+    public function query()
+    {
+        return Category::query()
+            ->select('id', 'name', 'description')
+            ->withCount('drivers');
+    }
+
+    public function salvar()
+    {
+        $this->request->validate([
+            'name' => 'required',
+            'name_english' => 'required',
+        ], [
+            'name.required' => 'O campo nome é obrigatório',
+            'name_english.required' => 'O campo nome em inglês é obrigatório',
+        ]);
+
+        Category::updateOrCreate([
+            'id' => $this->request->id,
+        ], [
+            'name' => $this->request->name,
+            'name_english' => $this->request->name_english,
+            'description' => $this->request->description ?? null,
+            'id_ascendent' => $this->request->id_ascendent ?? null,
+        ]);
+
+        return $this->prefix;
     }
 }

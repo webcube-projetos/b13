@@ -9,6 +9,7 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css',
                 'resources/scss/app.scss',
+                'resources/js/selectComponent.js',
                 'resources/js/app.js',
                 'resources/js/listagens.js',
                 'resources/js/addLines.js',

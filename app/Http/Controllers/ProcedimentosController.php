@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Traits\MontarPaginaDupla;
 use Illuminate\Http\Request;
 use App\Models\FakeModel;
+use App\Models\Procedure;
 use App\Traits\MontarForm;
 use Faker\Factory as Faker;
 
@@ -31,29 +32,6 @@ class ProcedimentosController extends Controller
 
     public function query()
     {
-        $faker = Faker::create('pt_BR');
-        $faker->addProvider(new \Faker\Provider\FakeCar($faker));
-
-        $data = [];
-
-        $data[] = [
-            'categorias' => 'Motorista C/ Segurança',
-            'ascendente' => false
-        ];
-
-        $data[] = [
-            'categorias' => 'Motorista S/ Segurança',
-            'ascendente' => false
-        ];
-        $data[] = [
-            'categorias' => 'Segurança I',
-            'ascendente' => false
-        ];
-        $data[] = [
-            'categorias' => 'Segurança II',
-            'ascendente' => false
-        ];
-
-        return new FakeModel($data);
+        return Procedure::query()->select('name');
     }
 }

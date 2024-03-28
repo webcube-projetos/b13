@@ -1,0 +1,48 @@
+#loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.navbar-vertical.navbar-expand-xs {
+  overflow-y: hidden !important;
+}
+
+aside .navbar-nav {
+  margin-bottom: 150px !important;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  /* Altere o valor para a largura desejada */
+}
+
+::-moz-scrollbar {
+  width: 5px;
+  /* Altere o valor para a largura desejada */
+}
+
+::-ms-scrollbar {
+  width: 5px;
+  /* Altere o valor para a largura desejada */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #34476773;
+}
