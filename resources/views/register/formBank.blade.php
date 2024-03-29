@@ -22,7 +22,7 @@
                             id="nome_banco"
                             name="nome_banco"
                             maxlength="20"
-                            value="{{ $value->bank->bank ?? '' }}"
+                            value="{{ $value?->bank?->bank ?? '' }}"
                             required
                         >
                     </div>
@@ -35,7 +35,7 @@
                             id="numero_banco"
                             name="numero_banco" 
                             maxlength="4" 
-                            value="{{ $value->bank->bank_number ?? '' }}"
+                            value="{{ $value?->bank?->bank_number ?? '' }}"
                             required
                         >
                     </div>
@@ -48,7 +48,7 @@
                             id="agencia"
                             name="agencia" 
                             maxlength="5"
-                            value="{{ $value->bank->agency ?? '' }}" 
+                            value="{{ $value?->bank?->agency ?? '' }}" 
                             required
                         >
                     </div>
@@ -61,7 +61,7 @@
                             id="conta"
                             name="conta" 
                             maxlength="15" 
-                            value="{{ $value->bank->cc ?? '' }}"
+                            value="{{ $value?->bank?->cc ?? '' }}"
                             required
                         >
                     </div>
@@ -77,10 +77,10 @@
                             required
                         >
                             <option value="" selected disabled>Selecione um tipo</option>
-                            <option @if($value->bank->key_type == 'CPF') selected @endif value="CPF">CPF</option>
-                            <option @if($value->bank->key_type == 'Celular') selected @endif value="Celular">Celular</option>
-                            <option @if($value->bank->key_type == 'E-mail') selected @endif value="E-mail">E-mail</option>
-                            <option @if($value->bank->key_type == 'Chave Aleatória') selected @endif value="Chave Aleatória">Chave Aleatória</option>
+                            <option @if($value?->bank?->key_type == 'CPF') selected @endif value="CPF">CPF</option>
+                            <option @if($value?->bank?->key_type == 'Celular') selected @endif value="Celular">Celular</option>
+                            <option @if($value?->bank?->key_type == 'E-mail') selected @endif value="E-mail">E-mail</option>
+                            <option @if($value?->bank?->key_type == 'Chave Aleatória') selected @endif value="Chave Aleatória">Chave Aleatória</option>
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -92,7 +92,7 @@
                             id="chave_pix"
                             name="chave_pix" 
                             maxlength="255" 
-                            value="{{ $value->bank->key ?? '' }}"
+                            value="{{ $value?->bank?->key ?? '' }}"
                             required
                         >
                     </div>
@@ -105,8 +105,8 @@
                             required
                         >
                             <option value="" selected disabled>Selecione uma opção</option>
-                            <option @if($value->bank->preference == 'Via PIX') selected @endif value="Via PIX">Via PIX</option>
-                            <option @if($value->bank->preference == 'Via Conta') selected @endif value="Via Conta">Via Conta</option>
+                            <option @if($value?->bank?->preference == 'Via PIX') selected @endif value="Via PIX">Via PIX</option>
+                            <option @if($value?->bank?->preference == 'Via Conta') selected @endif value="Via Conta">Via Conta</option>
                         </select>
                     </div>
                 </div>
