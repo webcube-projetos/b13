@@ -29,6 +29,16 @@ function handleSubmitForm(event) {
     .then(response => {
       callForm(response.data)
       callList(response.data)
+      Toastify({
+        text: "Cadastro realizado com sucesso!",
+        className: "info",
+        close: true,
+        gravity: "bottom",
+        position: "right",
+        style: {
+          background: "#FF9921",
+        }
+      }).showToast();
     })
 }
 
