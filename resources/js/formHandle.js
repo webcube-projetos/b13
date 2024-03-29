@@ -1,7 +1,11 @@
-console.log('formHandle')
-document.querySelector('#formRegister').addEventListener('submit', function (event) {
+document.querySelector('#formRegister') && document.querySelector('#formRegister').addEventListener('submit', function (event) {
   event.preventDefault();
   handleSubmitForm(event);
+})
+
+document.querySelector('#formRegisterEdit') && document.querySelector('#formRegisterEdit').addEventListener('submit', function (event) {
+  event.preventDefault();
+  handleSubmitFormEdit(event);
 })
 
 function handleSubmitForm(event) {
@@ -19,6 +23,23 @@ function handleSubmitForm(event) {
     .then(response => {
       callForm(response.data)
       callList(response.data)
+    })
+}
+
+function handleSubmitFormEdit(event) {
+  event.preventDefault();
+
+  const form = event.target;
+  const formData = new FormData(form);
+  const method = form.method;
+
+  axios({
+    method: method,
+    url: form.action,
+    data: formData
+  })
+    .then(response => {
+      window.location.href = response.data.route;
     })
 }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Client;
+use App\Models\ClientContact;
 use App\Models\Contact;
 use App\Models\FakeModel;
 use App\Traits\MontarPagina;
@@ -11,6 +12,7 @@ use App\Traits\MontarForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Fluent;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\DB;
 
 class ClientesController extends Controller
 {
@@ -29,65 +31,27 @@ class ClientesController extends Controller
 	{
 		$prefix = $this->prefix;
 
-		$dados = $this->query()->paginate(10);
+		$dados = $this->search()->paginate(10);
 
 		[$config, $header] = $this->montarPagina('cliente');
 
-		return view('listagem', compact('prefix', 'dados', 'config', 'header'));
+		return view('pages.Clients.index', compact('prefix', 'dados', 'config', 'header'));
 	}
 
-	public function query()
-	{
-		$faker = Faker::create('pt_BR');
-		$data = [];
-
-		for ($i = 0; $i < 30; $i++) {
-			$data[] = [
-				'id' => $i,
-				'razao_social' => $faker->company,
-				'apelido' => $faker->firstName,
-				'cidade' => $faker->city . ' - ' . $faker->stateAbbr,
-				'pais' => 'Brasil',
-			];
-		}
-
-		return new FakeModel($data);
-	}
-
-	public function queryCompleta()
-	{
-		$faker = Faker::create('pt_BR');
-		$data = [];
-
-		for ($i = 0; $i < 30; $i++) {
-			$data[] = [
-				'id' => $i,
-				'cpf' => $faker->cpf,
-				'razao_social' => $faker->company,
-				'nome_fantasia' => $faker->company,
-				'apelido' => $faker->firstName,
-				'cidade' => $faker->city . ' - ' . $faker->stateAbbr,
-				'pais' => 'Brasil',
-				'cep' => $faker->postcode,
-				'estado' => $faker->stateAbbr,
-				'bairro' => $faker->city,
-				'telefone' => $faker->phoneNumber,
-				'email' => $faker->email,
-				'logradouro' => $faker->streetAddress,
-				'numero' => $faker->buildingNumber,
-			];
-		}
-
-		return new FakeModel($data);
-	}
 
 	public function listar()
 	{
-		$dados = $this->query()->paginate(10);
+		$dados = $this->search()->paginate(10);
 
 		[$config, $header] = $this->montarPagina('clientes');
 
-		return view('listagem.tableList', compact('dados', 'config', 'header'));
+		return view('pages.Clients.list', compact('dados', 'config', 'header'));
+	}
+
+	public function search()
+	{
+		return Client::query()
+			->with(['address', 'contacts']);
 	}
 
 	public function cadastro()
@@ -101,31 +65,21 @@ class ClientesController extends Controller
 	public function editar()
 	{
 		$prefix = $this->prefix;
-		$id = request()->route('id');
+		$id = request()->query('client');
 
-		$cliente = $this->queryCompleta()->first() ?? null;
+		$cliente = Client::find($id);
+
 		$dados = $this->montarForm('clientes', $cliente);
 
 		return view('cadastro', compact('dados', 'prefix'));
 	}
 
-	public function select()
-	{
-		$faker = Faker::create('pt_BR');
-		$data = [];
-
-		for ($i = 0; $i < 30; $i++) {
-			$data[] = [
-				'id' => $i,
-				'nome' => $faker->firstName . ' ' . $faker->lastName,
-			];
-		}
-
-		return $data;
-	}
 
 	public function salvar()
 	{
+
+		DB::beginTransaction();
+
 		$endereco = Address::create([
 			'cep' => $this->request->cep,
 			'street' => $this->request->logradouro,
@@ -136,29 +90,36 @@ class ClientesController extends Controller
 			'country' => $this->request->pais,
 		]);
 
-		foreach ($this->request->nome_contato as $index => $contato) {
-			$contato = Contact::create([
-				'name' => $contato,
-				'email' => $this->request->email_contato[$index],
-				'phone' => $this->request->telefone_contato[$index],
-				'document' => $this->request->cpf_contato[$index],
-				'whatsapp' => $this->request->whatsapp_contato[$index],
-				'role' => $this->request->cargo_contato[$index],
-			]);
-		}
-
 		$client = Client::create([
 			'id_address' => $endereco->id,
-			'id_contact' => $contato->id,
 			'document' => $this->request->cpfcnpj,
 			'name' => $this->request->razao,
 			'fantasy_name' => $this->request->nome_fantasia,
 			'nickname' => $this->request->apelido,
 		]);
 
+		if ($this->request->nome_contato) {
+			foreach ($this->request->nome_contato as $index => $contato) {
+				$contato = Contact::create([
+					'name' => $contato,
+					'email' => $this->request->email_contato[$index],
+					'phone' => $this->request->telefone_contato[$index],
+					'document' => $this->request->cpf_contato[$index],
+					'whatsapp' => $this->request->whatsapp_contato[$index],
+					'role' => $this->request->cargo_contato[$index],
+				]);
+
+				ClientContact::create([
+					'client_id' => $client->id,
+					'contact_id' => $contato->id,
+				]);
+			}
+		}
+
+		DB::commit();
+
 		return [
-			'prefix' => $this->prefix,
-			'client' => $client,
+			'route' => route('clientes.editar', $client->id),
 		];
 	}
 }

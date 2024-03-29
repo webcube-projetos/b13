@@ -8,7 +8,10 @@
         </div>
 
         <div id="box-linhas-contato">
-            
+            @forelse($dados['pageInfo']['value']->contacts as $item)
+                @include('components.row-contact')
+            @empty
+            @endforelse
         </div>
     </div>
 </div>

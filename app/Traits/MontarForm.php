@@ -31,14 +31,14 @@ trait MontarForm
                 'title' => $value ? 'Editar cliente' : 'Cadastrar cliente',
                 'form_action' => 'clientes.salvar',
                 'form_method' => 'post',
-                'id' => 'formRegister',
+                'id' => 'formRegisterEdit',
                 'label_button' => $value ? 'Editar cliente' : 'Cadastrar cliente',
-                //Aqui a ideia é passar um array com todos os dados bancários e montar ele no formBank
                 'dados_bancarios' => $value['dados_bancarios'] ?? true,
                 'cadastro_contatos' => true,
                 'cadastro_adicionais' => false,
                 'cadastro_especializacoes' => false,
                 'cadastro_servicos' => true,
+                'value' => $value ?? null,
             ],
             'sessions' => [
                 'Dados da Empresa' => [
@@ -53,7 +53,7 @@ trait MontarForm
                         'id' => 'cpfcnpj',
                         'name' => 'cpfcnpj',
                         'function' => false,
-                        'value' => $value['cpf'] ?? null,
+                        'value' => $value->document ?? null,
                     ],
                     'apelido' => [
                         'container_tag' => 'div',
@@ -66,7 +66,7 @@ trait MontarForm
                         'id' => 'apelido',
                         'name' => 'apelido',
                         'function' => false,
-                        'value' => $value['apelido'] ?? null,
+                        'value' => $value->nickname ?? null,
                     ],
                     'razao_social' => [
                         'container_tag' => 'div',
@@ -79,7 +79,7 @@ trait MontarForm
                         'id' => 'razao',
                         'name' => 'razao',
                         'function' => false,
-                        'value' => $value['razao_social'] ?? null,
+                        'value' => $value->name ?? null,
                     ],
                     'nome_fantasia' => [
                         'container_tag' => 'div',
@@ -92,7 +92,7 @@ trait MontarForm
                         'id' => 'nome_fantasia',
                         'name' => 'nome_fantasia',
                         'function' => false,
-                        'value' => $value['nome_fantasia'] ?? null,
+                        'value' => $value->fantasy_name ?? null,
                     ],
                     'cep' => [
                         'container_tag' => 'div',
@@ -108,7 +108,7 @@ trait MontarForm
                             'type' => 'onblur',
                             'name' => 'pesquisaCep(this.value)',
                         ],
-                        'value' => $value['cep'] ?? null,
+                        'value' => $value->address->cep ?? null,
                     ],
                     'logradouro' => [
                         'container_tag' => 'div',
@@ -121,7 +121,7 @@ trait MontarForm
                         'id' => 'logradouro',
                         'name' => 'logradouro',
                         'function' => false,
-                        'value' => $value['logradouro'] ?? null,
+                        'value' => $value->address->street ?? null,
                     ],
                     'numero' => [
                         'container_tag' => 'div',
@@ -134,7 +134,7 @@ trait MontarForm
                         'id' => 'numero',
                         'name' => 'numero',
                         'function' => false,
-                        'value' => $value['numero'] ?? null,
+                        'value' => $value->address->number ?? null,
                     ],
                     'bairro' => [
                         'container_tag' => 'div',
@@ -147,7 +147,7 @@ trait MontarForm
                         'id' => 'bairro',
                         'name' => 'bairro',
                         'function' => false,
-                        'value' => $value['bairro'] ?? null,
+                        'value' => $value->address->neighborhood ?? null,
                     ],
                     'cidade' => [
                         'container_tag' => 'div',
@@ -160,7 +160,7 @@ trait MontarForm
                         'id' => 'cidade',
                         'name' => 'cidade',
                         'function' => false,
-                        'value' => $value['cidade'] ?? null,
+                        'value' => $value->address->city ?? null,
                     ],
                     'estado' => [
                         'container_tag' => 'div',
@@ -173,7 +173,7 @@ trait MontarForm
                         'id' => 'estado',
                         'name' => 'estado',
                         'function' => false,
-                        'value' => $value['estado'] ?? null,
+                        'value' => $value->address->state ?? null,
                     ],
                     'pais' => [
                         'container_tag' => 'div',
@@ -187,7 +187,7 @@ trait MontarForm
                         'id' => 'pais',
                         'name' => 'pais',
                         'function' => false,
-                        'value' => $value['pais'] ?? null,
+                        'value' => $value->address->country ?? null,
                     ],
                 ],
                 'Contatos da Empresa' => [

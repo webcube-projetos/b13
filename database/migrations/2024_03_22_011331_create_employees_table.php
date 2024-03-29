@@ -24,8 +24,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_contact');
             $table->unsignedBigInteger('id_bank')->nullable();
             $table->string('obs', 255)->nullable();
-            $table->string('cnh', 255)->nullable();
-            $table->string('cnv', 255)->nullable();
+            $table->text('cnh', 255)->nullable();
+            $table->text('cnv', 255)->nullable();
             $table->string('photo', 255)->nullable();
             $table->timestamps();
 

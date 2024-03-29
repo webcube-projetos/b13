@@ -18,4 +18,21 @@ class Client extends Model
         'fantasy_name',
         'nickname',
     ];
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class, 'id_address', 'id');
+    }
+
+    public function contacts()
+    {
+        return $this->hasManyThrough(
+            Contact::class,
+            ClientContact::class,
+            'client_id',
+            'id',
+            'id',
+            'contact_id'
+        );
+    }
 }
