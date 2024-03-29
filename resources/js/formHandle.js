@@ -8,6 +8,12 @@ document.querySelector('#formRegisterEdit') && document.querySelector('#formRegi
   handleSubmitFormEdit(event);
 })
 
+document.querySelector('#formDadosBancarios') && document.querySelector('#formDadosBancarios').addEventListener('submit', function (event) {
+  event.preventDefault();
+  handleSubmitFormEdit(event);
+})
+
+
 function handleSubmitForm(event) {
   event.preventDefault();
 

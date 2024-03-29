@@ -3,9 +3,12 @@
         <div class="card-header pb-0 px-3">
             <h6 class="mb-0">{{ $dados['pageInfo']['title'] }}</h6>
         </div>
-        
+        @php $value = $dados['pageInfo']['value']; @endphp
         <div class="card-body pt-4 p-3">
-            <form action="{{ $dados['pageInfo']['form_action'] }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left">
+            <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left" id="formDadosBancarios">
+                <input type="hidden" name="id_bank" value="{{ $dados['pageInfo']['value']?->bank?->id ?? '' }}">
+                <input type="hidden" name="id" value="{{ $dados['pageInfo']['value']?->id ?? '' }}">
+                <input type="hidden" name="tipo" value="bank">
                 @csrf
                 <div class="row">
                     <p class="fw-bold mb-2">Dados Bancários</p>
@@ -19,7 +22,7 @@
                             id="nome_banco"
                             name="nome_banco"
                             maxlength="20"
-                            value="{{ $dados['pageInfo']['dados_bancarios']['nome_banco'] ?? '' }}"
+                            value="{{ $value->bank->bank ?? '' }}"
                             required
                         >
                     </div>
@@ -32,12 +35,12 @@
                             id="numero_banco"
                             name="numero_banco" 
                             maxlength="4" 
-                            value="{{ $dados['pageInfo']['dados_bancarios']['numero_banco'] ?? '' }}"
+                            value="{{ $value->bank->bank_number ?? '' }}"
                             required
                         >
                     </div>
                     <div class="col-md-2">
-                        <label for=""> Agência</label>
+                        <label for="">Agência</label>
                         <input 
                             class="form-control" 
                             type="number" 
@@ -45,7 +48,7 @@
                             id="agencia"
                             name="agencia" 
                             maxlength="5"
-                            value="{{ $dados['pageInfo']['dados_bancarios']['agencia'] ?? '' }}" 
+                            value="{{ $value->bank->agency ?? '' }}" 
                             required
                         >
                     </div>
@@ -58,7 +61,7 @@
                             id="conta"
                             name="conta" 
                             maxlength="15" 
-                            value="{{ $dados['pageInfo']['dados_bancarios']['conta'] ?? '' }}"
+                            value="{{ $value->bank->cc ?? '' }}"
                             required
                         >
                     </div>
@@ -74,10 +77,10 @@
                             required
                         >
                             <option value="" selected disabled>Selecione um tipo</option>
-                            <option value="CPF">CPF</option>
-                            <option value="Celular">Celular</option>
-                            <option value="E-mail">E-mail</option>
-                            <option value="Chave Aleatória">Chave Aleatória</option>
+                            <option @if($value->bank->key_type == 'CPF') selected @endif value="CPF">CPF</option>
+                            <option @if($value->bank->key_type == 'Celular') selected @endif value="Celular">Celular</option>
+                            <option @if($value->bank->key_type == 'E-mail') selected @endif value="E-mail">E-mail</option>
+                            <option @if($value->bank->key_type == 'Chave Aleatória') selected @endif value="Chave Aleatória">Chave Aleatória</option>
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -89,7 +92,7 @@
                             id="chave_pix"
                             name="chave_pix" 
                             maxlength="255" 
-                            value="{{ $dados['pageInfo']['dados_bancarios']['chave_pix'] ?? '' }}"
+                            value="{{ $value->bank->key ?? '' }}"
                             required
                         >
                     </div>
@@ -97,13 +100,13 @@
                         <label for="">Prefere receber</label>
                         <select 
                             class="form-control"  
-                            id="tipo_chave"
-                            name="tipo_chave" 
+                            id="preference"
+                            name="preference" 
                             required
                         >
                             <option value="" selected disabled>Selecione uma opção</option>
-                            <option value="Via PIX">Via PIX</option>
-                            <option value="Via Conta">Via Conta</option>
+                            <option @if($value->bank->preference == 'Via PIX') selected @endif value="Via PIX">Via PIX</option>
+                            <option @if($value->bank->preference == 'Via Conta') selected @endif value="Via Conta">Via Conta</option>
                         </select>
                     </div>
                 </div>

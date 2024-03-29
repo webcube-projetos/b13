@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\BankAccount;
 use App\Models\Client;
 use App\Models\ClientContact;
 use App\Models\Contact;
@@ -82,6 +83,31 @@ class ClientesController extends Controller
 
 		if ($this->request->id) {
 			$client = Client::find($this->request->id);
+		}
+
+		if ($this->request->tipo == 'bank') {
+			$bank = BankAccount::updateOrCreate(
+				[
+					'id' => $this->request->id_bank ?? null
+				],
+				[
+					'bank' => $this->request->nome_banco ?? null,
+					'bank_number' => $this->request->numero_banco ?? null,
+					'agency' => $this->request->agencia ?? null,
+					'cc' => $this->request->conta ?? null,
+					'key_type' => $this->request->tipo_chave ?? null,
+					'key' => $this->request->chave_pix ?? null,
+					'preference' => $this->request->preference ?? null,
+				]
+			);
+
+			$client->id_bank = $bank->id;
+			$client->save();
+			DB::commit();
+
+			return [
+				'route' => route('clientes.editar', ['client' => $client->id]),
+			];
 		}
 
 		$endereco = Address::updateOrCreate(
