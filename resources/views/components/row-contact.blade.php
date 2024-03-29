@@ -1,3 +1,4 @@
+<input type="hidden" name="id_contato[]" @isset($item) value="{{ $item->id }}" @endisset>
 <div class="row linha-add mt-3">
     <div class="col-12 text-end">
         <div class="form-check form-switch d-inline-block ms-auto">
@@ -10,7 +11,7 @@
     </div>
     <div class="col-lg-3">
         <label for="cpf_contato">CPF</label>
-        <input type="text" class="form-control" name="cpf_contato[]" id="cpf_contato" maxlength="30" required @isset($item) value="{{ $item->documento }}" @endisset>
+        <input type="text" class="form-control" name="cpf_contato[]" id="cpf_contato" maxlength="30" required @isset($item) value="{{ $item->document }}" @endisset>
     </div>
     <div class="col-lg-4">
         <label for="email_contato">E-mail</label>

@@ -80,46 +80,67 @@ class ClientesController extends Controller
 
 		DB::beginTransaction();
 
-		$endereco = Address::create([
-			'cep' => $this->request->cep,
-			'street' => $this->request->logradouro,
-			'number' => $this->request->numero,
-			'neighborhood' => $this->request->bairro,
-			'city' => $this->request->cidade,
-			'state' => $this->request->estado,
-			'country' => $this->request->pais,
-		]);
+		if ($this->request->id) {
+			$client = Client::find($this->request->id);
+		}
 
-		$client = Client::create([
-			'id_address' => $endereco->id,
-			'document' => $this->request->cpfcnpj,
-			'name' => $this->request->razao,
-			'fantasy_name' => $this->request->nome_fantasia,
-			'nickname' => $this->request->apelido,
-		]);
+		$endereco = Address::updateOrCreate(
+			[
+				'id' => $client?->id_address ?? null
+			],
+			[
+				'cep' => $this->request->cep,
+				'street' => $this->request->logradouro,
+				'number' => $this->request->numero,
+				'neighborhood' => $this->request->bairro,
+				'city' => $this->request->cidade,
+				'state' => $this->request->estado,
+				'country' => $this->request->pais,
+			]
+		);
+
+		$client = Client::updateOrCreate(
+			[
+				'id' => $this->request->id ?? null
+			],
+			[
+				'id_address' => $endereco->id,
+				'document' => $this->request->cpfcnpj,
+				'name' => $this->request->razao,
+				'fantasy_name' => $this->request->nome_fantasia,
+				'nickname' => $this->request->apelido,
+			]
+		);
 
 		if ($this->request->nome_contato) {
 			foreach ($this->request->nome_contato as $index => $contato) {
-				$contato = Contact::create([
-					'name' => $contato,
-					'email' => $this->request->email_contato[$index],
-					'phone' => $this->request->telefone_contato[$index],
-					'document' => $this->request->cpf_contato[$index],
-					'whatsapp' => $this->request->whatsapp_contato[$index],
-					'role' => $this->request->cargo_contato[$index],
-				]);
+				$contato = Contact::updateOrCreate(
+					[
+						'id' => $this->request->id_contato[$index] ?? null
+					],
+					[
+						'name' => $contato,
+						'email' => $this->request->email_contato[$index],
+						'phone' => $this->request->telefone_contato[$index],
+						'document' => $this->request->cpf_contato[$index],
+						'whatsapp' => $this->request->whatsapp_contato[$index],
+						'role' => $this->request->cargo_contato[$index],
+					]
+				);
 
-				ClientContact::create([
-					'client_id' => $client->id,
-					'contact_id' => $contato->id,
-				]);
+				if (!$this->request->id_contato[$index]) {
+					ClientContact::create([
+						'client_id' => $client->id,
+						'contact_id' => $contato->id,
+					]);
+				}
 			}
 		}
 
 		DB::commit();
 
 		return [
-			'route' => route('clientes.editar', $client->id),
+			'route' => route('clientes.editar', ['client' => $client->id]),
 		];
 	}
 }

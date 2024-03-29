@@ -38,6 +38,7 @@
                     <div class="card">
                         <div class="card-body pt-4 p-3">
                             <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left" id="{{ $dados['pageInfo']['id'] }}">
+                                <input type="hidden" name="id" @isset($dados['pageInfo']['value']) value="{{ $dados['pageInfo']['value']->id }}" @endisset>
                                 @csrf
                                 <div class="row">
                                     @foreach ($dados['sessions'] as $key => $group)
