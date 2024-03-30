@@ -20,6 +20,9 @@ function showErrorModal(message) {
 }
 
 axios.interceptors.request.use(function (config) {
+  if (config.data instanceof FormData) {
+    config.headers['Content-Type'] = 'multipart/form-data';
+  }
   showLoading();
   return config;
 }, function (error) {
@@ -112,3 +115,25 @@ window.pesquisaCep = function (valor) {
   }
 };
 /** FIM PESQUISA CEP */
+
+var cpfMascara = function (val) {
+  return val.replace(/\D/g, '').length > 11 ? '00.000.000/0000-00' : '000.000.000-009';
+},
+  cpfOptions = {
+    onKeyPress: function (val, e, field, options) {
+      field.mask(cpfMascara.apply({}, arguments), options);
+    }
+  };
+$('#cpfcnpj').mask(cpfMascara, cpfOptions);
+
+var telefoneMascara = function (val) {
+  return val.replace(/\D/g, '').length > 10 ? '(00) 00000-0000' : '(00) 0000-00009';
+};
+
+var telefoneOptions = {
+  onKeyPress: function (val, e, field, options) {
+    field.mask(telefoneMascara(val), options);
+  }
+};
+
+$('#phone').mask(telefoneMascara, telefoneOptions);

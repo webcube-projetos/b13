@@ -17,7 +17,7 @@ class SelectComponent extends Component
     public function mount($type, $placeholder, $name, $selected)
     {
         $this->name = $name;
-        $this->selected = $selected;
+        $this->selected = $selected ?? null;
         $this->options = match ($type) {
             'especialization' => $this->especialization($placeholder),
         };

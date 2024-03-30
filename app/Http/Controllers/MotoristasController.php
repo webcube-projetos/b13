@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
+use App\Models\Employee;
 use App\Models\FakeModel;
 use App\Traits\MontarPagina;
 use App\Traits\MontarForm;
@@ -12,13 +14,15 @@ use Faker\Factory as Faker;
 class MotoristasController extends Controller
 {
     protected $prefix;
+    protected $request;
 
     use MontarPagina;
     use MontarForm;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->prefix = 'motoristas';
+        $this->request = $request;
     }
     public function index()
     {
@@ -124,5 +128,55 @@ class MotoristasController extends Controller
         $dados = $this->montarForm('motoristas', $motorista);
 
         return view('cadastro', compact('dados', 'prefix'));
+    }
+
+    public function salvar()
+    {
+        if (!$this->request->foto) {
+            $foto = json_decode($this->request->foto);
+            $imgUrlFoto = $this->storeImageBase64($foto->data, 'motoristas');
+        }
+        if ($this->request->cnh) {
+            $cnh = json_decode($this->request->cnh);
+            $imgUrlCnh = $this->storeImageBase64($cnh->data, 'motoristas');
+        }
+
+        if ($this->request->id) {
+            $employee = Employee::find($this->request->id);
+        }
+
+        $endereco = Address::updateOrCreate(
+            [
+                'id' => $employee?->id_address ?? null
+            ],
+            [
+                'cep' => $this->request->cep,
+                'street' => $this->request->logradouro,
+                'number' => $this->request->numero,
+                'neighborhood' => $this->request->bairro,
+                'city' => $this->request->cidade,
+                'state' => $this->request->estado,
+                'country' => $this->request->pais,
+            ]
+        );
+
+        Employee::updateOrCreate(
+            ['id' => $this->request->id],
+            [
+                'type' => Employee::DRIVER,
+                'name' => $this->request->name,
+                'fantasy_name' => $this->request->fantasy_name ?? null,
+                'nickname' => $this->request->nickname ?? null,
+                'document' => preg_replace('/[^0-9]/', '', $this->request->document),
+                'armed' => null,
+                'id_address' => $endereco->id,
+                'id_company' => $this->request->id_company ?? null,
+                'id_contact' => null,
+                'id_bank' => null,
+                'obs' => $this->request->obs ?? null,
+                'cnh' => $imgUrlCnh,
+                'photo' => $imgUrlFoto,
+            ]
+        );
     }
 }

@@ -77,6 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [MotoristasController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [MotoristasController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [MotoristasController::class, 'editar'])->name('editar');
+		Route::post('/salvar', [MotoristasController::class, 'salvar'])->name('salvar');
 	});
 
 	Route::prefix('segurancas')->name('segurancas.')->group(function () {

@@ -7,6 +7,7 @@ FilePond.registerPlugin(
   FilePondPluginImageCrop,
   FilePondPluginImageResize,
   FilePondPluginImageTransform,
+  FilePondPluginFileEncode,
   // FilePondPluginImageEdit
 );
 
@@ -24,6 +25,7 @@ FilePond.create(
     styleProgressIndicatorPosition: 'right bottom',
     styleButtonRemoveItemPosition: 'left bottom',
     styleButtonProcessItemPosition: 'right bottom',
+    allowFileEncode: true,
   }
 );
 
