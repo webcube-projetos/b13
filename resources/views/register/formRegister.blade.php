@@ -49,7 +49,7 @@
                                 />
                             @endif
                         @elseif($fields['type'] === 'selectCompoenent')
-                            <livewire:select-component type="{{$fields['typeSelect']}}" placeholder="{{$fields['placeholder']}}" name="{{$fields['name']}}" />
+                            <livewire:select-component type="{{$fields['typeSelect']}}" placeholder="{{$fields['placeholder']}}" name="{{$fields['name']}}" selected="{{$fields['value']}}" />
 
                         @else
                             <input 

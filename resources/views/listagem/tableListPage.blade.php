@@ -28,13 +28,15 @@
                       class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
                       data-toggle="tooltip" 
                       data-original-title="{{ $botao['title'] ?? ''}}"
+                      data-id="{{ $itens->id }}"
+                      data-route="{{ route($prefix.'.'.$botao['route']) ?? '' }}"
                       @if($botao['onClick']) onclick="{{ $botao['onClick'] }}" @endif
                     >
                       <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
                   </button>
                   @elseif ($botao['route'])
                   <a 
-                    href="{{ route($prefix.'.'.$botao['route']) }}"
+                    href="{{ route($prefix.'.'.$botao['route'], ['id' => $itens->id]) }}"
                     class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
                     data-toggle="tooltip" 
                     data-original-title="{{ $botao['title'] ?? ''}}"
@@ -65,6 +67,8 @@
                       class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
                       data-toggle="tooltip" 
                       data-original-title="{{ $botao['title'] ?? ''}}"
+                      data-id="{{ $itensChild->id }}"
+                      data-route="{{ route($prefix.'.'.$botao['route']) ?? '' }}"
                       @if($botao['onClick']) onclick="{{ $botao['onClick'] }}" @endif
                     >
                       <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>

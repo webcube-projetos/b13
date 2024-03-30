@@ -1,6 +1,6 @@
 <form action="{{ route($dados['pageInfo']['form_action']) ?? '' }}" method="{{ $dados['pageInfo']['form_method'] ?? 'POST' }}" role="form text-left" id="{{$dados['pageInfo']['id']}}">
   @csrf
-  
+  <input type="hidden" name="id" value="{{ $dados['pageInfo']['value']?->id ?? '' }}">
   @foreach ($dados['sessions'] as $key => $group)
     @include('register.formRegister')
   @endforeach

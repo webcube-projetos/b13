@@ -2,7 +2,7 @@
     <select class="dinamicSelect" name="{{ $name }}">
         <option value="" selected disabled>Selecione {{ $placeholder }}</option>
         @foreach ($options as $option)
-            <option value="{{ $option->id }}">{{ $option->name }}</option>
+            <option {{ $selected == $option->id ? 'selected' : '' }} value="{{ $option->id }}">{{ $option->name }}</option>
         @endforeach
     </select>
 </div>

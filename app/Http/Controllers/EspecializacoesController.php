@@ -80,4 +80,11 @@ class EspecializacoesController extends Controller
 
         return $this->prefix;
     }
+
+    public function editar()
+    {
+        $specialization = Specialization::find($this->request->id);
+        $dados = $this->montarForm('especializacao', $specialization);
+        return view('register.formRegisterSingle', compact('dados'));
+    }
 }

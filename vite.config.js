@@ -13,6 +13,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/listagens.js',
                 'resources/js/addLines.js',
+                'resources/js/doublePage.js',
             ],
             refresh: true,
         }),

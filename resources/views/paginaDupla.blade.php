@@ -2,6 +2,8 @@
 
 @push('headPagina')
 	@vite(['resources/js/listagens.js'])
+	@vite(['resources/js/doublePage.js'])
+
 @endpush
 
 @section('content')

@@ -14,7 +14,6 @@
   <!-- REGISTROS TABELA -->
   <tbody>
     @foreach($dados as $itens)
-    @dd($itens)
     <tr class="@if(isset($itens['status']) &&$itens['status'] == 0) inactive @endif">
         @foreach($itens as $coluna => $dado)
             @if ($coluna === 'status') 

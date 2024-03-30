@@ -26,11 +26,27 @@ trait MontarPaginaDupla
       'select' => 'especializacoes',
     ]);
 
+    $buttons = [
+      'editar' => [
+        'title' => 'Editar',
+        'route' => 'editar',
+        'icon' => 'fa fa-pencil',
+        'onClick' => 'editDoublePage(event)',
+        'class' => '',
+      ],
+      'delete' => [
+        'title' => 'Deletar',
+        'route' => 'delete',
+        'icon' => 'fa fa-trash',
+        'onClick' => 'deletar(this)',
+        'class' => '',
+      ],
+    ];
 
     $infoRight = collect([
       'title' => 'Especializações',
       'head' => collect(['Nome', 'Descrição', 'Motorista', 'Ações']),
-      'actions' => $this->botoes(['editar', 'delete']),
+      'actions' => $buttons,
     ]);
 
     return ['infoLeft' => $infoLeft, 'infoRight' => $infoRight];
@@ -60,11 +76,27 @@ trait MontarPaginaDupla
       'fields' => collect(['Nome da categoria', 'Name in English', 'Descrição']),
     ]);
 
+    $buttons = [
+      'editar' => [
+        'title' => 'Editar',
+        'route' => 'editar',
+        'icon' => 'fa fa-pencil',
+        'onClick' => 'editDoublePage(this)',
+        'class' => '',
+      ],
+      'delete' => [
+        'title' => 'Deletar',
+        'route' => 'delete',
+        'icon' => 'fa fa-trash',
+        'onClick' => 'deletar(this)',
+        'class' => '',
+      ],
+    ];
 
     $infoRight = collect([
       'title' => 'Categorias',
       'head' => collect(['Nome', 'Descrição', 'Veiculos', 'Ações']),
-      'actions' => $this->botoes(['editar', 'delete']),
+      'actions' => $buttons,
     ]);
 
     return ['infoLeft' => $infoLeft, 'infoRight' => $infoRight];

@@ -12,11 +12,12 @@ class SelectComponent extends Component
     public $options;
     public $placeholder;
     public $name;
+    public $selected;
 
-    public function mount($type, $placeholder, $name)
+    public function mount($type, $placeholder, $name, $selected)
     {
         $this->name = $name;
-
+        $this->selected = $selected;
         $this->options = match ($type) {
             'especialization' => $this->especialization($placeholder),
         };

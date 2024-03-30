@@ -121,7 +121,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/', [EspecializacoesController::class, 'index'])->name('index');
 		Route::get('/list', [EspecializacoesController::class, 'list'])->name('list');
 		Route::get('/form', [EspecializacoesController::class, 'form'])->name('form');
-		Route::get('/editar', [EspecializacoesController::class, 'editar'])->name('editar');
+		Route::post('/editar', [EspecializacoesController::class, 'editar'])->name('editar');
+		Route::get('/delete', [EspecializacoesController::class, 'delete'])->name('delete');
 		Route::post('/salvar', [EspecializacoesController::class, 'salvar'])->name('salvar');
 	});
 

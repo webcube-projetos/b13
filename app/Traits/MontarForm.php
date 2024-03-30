@@ -636,6 +636,7 @@ trait MontarForm
                 'cadastro_adicionais' => false,
                 'cadastro_especializacoes' => false,
                 'cadastro_servicos' => true,
+                'value' => $value ?? null,
             ],
             'sessions' => [
                 'Cadastrar especialização' => [
@@ -650,7 +651,7 @@ trait MontarForm
                         'id' => 'nome',
                         'name' => 'name',
                         'function' => false,
-                        'dado' => $value['nome'] ?? null,
+                        'value' => $value->name ?? null,
                     ],
                     'Name in English' => [
                         'container_tag' => 'div',
@@ -663,7 +664,7 @@ trait MontarForm
                         'id' => 'name_english',
                         'name' => 'name_english',
                         'function' => false,
-                        'dado' => $value['name_english'] ?? null,
+                        'value' => $value->name_english ?? null,
                     ],
                     'Descrição' => [
                         'container_tag' => 'div',
@@ -676,7 +677,7 @@ trait MontarForm
                         'id' => 'descricao',
                         'name' => 'description',
                         'function' => false,
-                        'dado' => $value['descricao'] ?? null,
+                        'value' => $value->description ?? null,
                     ],
                     'especializacoes' => [
                         'container_tag' => 'div',
@@ -688,7 +689,7 @@ trait MontarForm
                         'required' => false,
                         'id' => 'especializacao',
                         'name' => 'id_ascendent',
-                        'value' => $value['especializacao'] ?? null,
+                        'value' => $value->id_ascendent ?? null,
                     ],
                 ],
             ],
