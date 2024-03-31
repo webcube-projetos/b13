@@ -1,3 +1,49 @@
+import axios from 'axios';
+window.axios = axios;
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+function showLoading() {
+  document.getElementById('loading').style.display = 'flex';
+}
+
+function hideLoading() {
+  document.getElementById('loading').style.display = 'none';
+}
+
+function showErrorModal(message) {
+  const errorMessageElement = document.querySelector('#errorModal .modal-content p');
+  errorMessageElement.innerText = message;
+
+  const modal = new bootstrap.Modal(document.getElementById('errorModal'));
+  modal.show();
+}
+
+axios.interceptors.request.use(function (config) {
+  if (config.data instanceof FormData) {
+    config.headers['Content-Type'] = 'multipart/form-data';
+  }
+  showLoading();
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
+
+axios.interceptors.response.use(function (response) {
+  hideLoading();
+  return response;
+}, function (error) {
+  hideLoading();
+  if (error.response) {
+    showErrorModal(error.response.data.message || 'Erro desconhecido');
+  } else if (error.request) {
+    showErrorModal('Sem resposta do servidor');
+  } else {
+    showErrorModal('Erro ao enviar requisição');
+  }
+  return Promise.reject(error);
+});
+
 function paginacaoAjax(div, callback) {
   $(div).find('a.page-link').off().on('click', function () {
     let page = $(this).attr('href').replace('#', '');
@@ -69,3 +115,25 @@ window.pesquisaCep = function (valor) {
   }
 };
 /** FIM PESQUISA CEP */
+
+var cpfMascara = function (val) {
+  return val.replace(/\D/g, '').length > 11 ? '00.000.000/0000-00' : '000.000.000-009';
+},
+  cpfOptions = {
+    onKeyPress: function (val, e, field, options) {
+      field.mask(cpfMascara.apply({}, arguments), options);
+    }
+  };
+$('#cpfcnpj').mask(cpfMascara, cpfOptions);
+
+var telefoneMascara = function (val) {
+  return val.replace(/\D/g, '').length > 10 ? '(00) 00000-0000' : '(00) 0000-00009';
+};
+
+var telefoneOptions = {
+  onKeyPress: function (val, e, field, options) {
+    field.mask(telefoneMascara(val), options);
+  }
+};
+
+$('#phone').mask(telefoneMascara, telefoneOptions);

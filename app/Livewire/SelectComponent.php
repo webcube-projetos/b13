@@ -2,35 +2,38 @@
 
 namespace App\Livewire;
 
+use App\Models\Specialization;
 use Livewire\Component;
 use Illuminate\Support\Facades\Http;
+use Livewire\WithPagination;
 
 class SelectComponent extends Component
 {
-    public $name; //string
-    public $componentId; //string
-    public $label; //string
-    public $route; //string
-    public $required; //string
-    public $value; //string
-    public $function; // array
-    public $registros;
+    public $options;
+    public $placeholder;
+    public $name;
+    public $selected;
 
-    public function mount($name, $componentId, $label, $route, $required, $function, $value = null)
+    public function mount($type, $placeholder, $name, $selected)
     {
         $this->name = $name;
-        $this->componentId = $componentId;
-        $this->label = $label;
-        $this->function = $function;
-        $this->required = $required;
-        $this->route = $route; 
-        $this->value = $value; 
-
-        $response = Http::get(route($this->route));
-        $this->registros = $response->json();
+        $this->selected = $selected ?? null;
+        $this->options = match ($type) {
+            'especialization' => $this->especialization($placeholder),
+        };
     }
     public function render()
     {
-        return view('livewire.select-component');
+        return view('livewire.select-component', [
+            'placeholder' => $this->placeholder
+        ]);
+    }
+
+    public function especialization()
+    {
+        return Specialization::select('id', 'name')
+            ->orderBy('created_at', 'desc')
+            ->whereNull('id_ascendent')
+            ->get();
     }
 }

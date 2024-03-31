@@ -20,6 +20,7 @@
         "nunomaduro/collision": "^7.0",
         "pelmered/fake-car": "^2.0",
         "phpunit/phpunit": "^10.1",
+        "reliese/laravel": "^1.2",
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {

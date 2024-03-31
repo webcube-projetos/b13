@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Traits\MontarPaginaDupla;
 use Illuminate\Http\Request;
 use App\Models\FakeModel;
+use App\Models\Specialization;
 use App\Traits\MontarForm;
 use Faker\Factory as Faker;
 
@@ -14,10 +15,12 @@ class EspecializacoesController extends Controller
     use MontarForm;
 
     public $prefix;
+    protected $request;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->prefix = 'especializacoes';
+        $this->request = $request;
     }
     public function index()
     {
@@ -29,56 +32,59 @@ class EspecializacoesController extends Controller
         return view('paginaDupla', compact('prefix', 'config', 'lista', 'dados'));
     }
 
-    public function query()
+    public function form()
     {
-        $faker = Faker::create('pt_BR');
-        $faker->addProvider(new \Faker\Provider\FakeCar($faker));
-
-        $data = [];
-
-        $data[] = [
-            'especializacoes' => 'Idiomas',
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => false
-        ];
-
-        $data[] = [
-            'especializacoes' => $faker->randomElement(['- Inglês']),
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => 'Idiomas'
-        ];
-
-        $data[] = [
-            'especializacoes' => $faker->randomElement(['- Espanhol']),
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => 'Idiomas'
-        ];
-
-        $data[] = [
-            'especializacoes' => 'Direção Defensiva',
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => false
-        ];
-
-        return new FakeModel($data);
+        $dados = $this->montarForm('especializacao');
+        return view('register.formRegisterSingle', compact('dados'));
     }
 
-    public function select()
+    public function list()
     {
-        $faker = Faker::create('pt_BR');
-        $data = [];
+        $prefix = $this->prefix;
+        $config = $this->montarPaginaDupla('especializacao');
+        $lista = $this->query()->paginate(10);
 
-        for ($i = 0; $i < 4; $i++) {
-            $data[] = [
-                'id' => $i,
-                'nome' => $faker->randomElement(['Idioma', 'Transporte executivo', 'Direção Defensiva', 'Transporte de veículos especiais']),
-            ];
-        }
+        return view('listagem.tableListPage', compact('prefix', 'config', 'lista'));
+    }
 
-        return $data;
+    public function query()
+    {
+        return Specialization::with(['children' => function ($query) {
+            $query->select('id', 'name', 'description', 'id_ascendent')
+                ->withCount('drivers');
+        }])
+            ->whereNull('id_ascendent')
+            ->select('id', 'name', 'description')
+            ->withCount('drivers');
+    }
+
+    public function salvar()
+    {
+        //validate and respond with errors message
+        $this->request->validate([
+            'name' => 'required',
+            'name_english' => 'required',
+        ], [
+            'name.required' => 'O campo nome é obrigatório',
+            'name_english.required' => 'O campo nome em inglês é obrigatório',
+        ]);
+
+        Specialization::updateOrCreate([
+            'id' => $this->request->id,
+        ], [
+            'name' => $this->request->name,
+            'name_english' => $this->request->name_english,
+            'description' => $this->request->description ?? null,
+            'id_ascendent' => $this->request->id_ascendent ?? null,
+        ]);
+
+        return $this->prefix;
+    }
+
+    public function editar()
+    {
+        $specialization = Specialization::find($this->request->id);
+        $dados = $this->montarForm('especializacao', $specialization);
+        return view('register.formRegisterSingle', compact('dados'));
     }
 }

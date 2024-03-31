@@ -16,7 +16,7 @@
     <div>
         <div class="container-fluid py-4">
             <!-- SE DADOS BANCÁRIOS É TRUE, IMPRIME AS TABS NO TOPO DA PÁGINA -->
-            @if ($dados['pageInfo']['dados_bancarios'])
+            @if ($dados['pageInfo']['dados_bancarios'] && !Str::contains(url()->current(), 'cadastro'))
                 <div class="row mb-4">
                     <div class="col-lg-4">
                         <div class="nav-wrapper position-relative end-0">
@@ -37,7 +37,8 @@
                 <div class="tab-pane fade show active" id="cadastro" role="tabpanel" aria-labelledby="cadastro-tab">
                     <div class="card">
                         <div class="card-body pt-4 p-3">
-                            <form action="{{ $dados['pageInfo']['form_action'] }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left">
+                            <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left" id="{{ $dados['pageInfo']['id'] }}" enctype="multipart/form-data">
+                                <input type="hidden" name="id" @isset($dados['pageInfo']['value']) value="{{ $dados['pageInfo']['value']->id }}" @endisset>
                                 @csrf
                                 <div class="row">
                                     @foreach ($dados['sessions'] as $key => $group)

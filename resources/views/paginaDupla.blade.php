@@ -2,6 +2,8 @@
 
 @push('headPagina')
 	@vite(['resources/js/listagens.js'])
+	@vite(['resources/js/doublePage.js'])
+
 @endpush
 
 @section('content')
@@ -22,19 +24,8 @@
               <!-- FIM TÍTULO TABELA -->
             </div>
             <div class="card-body pt-0 pb-2">
-              <div class="p-0" id="tableList">
-                <form action="{{ $dados['pageInfo']['form_action'] }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left">
-                    @csrf
-                    <div class="row">
-                        @foreach ($dados['sessions'] as $key => $group)
-                            @include('register.formRegister')
-                        @endforeach
-
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ $dados['pageInfo']['label_button'] }}</button>
-                    </div>
-                </form> 
+              <div class="p-0" id="formRegister">
+                @include('register.formRegisterSingle')
               </div>
             </div>
           </div>

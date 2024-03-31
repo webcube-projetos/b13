@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [ClientesController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [ClientesController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [ClientesController::class, 'editar'])->name('editar');
+		Route::post('/salvar', [ClientesController::class, 'salvar'])->name('salvar');
 	});
 
 	Route::prefix('empresas')->name('empresas.')->group(function () {
@@ -76,6 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [MotoristasController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [MotoristasController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [MotoristasController::class, 'editar'])->name('editar');
+		Route::post('/salvar', [MotoristasController::class, 'salvar'])->name('salvar');
 	});
 
 	Route::prefix('segurancas')->name('segurancas.')->group(function () {
@@ -118,8 +120,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::prefix('especializacoes')->name('especializacoes.')->group(function () {
 		Route::get('/', [EspecializacoesController::class, 'index'])->name('index');
-		Route::get('/editar', [EspecializacoesController::class, 'editar'])->name('editar');
-		Route::get('/select-especializacao', [EspecializacoesController::class, 'select'])->name('selectEspecializacao');
+		Route::get('/list', [EspecializacoesController::class, 'list'])->name('list');
+		Route::get('/form', [EspecializacoesController::class, 'form'])->name('form');
+		Route::post('/editar', [EspecializacoesController::class, 'editar'])->name('editar');
+		Route::get('/delete', [EspecializacoesController::class, 'delete'])->name('delete');
+		Route::post('/salvar', [EspecializacoesController::class, 'salvar'])->name('salvar');
 	});
 
 	Route::prefix('adicionais')->name('adicionais.')->group(function () {
@@ -135,6 +140,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('categorias-segurancas')->name('categorias.segurancas.')->group(function () {
 		Route::get('/', [CategoriaSegurancaController::class, 'index'])->name('index');
 		Route::get('/editar', [CategoriaSegurancaController::class, 'editar'])->name('editar');
+		Route::get('/list', [CategoriaSegurancaController::class, 'list'])->name('list');
+		Route::get('/form', [CategoriaSegurancaController::class, 'form'])->name('form');
+		Route::post('/salvar', [CategoriaSegurancaController::class, 'salvar'])->name('salvar');
 	});
 
 	Route::prefix('categorias-servicos')->name('categorias.servicos.')->group(function () {
@@ -180,7 +188,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('row-servico-locacao-os', function () {
 		return view('components.row-servico-locacao-os');
 	})->name('row.servico-locacao-os');
-	
+
 	Route::get('row-servico-seguranca-os', function () {
 		return view('components.row-servico-seguranca-os');
 	})->name('row.servico-seguranca-os');

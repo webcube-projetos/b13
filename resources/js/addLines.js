@@ -50,6 +50,9 @@ $(document).ready(function () {
                 $('#box-linhas-especializacao').append(data);
 
                 $('#box-linhas-especializacao .row:last-child input').val('');
+
+                Livewire.restart()
+                callSelectConfig()
             },
             error: function () {
                 alert('Erro ao carregar a linha de especialização.');

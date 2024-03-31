@@ -1,22 +1,12 @@
-<div class="form-group">
-    <label for="{{ $name }}">{{ ucfirst($label) }}</label>
-    <select 
-        name="{{ $name }}" 
-        id="{{ $componentId }}" 
-        class="form-control"
-        {{ $function ? $function['type'] . '=' . $function['name'] : '' }}
-        {{ $required ? 'required' : '' }}
-    >
-        <option value="" selected disabled>Selecione {{ $label }}</option>
-        @foreach ($registros as $registro)
-            <option 
-                value="{{ $registro['id'] }}" 
-                @if ($value == $registro['id']) 
-                     selected
-                @endif
-            >
-                {{ $registro['nome'] }}
-            </option>
+<div>
+    <select class="dinamicSelect" name="{{ $name }}">
+        <option value="" selected disabled>Selecione {{ $placeholder }}</option>
+        @foreach ($options as $option)
+            <option {{ $selected == $option->id ? 'selected' : '' }} value="{{ $option->id }}">{{ $option->name }}</option>
         @endforeach
     </select>
 </div>
+
+@push('scripts')
+    @vite(['resources/js/selectComponent.js'])
+@endpush
