@@ -45,7 +45,7 @@ trait MontarPaginaDupla
 
     $infoRight = collect([
       'title' => 'Especializações',
-      'head' => collect(['Nome', 'Descrição', 'Motorista', 'Ações']),
+      'head' => collect(['Nome', 'Nome em inglês', 'Descrição', 'Motoristas', 'Ações']),
       'actions' => $buttons,
     ]);
 
