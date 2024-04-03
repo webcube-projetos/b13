@@ -50,11 +50,11 @@ class EspecializacoesController extends Controller
     public function query()
     {
         return Specialization::with(['children' => function ($query) {
-            $query->select('id', 'name', 'description', 'id_ascendent')
+            $query->select('id', 'name', 'name_english', 'description', 'id_ascendent')
                 ->withCount('drivers');
         }])
             ->whereNull('id_ascendent')
-            ->select('id', 'name', 'description')
+            ->select('id', 'name', 'name_english', 'description')
             ->withCount('drivers');
     }
 
