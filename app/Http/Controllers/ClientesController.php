@@ -131,7 +131,7 @@ class ClientesController extends Controller
 			],
 			[
 				'id_address' => $endereco->id,
-				'document' => $this->request->cpfcnpj,
+				'document' => preg_replace('/[^0-9]/', '', $this->request->cpfcnpj),
 				'name' => $this->request->razao,
 				'fantasy_name' => $this->request->nome_fantasia,
 				'nickname' => $this->request->apelido,

@@ -62,7 +62,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [EmpresasController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [EmpresasController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [EmpresasController::class, 'editar'])->name('editar');
-		Route::get('/select-empresa', [EmpresasController::class, 'select'])->name('selectEmpresa');
+		Route::post('/salvar', [EmpresasController::class, 'salvar'])->name('salvar');
 	});
 
 	Route::prefix('veiculos')->name('veiculos.')->group(function () {
@@ -70,6 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [VeiculosController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [VeiculosController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [VeiculosController::class, 'editar'])->name('editar');
+		Route::get('/salvar', [VeiculosController::class, 'salvar'])->name('salvar');
 	});
 
 	Route::prefix('motoristas')->name('motoristas.')->group(function () {
@@ -85,6 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [SegurancasController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [SegurancasController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [SegurancasController::class, 'editar'])->name('editar');
+		Route::post('/salvar', [SegurancasController::class, 'salvar'])->name('salvar');
 	});
 
 	Route::prefix('servicos')->name('servicos.')->group(function () {

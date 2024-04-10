@@ -1,18 +1,23 @@
-window.callSelectConfig = function () {
+// window.callSelectConfig = function () {
 
-  document.addEventListener('livewire:load', function () {
-    console.log($('.dinamicSelect'))
-    var select = new TomSelect('.dinamicSelect', {
-      plugins: ['remove_button'],
-    });
+//   document.addEventListener('livewire:init', function () {
 
-    Livewire.on('optionsUpdated', function (options) {
-      select.clearOptions();
-      options.forEach(function (option) {
-        select.addOption({ value: option, text: option });
-      });
-    });
-  });
-}
+//     const elements = document.querySelectorAll('select.dinamicSelect:not(.tomselected)');
 
-callSelectConfig()
+//     elements.forEach(function (element) {
+//       var select = new TomSelect(element, {
+//         plugins: ['remove_button'],
+//       });
+
+//       Livewire.on('optionsUpdated', function (options) {
+//         select.clearOptions();
+//         options.forEach(function (option) {
+//           select.addOption({ value: option, text: option });
+//         });
+//       });
+//     })
+
+//   });
+// }
+
+// callSelectConfig()

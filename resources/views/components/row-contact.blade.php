@@ -11,7 +11,7 @@
     </div>
     <div class="col-lg-3">
         <label for="cpf_contato">CPF</label>
-        <input type="text" class="form-control" name="cpf_contato[]" id="cpf_contato" maxlength="30" required @isset($item) value="{{ $item->document }}" @endisset>
+        <input type="text" class="form-control" name="cpf_contato[]" id="cpfcnpj" maxlength="30" required @isset($item) value="{{ $item->document }}" @endisset>
     </div>
     <div class="col-lg-4">
         <label for="email_contato">E-mail</label>
@@ -19,11 +19,11 @@
     </div>
     <div class="col-lg-4">
         <label for="telefone_contato">Telefone</label>
-        <input type="text" class="form-control" name="telefone_contato[]" id="telefone_contato" maxlength="30" required @isset($item) value="{{ $item->phone }}" @endisset>
+        <input type="text" class="form-control phone" name="telefone_contato[]" id="telefone_contato" maxlength="30" required @isset($item) value="{{ $item->phone }}" @endisset>
     </div>
     <div class="col-lg-4">
         <label for="whatsapp_contato">Whatsapp</label>
-        <input type="text" class="form-control" name="whatsapp_contato[]" id="whatsapp_contato" maxlength="30" required @isset($item) value="{{ $item->whatsapp }}" @endisset>
+        <input type="text" class="form-control phone" name="whatsapp_contato[]" id="whatsapp_contato" maxlength="30" required @isset($item) value="{{ $item->whatsapp }}" @endisset>
     </div>
     <div class="col-lg-3">
         <label for="cargo_contato">Cargo</label>
