@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActiveSpecialization;
 use App\Models\Address;
+use App\Models\BankAccount;
 use App\Models\Employee;
-use App\Models\FakeModel;
+use App\Models\Specialization;
 use App\Traits\MontarPagina;
 use App\Traits\MontarForm;
 use Illuminate\Http\Request;
-use Illuminate\Support\Fluent;
-use Faker\Factory as Faker;
+
+use Illuminate\Support\Facades\DB;
 
 class MotoristasController extends Controller
 {
@@ -28,87 +30,27 @@ class MotoristasController extends Controller
     {
         $prefix = $this->prefix;
 
-        $dados = $this->query()->paginate(10);
+        $dados = $this->search()->paginate(10);
 
         [$config, $header] = $this->montarPagina('motoristas');
 
-        return view('listagem', compact('prefix', 'dados', 'config', 'header'));
+        return view('pages.Employees.index', compact('prefix', 'dados', 'config', 'header'));
     }
 
-    public function query()
+    public function search()
     {
-        $faker = Faker::create('pt_BR');
-        $data = [];
-
-        for ($i = 0; $i < 30; $i++) {
-            $data[] = [
-                'pessoa-foto' => [
-                    'nome' => $faker->firstName . ' ' . $faker->lastName,
-                    'foto' => 'https://xsgames.co/randomusers/avatar.php?g=male',
-                ],
-                'empresa' => $faker->company,
-                'cidade' => $faker->city . ' - ' . $faker->stateAbbr,
-                'status' => true,
-            ];
-        }
-
-        return new FakeModel($data);
-    }
-
-    public function queryCompleta()
-    {
-        $faker = Faker::create('pt_BR');
-
-        $data[] = [
-            'id' => 20,
-            'cpfCnpj' => '10.123.456/0001-99',
-            'apelido' => 'Jorge da Van',
-            'foto' => $faker->imageUrl($width = 640, $height = 480, 'people'),
-            'razaoSocial' => 'Jorge Transportes ABC',
-            'nomeFantasia' => 'Transportes ABC',
-            'cep' => '05022-789',
-            'logradouro' => 'Av. Das Rosas',
-            'numero' => 516,
-            'bairro' => 'Vila Rosa',
-            'cidade' => 'São Paulo',
-            'estado' => 'SP',
-            'pais' => 'Brasil',
-            'telefone' => 516,
-            'email' => 'Vila Rosa',
-            'empresa' => 3,
-            'observacao' => 'SP',
-            'cnh' => false,
-            'dadosBancarios' => [
-                'nomeBanco' => 'Itau',
-                'numeroBanco' => '0341',
-                'agencia' => '1240',
-                'contaCorrente' => '0143202-9',
-                'tipoChave' => 'CNPJ',
-                'chavePix' => '10.123.456/0001-99',
-                'prefereReceber' => 2,
-            ],
-            'especializacao' => [
-                [
-                    'id_tipo' => 1,
-                    'id_valor' => 3,
-                ],
-                [
-                    'id_tipo' => 2,
-                    'id_valor' => 5,
-                ],
-            ]
-        ];
-
-        return new FakeModel($data);
+        return Employee::query()
+            ->where('type', Employee::DRIVER)
+            ->with(['address', 'contacts', 'specializations']);
     }
 
     public function listar()
     {
-        $dados = $this->query()->paginate(10);
+        $dados = $this->search()->paginate(10);
 
         [$config, $header] = $this->montarPagina('motoristas');
 
-        return view('listagem.tableList', compact('dados', 'config', 'header'));
+        return view('pages.Employees.list', compact('dados', 'config', 'header'));
     }
 
     public function cadastro()
@@ -122,17 +64,19 @@ class MotoristasController extends Controller
     public function editar()
     {
         $prefix = $this->prefix;
-        $id = request()->route('id');
+        $id = request()->query('employee');
 
-        $motorista = $this->queryCompleta()->first() ?? null;
-        $dados = $this->montarForm('motoristas', $motorista);
+        $employee = Employee::find($id);
+        $dados = $this->montarForm('motoristas', $employee);
 
-        return view('cadastro', compact('dados', 'prefix'));
+        return view('cadastro', compact('dados', 'prefix', 'employee'));
     }
 
     public function salvar()
     {
-        if (!$this->request->foto) {
+        DB::beginTransaction();
+
+        if ($this->request->foto) {
             $foto = json_decode($this->request->foto);
             $imgUrlFoto = $this->storeImageBase64($foto->data, 'motoristas');
         }
@@ -145,22 +89,48 @@ class MotoristasController extends Controller
             $employee = Employee::find($this->request->id);
         }
 
+        if ($this->request->tipo == 'bank') {
+            $bank = BankAccount::updateOrCreate(
+                [
+                    'id' => $this->request->id_bank ?? null
+                ],
+                [
+                    'bank' => $this->request->nome_banco ?? null,
+                    'bank_number' => $this->request->numero_banco ?? null,
+                    'agency' => $this->request->agencia ?? null,
+                    'cc' => $this->request->conta ?? null,
+                    'key_type' => $this->request->tipo_chave ?? null,
+                    'key' => $this->request->chave_pix ?? null,
+                    'preference' => $this->request->preference ?? null,
+                ]
+            );
+
+            $employee->id_bank = $bank->id;
+            $employee->save();
+            DB::commit();
+
+            return [
+                'route' => route('motoristas.editar', ['drivers' => $employee->id]),
+            ];
+        }
+
+
         $endereco = Address::updateOrCreate(
             [
                 'id' => $employee?->id_address ?? null
             ],
             [
                 'cep' => $this->request->cep,
-                'street' => $this->request->logradouro,
-                'number' => $this->request->numero,
-                'neighborhood' => $this->request->bairro,
-                'city' => $this->request->cidade,
-                'state' => $this->request->estado,
-                'country' => $this->request->pais,
+                'street' => $this->request->street,
+                'number' => $this->request->number,
+                'neighborhood' => $this->request->neighborhood,
+                'city' => $this->request->city,
+                'state' => $this->request->state,
+                'country' => $this->request->country,
             ]
         );
 
-        Employee::updateOrCreate(
+        $employee = Employee::updateOrCreate(
             ['id' => $this->request->id],
             [
                 'type' => Employee::DRIVER,
@@ -168,15 +138,33 @@ class MotoristasController extends Controller
                 'fantasy_name' => $this->request->fantasy_name ?? null,
                 'nickname' => $this->request->nickname ?? null,
                 'document' => preg_replace('/[^0-9]/', '', $this->request->document),
-                'armed' => null,
+                'armed' => 0,
                 'id_address' => $endereco->id,
                 'id_company' => $this->request->id_company ?? null,
-                'id_contact' => null,
                 'id_bank' => null,
                 'obs' => $this->request->obs ?? null,
-                'cnh' => $imgUrlCnh,
-                'photo' => $imgUrlFoto,
+                'cnh' => $imgUrlCnh ?? null,
+                'photo' => $imgUrlFoto ?? null,
             ]
         );
+
+
+        foreach ($this->request->id_especialization as $index => $especializacao) {
+            $especializacao = Specialization::find($especializacao);
+
+            if (!$especializacao) continue;
+            if (!$especializacao->children->isEmpty()) continue;
+
+            ActiveSpecialization::updateOrCreate([
+                'id_employee' => $employee->id,
+                'id_especializacao' => $especializacao->id,
+            ]);
+        }
+
+        DB::commit();
+
+        return [
+            'route' => route('motoristas.editar', ['employee' => $employee->id]),
+        ];
     }
 }

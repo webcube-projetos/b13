@@ -124,6 +124,8 @@ var cpfMascara = function (val) {
       field.mask(cpfMascara.apply({}, arguments), options);
     }
   };
+
+
 $('#cpfcnpj').mask(cpfMascara, cpfOptions);
 
 var telefoneMascara = function (val) {
@@ -136,4 +138,4 @@ var telefoneOptions = {
   }
 };
 
-$('#phone').mask(telefoneMascara, telefoneOptions);
+$('.phone').mask(telefoneMascara, telefoneOptions);

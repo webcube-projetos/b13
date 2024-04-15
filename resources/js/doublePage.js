@@ -10,9 +10,6 @@ function handleEditForm(element) {
 
   })
     .then(response => {
-      console.log(response.data)
       document.querySelector('#formRegister').innerHTML = response.data
-      Livewire.restart()
-      callSelectConfig()
     })
 }

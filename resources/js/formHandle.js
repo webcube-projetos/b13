@@ -66,8 +66,7 @@ function callForm(response) {
   })
     .then(response => {
       document.querySelector('#formRegister').innerHTML = response.data
-      Livewire.restart()
-      callSelectConfig()
+
     })
 }
 

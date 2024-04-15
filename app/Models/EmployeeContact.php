@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ActiveSpecialization extends Model
+class EmployeeContact extends Model
 {
     use HasFactory;
 
-    protected $table = 'actives_specializations';
-
     protected $fillable = [
-        'id_especializacao',
-        'id_employee',
+        'employee_id',
+        'contact_id',
     ];
 }
