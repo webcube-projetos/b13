@@ -3,82 +3,51 @@
 namespace App\Http\Controllers;
 
 use App\Models\FakeModel;
+use App\Models\Service;
+use App\Models\ServiceType;
 use App\Traits\MontarPagina;
 use App\Traits\MontarForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Fluent;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\DB;
 
 class ServicosController extends Controller
 {
     protected $prefix;
+    protected $request;
 
     use MontarPagina;
     use MontarForm;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->prefix = 'servicos';
+        $this->request = $request;
     }
     public function index()
     {
         $prefix = $this->prefix;
 
-        $dados = $this->query()->paginate(10);
+        $dados = $this->search()->paginate(10);
 
         [$config, $header] = $this->montarPagina('servicos');
 
-        return view('listagem', compact('prefix', 'dados', 'config', 'header'));
+        return view('pages.Services.index', compact('prefix', 'dados', 'config', 'header'));
     }
 
-    public function query()
+    public function search()
     {
-        $data = [];
-
-        for ($i = 0; $i < 30; $i++) {
-            $data[] = [
-                'tipo' => 'Locação',
-                'nome' => '5 Horas',
-                'categoria' => 'Diária',
-                'preco' => 'R$700,00',
-            ];
-        }
-
-        return new FakeModel($data);
-    }
-
-    public function queryCompleta()
-    {
-        $data = array(
-            'id' => '',
-            'categoria' => 2,
-            'nome' => 'In',
-            'categoriaVeiculo' => 1,
-            'tipoVeiculo' => 1,
-            'blindado' => 1,
-            'cep' => '05022-789',
-            'precoBase' => 600,
-            'horaBase' => 0,
-            'precoHoraExtra' => 0,
-            'kmBase' => 0,
-            'kmExtra' => 0,
-            'custoParceiro' => 300,
-            'horaExtraParceiro' => 0,
-            'kmExtraParceiro' => 0,
-            'custoMotorista' => 250,
-            'custoHoraExtra' => 0,
-        );
-
-        return new FakeModel($data);
+        return Service::query();
     }
 
     public function listar()
     {
-        $dados = $this->query()->paginate(10);
+        $dados = $this->search()->paginate(10);
 
         [$config, $header] = $this->montarPagina('servicos');
 
-        return view('listagem.tableList', compact('dados', 'config', 'header'));
+        return view('pages.Services.list', compact('dados', 'config', 'header'));
     }
 
     public function cadastro()
@@ -91,11 +60,63 @@ class ServicosController extends Controller
 
     public function editar()
     {
-        $id = request()->route('id');
+        $prefix = $this->prefix;
+        $id = request()->query('servicos');
 
-        $cliente = $this->queryCompleta()->first() ?? null;
-        $dados = $this->montarForm('servicos', $cliente);
+        $servico = Service::find($id);
+        $dados = $this->montarForm('servicos', $servico);
 
-        return view('cadastro', compact('dados'));
+        return view('cadastro', compact('dados', 'prefix', 'servico'));
+    }
+
+    public function salvar()
+    {
+        DB::beginTransaction();
+
+        if ($this->request->id) {
+            $service = Service::find($this->request->id);
+        }
+
+        $serviceType = ServiceType::where('name', $this->request->id_service_type)->first();
+
+        $service = Service::updateOrCreate(
+            ['id' => $this->request->id],
+            [
+                'name' => $this->request->name,
+                'name_english' => $this->request->name_english ?? null,
+                'blindado_armado' => $this->request->armored,
+                'price' => $this->request->price,
+                'time' => $this->request->time,
+                'extra_price' => $this->request->extra_price,
+                'km' => $this->request->km,
+                'km_extra' => $this->request->km_extra,
+                'partner_cost' => $this->request->partner_cost,
+                'partner_extra_time' => $this->request->partner_extra_time,
+                'partner_extra_km' => $this->request->partner_extra_km,
+                'employee_cost' => $this->request->employee_cost,
+                'employee_extra' => $this->request->employee_extra,
+                'id_category_service' => $this->request->id_category_service,
+                'id_category_espec' => $this->request->id_category_espec,
+                'id_service_type' => $serviceType->id,
+                'id_vehicle' => $this->request->id_vehicle,
+            ]
+        );
+        DB::commit();
+
+        return [
+            'route' => route('servicos.editar', ['servicos' => $service->id]),
+        ];
+    }
+
+    public function delete()
+    {
+        $service = Service::find($this->request->id);
+
+        if ($service) {
+
+            $service->delete();
+        }
+
+        return $this->listar();
     }
 }

@@ -48,6 +48,9 @@
                             value="{{ $fields['value'] }}"
                         />
                     @endif
+                @elseif($fields['type'] === 'selectComponent')
+                    <livewire:select-component type="{{$fields['typeSelect']}}" placeholder="{{$fields['placeholder']}}" name="{{$fields['name']}}" selected="{{$fields['value']}}" />
+
                 @else
                     <input 
                         class="form-control" 
@@ -55,7 +58,7 @@
                         placeholder="{{ $fields['placeholder'] }}" 
                         id="{{ $fields['id'] }}"
                         name="{{ $fields['name'] }}" 
-                        maxlength="{{ $fields['maxlenghtRoute'] }}" 
+                        maxlength="{{ $fields['maxlenghtRoute'] ?? '' }}" 
                         value="{{ $fields['value'] ?? '' }}"
                         {{ $fields['function'] ? $fields['function']['type'] . '=' . $fields['function']['name'] : '' }}
                         {{ $fields['required'] ? 'required' : '' }}

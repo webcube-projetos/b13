@@ -15,7 +15,7 @@
   <tbody>
     @foreach($lista as $itens)
       <tr>
-          @foreach($itens->toArray() as $column => $dado)
+          @foreach($itens?->toArray() as $column => $dado)
             @if(!in_array($column, ['children', 'id', 'id_ascendent']))
               <td><h6 class="mb-0 text-sm">{{ $dado ?? '' }}</h6></td>
             @endif
@@ -48,48 +48,50 @@
               @endforeach
           </td>
       </tr>
-      @forelse($itens['children'] as $itensChild)
-      <tr>
-        @foreach($itensChild->toArray() as $column => $dado)
-          @if(!in_array($column, ['id', 'id_ascendent']))
+      @isset($itens['children'])
+        @forelse($itens['children'] as $itensChild)
+          <tr>
+            @foreach($itensChild->toArray() as $column => $dado)
+              @if(!in_array($column, ['id', 'id_ascendent']))
 
-            @if ($column == 'name')
-              <td><h6 class="mb-0 text-sm">- {{ $dado ?? '' }}</h6></td>
-            @else
-              <td><h6 class="mb-0 text-sm">{{ $dado ?? '' }}</h6></td>
-            @endif
-          @endif
-        @endforeach
-          <td class="text-right">
-              @foreach($config['infoRight']['actions'] as $botao)
-                @if ($botao['onClick'])
-                  <button 
-                      class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
-                      data-toggle="tooltip" 
-                      data-original-title="{{ $botao['title'] ?? ''}}"
-                      data-id="{{ $itensChild->id }}"
-                      data-route="{{ route($prefix.'.'.$botao['route']) ?? '' }}"
-                      @if($botao['onClick']) onclick="{{ $botao['onClick'] }}" @endif
-                    >
-                      <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
-                  </button>
-                  @elseif ($botao['route'])
-                  <a 
-                    href="{{ route($prefix.'.'.$botao['route']) }}"
-                    class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
-                    data-toggle="tooltip" 
-                    data-original-title="{{ $botao['title'] ?? ''}}"
-                    @if($botao['onClick']) onclick="{{ $botao['onClick'] }}" @endif
-                  >
-                    <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
-                </a>
+                @if ($column == 'name')
+                  <td><h6 class="mb-0 text-sm">- {{ $dado ?? '' }}</h6></td>
+                @else
+                  <td><h6 class="mb-0 text-sm">{{ $dado ?? '' }}</h6></td>
                 @endif
-              @endforeach
-          </td>
-        </tr>
+              @endif
+            @endforeach
+              <td class="text-right">
+                  @foreach($config['infoRight']['actions'] as $botao)
+                    @if ($botao['onClick'])
+                      <button 
+                          class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
+                          data-toggle="tooltip" 
+                          data-original-title="{{ $botao['title'] ?? ''}}"
+                          data-id="{{ $itensChild->id }}"
+                          data-route="{{ route($prefix.'.'.$botao['route']) ?? '' }}"
+                          @if($botao['onClick']) onclick="{{ $botao['onClick'] }}" @endif
+                        >
+                          <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
+                      </button>
+                      @elseif ($botao['route'])
+                      <a 
+                        href="{{ route($prefix.'.'.$botao['route']) }}"
+                        class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
+                        data-toggle="tooltip" 
+                        data-original-title="{{ $botao['title'] ?? ''}}"
+                        @if($botao['onClick']) onclick="{{ $botao['onClick'] }}" @endif
+                      >
+                        <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
+                    </a>
+                    @endif
+                  @endforeach
+              </td>
+          </tr>
 
-      @empty
-      @endforelse
+        @empty
+        @endforelse
+      @endisset
     @endforeach
 </tbody>
 

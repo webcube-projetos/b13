@@ -39,7 +39,9 @@
 .filepond--root#documento,
 .filepond--root#imagem {
     width: 100%;
-    margin-left: auto;
+    max-width: 200px;
+    margin-right: auto !important;
+    margin-left: 0 !important;
 }
 
 #cnh .filepond--drip,

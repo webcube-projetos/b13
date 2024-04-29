@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Traits\MontarPaginaDupla;
 use Illuminate\Http\Request;
 use App\Models\FakeModel;
@@ -14,59 +15,86 @@ class CategoriaController extends Controller
     use MontarForm;
 
     public $prefix;
+    public $request;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->prefix = 'categorias.veiculos';
+        $this->request = $request;
     }
     public function index()
     {
         $prefix = $this->prefix;
         $config = $this->montarPaginaDupla('categorias');
-        $lista = $this->query()->paginate(10);
+        $lista = $this->search()->paginate(10);
         $dados = $this->montarForm('categorias');
 
         return view('paginaDupla', compact('prefix', 'config', 'lista', 'dados'));
     }
 
-    public function query()
+    public function form()
     {
-        $faker = Faker::create('pt_BR');
-        $faker->addProvider(new \Faker\Provider\FakeCar($faker));
+        $dados = $this->montarForm('categorias');
+        return view('register.formRegisterSingle', compact('dados'));
+    }
+    public function list()
+    {
+        $prefix = $this->prefix;
+        $config = $this->montarPaginaDupla('categorias');
+        $lista = $this->search()->paginate(10);
 
-        $data = [];
-
-        $data[] = [
-            'categorias' => 'Executivo',
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => false
-        ];
-
-        $data[] = [
-            'categorias' => 'Luxo',
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => false
-        ];
-        $data[] = [
-            'categorias' => 'Cargo',
-            'descricao' => 'Descrição',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => false
-        ];
-
-        return new FakeModel($data);
+        return view('listagem.tableListPage', compact('prefix', 'config', 'lista'));
     }
 
-    public function select()
+    public function search()
     {
-        $data = [
-            ['id' => 1, 'nome' => 'Executivo'],
-            ['id' => 2, 'nome' => 'Luxo'],
-            ['id' => 3, 'nome' => 'Cargo'],
-        ];
+        return Category::query()
+            ->select('id', 'name', 'description')
+            ->withCount('vehicles')
+            ->where('type', Category::VEHICLE);
+    }
 
-        return $data;
+    public function salvar()
+    {
+        $this->request->validate([
+            'name' => 'required',
+        ], [
+            'name.required' => 'O campo nome é obrigatório',
+        ]);
+
+        Category::updateOrCreate([
+            'id' => $this->request->id,
+            'type' => Category::VEHICLE,
+        ], [
+            'name' => $this->request->name,
+            'description' => $this->request->description ?? null,
+        ]);
+
+        return 'categorias-veiculos';
+    }
+
+    public function editar()
+    {
+        $categoria = Category::find($this->request->id);
+        $dados = $this->montarForm('categorias', $categoria);
+        return view('register.formRegisterSingle', compact('dados'));
+    }
+
+    public function delete()
+    {
+        $categoria = Category::find($this->request->id);
+
+        if ($categoria) {
+            if ($categoria->services->count() > 0) {
+                abort(403, 'Esta categoria contém servicos');
+            }
+            $categoria->delete();
+        }
+
+        $prefix = $this->prefix;
+        $config = $this->montarPaginaDupla('categorias');
+        $lista = $this->search()->paginate(10);
+
+        return view('listagem.tableListPage', compact('prefix', 'config', 'lista'));
     }
 }

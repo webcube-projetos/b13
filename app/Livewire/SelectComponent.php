@@ -2,8 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Models\Category;
 use App\Models\Company;
 use App\Models\Specialization;
+use App\Models\VehicleBrand;
+use App\Models\VehicleType;
 use Livewire\Component;
 use Illuminate\Support\Facades\Http;
 use Livewire\WithPagination;
@@ -24,6 +27,13 @@ class SelectComponent extends Component
             'especialization' => $this->especialization(),
             'especialization_primary' => $this->especialization(true),
             'empresas' => $this->empresas(),
+            'typesVehicle' => $this->typesVehicle(),
+            'categoryVehicle' => $this->categoryVehicle(),
+            'selectBrand' => $this->brands(),
+            'armored' => $this->armored(),
+            'armed' => $this->armored(),
+            'categoryService' => $this->categoryService(),
+            'securityType' => $this->securityType(),
         };
     }
     public function render()
@@ -47,5 +57,50 @@ class SelectComponent extends Component
         return Company::select('id', 'name')
             ->orderBy('created_at', 'desc')
             ->get();
+    }
+
+    public function typesVehicle()
+    {
+        return VehicleType::select('id', 'name')
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    public function categoryVehicle()
+    {
+        return Category::select('id', 'name')
+            ->where('type', Category::VEHICLE)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+    public function categoryService()
+    {
+        return Category::select('id', 'name')
+            ->where('type', Category::SERVICE)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+    public function securityType()
+    {
+        return Category::select('id', 'name')
+            ->where('type', Category::SECURITY)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+    public function brands()
+    {
+        return VehicleBrand::select('id', 'name')
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    public function armored()
+    {
+        return collect([
+            ['id' => 1, 'name' => 'Sim'],
+            ['id' => 0, 'name' => 'Não'],
+        ])->map(function ($item) {
+            return (object) $item;
+        });
     }
 }

@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VehicleType extends Model
+class VehicleAdditional extends Model
 {
     use HasFactory;
 
-    protected $table = 'vehicles_types';
-
     protected $fillable = [
-        'name',
+        'vehicle_id',
+        'additional_id',
     ];
 }

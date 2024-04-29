@@ -21,6 +21,8 @@ function pesquisar(page = 1) {
     success: function (data) {
       $('#tableList').html(data);
       ativarPaginacao();
+      $('[data-toggle="tooltip"]').tooltip();
+
     },
   })
 }
@@ -28,3 +30,31 @@ function pesquisar(page = 1) {
 $(document).ready(function () {
   ativarPaginacao();
 })
+
+window.deletar = function (event) {
+  var button = event.target.closest('button');
+
+  handleDelete(button);
+}
+
+function handleDelete(element) {
+  axios.post(element.dataset.route, {
+    id: element.dataset.id
+
+  })
+    .then(response => {
+      document.querySelector('#tableList').innerHTML = response.data
+      $('[data-toggle="tooltip"]').tooltip();
+
+      Toastify({
+        text: "Item removido com sucesso!",
+        className: "info",
+        close: true,
+        gravity: "bottom",
+        position: "right",
+        style: {
+          background: "#FF9921",
+        }
+      }).showToast();
+    })
+}

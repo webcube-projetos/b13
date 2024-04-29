@@ -25,7 +25,7 @@ class CategoriaSegurancaController extends Controller
     public function index()
     {
         $prefix = $this->prefix;
-        $config = $this->montarPaginaDupla('categorias');
+        $config = $this->montarPaginaDupla('categoriasSeguranca');
         $lista = $this->query()->paginate(10);
         $dados = $this->montarForm('categorias');
 
@@ -41,7 +41,7 @@ class CategoriaSegurancaController extends Controller
     public function list()
     {
         $prefix = $this->prefix;
-        $config = $this->montarPaginaDupla('categorias');
+        $config = $this->montarPaginaDupla('categoriasSeguranca');
         $lista = $this->query()->paginate(10);
 
         return view('listagem.tableListPage', compact('prefix', 'config', 'lista'));
@@ -51,7 +51,8 @@ class CategoriaSegurancaController extends Controller
     {
         return Category::query()
             ->select('id', 'name', 'description')
-            ->withCount('drivers');
+            ->withCount('security')
+            ->where('type', Category::SECURITY);
     }
 
     public function salvar()

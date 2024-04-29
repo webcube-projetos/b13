@@ -138,7 +138,7 @@ trait MontarPagina
       'title' => 'Deletar',
       'route' => 'veiculos.delete',
       'icon' => 'fa fa-trash',
-      'onClick' => 'deletar(this)',
+      'onClick' => 'deletar(event)',
       'class' => '',
     ]);
 
@@ -278,7 +278,7 @@ trait MontarPagina
       'title' => 'Deletar',
       'route' => 'delete',
       'icon' => 'fa fa-trash',
-      'onClick' => 'deletar(this)',
+      'onClick' => 'deletar(event)',
       'class' => '',
     ]);
 

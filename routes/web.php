@@ -70,7 +70,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [VeiculosController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [VeiculosController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [VeiculosController::class, 'editar'])->name('editar');
-		Route::get('/salvar', [VeiculosController::class, 'salvar'])->name('salvar');
+		Route::post('/salvar', [VeiculosController::class, 'salvar'])->name('salvar');
+		Route::post('/delete', [VeiculosController::class, 'delete'])->name('delete');
 	});
 
 	Route::prefix('motoristas')->name('motoristas.')->group(function () {
@@ -94,6 +95,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [ServicosController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [ServicosController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [ServicosController::class, 'editar'])->name('editar');
+		Route::post('/salvar', [ServicosController::class, 'salvar'])->name('salvar');
+		Route::post('/delete', [ServicosController::class, 'delete'])->name('delete');
 	});
 
 	Route::prefix('financeiro')->name('financeiro.')->group(function () {
@@ -125,18 +128,26 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/list', [EspecializacoesController::class, 'list'])->name('list');
 		Route::get('/form', [EspecializacoesController::class, 'form'])->name('form');
 		Route::post('/editar', [EspecializacoesController::class, 'editar'])->name('editar');
-		Route::get('/delete', [EspecializacoesController::class, 'delete'])->name('delete');
+		Route::post('/delete', [EspecializacoesController::class, 'delete'])->name('delete');
 		Route::post('/salvar', [EspecializacoesController::class, 'salvar'])->name('salvar');
 	});
 
 	Route::prefix('adicionais')->name('adicionais.')->group(function () {
 		Route::get('/', [AdicionaisController::class, 'index'])->name('index');
-		Route::get('/editar', [AdicionaisController::class, 'editar'])->name('editar');
+		Route::post('/editar', [AdicionaisController::class, 'editar'])->name('editar');
+		Route::post('/delete', [AdicionaisController::class, 'delete'])->name('delete');
+		Route::post('/salvar', [AdicionaisController::class, 'salvar'])->name('salvar');
+		Route::get('/list', [AdicionaisController::class, 'list'])->name('list');
+		Route::get('/form', [AdicionaisController::class, 'form'])->name('form');
 	});
 
 	Route::prefix('categorias-veiculos')->name('categorias.veiculos.')->group(function () {
 		Route::get('/', [CategoriaController::class, 'index'])->name('index');
-		Route::get('/editar', [CategoriaController::class, 'editar'])->name('editar');
+		Route::post('/editar', [CategoriaController::class, 'editar'])->name('editar');
+		Route::post('/delete', [CategoriaController::class, 'delete'])->name('delete');
+		Route::post('/salvar', [CategoriaController::class, 'salvar'])->name('salvar');
+		Route::get('/list', [CategoriaController::class, 'list'])->name('list');
+		Route::get('/form', [CategoriaController::class, 'form'])->name('form');
 	});
 
 	Route::prefix('categorias-segurancas')->name('categorias.segurancas.')->group(function () {
@@ -145,11 +156,16 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/list', [CategoriaSegurancaController::class, 'list'])->name('list');
 		Route::get('/form', [CategoriaSegurancaController::class, 'form'])->name('form');
 		Route::post('/salvar', [CategoriaSegurancaController::class, 'salvar'])->name('salvar');
+		Route::post('/delete', [CategoriaSegurancaController::class, 'delete'])->name('delete');
 	});
 
 	Route::prefix('categorias-servicos')->name('categorias.servicos.')->group(function () {
 		Route::get('/', [CategoriaServicoController::class, 'index'])->name('index');
-		Route::get('/editar', [CategoriaServicoController::class, 'editar'])->name('editar');
+		Route::post('/editar', [CategoriaServicoController::class, 'editar'])->name('editar');
+		Route::post('/delete', [CategoriaServicoController::class, 'delete'])->name('delete');
+		Route::post('/salvar', [CategoriaServicoController::class, 'salvar'])->name('salvar');
+		Route::get('/list', [CategoriaServicoController::class, 'list'])->name('list');
+		Route::get('/form', [CategoriaServicoController::class, 'form'])->name('form');
 	});
 
 	Route::prefix('procedimentos')->name('procedimentos.')->group(function () {
