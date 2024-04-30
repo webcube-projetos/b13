@@ -58,7 +58,7 @@
                                 placeholder="{{ $fields['placeholder'] }}" 
                                 id="{{ $fields['id'] }}"
                                 name="{{ $fields['name'] }}" 
-                                maxlength="{{ $fields['maxlenghtRoute'] }}" 
+                                maxlength="{{ $fields['maxlenghtRoute'] ?? '' }}" 
                                 value="{{ $fields['value'] ?? '' }}"
                                 {{ $fields['function'] ? $fields['function']['type'] . '=' . $fields['function']['name'] : '' }}
                                 {{ $fields['required'] ? 'required' : '' }}

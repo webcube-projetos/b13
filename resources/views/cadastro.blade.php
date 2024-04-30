@@ -103,12 +103,16 @@
                 <div class="col-lg-4">
                     <div class="nav-wrapper position-relative end-0">
                         <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                            @if((isset($servico) && $servico->serviceType->name == 'Locação') || !isset($servico))
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 active" id="locacao-tab" data-bs-toggle="tab" data-bs-target="#locacao" type="button" role="tab" aria-controls="locacao" aria-selected="true">Locação</a>
                             </li>
+                            @endif
+                            @if((isset($servico) && $servico->serviceType->name == 'Segurança') || !isset($servico))
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1" id="seguranca-tab" data-bs-toggle="tab" data-bs-target="#seguranca" type="button" role="tab" aria-controls="seguranca" aria-selected="true">Segurança</a>
                             </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -118,7 +122,10 @@
                 <div class="tab-pane fade show active" id="locacao" role="tabpanel" aria-labelledby="locacao-tab">
                     <div class="card">
                         <div class="card-body pt-4 p-3">
-                            <form action="{{ $dados['pageInfo']['form_action'] }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left">
+                                <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left" id="{{ $dados['pageInfo']['id'] }}" enctype="multipart/form-data">
+                                <input type="hidden" name="id_service_type" value="Locação">
+                                <input type="hidden" name="id" @isset($dados['pageInfo']['value']) value="{{ $dados['pageInfo']['value']->id }}" @endisset>
+
                                 @csrf
                                 <div class="row">
                                     <p class="fw-bold mt-4">Locação</p>
@@ -137,7 +144,10 @@
                 <div class="tab-pane fade show" id="seguranca" role="tabpanel" aria-labelledby="seguranca-tab">
                     <div class="card">
                         <div class="card-body pt-4 p-3">
-                            <form action="{{ $dados['pageInfo']['form_action'] }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left">
+                                <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left" id="{{ $dados['pageInfo']['id'] }}" enctype="multipart/form-data">
+                                <input type="hidden" name="id_service_type" value="Segurança">
+                                <input type="hidden" name="id" @isset($dados['pageInfo']['value']) value="{{ $dados['pageInfo']['value']->id }}" @endisset>
+
                                 @csrf
                                 <div class="row">
                                     <p class="fw-bold mt-4">Segurança</p>

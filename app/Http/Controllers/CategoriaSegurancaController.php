@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\CategoryType;
 use App\Traits\MontarPaginaDupla;
 use Illuminate\Http\Request;
 use App\Models\FakeModel;
@@ -19,60 +20,86 @@ class CategoriaSegurancaController extends Controller
 
     public function __construct(Request $request)
     {
-        $this->prefix = 'categorias.seguranca';
+        $this->prefix = 'categorias.segurancas';
         $this->request = $request;
     }
     public function index()
     {
         $prefix = $this->prefix;
-        $config = $this->montarPaginaDupla('categorias');
-        $lista = $this->query()->paginate(10);
-        $dados = $this->montarForm('categorias');
+        $config = $this->montarPaginaDupla('categoriasSeguranca');
+        $lista = $this->search()->paginate(10);
+        $dados = $this->montarForm('categoriasSeguranca');
 
         return view('paginaDupla', compact('prefix', 'config', 'lista', 'dados'));
     }
 
     public function form()
     {
-        $dados = $this->montarForm('categorias');
-        return view('register.formRegister', compact('dados'));
+        $dados = $this->montarForm('categoriasSeguranca');
+        return view('register.formRegisterSingle', compact('dados'));
     }
 
     public function list()
     {
         $prefix = $this->prefix;
-        $config = $this->montarPaginaDupla('categorias');
-        $lista = $this->query()->paginate(10);
+        $config = $this->montarPaginaDupla('categoriasSeguranca');
+        $lista = $this->search()->paginate(10);
 
         return view('listagem.tableListPage', compact('prefix', 'config', 'lista'));
     }
 
-    public function query()
+    public function search()
     {
         return Category::query()
             ->select('id', 'name', 'description')
-            ->withCount('drivers');
+            ->withCount('security')
+            ->whereHas('type', function ($query) {
+                $query->where('name', 'Security');
+            });
     }
 
     public function salvar()
     {
         $this->request->validate([
             'name' => 'required',
-            'name_english' => 'required',
         ], [
             'name.required' => 'O campo nome é obrigatório',
-            'name_english.required' => 'O campo nome em inglês é obrigatório',
         ]);
+
+        $type = CategoryType::where('name', 'Security')->first();
 
         Category::updateOrCreate([
             'id' => $this->request->id,
         ], [
             'name' => $this->request->name,
-            'name_english' => $this->request->name_english,
             'description' => $this->request->description ?? null,
-            'id_ascendent' => $this->request->id_ascendent ?? null,
+            'type' => $type->id
         ]);
 
-        return $this->prefix;
+        return 'categorias-segurancas';
+    }
+    public function delete()
+    {
+        $categoria = Category::find($this->request->id);
+
+        if ($categoria) {
+            if ($categoria->services->count() > 0) {
+                abort(403, 'Esta categoria contém servicos');
+            }
+            $categoria->delete();
+        }
+
+        $prefix = $this->prefix;
+        $config = $this->montarPaginaDupla('categoriasSeguranca');
+        $lista = $this->search()->paginate(10);
+
+        return view('listagem.tableListPage', compact('prefix', 'config', 'lista'));
+    }
+
+    public function editar()
+    {
+        $categoria = Category::find($this->request->id);
+        $dados = $this->montarForm('categoriasSeguranca', $categoria);
+        return view('register.formRegisterSingle', compact('dados'));
     }
 }

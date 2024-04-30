@@ -48,6 +48,9 @@
                             value="{{ $fields['value'] }}"
                         />
                     @endif
+                @elseif($fields['type'] === 'selectComponent')
+                    <livewire:select-component type="{{$fields['typeSelect']}}" placeholder="{{$fields['placeholder']}}" name="{{$fields['name']}}" selected="{{$fields['value']}}" />
+
                 @else
                     <input 
                         class="form-control" 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\CategoryType;
 use App\Traits\MontarPaginaDupla;
 use Illuminate\Http\Request;
 use App\Models\FakeModel;
@@ -14,56 +16,93 @@ class CategoriaServicoController extends Controller
     use MontarForm;
 
     public $prefix;
+    public $request;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->prefix = 'categorias.servicos';
+        $this->request = $request;
     }
     public function index()
     {
         $prefix = $this->prefix;
         $config = $this->montarPaginaDupla('categorias-servicos');
-        $lista = $this->query()->paginate(10);
+        $lista = $this->search()->paginate(10);
+
         $dados = $this->montarForm('categorias-servicos');
 
         return view('paginaDupla', compact('prefix', 'config', 'lista', 'dados'));
     }
-
-    public function query()
+    public function form()
     {
-        $faker = Faker::create('pt_BR');
-        $faker->addProvider(new \Faker\Provider\FakeCar($faker));
+        $dados = $this->montarForm('categorias-servicos');
+        return view('register.formRegisterSingle', compact('dados'));
+    }
+    public function list()
+    {
+        $prefix = $this->prefix;
+        $config = $this->montarPaginaDupla('categorias-servicos');
+        $lista = $this->search()->paginate(10);
 
-        $data = [];
-
-        $data[] = [
-            'categorias' => 'Transfer',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => false
-        ];
-
-        $data[] = [
-            'categorias' => 'Diária',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => false
-        ];
-        $data[] = [
-            'categorias' => 'Travel',
-            'motoristas_id' => $faker->numberBetween(1, 20),
-            'ascendente' => false
-        ];
-
-        return new FakeModel($data);
+        return view('listagem.tableListPage', compact('prefix', 'config', 'lista'));
     }
 
-    public function select()
+    public function search()
     {
-        $data = [
-            ['id' => 1, 'nome' => 'Executivo'],
-            ['id' => 2, 'nome' => 'Luxo'],
-            ['id' => 3, 'nome' => 'Cargo'],
-        ];
+        return Category::query()
+            ->select('id', 'name', 'name_english')
+            ->withCount('services')
+            ->whereHas('type', function ($query) {
+                $query->where('name', 'Service');
+            });
+    }
 
-        return $data;
+    public function salvar()
+    {
+        //validate and respond with errors message
+        $this->request->validate([
+            'name' => 'required',
+            'name_english' => 'required',
+        ], [
+            'name.required' => 'O campo nome é obrigatório',
+            'name_english.required' => 'O campo nome em inglês é obrigatório',
+        ]);
+
+        $type = CategoryType::where('name', 'Service')->first();
+
+        Category::updateOrCreate([
+            'id' => $this->request->id,
+        ], [
+            'name' => $this->request->name,
+            'name_english' => $this->request->name_english,
+            'type' => $type->id
+        ]);
+
+        return 'categorias-servicos';
+    }
+
+    public function editar()
+    {
+        $categoria = Category::find($this->request->id);
+        $dados = $this->montarForm('categorias-servicos', $categoria);
+        return view('register.formRegisterSingle', compact('dados'));
+    }
+
+    public function delete()
+    {
+        $categoria = Category::find($this->request->id);
+
+        if ($categoria) {
+            if ($categoria->services->count() > 0) {
+                abort(403, 'Esta categoria contém servicos');
+            }
+            $categoria->delete();
+        }
+
+        $prefix = $this->prefix;
+        $config = $this->montarPaginaDupla('categorias-servicos');
+        $lista = $this->search()->paginate(10);
+
+        return view('listagem.tableListPage', compact('prefix', 'config', 'lista'));
     }
 }

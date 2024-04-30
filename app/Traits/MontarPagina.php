@@ -138,7 +138,7 @@ trait MontarPagina
       'title' => 'Deletar',
       'route' => 'veiculos.delete',
       'icon' => 'fa fa-trash',
-      'onClick' => 'deletar(this)',
+      'onClick' => 'deletar(event)',
       'class' => '',
     ]);
 
@@ -268,19 +268,20 @@ trait MontarPagina
 
     $editar = collect([
       'title' => 'Editar',
-      'route' => 'editar',
+      'route' => 'servicos.editar',
       'icon' => 'fa fa-pencil',
-      'onClick' => 'editar(this)',
+      'onClick' => false,
       'class' => '',
     ]);
 
     $deletar = collect([
       'title' => 'Deletar',
-      'route' => 'delete',
+      'route' => 'servicos.delete',
       'icon' => 'fa fa-trash',
-      'onClick' => 'deletar(this)',
+      'onClick' => 'deletar(event)',
       'class' => '',
     ]);
+
 
     $actions = collect([
       $editar,

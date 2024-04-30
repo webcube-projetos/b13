@@ -13,6 +13,7 @@ trait MontarPaginaDupla
       'especializacao' => $this->montarEspecializacao(),
       'adicionais' => $this->montarAdicionais(),
       'categorias' => $this->montarCategorias(),
+      'categoriasSeguranca' => $this->montarCategoriasSeguranca(),
       'categorias-servicos' => $this->montarCategoriasServicos(),
       'procedimentos' => $this->montarProcedimentos(),
     };
@@ -38,7 +39,7 @@ trait MontarPaginaDupla
         'title' => 'Deletar',
         'route' => 'delete',
         'icon' => 'fa fa-trash',
-        'onClick' => 'deletar(this)',
+        'onClick' => 'deletar(event)',
         'class' => '',
       ],
     ];
@@ -59,11 +60,27 @@ trait MontarPaginaDupla
       'fields' => collect(['Nome do adicional', 'Name in English', 'Descrição']),
     ]);
 
+    $buttons = [
+      'editar' => [
+        'title' => 'Editar',
+        'route' => 'editar',
+        'icon' => 'fa fa-pencil',
+        'onClick' => 'editDoublePage(event)',
+        'class' => '',
+      ],
+      'delete' => [
+        'title' => 'Deletar',
+        'route' => 'delete',
+        'icon' => 'fa fa-trash',
+        'onClick' => 'deletar(event)',
+        'class' => '',
+      ],
+    ];
 
     $infoRight = collect([
       'title' => 'Adicionais',
-      'head' => collect(['Nome', 'Descrição', 'Veiculos', 'Ações']),
-      'actions' => $this->botoes(['editar', 'delete']),
+      'head' => collect(['Nome', 'Nome em inglês', 'Descrição', 'Veiculos', 'Ações']),
+      'actions' => $buttons,
     ]);
 
     return ['infoLeft' => $infoLeft, 'infoRight' => $infoRight];
@@ -73,7 +90,7 @@ trait MontarPaginaDupla
   {
     $infoLeft = collect([
       'title' => 'Cadastrar Categoria',
-      'fields' => collect(['Nome da categoria', 'Name in English', 'Descrição']),
+      'fields' => collect(['Nome da categoria', 'Descrição']),
     ]);
 
     $buttons = [
@@ -81,14 +98,14 @@ trait MontarPaginaDupla
         'title' => 'Editar',
         'route' => 'editar',
         'icon' => 'fa fa-pencil',
-        'onClick' => 'editDoublePage(this)',
+        'onClick' => 'editDoublePage(event)',
         'class' => '',
       ],
       'delete' => [
         'title' => 'Deletar',
         'route' => 'delete',
         'icon' => 'fa fa-trash',
-        'onClick' => 'deletar(this)',
+        'onClick' => 'deletar(event)',
         'class' => '',
       ],
     ];
@@ -101,6 +118,39 @@ trait MontarPaginaDupla
 
     return ['infoLeft' => $infoLeft, 'infoRight' => $infoRight];
   }
+  public function montarCategoriasSeguranca()
+  {
+    $infoLeft = collect([
+      'title' => 'Cadastrar Categoria',
+      'fields' => collect(['Nome da categoria', 'Descrição']),
+    ]);
+
+    $buttons = [
+      'editar' => [
+        'title' => 'Editar',
+        'route' => 'editar',
+        'icon' => 'fa fa-pencil',
+        'onClick' => 'editDoublePage(event)',
+        'class' => '',
+      ],
+      'delete' => [
+        'title' => 'Deletar',
+        'route' => 'delete',
+        'icon' => 'fa fa-trash',
+        'onClick' => 'deletar(event)',
+        'class' => '',
+      ],
+    ];
+
+    $infoRight = collect([
+      'title' => 'Categorias',
+      'head' => collect(['Nome', 'Descrição', 'Seguranças', 'Ações']),
+      'actions' => $buttons,
+    ]);
+
+    return ['infoLeft' => $infoLeft, 'infoRight' => $infoRight];
+  }
+
 
   public function montarCategoriasServicos()
   {
@@ -109,10 +159,27 @@ trait MontarPaginaDupla
       'fields' => collect(['Nome da categoria', 'Name in English']),
     ]);
 
+    $buttons = [
+      'editar' => [
+        'title' => 'Editar',
+        'route' => 'editar',
+        'icon' => 'fa fa-pencil',
+        'onClick' => 'editDoublePage(event)',
+        'class' => '',
+      ],
+      'delete' => [
+        'title' => 'Deletar',
+        'route' => 'delete',
+        'icon' => 'fa fa-trash',
+        'onClick' => 'deletar(event)',
+        'class' => '',
+      ],
+    ];
+
     $infoRight = collect([
       'title' => 'Categorias',
-      'head' => collect(['Nome', 'Serviços', 'Ações']),
-      'actions' => $this->botoes(['editar', 'delete']),
+      'head' => collect(['Nome', 'Nome em inglês', 'Serviços', 'Ações']),
+      'actions' => $buttons,
     ]);
 
     return ['infoLeft' => $infoLeft, 'infoRight' => $infoRight];
@@ -146,7 +213,7 @@ trait MontarPaginaDupla
         'title' => 'Deletar',
         'route' => 'delete',
         'icon' => 'fa fa-trash',
-        'onClick' => 'deletar(this)',
+        'onClick' => 'deletar(event)',
         'class' => '',
       ],
     ];

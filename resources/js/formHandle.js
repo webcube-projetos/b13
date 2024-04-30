@@ -55,6 +55,7 @@ function handleSubmitFormEdit(event) {
     data: formData
   })
     .then(response => {
+      console.log(response.data)
       window.location.href = response.data.route;
     })
 }
