@@ -122,8 +122,10 @@
                 <div class="tab-pane fade show active" id="locacao" role="tabpanel" aria-labelledby="locacao-tab">
                     <div class="card">
                         <div class="card-body pt-4 p-3">
-                            <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left">
+                                <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left" id="{{ $dados['pageInfo']['id'] }}" enctype="multipart/form-data">
                                 <input type="hidden" name="id_service_type" value="Locação">
+                                <input type="hidden" name="id" @isset($dados['pageInfo']['value']) value="{{ $dados['pageInfo']['value']->id }}" @endisset>
+
                                 @csrf
                                 <div class="row">
                                     <p class="fw-bold mt-4">Locação</p>
@@ -142,8 +144,10 @@
                 <div class="tab-pane fade show" id="seguranca" role="tabpanel" aria-labelledby="seguranca-tab">
                     <div class="card">
                         <div class="card-body pt-4 p-3">
-                            <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left">
+                                <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left" id="{{ $dados['pageInfo']['id'] }}" enctype="multipart/form-data">
                                 <input type="hidden" name="id_service_type" value="Segurança">
+                                <input type="hidden" name="id" @isset($dados['pageInfo']['value']) value="{{ $dados['pageInfo']['value']->id }}" @endisset>
+
                                 @csrf
                                 <div class="row">
                                     <p class="fw-bold mt-4">Segurança</p>

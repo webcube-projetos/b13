@@ -69,21 +69,21 @@ class SelectComponent extends Component
     public function categoryVehicle()
     {
         return Category::select('id', 'name')
-            ->where('type', Category::VEHICLE)
+            ->whereHas('type', fn ($query) => $query->where('name', 'Vehicle'))
             ->orderBy('created_at', 'desc')
             ->get();
     }
     public function categoryService()
     {
         return Category::select('id', 'name')
-            ->where('type', Category::SERVICE)
+            ->whereHas('type', fn ($query) => $query->where('name', 'Service'))
             ->orderBy('created_at', 'desc')
             ->get();
     }
     public function securityType()
     {
         return Category::select('id', 'name')
-            ->where('type', Category::SECURITY)
+            ->whereHas('type', fn ($query) => $query->where('name', 'Security'))
             ->orderBy('created_at', 'desc')
             ->get();
     }

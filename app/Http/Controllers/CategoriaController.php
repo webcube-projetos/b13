@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\CategoryType;
 use App\Traits\MontarPaginaDupla;
 use Illuminate\Http\Request;
 use App\Models\FakeModel;
@@ -51,7 +52,9 @@ class CategoriaController extends Controller
         return Category::query()
             ->select('id', 'name', 'description')
             ->withCount('vehicles')
-            ->where('type', Category::VEHICLE);
+            ->whereHas('type', function ($query) {
+                $query->where('name', 'Vehicle');
+            });
     }
 
     public function salvar()
@@ -62,12 +65,14 @@ class CategoriaController extends Controller
             'name.required' => 'O campo nome é obrigatório',
         ]);
 
+        $type = CategoryType::where('name', 'Vehicle')->first();
+
         Category::updateOrCreate([
             'id' => $this->request->id,
-            'type' => Category::VEHICLE,
         ], [
             'name' => $this->request->name,
             'description' => $this->request->description ?? null,
+            'type' => $type->id
         ]);
 
         return 'categorias-veiculos';

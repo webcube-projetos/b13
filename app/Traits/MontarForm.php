@@ -16,6 +16,7 @@ trait MontarForm
             'especializacao' => $this->montarFormEspecializacao($value),
             'adicionais' => $this->montarFormAdicionais($value),
             'categorias' => $this->montarFormCategorias($value),
+            'categoriasSeguranca' => $this->montarFormCategoriasSeguranca($value),
             'categorias-servicos' => $this->montarFormCategoriasServicos($value),
             'segurancas' => $this->montarFormSegurancas($value),
             'servicos' => $this->montarFormServicos($value),
@@ -808,6 +809,57 @@ trait MontarForm
         return $data;
     }
 
+    private function montarFormCategoriasSeguranca($value = null)
+    {
+        $data = new Fluent([
+            'pageInfo' => [
+                'title' => $value ? 'Editar Categoria' : 'Cadastrar Categoria',
+                'form_action' => 'categorias.segurancas.salvar',
+                'form_method' => 'post',
+                'id' => 'formRegister',
+                'label_button' => $value ? 'Editar Categoria' : 'Cadastrar Categoria',
+                'dados_bancarios' => false,
+                'cadastro_contatos' => false,
+                'cadastro_adicionais' => false,
+                'cadastro_especializacoes' => false,
+                'cadastro_servicos' => true,
+                'value' => $value ?? null,
+
+            ],
+            'sessions' => [
+                'Categoria de Serviço' => [
+                    'Nome' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Nome',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlenghtRoute' => 50,
+                        'required' => false,
+                        'id' => 'name',
+                        'name' => 'name',
+                        'function' => false,
+                        'value' => $value->name ?? null,
+                    ],
+                    'Descrição' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-12',
+                        'label' => 'Descrição',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlenghtRoute' => 70,
+                        'required' => false,
+                        'id' => 'descricao',
+                        'name' => 'description',
+                        'function' => false,
+                        'value' => $value->description ?? null,
+                    ],
+                ],
+            ],
+        ]);
+        return $data;
+    }
+
     private function montarFormCategoriasServicos($value = null)
     {
         $data = new Fluent([
@@ -1474,7 +1526,7 @@ trait MontarForm
                             'id' => 'blindado',
                             'name' => 'armored',
                             'function' => false,
-                            'value' => $value->armored ?? null,
+                            'value' => $value->blindado_armado ?? null,
                         ],
                     ],
                     'Cobranca' => [
@@ -1541,7 +1593,7 @@ trait MontarForm
                             'id' => 'kmExtra',
                             'name' => 'km_extra',
                             'function' => false,
-                            'value' => $value->kmExtra ?? null,
+                            'value' => $value->km_extra ?? null,
                         ],
                     ],
                     'Custos' => [

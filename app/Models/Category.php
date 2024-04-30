@@ -37,4 +37,9 @@ class Category extends Model
     {
         return $this->hasMany(Vehicle::class, 'id_category', 'id');
     }
+
+    public function type()
+    {
+        return $this->belongsTo(CategoryType::class, 'type', 'id');
+    }
 }

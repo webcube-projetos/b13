@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\CategoryType;
 use App\Traits\MontarPaginaDupla;
 use Illuminate\Http\Request;
 use App\Models\FakeModel;
@@ -51,7 +52,9 @@ class CategoriaServicoController extends Controller
         return Category::query()
             ->select('id', 'name', 'name_english')
             ->withCount('services')
-            ->where('type', Category::SERVICE);
+            ->whereHas('type', function ($query) {
+                $query->where('name', 'Service');
+            });
     }
 
     public function salvar()
@@ -65,12 +68,14 @@ class CategoriaServicoController extends Controller
             'name_english.required' => 'O campo nome em inglês é obrigatório',
         ]);
 
+        $type = CategoryType::where('name', 'Service')->first();
+
         Category::updateOrCreate([
             'id' => $this->request->id,
         ], [
             'name' => $this->request->name,
             'name_english' => $this->request->name_english,
-            'type' => Category::SERVICE,
+            'type' => $type->id
         ]);
 
         return 'categorias-servicos';

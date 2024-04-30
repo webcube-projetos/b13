@@ -33,4 +33,9 @@ class Service extends Model
     {
         return $this->belongsTo(ServiceType::class, 'id_service_type', 'id');
     }
+
+    public function categoryService()
+    {
+        return $this->belongsTo(Category::class, 'id_category_service', 'id');
+    }
 }

@@ -96,9 +96,9 @@ class ServicosController extends Controller
                 'employee_cost' => $this->request->employee_cost,
                 'employee_extra' => $this->request->employee_extra,
                 'id_category_service' => $this->request->id_category_service,
-                'id_category_espec' => $this->request->id_category_espec,
+                'id_category_espec' => $this->request->id_category_espec ?? null,
                 'id_service_type' => $serviceType->id,
-                'id_vehicle' => $this->request->id_vehicle,
+                'id_vehicle' => $this->request->id_vehicle ?? null,
             ]
         );
         DB::commit();

@@ -13,40 +13,20 @@
   <!-- FIM TOPO TABELA -->
   <!-- REGISTROS TABELA -->
   <tbody>
-    @foreach($dados as $vehicle)
+    @foreach($dados as $service)
 
       <td>
-        {{$vehicle->type->name}}
+        {{$service->serviceType->name}}
       </td>
       <td>
-        {{$vehicle->brand->name}}
+        {{$service->name}}
       </td>
       <td>
-        {{$vehicle->category->name}}
+        {{$service->categoryService->name}}
       </td>
       <td>
-        {{$vehicle->year}}
+        R$ {{$service->price}}
       </td>
-      <td>
-        {{$vehicle->armored ? 'Sim' : 'Não'}}
-      </td>
-      <td>
-        {{$vehicle->plate}}
-      </td>
-
-      <td class="text-center">
-        <button 
-          class="btn-adicional"
-          data-bs-toggle="tooltip" 
-          data-bs-placement="top"
-          data-bs-custom-class="custom-tooltip"
-          data-bs-title="{{ $vehicle->additionals->pluck('name')->implode(' | ') }}"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-          </svg>
-        </button>
 
       <td class="text-right">
           @foreach($config->actions as $botao)
@@ -54,7 +34,7 @@
               <button 
                   class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
                   data-toggle="tooltip" 
-                  data-id="{{ $vehicle->id }}"
+                  data-id="{{ $service->id }}"
                   data-route="{{ route($botao['route']) ?? '' }}"
                   data-original-title="{{ $botao['title'] ?? ''}}"
                   @if($botao['onClick']) onclick="{{ $botao['onClick'] }}" @endif
@@ -63,7 +43,7 @@
               </button>
               @elseif (isset($botao['route']))
               <a 
-                href="{{ route($botao['route'], ['veiculos' => $vehicle->id]) }}"
+                href="{{ route($botao['route'], ['servicos' => $service->id]) }}"
                 class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
                 data-toggle="tooltip" 
                 data-original-title="{{ $botao['title'] ?? ''}}"
@@ -76,7 +56,7 @@
                 type="button" 
                 class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
                 data-bs-toggle="modal" 
-                data-id="{{ $vehicle->id }}"
+                data-id="{{ $service->id }}"
                 data-bs-target="#{{ $botao['target'] }}">
                 <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
               </button>
