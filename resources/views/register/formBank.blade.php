@@ -56,7 +56,7 @@
                         <label for=""> Conta Corrente</label>
                         <input 
                             class="form-control" 
-                            type="number" 
+                            type="text" 
                             placeholder="012345678-9" 
                             id="conta"
                             name="conta" 

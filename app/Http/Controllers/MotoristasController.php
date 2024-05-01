@@ -110,7 +110,7 @@ class MotoristasController extends Controller
             DB::commit();
 
             return [
-                'route' => route('motoristas.editar', ['drivers' => $employee->id]),
+                'route' => route('motoristas.editar', ['employee' => $employee->id]),
             ];
         }
 

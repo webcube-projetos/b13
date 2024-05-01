@@ -72,7 +72,7 @@
         'permission' => 1,
       ],
       [
-        'title' => 'Categorias de Veciulos',
+        'title' => 'Categorias de Veículos',
         'route' => 'categorias.veiculos.index',
         'icon' => 'fa fa-bus',
         'permission' => 1,

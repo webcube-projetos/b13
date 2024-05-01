@@ -90,7 +90,7 @@ trait MontarPaginaDupla
   {
     $infoLeft = collect([
       'title' => 'Cadastrar Categoria',
-      'fields' => collect(['Nome da categoria', 'Descrição']),
+      'fields' => collect(['Nome da categoria', 'Name in english', 'Descrição']),
     ]);
 
     $buttons = [
@@ -112,7 +112,7 @@ trait MontarPaginaDupla
 
     $infoRight = collect([
       'title' => 'Categorias',
-      'head' => collect(['Nome', 'Descrição', 'Veiculos', 'Ações']),
+      'head' => collect(['Nome', 'Name in english', 'Descrição', 'Veiculos', 'Ações']),
       'actions' => $buttons,
     ]);
 
@@ -122,7 +122,7 @@ trait MontarPaginaDupla
   {
     $infoLeft = collect([
       'title' => 'Cadastrar Categoria',
-      'fields' => collect(['Nome da categoria', 'Descrição']),
+      'fields' => collect(['Nome da categoria', 'Name in english', 'Descrição']),
     ]);
 
     $buttons = [
@@ -144,7 +144,7 @@ trait MontarPaginaDupla
 
     $infoRight = collect([
       'title' => 'Categorias',
-      'head' => collect(['Nome', 'Descrição', 'Seguranças', 'Ações']),
+      'head' => collect(['Nome', 'Name in english', 'Descrição', 'Seguranças', 'Ações']),
       'actions' => $buttons,
     ]);
 
