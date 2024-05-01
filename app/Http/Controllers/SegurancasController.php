@@ -110,7 +110,7 @@ class SegurancasController extends Controller
             DB::commit();
 
             return [
-                'route' => route('segurancas.editar', ['drivers' => $employee->id]),
+                'route' => route('segurancas.editar', ['employee' => $employee->id]),
             ];
         }
 

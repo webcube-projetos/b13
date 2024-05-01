@@ -51,7 +51,7 @@ class CategoriaSegurancaController extends Controller
     public function search()
     {
         return Category::query()
-            ->select('id', 'name', 'description')
+            ->select('id', 'name', 'name_english', 'description')
             ->withCount('security')
             ->whereHas('type', function ($query) {
                 $query->where('name', 'Security');
@@ -72,6 +72,7 @@ class CategoriaSegurancaController extends Controller
             'id' => $this->request->id,
         ], [
             'name' => $this->request->name,
+            'name_english' => $this->request->name_english,
             'description' => $this->request->description ?? null,
             'type' => $type->id
         ]);
