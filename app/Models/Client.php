@@ -17,6 +17,8 @@ class Client extends Model
         'name',
         'fantasy_name',
         'nickname',
+        'phone',
+        'email',
     ];
 
     public function address()

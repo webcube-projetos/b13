@@ -16,6 +16,8 @@ class Company extends Model
         'name',
         'fantasy_name',
         'nickname',
+        'phone',
+        'email',
     ];
 
     protected $table = 'companies';
