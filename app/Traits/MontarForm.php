@@ -139,7 +139,7 @@ trait MontarForm
                     ],
                     'complemento' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Complemento',
                         'type' => 'text',
                         'placeholder' => '',
@@ -152,7 +152,7 @@ trait MontarForm
                     ],
                     'bairro' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Bairro',
                         'type' => 'text',
                         'placeholder' => '',
@@ -165,7 +165,7 @@ trait MontarForm
                     ],
                     'cidade' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Cidade',
                         'type' => 'text',
                         'placeholder' => '',
@@ -178,7 +178,7 @@ trait MontarForm
                     ],
                     'estado' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-2',
+                        'container_class' => 'col-md-1',
                         'label' => 'Estado',
                         'type' => 'text',
                         'placeholder' => '',
@@ -216,6 +216,7 @@ trait MontarForm
                         'id' => 'phone',
                         'name' => 'phone',
                         'function' => false,
+                        'value' => $value->phone ?? null,
                     ],
                     'email' => [
                         'container_tag' => 'div',
@@ -228,6 +229,7 @@ trait MontarForm
                         'id' => 'email',
                         'name' => 'email',
                         'function' => false,
+                        'value' => $value->email ?? null,
                     ],
                 ],
             ],
@@ -350,7 +352,7 @@ trait MontarForm
                     ],
                     'complemento' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Complemento',
                         'type' => 'text',
                         'placeholder' => '',
@@ -363,7 +365,7 @@ trait MontarForm
                     ],
                     'bairro' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Bairro',
                         'type' => 'text',
                         'placeholder' => '',
@@ -376,7 +378,7 @@ trait MontarForm
                     ],
                     'cidade' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Cidade',
                         'type' => 'text',
                         'placeholder' => '',
@@ -389,7 +391,7 @@ trait MontarForm
                     ],
                     'estado' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-2',
+                        'container_class' => 'col-md-1',
                         'label' => 'Estado',
                         'type' => 'text',
                         'placeholder' => '',
@@ -416,32 +418,34 @@ trait MontarForm
                     ],
 
                 ],
-                // 'Contatos da Empresa' => [
-                //     'phone' => [
-                //         'container_tag' => 'div',
-                //         'container_class' => 'col-md-4',
-                //         'label' => 'Telefone empresarial',
-                //         'type' => 'number',
-                //         'placeholder' => '(00)0000-00000',
-                //         'maxlenghtRoute' => 14,
-                //         'required' => false,
-                //         'id' => 'phone',
-                //         'name' => 'phone',
-                //         'function' => false,
-                //     ],
-                //     'email' => [
-                //         'container_tag' => 'div',
-                //         'container_class' => 'col-md-8',
-                //         'label' => 'E-mail empresarial',
-                //         'type' => 'email',
-                //         'placeholder' => 'contato@b13company.com',
-                //         'maxlenghtRoute' => 70,
-                //         'required' => false,
-                //         'id' => 'email',
-                //         'name' => 'email',
-                //         'function' => false,
-                //     ],
-                // ],
+                'Contatos da Empresa' => [
+                    'phone' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-md-4',
+                        'label' => 'Telefone empresarial',
+                        'type' => 'number',
+                        'placeholder' => '(00)0000-00000',
+                        'maxlenghtRoute' => 14,
+                        'required' => false,
+                        'id' => 'phone',
+                        'name' => 'phone',
+                        'function' => false,
+                        'value' => $value->phone ?? null,
+                    ],
+                    'email' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-md-8',
+                        'label' => 'E-mail empresarial',
+                        'type' => 'email',
+                        'placeholder' => 'contato@b13company.com',
+                        'maxlenghtRoute' => 70,
+                        'required' => false,
+                        'id' => 'email',
+                        'name' => 'email',
+                        'function' => false,
+                        'value' => $value->email ?? null,
+                    ],
+                ],
             ],
         ]);
         return $data;
@@ -980,7 +984,7 @@ trait MontarForm
                 'value' => $value ?? null,
             ],
             'sessions' => [
-                'Dados da Empresa' => [
+                'Dados do Motorista' => [
                     'foto' => [
                         'container_tag' => 'div',
                         'container_class' => 'col-md-3',
@@ -1091,7 +1095,7 @@ trait MontarForm
                     ],
                     'complemento' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Complemento',
                         'type' => 'text',
                         'placeholder' => '',
@@ -1104,7 +1108,7 @@ trait MontarForm
                     ],
                     'bairro' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Bairro',
                         'type' => 'text',
                         'placeholder' => '',
@@ -1117,7 +1121,7 @@ trait MontarForm
                     ],
                     'cidade' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Cidade',
                         'type' => 'text',
                         'placeholder' => '',
@@ -1130,7 +1134,7 @@ trait MontarForm
                     ],
                     'estado' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-2',
+                        'container_class' => 'col-md-1',
                         'label' => 'Estado',
                         'type' => 'text',
                         'placeholder' => '',
@@ -1208,6 +1212,7 @@ trait MontarForm
                         'id' => 'phone',
                         'name' => 'phone',
                         'function' => false,
+                        'value' => $value->phone ?? null,
                     ],
                     'email' => [
                         'container_tag' => 'div',
@@ -1220,6 +1225,7 @@ trait MontarForm
                         'id' => 'email',
                         'name' => 'email',
                         'function' => false,
+                        'value' => $value->email ?? null,
                     ],
                 ],
             ],
@@ -1245,7 +1251,7 @@ trait MontarForm
 
             ],
             'sessions' => [
-                'Dados da Empresa' => [
+                'Dados do Segurança' => [
                     'foto' => [
                         'container_tag' => 'div',
                         'container_class' => 'col-md-3',
@@ -1356,20 +1362,7 @@ trait MontarForm
                     ],
                     'complemento' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
-                        'label' => 'Complemento',
-                        'type' => 'text',
-                        'placeholder' => '',
-                        'maxlenghtRoute' => 30,
-                        'required' => false,
-                        'id' => 'complemento',
-                        'name' => 'complement',
-                        'function' => false,
-                        'value' => $value->address->complement ?? null,
-                    ],
-                    'complemento' => [
-                        'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Complemento',
                         'type' => 'text',
                         'placeholder' => '',
@@ -1382,7 +1375,7 @@ trait MontarForm
                     ],
                     'bairro' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Bairro',
                         'type' => 'text',
                         'placeholder' => '',
@@ -1395,7 +1388,7 @@ trait MontarForm
                     ],
                     'cidade' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Cidade',
                         'type' => 'text',
                         'placeholder' => '',
@@ -1408,7 +1401,7 @@ trait MontarForm
                     ],
                     'estado' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-2',
+                        'container_class' => 'col-md-1',
                         'label' => 'Estado',
                         'type' => 'text',
                         'placeholder' => '',
@@ -1500,6 +1493,7 @@ trait MontarForm
                         'id' => 'phone',
                         'name' => 'phone',
                         'function' => false,
+                        'value' => $value->phone ?? null,
                     ],
                     'email' => [
                         'container_tag' => 'div',
@@ -1512,6 +1506,7 @@ trait MontarForm
                         'id' => 'email',
                         'name' => 'email',
                         'function' => false,
+                        'value' => $value->email ?? null,
                     ],
                 ],
             ],

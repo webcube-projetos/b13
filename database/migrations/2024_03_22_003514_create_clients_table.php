@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('fantasy_name', 100)->nullable();
             $table->string('nickname', 100)->nullable();
+            $table->string('phone');
+            $table->string('email', 100);
             $table->timestamps();
         });
     }

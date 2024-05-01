@@ -118,6 +118,7 @@ class ClientesController extends Controller
 				'cep' => $this->request->cep,
 				'street' => $this->request->logradouro,
 				'number' => $this->request->numero,
+				'complement' => $this->request->complement,
 				'neighborhood' => $this->request->bairro,
 				'city' => $this->request->cidade,
 				'state' => $this->request->estado,
@@ -135,6 +136,8 @@ class ClientesController extends Controller
 				'name' => $this->request->razao,
 				'fantasy_name' => $this->request->nome_fantasia,
 				'nickname' => $this->request->apelido,
+				'phone' => $this->request->phone,
+                'email' => $this->request->email,
 			]
 		);
 

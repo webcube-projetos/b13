@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('cep', 9)->nullable();
             $table->string('street', 150)->nullable();
             $table->integer('number')->nullable();
+            $table->string('complement', 70)->nullable();
             $table->string('neighborhood', 70)->nullable();
             $table->string('city', 100)->nullable();
             $table->string('state', 2)->nullable();

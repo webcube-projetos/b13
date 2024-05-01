@@ -7,7 +7,7 @@ use App\Models\VehicleBrand;
 use App\Models\VehicleType;
 use Illuminate\Database\Seeder;
 
-class VechicleTypeSeeder extends Seeder
+class VehicleTypeSeeder extends Seeder
 {
   /**
    * Run the database seeds.
