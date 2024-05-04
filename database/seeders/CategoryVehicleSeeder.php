@@ -15,9 +15,24 @@ class CategoryVehicleSeeder extends Seeder
     {
         $categorys = [
             [
-              'name' => 'Luxo',
-              'name_english' => 'Lux',
-              'type' => 3, 
+                'name' => 'Básico',
+                'name_english' => 'Basic',
+                'type' => 3, 
+            ],
+            [
+                'name' => 'Executivo',
+                'name_english' => 'Executive',
+                'type' => 3, 
+            ],
+            [
+                'name' => 'Luxo',
+                'name_english' => 'Lux',
+                'type' => 3, 
+            ],
+            [
+                'name' => 'Plus',
+                'name_english' => 'Plus',
+                'type' => 3, 
             ],
         ];
       

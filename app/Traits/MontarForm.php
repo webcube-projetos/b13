@@ -1534,7 +1534,6 @@ trait MontarForm
             'sessions' => [
                 'locacao' => [
                     'Identificacao' => [
-
                         'nome' => [
                             'container_tag' => 'div',
                             'container_class' => 'col-md-6',
@@ -1563,7 +1562,7 @@ trait MontarForm
                         ],
                         'categoria' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-6',
+                            'container_class' => 'col-md-3',
                             'label' => 'Categoria',
                             'type' => 'selectComponent',
                             'typeSelect' => 'categoryVehicle',
@@ -1577,8 +1576,8 @@ trait MontarForm
                         ],
                         'categoriaServico' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-6',
-                            'label' => 'Categoria',
+                            'container_class' => 'col-md-3',
+                            'label' => 'Tipo de Serviço',
                             'type' => 'selectComponent',
                             'typeSelect' => 'categoryService',
                             'placeholder' => '',
@@ -1644,7 +1643,7 @@ trait MontarForm
                         ],
                         'precoHoraExtra' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-2',
                             'label' => 'Valor hora extra',
                             'type' => 'number',
                             'placeholder' => '50',
@@ -1657,7 +1656,7 @@ trait MontarForm
                         ],
                         'kmBase' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-2',
                             'label' => 'KM franquia',
                             'type' => 'number',
                             'placeholder' => '50',
@@ -1670,7 +1669,7 @@ trait MontarForm
                         ],
                         'kmExtra' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-2',
                             'label' => 'Valor KM Extra',
                             'type' => 'number',
                             'placeholder' => '50',
@@ -1685,7 +1684,7 @@ trait MontarForm
                     'Custos' => [
                         'custoParceiro' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-4',
                             'label' => 'Custo Parceiro',
                             'type' => 'number',
                             'placeholder' => '300',
@@ -1698,7 +1697,7 @@ trait MontarForm
                         ],
                         'horaExtraParceiro' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-4',
                             'label' => 'Valor Hora extra parceiro',
                             'type' => 'number',
                             'placeholder' => '500',
@@ -1711,7 +1710,7 @@ trait MontarForm
                         ],
                         'kmExtraParceiro' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-4',
                             'label' => 'Valor KM extra parceiro',
                             'type' => 'number',
                             'placeholder' => '50',
@@ -1724,7 +1723,7 @@ trait MontarForm
                         ],
                         'custoMotorista' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-6',
                             'label' => 'Custo motorista',
                             'type' => 'number',
                             'placeholder' => '250',
@@ -1737,7 +1736,7 @@ trait MontarForm
                         ],
                         'custoMotoristaExtra' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-6',
                             'label' => 'Valor Hora extra motorista',
                             'type' => 'number',
                             'placeholder' => '50',
@@ -1780,7 +1779,7 @@ trait MontarForm
                         ],
                         'categoriaServico' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-6',
+                            'container_class' => 'col-md-4',
                             'label' => 'Categoria',
                             'type' => 'selectComponent',
                             'typeSelect' => 'categoryService',
@@ -1793,7 +1792,7 @@ trait MontarForm
                         ],
                         'tipo' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-6',
+                            'container_class' => 'col-md-4',
                             'label' => 'Tipo do segurança',
                             'type' => 'selectComponent',
                             'typeSelect' => 'securityType',
@@ -1806,7 +1805,7 @@ trait MontarForm
                         ],
                         'armado' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-4',
                             'label' => 'Armado',
                             'type' => 'selectComponent',
                             'typeSelect' => 'armed',
@@ -1848,7 +1847,7 @@ trait MontarForm
                         ],
                         'precoHoraExtra' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-2',
                             'label' => 'Valor hora extra',
                             'type' => 'number',
                             'placeholder' => '50',
@@ -1861,7 +1860,7 @@ trait MontarForm
                         ],
                         'kmBase' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-2',
                             'label' => 'KM franquia',
                             'type' => 'number',
                             'placeholder' => '50',
@@ -1874,7 +1873,7 @@ trait MontarForm
                         ],
                         'kmExtra' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-2',
                             'label' => 'Valor KM Extra',
                             'type' => 'number',
                             'placeholder' => '50',

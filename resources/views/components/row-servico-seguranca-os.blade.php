@@ -55,14 +55,21 @@
                 <label for="execucacao">Data de execução</label>
                 <input type="date" class="form-control" name="execucacao[]" id="execucacao" maxlength="30" required>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-3 mb-3">
                 <label for="tipoSeguranca">Tipo de segurança</label>
                 <select name="tipoSeguranca[]" id="tipoSeguranca"  class="form-control">
                     <option value="">Patrimonial</option>
                     <option value="">Evento</option>
                 </select>
             </div>
-            <div class="col-md-5 mb-3">
+            <div class="col-md-3 mb-3">
+                <label for="company">Empresa</label>
+                <select name="company[]" id="company"  class="form-control">
+                    <option value="">B13 Company</option>
+                    <option value="">ABC Security</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
                 <label for="seguranca">Seguranca</label>
                 <select name="seguranca[]" id="seguranca"  class="form-control">
                     <option value="">Jorge Afonso</option>

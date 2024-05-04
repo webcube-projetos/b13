@@ -34,5 +34,28 @@ class SpecializationsSeeder extends Seeder
             'name_english' => 'Spanish',
             'description' => null
         ]);
+
+        // Cadastrar as especializações filhas
+        $portugues = Specialization::create([
+            'id_ascendent' => $lingua->id,
+            'name' => 'Espanhol',
+            'name_english' => 'Spanish',
+            'description' => null
+        ]);
+
+        $italiano = Specialization::create([
+            'id_ascendent' => $lingua->id,
+            'name' => 'Iitaliano',
+            'name_english' => 'Italian',
+            'description' => null
+        ]);
+
+        // Cadastrar as especializações filhas
+        $frances = Specialization::create([
+            'id_ascendent' => $lingua->id,
+            'name' => 'Francês',
+            'name_english' => 'French',
+            'description' => null
+        ]);
     }
 }

@@ -20,6 +20,11 @@ class CategoryServiceSeeder extends Seeder
               'type' => 2, 
             ],
             [
+              'name' => 'Transfer',
+              'name_english' => 'Transfer',
+              'type' => 2, 
+            ],
+            [
               'name' => 'Travel',
               'name_english' => 'Travel',
               'type' => 2, 
