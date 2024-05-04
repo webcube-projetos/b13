@@ -15,9 +15,34 @@ class CategorySecuritySeeder extends Seeder
     {
         $categorys = [
             [
-              'name' => 'Patrimonial',
-              'name_english' => 'Patrimonial',
-              'type' => 1, 
+                'name' => 'Pessoal',
+                'name_english' => 'Personal Security',
+                'type' => 1, 
+            ],
+            [
+                'name' => 'Guarda Costas',
+                'name_english' => 'Body Guard',
+                'type' => 1, 
+            ],
+            [
+                'name' => 'Escolta',
+                'name_english' => 'Escort',
+                'type' => 1, 
+            ],
+            [
+                'name' => 'Escolta com Viatura',
+                'name_english' => 'Escort with Vehicle',
+                'type' => 1, 
+            ],
+            [
+                'name' => 'Escolta armada',
+                'name_english' => 'Escort armed',
+                'type' => 1, 
+            ],
+            [
+                'name' => 'Eventos',
+                'name_english' => 'Events',
+                'type' => 1, 
             ],
         ];
       

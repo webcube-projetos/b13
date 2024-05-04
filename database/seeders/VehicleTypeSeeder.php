@@ -16,14 +16,29 @@ class VehicleTypeSeeder extends Seeder
   {
     $brands = [
       [
+        'name' => 'Carga',
+      ],
+      [
+        'name' => 'Jet Van',
+      ],
+      [
+        'name' => 'Micro ônibus',
+      ],
+      [
+        'name' => 'Mini van',
+      ],
+      [
+        'name' => 'Ônibus',
+      ],
+      [
         'name' => 'Sedan',
       ],
       [
         'name' => 'SUV',
       ],
       [
-        'name' => 'Hatch',
-      ]
+        'name' => 'Van',
+      ],
     ];
 
     foreach ($brands as $brand) {

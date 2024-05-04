@@ -22,6 +22,12 @@
     ],
     'Ativos e Parceiros' => [
       [
+        'title' => 'Empresas',
+        'route' => 'empresas.index',
+        'icon' => 'fa fa-briefcase',
+        'permission' => 1,
+      ],
+      [
         'title' => 'Veiculos',
         'route' => 'veiculos.index',
         'icon' => 'fa fa-car',
@@ -39,12 +45,6 @@
         'icon' => 'fa fa-shield',
         'permission' => 1,
       ],
-      [
-        'title' => 'Empresas',
-        'route' => 'empresas.index',
-        'icon' => 'fa fa-briefcase',
-        'permission' => 1,
-      ],
     ],
     'Gestão' => [
       [
@@ -59,16 +59,18 @@
         'icon' => 'fa fa-plus-square-o',
         'permission' => 1,
       ],
+    ],
+    'Configurações' => [
+      [
+        'title' => 'Procedimentos',
+        'route' => 'procedimentos.index',
+        'icon' => 'fa fa-align-left',
+        'permission' => 1,
+      ],
       [
         'title' => 'Categoria de Serviços',
         'route' => 'categorias.servicos.index',
         'icon' => 'fa fa-filter',
-        'permission' => 1,
-      ],
-      [
-        'title' => 'Adicionais',
-        'route' => 'adicionais.index',
-        'icon' => 'fa fa-plus-square',
         'permission' => 1,
       ],
       [
@@ -84,9 +86,9 @@
         'permission' => 1,
       ],
       [
-        'title' => 'Procedimentos',
-        'route' => 'procedimentos.index',
-        'icon' => 'fa fa-align-left',
+        'title' => 'Adicionais',
+        'route' => 'adicionais.index',
+        'icon' => 'fa fa-plus-square',
         'permission' => 1,
       ],
       [
