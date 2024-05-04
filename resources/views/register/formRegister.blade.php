@@ -1,6 +1,6 @@
         @foreach ($dados['sessions'][$key] as $fields)
             @if ($fields['name'] !== 'foto') 
-                <{{ $fields['container_tag'] }} class="{{ $fields['container_class'] }}">
+                <div {{ $fields['container_tag'] }} class="{{ $fields['container_class'] }}">
                     <div class="form-group">
                         <label 
                             for="{{ $fields['id'] }}" 
@@ -50,7 +50,8 @@
                             @endif
                         @elseif($fields['type'] === 'selectComponent')
                             <livewire:select-component type="{{$fields['typeSelect']}}" placeholder="{{$fields['placeholder']}}" name="{{$fields['name']}}" selected="{{$fields['value']}}" />
-
+                        @elseif($fields['type'] === 'selectClient')
+                            <livewire:select-client placeholder="{{$fields['placeholder']}}" name="{{$fields['name']}}" selected="{{$fields['value']}}" />
                         @elseif($fields['type'] === 'number' && $fields['name'] !== 'ano' || $fields['name'] !== 'malas' || $fields['name'] !== 'passageiros')
                             <input 
                                 class="form-control" 
