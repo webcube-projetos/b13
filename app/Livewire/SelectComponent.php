@@ -34,6 +34,8 @@ class SelectComponent extends Component
             'armed' => $this->armored(),
             'categoryService' => $this->categoryService(),
             'securityType' => $this->securityType(),
+            'client' => $this->client(),
+            default => $this->especialization(),
         };
     }
     public function render()
@@ -95,6 +97,16 @@ class SelectComponent extends Component
     }
 
     public function armored()
+    {
+        return collect([
+            ['id' => 1, 'name' => 'Sim'],
+            ['id' => 0, 'name' => 'Não'],
+        ])->map(function ($item) {
+            return (object) $item;
+        });
+    }
+
+    public function client()
     {
         return collect([
             ['id' => 1, 'name' => 'Sim'],
