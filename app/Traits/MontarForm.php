@@ -997,7 +997,7 @@ trait MontarForm
             ],
             'sessions' => [
                 'Dados do Motorista' => [
-                    'foto' => [
+                    'photo' => [
                         'container_tag' => 'div',
                         'container_class' => 'col-md-3',
                         'label' => 'Foto',
@@ -1006,10 +1006,10 @@ trait MontarForm
                         'placeholder' => '',
                         'maxlenghtRoute' => '',
                         'required' => false,
-                        'id' => 'foto',
-                        'name' => 'foto',
+                        'id' => 'photo',
+                        'name' => 'photo',
                         'function' => false,
-                        'value' => $value->foto ?? null,
+                        'value' => $value->photo ?? null,
                     ],
                     'cpf' => [
                         'container_tag' => 'div',
@@ -1250,7 +1250,7 @@ trait MontarForm
         $data = new Fluent([
             'pageInfo' => [
                 'title' => $value ? 'Editar segurança' : 'Cadastrar segurança',
-                'form_action' => 'motoristas.salvar',
+                'form_action' => 'segurancas.salvar',
                 'form_method' => 'post',
                 'id' => 'formRegisterEdit',
                 'label_button' => $value ? 'Editar segurança' : 'Cadastrar segurança',
@@ -1264,7 +1264,7 @@ trait MontarForm
             ],
             'sessions' => [
                 'Dados do Segurança' => [
-                    'foto' => [
+                    'photo' => [
                         'container_tag' => 'div',
                         'container_class' => 'col-md-3',
                         'label' => 'Foto',
@@ -1273,10 +1273,10 @@ trait MontarForm
                         'placeholder' => '',
                         'maxlenghtRoute' => '',
                         'required' => false,
-                        'id' => 'foto',
-                        'name' => 'foto',
+                        'id' => 'photo',
+                        'name' => 'photo',
                         'function' => false,
-                        'value' => $value->foto ?? null,
+                        'value' => $value->photo ?? null,
                     ],
                     'cpf' => [
                         'container_tag' => 'div',
@@ -1833,7 +1833,7 @@ trait MontarForm
                     'Cobranca' => [
                         'precoBase' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-4',
                             'label' => 'Valor',
                             'type' => 'number',
                             'placeholder' => '500',
@@ -1846,7 +1846,7 @@ trait MontarForm
                         ],
                         'horasBase' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
+                            'container_class' => 'col-md-4',
                             'label' => 'Horas franquia',
                             'type' => 'number',
                             'placeholder' => '500',
@@ -1859,7 +1859,7 @@ trait MontarForm
                         ],
                         'precoHoraExtra' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-2',
+                            'container_class' => 'col-md-4',
                             'label' => 'Valor hora extra',
                             'type' => 'number',
                             'placeholder' => '50',
@@ -1869,32 +1869,6 @@ trait MontarForm
                             'name' => 'extra_price',
                             'function' => false,
                             'value' => $value->extra_price ?? null,
-                        ],
-                        'kmBase' => [
-                            'container_tag' => 'div',
-                            'container_class' => 'col-md-2',
-                            'label' => 'KM franquia',
-                            'type' => 'number',
-                            'placeholder' => '50',
-                            'maxlenghtRoute' => '',
-                            'required' => false,
-                            'id' => 'kmBase',
-                            'name' => 'km',
-                            'function' => false,
-                            'value' => $value->km ?? null,
-                        ],
-                        'kmExtra' => [
-                            'container_tag' => 'div',
-                            'container_class' => 'col-md-2',
-                            'label' => 'Valor KM Extra',
-                            'type' => 'number',
-                            'placeholder' => '50',
-                            'maxlenghtRoute' => '',
-                            'required' => false,
-                            'id' => 'kmExtra',
-                            'name' => 'km_extra',
-                            'function' => false,
-                            'value' => $value->kmExtra ?? null,
                         ],
                     ],
                     'Custos' => [
@@ -1914,7 +1888,7 @@ trait MontarForm
                         'horaExtraParceiro' => [
                             'container_tag' => 'div',
                             'container_class' => 'col-md-3',
-                            'label' => 'Valor Hora extra parceiro',
+                            'label' => 'Custo Hora extra parceiro',
                             'type' => 'number',
                             'placeholder' => '500',
                             'maxlenghtRoute' => '',
@@ -1924,23 +1898,10 @@ trait MontarForm
                             'function' => false,
                             'value' => $value->partner_extra_time ?? null,
                         ],
-                        'kmExtraParceiro' => [
-                            'container_tag' => 'div',
-                            'container_class' => 'col-md-3',
-                            'label' => 'Valor KM extra parceiro',
-                            'type' => 'number',
-                            'placeholder' => '50',
-                            'maxlenghtRoute' => '',
-                            'required' => false,
-                            'id' => 'kmExtraParceiro',
-                            'name' => 'partner_extra_km',
-                            'function' => false,
-                            'value' => $value->partner_extra_km ?? null,
-                        ],
                         'custoMotorista' => [
                             'container_tag' => 'div',
                             'container_class' => 'col-md-3',
-                            'label' => 'Custo motorista',
+                            'label' => 'Custo Segurança',
                             'type' => 'number',
                             'placeholder' => '250',
                             'maxlenghtRoute' => '',

@@ -50,18 +50,19 @@
                                                 @php
                                                     $photoValue = data_get($dados, "sessions.$key.photo.value");
                                                 @endphp
-                                                                                
-                                                <input 
-                                                    class="form-control filepond" 
-                                                    type="{{ data_get($dados, "sessions.$key.photo.type") }}" 
-                                                    placeholder="{{ data_get($dados, "sessions.$key.photo.placeholder") }}" 
-                                                    id="{{ data_get($dados, "sessions.$key.photo.id") }}"
-                                                    name="{{ data_get($dados, "sessions.$key.photo.name") }}" 
-                                                    maxlength="{{ data_get($dados, "sessions.$key.photo.maxlenghtRoute")}}" 
-                                                    value="{{ $photoValue ?? '' }}"
-                                                    {{ data_get($dados, "sessions.$key.photo.function") ? data_get($dados, "sessions.$key.photo.function.type") . '=' . data_get($dados, "sessions.$key.photo.function.name") : '' }}
-                                                    {{ data_get($dados, "sessions.$key.photo.required") ? 'required' : '' }}
-                                                >
+                                                <div>                        
+                                                    <input 
+                                                        class="form-control filepond" 
+                                                        type="{{ data_get($dados, "sessions.$key.photo.type") }}" 
+                                                        placeholder="{{ data_get($dados, "sessions.$key.photo.placeholder") }}" 
+                                                        id="{{ data_get($dados, "sessions.$key.photo.id") }}"
+                                                        name="{{ data_get($dados, "sessions.$key.photo.name") }}" 
+                                                        maxlength="{{ data_get($dados, "sessions.$key.photo.maxlenghtRoute")}}" 
+                                                        value="{{ $photoValue ?? '' }}"
+                                                        {{ data_get($dados, "sessions.$key.photo.function") ? data_get($dados, "sessions.$key.photo.function.type") . '=' . data_get($dados, "sessions.$key.photo.function.name") : '' }}
+                                                        {{ data_get($dados, "sessions.$key.photo.required") ? 'required' : '' }}
+                                                    >
+                                                </div>
                                                 @if ($photoValue)
                                                     <a href="{{ asset($photoValue) }}" data-fancybox>
                                                         <img src="{{ asset($photoValue) }}" class="img-thumbnail" style="max-width: 200px;">
