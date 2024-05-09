@@ -11,7 +11,7 @@
     </div>
     <div class="col-lg-3">
         <label for="cpf_contato">CPF</label>
-        <input type="text" class="form-control" name="cpf_contato[]" id="cpfcnpj" maxlength="30" required @isset($item) value="{{ $item->document }}" @endisset>
+        <input type="text" class="form-control" name="cpf_contato[]" id="cpfcnpj" maxlength="30" @isset($item) value="{{ $item->document }}" @endisset>
     </div>
     <div class="col-lg-4">
         <label for="email_contato">E-mail</label>
@@ -23,11 +23,11 @@
     </div>
     <div class="col-lg-4">
         <label for="whatsapp_contato">Whatsapp</label>
-        <input type="text" class="form-control phone" name="whatsapp_contato[]" id="whatsapp_contato" maxlength="30" required @isset($item) value="{{ $item->whatsapp }}" @endisset>
+        <input type="text" class="form-control phone" name="whatsapp_contato[]" id="whatsapp_contato" maxlength="30" @isset($item) value="{{ $item->whatsapp }}" @endisset>
     </div>
     <div class="col-lg-3">
         <label for="cargo_contato">Cargo</label>
-        <input type="text" class="form-control" name="cargo_contato[]" id="cargo_contato" maxlength="30" required @isset($item) value="{{ $item->role }}" @endisset>
+        <input type="text" class="form-control" name="cargo_contato[]" id="cargo_contato" maxlength="30" @isset($item) value="{{ $item->role }}" @endisset>
     </div>
     <div class="col-md-1">
         <a href="javascript:;" class="button-actions text-secondary font-weight-bold text-xs me-2 deletarLinha" @isset($item)data-contact="{{ $key }}" @endisset>

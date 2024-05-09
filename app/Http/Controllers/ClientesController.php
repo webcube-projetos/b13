@@ -39,7 +39,6 @@ class ClientesController extends Controller
 		return view('pages.Clients.index', compact('prefix', 'dados', 'config', 'header'));
 	}
 
-
 	public function listar()
 	{
 		$dados = $this->search()->paginate(10);
@@ -74,7 +73,6 @@ class ClientesController extends Controller
 
 		return view('cadastro', compact('dados', 'prefix'));
 	}
-
 
 	public function salvar()
 	{

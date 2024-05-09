@@ -1,6 +1,6 @@
         @foreach ($dados['sessions'][$key] as $fields)
-            @if ($fields['name'] !== 'foto') 
-                <div {{ $fields['container_tag'] }} class="{{ $fields['container_class'] }}">
+            @if ($fields['name'] !== 'photo' && $fields['name'] !== 'doc_photo' && $fields['name'] !== 'cnh') 
+                <{{ $fields['container_tag'] }} class="{{ $fields['container_class'] }}">
                     <div class="form-group">
                         <label 
                             for="{{ $fields['id'] }}" 
@@ -61,7 +61,7 @@
                                 name="{{ $fields['name'] }}" 
                                 maxlength="{{ $fields['maxlenghtRoute'] ?? '' }}" 
                                 value="{{ $fields['value'] ?? '' }}"
-                                step="0.010"
+                                step="0.01"
                                 {{ $fields['function'] ? $fields['function']['type'] . '=' . $fields['function']['name'] : '' }}
                                 {{ $fields['required'] ? 'required' : '' }}
                             >
@@ -78,6 +78,32 @@
                                 {{ $fields['required'] ? 'required' : '' }}
                             >
                         @endif
+                    </div>
+                </div>
+            @elseif ($fields['name'] === 'doc_photo' || $fields['name'] === 'cnh')
+                <{{ $fields['container_tag'] }} class="{{ $fields['container_class'] }}">
+                    <div class="form-group">
+                        <label for="{{ $fields['id'] }}" class="form-control-label">
+                            {{ $fields['label'] }}{{ $fields['required'] ? '*' : '' }}
+                        </label>
+                        @if ($fields['value'])
+                            <br>
+                            <a href="{{ asset($fields['value']) }}" data-fancybox>
+                                <img src="{{ asset($fields['value']) }}" class="img-thumbnail" style="max-width: 200px;">
+                            </a>
+                        @endif
+        
+                        <input 
+                            class="form-control filepond" 
+                            type="{{ $fields['type'] }}" 
+                            placeholder="{{ $fields['placeholder'] }}" 
+                            id="{{ $fields['id'] }}"
+                            name="{{ $fields['name'] }}" 
+                            maxlength="{{ $fields['maxlenghtRoute'] ?? '' }}" 
+                            value="{{ $fields['value'] ?? '' }}"
+                            {{ $fields['function'] ? $fields['function']['type'] . '=' . $fields['function']['name'] : '' }}
+                            {{ $fields['required'] ? 'required' : '' }}
+                        >
                     </div>
                 </div>
             @endif

@@ -22,7 +22,7 @@
         {{$vehicle->brand->name}}
       </td>
       <td>
-        {{$vehicle->category->name}}
+        {{$vehicle->model}}
       </td>
       <td>
         {{$vehicle->year}}

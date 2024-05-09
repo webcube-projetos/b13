@@ -72,6 +72,10 @@ class VeiculosController extends Controller
 
     public function salvar()
     {
+        // Inicialize as variáveis de URL da foto e do documento
+        $imgUrlFoto = null;
+        $imgUrldoc_photo = null;
+
         DB::beginTransaction();
         if ($this->request->photo) {
             $photo = json_decode($this->request->photo);
@@ -92,6 +96,7 @@ class VeiculosController extends Controller
                 'id_type' => $this->request->id_type,
                 'id_category' => $this->request->id_category ?? null,
                 'id_brand' => $this->request->id_brand ?? null,
+                'model' => $this->request->model ?? null,
                 'year' => $this->request->year ?? null,
                 'armored' => $this->request->armored ?? null,
                 'plate' => $this->request->plate ?? null,
@@ -100,21 +105,33 @@ class VeiculosController extends Controller
                 'expiration_date' => $this->request->expiration_date ?? null,
                 'insurance' => $this->request->insurance ?? null,
                 'id_company' => $this->request->id_company ?? null,
-                'documento' => $imgUrldoc_photo ?? null,
-                'photo' => $imgUrlFoto ?? null,
             ]
         );
 
+        // Atualize o URL da foto somente se uma nova foto foi enviada
+        if ($imgUrlFoto) {
+            $vehicle->photo = $imgUrlFoto;
+        }
 
-        foreach ($this->request->id_aditional as $index => $adicional) {
-            $adicional = Additional::find($adicional);
+        // Atualize o URL do documento somente se um novo documento foi enviado
+        if ($imgUrldoc_photo) {
+            $vehicle->doc_photo = $imgUrldoc_photo;
+        }
 
-            if (!$adicional) continue;
+        // Salve o veículo
+        $vehicle->save();
 
-            VehicleAdditional::updateOrCreate([
-                'vehicle_id' => $vehicle->id,
-                'additional_id' => $adicional->id,
-            ]);
+        if (!empty($this->request->id_aditional)) {
+            foreach ($this->request->id_aditional as $index => $adicional) {
+                $adicional = Additional::find($adicional);
+
+                if (!$adicional) continue;
+
+                VehicleAdditional::updateOrCreate([
+                    'vehicle_id' => $vehicle->id,
+                    'additional_id' => $adicional->id,
+                ]);
+            }
         }
 
         DB::commit();

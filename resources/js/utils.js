@@ -139,3 +139,7 @@ var telefoneOptions = {
 };
 
 $('.phone').mask(telefoneMascara, telefoneOptions);
+
+Fancybox.bind("[data-fancybox]", {
+  // Your custom options
+});

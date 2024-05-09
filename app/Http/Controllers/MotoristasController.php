@@ -40,7 +40,7 @@ class MotoristasController extends Controller
     public function search()
     {
         return Employee::query()
-            ->where('type', Employee::DRIVER)
+            ->where('type', 1)
             ->with(['address', 'contacts', 'specializations']);
     }
 
@@ -76,17 +76,27 @@ class MotoristasController extends Controller
     {
         DB::beginTransaction();
 
-        if ($this->request->foto) {
-            $foto = json_decode($this->request->foto);
-            $imgUrlFoto = $this->storeImageBase64($foto->data, 'motoristas');
-        }
-        if ($this->request->cnh) {
-            $cnh = json_decode($this->request->cnh);
-            $imgUrlCnh = $this->storeImageBase64($cnh->data, 'motoristas');
-        }
+        $imgUrlFoto = null;
+        $imgUrlCnh = null;
+
+        $employee = null; // Inicialize $employee fora dos condicionais para garantir que esteja disponível fora deles
 
         if ($this->request->id) {
             $employee = Employee::find($this->request->id);
+        }
+
+        if ($this->request->photo) {
+            $photo = json_decode($this->request->photo);
+            $imgUrlFoto = $this->storeImageBase64($photo->data, 'segurancas');
+        } elseif ($employee && $employee->photo) { // Verifica se $employee existe e se possui uma foto existente
+            $imgUrlFoto = $employee->photo; // Mantém a foto existente
+        }
+
+        if ($this->request->cnh) {
+            $cnh = json_decode($this->request->cnh);
+            $imgUrlCnh = $this->storeImageBase64($cnh->data, 'segurancas');
+        } elseif ($employee && $employee->cnh) { // Verifica se $employee existe e se possui uma CNH existente
+            $imgUrlCnh = $employee->cnh; // Mantém a CNH existente
         }
 
         if ($this->request->tipo == 'bank') {
@@ -104,21 +114,19 @@ class MotoristasController extends Controller
                     'preference' => $this->request->preference ?? null,
                 ]
             );
-
+        
             $employee->id_bank = $bank->id;
             $employee->save();
             DB::commit();
-
+        
             return [
                 'route' => route('motoristas.editar', ['employee' => $employee->id]),
             ];
         }
 
-
+        // Atualiza o endereço
         $endereco = Address::updateOrCreate(
-            [
-                'id' => $employee?->id_address ?? null
-            ],
+            ['id' => $employee?->id_address ?? null],
             [
                 'cep' => $this->request->cep,
                 'street' => $this->request->street,
@@ -131,6 +139,7 @@ class MotoristasController extends Controller
             ]
         );
 
+        // Atualiza os dados do funcionário
         $employee = Employee::updateOrCreate(
             ['id' => $this->request->id],
             [
@@ -146,22 +155,24 @@ class MotoristasController extends Controller
                 'id_company' => $this->request->id_company ?? null,
                 'id_bank' => null,
                 'obs' => $this->request->obs ?? null,
-                'cnh' => $imgUrlCnh ?? null,
-                'photo' => $imgUrlFoto ?? null,
+                'cnh' => $imgUrlCnh ?? $employee->cnh, // Manter a CNH existente se não houver nova selecionada
+                'photo' => $imgUrlFoto ?? $employee->photo, // Manter a foto existente se não houver nova selecionada
             ]
         );
 
+        // Verifica se há especializações selecionadas antes de tentar atualizá-las
+        if (!empty($this->request->id_especialization)) {
+            foreach ($this->request->id_especialization as $index => $especializacao) {
+                $especializacao = Specialization::find($especializacao);
 
-        foreach ($this->request->id_especialization as $index => $especializacao) {
-            $especializacao = Specialization::find($especializacao);
+                if (!$especializacao) continue;
+                if (!$especializacao->children->isEmpty()) continue;
 
-            if (!$especializacao) continue;
-            if (!$especializacao->children->isEmpty()) continue;
-
-            ActiveSpecialization::updateOrCreate([
-                'id_employee' => $employee->id,
-                'id_especializacao' => $especializacao->id,
-            ]);
+                ActiveSpecialization::updateOrCreate([
+                    'id_employee' => $employee->id,
+                    'id_especializacao' => $especializacao->id,
+                ]);
+            }
         }
 
         DB::commit();

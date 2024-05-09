@@ -18,12 +18,15 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-XiHsxfJL.js",
+    "file": "assets/app-Cw8AxfhU.js",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
       "resources/js/addLines.js",
       "resources/js/listagens.js"
+    ],
+    "css": [
+      "assets/app-BFr9Ws09.css"
     ]
   },
   "resources/js/doublePage.js": {

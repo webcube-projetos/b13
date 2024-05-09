@@ -157,7 +157,7 @@ trait MontarPagina
       'actions' => $actions,
     ]);
 
-    $header = collect(['Tipo do Veiculo', 'MARCA', 'Modelo', 'Ano', 'Blindado', 'Placa', 'Adicionais', 'Ações']);
+    $header = collect(['Tipo do Veiculo', 'Marca', 'Modelo', 'Ano', 'Blindado', 'Placa', 'Adicionais', 'Ações']);
 
     return [$config, $header];
   }

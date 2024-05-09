@@ -42,26 +42,37 @@
                                 @csrf
                                 <div class="row">
                                     @foreach ($dados['sessions'] as $key => $group)
-                                        @if (data_get($dados, "sessions.$key.foto"))
+                                        @if (data_get($dados, "sessions.$key.photo"))
                                             <div class="col-lg-6 mb-4">
                                                 <p class="fw-bold">{{ $key }}</p>
                                             </div>
-                                            <div class="col-lg-6 mb-4">
-                                                <input 
-                                                    class="form-control filepond" 
-                                                    type="{{ data_get($dados, "sessions.$key.foto.type") }}" 
-                                                    placeholder="{{ data_get($dados, "sessions.$key.foto.placeholder") }}" 
-                                                    id="{{ data_get($dados, "sessions.$key.foto.id") }}"
-                                                    name="{{ data_get($dados, "sessions.$key.foto.name") }}" 
-                                                    maxlength="{{ data_get($dados, "sessions.$key.foto.maxlenghtRoute")}}" 
-                                                    value="{{ data_get($dados, "sessions.$key.foto.value") ?? '' }}"
-                                                    {{ data_get($dados, "sessions.$key.foto.function") ? data_get($dados, "sessions.$key.foto.function.type") . '=' . data_get($dados, "sessions.$key.foto.function.name") : '' }}
-                                                    {{ data_get($dados, "sessions.$key.foto.required") ? 'required' : '' }}
-                                                >
+                                            <div class="col-lg-6 d-flex text-end mb-4">
+                                                @php
+                                                    $photoValue = data_get($dados, "sessions.$key.photo.value");
+                                                @endphp
+                                                <div>                        
+                                                    <input 
+                                                        class="form-control filepond" 
+                                                        type="{{ data_get($dados, "sessions.$key.photo.type") }}" 
+                                                        placeholder="{{ data_get($dados, "sessions.$key.photo.placeholder") }}" 
+                                                        id="{{ data_get($dados, "sessions.$key.photo.id") }}"
+                                                        name="{{ data_get($dados, "sessions.$key.photo.name") }}" 
+                                                        maxlength="{{ data_get($dados, "sessions.$key.photo.maxlenghtRoute")}}" 
+                                                        value="{{ $photoValue ?? '' }}"
+                                                        {{ data_get($dados, "sessions.$key.photo.function") ? data_get($dados, "sessions.$key.photo.function.type") . '=' . data_get($dados, "sessions.$key.photo.function.name") : '' }}
+                                                        {{ data_get($dados, "sessions.$key.photo.required") ? 'required' : '' }}
+                                                    >
+                                                </div>
+                                                @if ($photoValue)
+                                                    <a href="{{ asset($photoValue) }}" data-fancybox>
+                                                        <img src="{{ asset($photoValue) }}" class="img-thumbnail" style="max-width: 200px;">
+                                                    </a>
+                                                @endif
                                             </div>
                                         @else 
-                                            <p class="fw-bold mt-4">{{ $key }}</p>
-                                        @endif
+                                    <p class="fw-bold mt-4">{{ $key }}</p>
+                                @endif
+                                
     
                                         @include('register.formRegister')
                                     @endforeach

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_brand')->nullable();
             $table->foreign('id_brand')->references('id')->on('vehicle_brands');
 
+            $table->string('model', 50)->nullable();
             $table->integer('year')->nullable();
             $table->boolean('armored');
             $table->integer('passengers')->nullable();
