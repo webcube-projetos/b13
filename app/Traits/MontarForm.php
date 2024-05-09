@@ -469,7 +469,7 @@ trait MontarForm
             ],
             'sessions' => [
                 'Dados do Veículo' => [
-                    'foto' => [
+                    'photo' => [
                         'container_tag' => 'div',
                         'container_class' => 'col-md-3',
                         'label' => 'Foto',
@@ -478,14 +478,14 @@ trait MontarForm
                         'placeholder' => '',
                         'maxlenghtRoute' => '',
                         'required' => false,
-                        'id' => 'foto',
-                        'name' => 'foto',
+                        'id' => 'photo',
+                        'name' => 'photo',
                         'function' => false,
-                        'value' => $value->foto ?? null,
+                        'value' => $value->photo ?? null,
                     ],
                     'tipo' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Tipo do veículo',
                         'placeholder' => '',
                         'type' => 'selectComponent',
@@ -498,7 +498,7 @@ trait MontarForm
                     ],
                     'categoria' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Categoria',
                         'type' => 'selectComponent',
                         'typeSelect' => 'categoryVehicle',
@@ -512,7 +512,7 @@ trait MontarForm
                     ],
                     'marca' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-4',
+                        'container_class' => 'col-md-3',
                         'label' => 'Marca',
                         'type' => 'selectComponent',
                         'typeSelect' => 'selectBrand',
@@ -523,6 +523,19 @@ trait MontarForm
                         'name' => 'id_brand',
                         'function' => false,
                         'value' => $value->id_brand ?? null,
+                    ],
+                    'modelo' => [
+                        'container_tag' => 'div',
+                        'container_class' => 'col-md-3',
+                        'label' => 'Modelo',
+                        'type' => 'text',
+                        'placeholder' => '',
+                        'maxlenghtRoute' => '',
+                        'required' => false,
+                        'id' => 'modelo',
+                        'name' => 'model',
+                        'function' => false,
+                        'value' => $value->model ?? null,
                     ],
                     'ano' => [
                         'container_tag' => 'div',
@@ -629,7 +642,6 @@ trait MontarForm
                         'function' => false,
                         'value' => $value->id_company ?? null,
                     ],
-
                     'documento' => [
                         'container_tag' => 'div',
                         'container_class' => 'col-md-12',
