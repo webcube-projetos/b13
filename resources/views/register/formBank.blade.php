@@ -23,7 +23,6 @@
                             name="nome_banco"
                             maxlength="20"
                             value="{{ $value?->bank?->bank ?? '' }}"
-                            required
                         >
                     </div>
                     <div class="col-md-2">
@@ -36,7 +35,6 @@
                             name="numero_banco" 
                             maxlength="4" 
                             value="{{ $value?->bank?->bank_number ?? '' }}"
-                            required
                         >
                     </div>
                     <div class="col-md-2">
@@ -49,7 +47,6 @@
                             name="agencia" 
                             maxlength="5"
                             value="{{ $value?->bank?->agency ?? '' }}" 
-                            required
                         >
                     </div>
                     <div class="col-md-4">
@@ -62,7 +59,6 @@
                             name="conta" 
                             maxlength="15" 
                             value="{{ $value?->bank?->cc ?? '' }}"
-                            required
                         >
                     </div>
                 </div>
@@ -73,11 +69,12 @@
                         <select 
                             class="form-control"  
                             id="tipo_chave"
-                            name="tipo_chave" 
+                            name="tipo_chave"
                             required
                         >
                             <option value="" selected disabled>Selecione um tipo</option>
                             <option @if($value?->bank?->key_type == 'CPF') selected @endif value="CPF">CPF</option>
+                            <option @if($value?->bank?->key_type == 'CNPJ') selected @endif value="CNPJ">CNPJ</option>
                             <option @if($value?->bank?->key_type == 'Celular') selected @endif value="Celular">Celular</option>
                             <option @if($value?->bank?->key_type == 'E-mail') selected @endif value="E-mail">E-mail</option>
                             <option @if($value?->bank?->key_type == 'Chave Aleatória') selected @endif value="Chave Aleatória">Chave Aleatória</option>
@@ -102,7 +99,6 @@
                             class="form-control"  
                             id="preference"
                             name="preference" 
-                            required
                         >
                             <option value="" selected disabled>Selecione uma opção</option>
                             <option @if($value?->bank?->preference == 'Via PIX') selected @endif value="Via PIX">Via PIX</option>
