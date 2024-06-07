@@ -38,4 +38,9 @@ class Company extends Model
             'contact_id'
         );
     }
+
+    public function bank()
+    {
+        return $this->belongsTo(BankAccount::class, 'id_bank', 'id');
+    }
 }
