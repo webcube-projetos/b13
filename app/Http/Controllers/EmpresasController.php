@@ -77,12 +77,9 @@ class EmpresasController extends Controller
 
     public function salvar()
     {
-
         DB::beginTransaction();
 
-        if ($this->request->id) {
-            $company = Company::find($this->request->id);
-        }
+        $company = $this->request->id ? Company::find($this->request->id) : new Company();
 
         if ($this->request->tipo == 'bank') {
             $bank = BankAccount::updateOrCreate(
@@ -125,24 +122,25 @@ class EmpresasController extends Controller
             ]
         );
 
-        $company = Company::updateOrCreate(
-            [
-                'id' => $this->request->id ?? null
-            ],
-            [
-                'id_address' => $endereco->id,
-                'document' => preg_replace('/[^0-9]/', '', $this->request->cpfcnpj),
-                'name' => $this->request->razao,
-                'fantasy_name' => $this->request->nome_fantasia,
-                'nickname' => $this->request->apelido,
-                'phone' => $this->request->phone,
-                'email' => $this->request->email,
-            ]
-        );
+        $company->fill([
+            'id_address' => $endereco->id,
+            'document' => preg_replace('/[^0-9]/', '', $this->request->cpfcnpj),
+            'name' => $this->request->razao,
+            'fantasy_name' => $this->request->nome_fantasia,
+            'nickname' => $this->request->apelido,
+            'phone' => $this->request->phone,
+            'email' => $this->request->email,
+        ]);
+        $company->save();
 
+        // Processar contatos
+        $existingContactIds = $company->contacts->pluck('id')->toArray();
+        $requestContactIds = $this->request->id_contato ?? [];
+
+        // Atualizar ou criar contatos
         if ($this->request->nome_contato) {
             foreach ($this->request->nome_contato as $index => $contato) {
-                $contato = Contact::updateOrCreate(
+                $contact = Contact::updateOrCreate(
                     [
                         'id' => $this->request->id_contato[$index] ?? null
                     ],
@@ -159,12 +157,23 @@ class EmpresasController extends Controller
                 if (!$this->request->id_contato[$index]) {
                     CompanyContact::create([
                         'company_id' => $company->id,
-                        'contact_id' => $contato->id,
+                        'contact_id' => $contact->id,
                     ]);
+                }
+
+                // Remover do array de IDs existentes para que não seja deletado
+                if (($key = array_search($contact->id, $existingContactIds)) !== false) {
+                    unset($existingContactIds[$key]);
                 }
             }
         }
 
+        // Remover contatos que não estão mais presentes na solicitação
+        if (!empty($existingContactIds)) {
+            CompanyContact::whereIn('contact_id', $existingContactIds)->delete();
+            Contact::destroy($existingContactIds);
+        }
+        
         DB::commit();
 
         return [
