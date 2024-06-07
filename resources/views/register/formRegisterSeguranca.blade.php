@@ -9,7 +9,7 @@
                     {{ $fields['label'] }}{{ $fields['required'] ? '*' : '' }}
                 </label>
                 @if ( $fields['type'] === 'select' )
-                    @if ( $fields['name'] === 'blindado' )
+                    @if ( $fields['name'] === 'blindado')
                         <div class="form-group">
                             <select 
                                 name="{{ $fields['name'] }}" 

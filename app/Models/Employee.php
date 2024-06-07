@@ -19,6 +19,7 @@ class Employee extends Model
         'nickname',
         'document',
         'armed',
+        'driver',
         'phone',
         'email',
         'id_address',

@@ -149,6 +149,7 @@ class MotoristasController extends Controller
                 'nickname' => $this->request->nickname ?? null,
                 'document' => preg_replace('/[^0-9]/', '', $this->request->document),
                 'armed' => 0,
+                'driver' => 0,
                 'phone' => $this->request->phone,
                 'email' => $this->request->email,
                 'id_address' => $endereco->id,

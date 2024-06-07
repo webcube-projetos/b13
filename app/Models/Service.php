@@ -13,6 +13,8 @@ class Service extends Model
         'name',
         'name_english',
         'blindado_armado',
+        'bilingual',
+        'driver',
         'price',
         'time',
         'extra_price',
@@ -27,6 +29,10 @@ class Service extends Model
         'id_category_espec',
         'id_service_type',
         'id_vehicle',
+    ];
+
+    protected $attributes = [
+        'driver' => 0,
     ];
 
     public function serviceType()

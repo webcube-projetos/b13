@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('name_english', 50);
             $table->tinyInteger('blindado_armado');
+            $table->tinyInteger('bilingual');
+            $table->tinyInteger('driver');
             $table->float('price');
             $table->integer('time');
             $table->float('extra_price');
