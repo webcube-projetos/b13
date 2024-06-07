@@ -34,15 +34,7 @@ class SpecializationsSeeder extends Seeder
             'name_english' => 'Spanish',
             'description' => null
         ]);
-
-        // Cadastrar as especializações filhas
-        $portugues = Specialization::create([
-            'id_ascendent' => $lingua->id,
-            'name' => 'Espanhol',
-            'name_english' => 'Spanish',
-            'description' => null
-        ]);
-
+        
         $italiano = Specialization::create([
             'id_ascendent' => $lingua->id,
             'name' => 'Iitaliano',

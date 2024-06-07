@@ -70,7 +70,6 @@
                             class="form-control"  
                             id="tipo_chave"
                             name="tipo_chave"
-                            required
                         >
                             <option value="" selected disabled>Selecione um tipo</option>
                             <option @if($value?->bank?->key_type == 'CPF') selected @endif value="CPF">CPF</option>
@@ -90,7 +89,6 @@
                             name="chave_pix" 
                             maxlength="255" 
                             value="{{ $value?->bank?->key ?? '' }}"
-                            required
                         >
                     </div>
                     <div class="col-md-3">

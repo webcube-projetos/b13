@@ -150,6 +150,7 @@ class SegurancasController extends Controller
                 'nickname' => $this->request->nickname ?? null,
                 'document' => preg_replace('/[^0-9]/', '', $this->request->document),
                 'armed' => $this->request->armored,
+                'driver' => $this->request->driver,
                 'phone' => $this->request->phone,
                 'email' => $this->request->email,
                 'id_address' => $endereco->id,

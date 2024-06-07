@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nickname', 100)->nullable();
             $table->integer('document');
             $table->integer('armed');
+            $table->integer('driver')->nullable();
             $table->string('phone');
             $table->string('email', 100);
             $table->unsignedBigInteger('id_address');

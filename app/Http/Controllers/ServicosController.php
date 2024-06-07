@@ -73,18 +73,19 @@ class ServicosController extends Controller
     {
         DB::beginTransaction();
 
-        if ($this->request->id) {
-            $service = Service::find($this->request->id);
-        }
 
-        $serviceType = ServiceType::where('name', $this->request->id_service_type)->first();
+        try {
+            if ($this->request->id) {
+                $service = Service::find($this->request->id);
+            }
 
-        $service = Service::updateOrCreate(
-            ['id' => $this->request->id],
-            [
+            $serviceType = ServiceType::where('name', $this->request->id_service_type)->first();
+
+            $data = [
                 'name' => $this->request->name,
                 'name_english' => $this->request->name_english ?? null,
                 'blindado_armado' => $this->request->armored,
+                'bilingual' => $this->request->bilingual,
                 'price' => $this->request->price,
                 'time' => $this->request->time,
                 'extra_price' => $this->request->extra_price,
@@ -99,13 +100,28 @@ class ServicosController extends Controller
                 'id_category_espec' => $this->request->id_category_espec ?? null,
                 'id_service_type' => $serviceType->id,
                 'id_vehicle' => $this->request->id_vehicle ?? null,
-            ]
-        );
-        DB::commit();
+            ];
 
-        return [
-            'route' => route('servicos.editar', ['servicos' => $service->id]),
-        ];
+            // Adiciona o campo driver somente se estiver presente na solicitação
+            if ($this->request->has('driver')) {
+                $data['driver'] = $this->request->driver;
+            }
+
+            $service = Service::updateOrCreate(
+                ['id' => $this->request->id],
+                $data
+            );
+
+            DB::commit();
+
+            return [
+                'route' => route('servicos.editar', ['servicos' => $service->id]),
+            ];
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Lidar com a exceção de acordo com suas necessidades, por exemplo, logando o erro e retornando uma resposta adequada
+            return response()->json(['error' => 'Erro ao salvar o serviço.'], 500);
+        }
     }
 
     public function delete()
