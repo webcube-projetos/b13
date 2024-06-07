@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('bank_number')->nullable();
             $table->string('agency', 10)->nullable();
             $table->string('cc', 20)->nullable();
-            $table->string('key_type', 30);
-            $table->string('key', 255);
+            $table->string('key_type', 30)->nullable();
+            $table->string('key', 255)->nullable();
             $table->string('preference', 20)->nullable();
             $table->timestamps();
         });

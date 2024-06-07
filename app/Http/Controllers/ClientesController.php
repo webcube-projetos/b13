@@ -79,9 +79,7 @@ class ClientesController extends Controller
 
 		DB::beginTransaction();
 
-		if ($this->request->id) {
-			$client = Client::find($this->request->id);
-		}
+		$client = $this->request->id ? Client::find($this->request->id) : new Client();
 
 		if ($this->request->tipo == 'bank') {
 			$bank = BankAccount::updateOrCreate(
@@ -124,24 +122,24 @@ class ClientesController extends Controller
 			]
 		);
 
-		$client = Client::updateOrCreate(
-			[
-				'id' => $this->request->id ?? null
-			],
-			[
-				'id_address' => $endereco->id,
-				'document' => preg_replace('/[^0-9]/', '', $this->request->cpfcnpj),
-				'name' => $this->request->razao,
-				'fantasy_name' => $this->request->nome_fantasia,
-				'nickname' => $this->request->apelido,
-				'phone' => $this->request->phone,
-                'email' => $this->request->email,
-			]
-		);
+		$client->fill([
+			'id_address' => $endereco->id,
+			'document' => preg_replace('/[^0-9]/', '', $this->request->cpfcnpj),
+			'name' => $this->request->razao,
+			'fantasy_name' => $this->request->nome_fantasia,
+			'nickname' => $this->request->apelido,
+			'phone' => $this->request->phone,
+			'email' => $this->request->email,
+		]);
+		$client->save();
 
+		$existingContactIds = $client->contacts->pluck('id')->toArray();
+    	$requestContactIds = $this->request->id_contato ?? [];
+
+		// Atualizar ou criar contatos
 		if ($this->request->nome_contato) {
 			foreach ($this->request->nome_contato as $index => $contato) {
-				$contato = Contact::updateOrCreate(
+				$contact = Contact::updateOrCreate(
 					[
 						'id' => $this->request->id_contato[$index] ?? null
 					],
@@ -158,10 +156,21 @@ class ClientesController extends Controller
 				if (!$this->request->id_contato[$index]) {
 					ClientContact::create([
 						'client_id' => $client->id,
-						'contact_id' => $contato->id,
+                    	'contact_id' => $contact->id,
 					]);
 				}
+
+				// Remover do array de IDs existentes para que não seja deletado
+				if (($key = array_search($contact->id, $existingContactIds)) !== false) {
+					unset($existingContactIds[$key]);
+				}
 			}
+		}
+
+		// Remover contatos que não estão mais presentes na solicitação
+		if (!empty($existingContactIds)) {
+			ClientContact::whereIn('contact_id', $existingContactIds)->delete();
+			Contact::destroy($existingContactIds);
 		}
 
 		DB::commit();
