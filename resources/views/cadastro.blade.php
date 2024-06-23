@@ -46,7 +46,7 @@
                                             <div class="col-lg-6 mb-4">
                                                 <p class="fw-bold">{{ $key }}</p>
                                             </div>
-                                            <div class="col-lg-6 d-flex text-end mb-4">
+                                            <div class="col-lg-6 d-flex text-end mb-4 justify-content-end">
                                                 @php
                                                     $photoValue = data_get($dados, "sessions.$key.photo.value");
                                                 @endphp

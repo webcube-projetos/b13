@@ -8,8 +8,8 @@
         </select>
     </div>
     <div class="col-md-6">
-        <select class="dinamicSelect form-control" name="contact_id">
-            <option value="" selected disabled>Selecione o Contato</option>
+        <select class="dinamicSelect form-control" name="contact_id" wire:model.live="contato">
+            <option value="" selected >Selecione o Contato</option>
             @if(($contacts && $contacts->count()))                
                 @foreach ($contacts as $option)
                     <option value="{{ $option->id }}">{{ $option->name }}</option>

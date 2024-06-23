@@ -108,6 +108,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/', [OrcamentosController::class, 'index'])->name('index');
 		Route::get('/listar', [OrcamentosController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [OrcamentosController::class, 'cadastro'])->name('cadastro');
+		Route::post('/salvar', [OrcamentosController::class, 'salvar'])->name('salvar');
+
 		Route::get('/editar', [OrcamentosController::class, 'editar'])->name('editar');
 	});
 
