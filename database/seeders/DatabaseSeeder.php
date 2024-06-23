@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             VehicleBrandSeeder::class,
             VehicleTypeSeeder::class,
+            PaymentMethodSeeder::class
         ]);
     }
 }

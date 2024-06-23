@@ -13,7 +13,8 @@ class SelectClient extends Component
     public $selected = null;
     public $clients;
     public $contacts = null;
-    public $selectedPrimary;
+    public $selectedPrimary = null;
+    public $contato = null;
 
     public function mount($name, $selected)
     {
@@ -41,5 +42,15 @@ class SelectClient extends Component
         $this->contacts = Contact::query()
             ->whereHas('client', fn ($query) => $query->where('clients.id', $selectedPrimary))
             ->get();
+    }
+
+    public function updatedSelectedPrimary($value)
+    {
+        $this->dispatch('selectUpdated', 'client', $value);
+    }
+
+    public function updatedContato($value)
+    {
+        $this->dispatch('selectUpdated', 'contato', $value);
     }
 }
