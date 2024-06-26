@@ -79,7 +79,7 @@ class MotoristasController extends Controller
         $imgUrlFoto = null;
         $imgUrlCnh = null;
 
-        $employee = null; // Inicialize $employee fora dos condicionais para garantir que esteja disponível fora deles
+        $employee = null;
 
         if ($this->request->id) {
             $employee = Employee::find($this->request->id);
@@ -88,15 +88,15 @@ class MotoristasController extends Controller
         if ($this->request->photo) {
             $photo = json_decode($this->request->photo);
             $imgUrlFoto = $this->storeImageBase64($photo->data, 'segurancas');
-        } elseif ($employee && $employee->photo) { // Verifica se $employee existe e se possui uma foto existente
-            $imgUrlFoto = $employee->photo; // Mantém a foto existente
+        } elseif ($employee && $employee->photo) {
+            $imgUrlFoto = $employee->photo;
         }
 
         if ($this->request->cnh) {
             $cnh = json_decode($this->request->cnh);
             $imgUrlCnh = $this->storeImageBase64($cnh->data, 'segurancas');
-        } elseif ($employee && $employee->cnh) { // Verifica se $employee existe e se possui uma CNH existente
-            $imgUrlCnh = $employee->cnh; // Mantém a CNH existente
+        } elseif ($employee && $employee->cnh) {
+            $imgUrlCnh = $employee->cnh;
         }
 
         if ($this->request->tipo == 'bank') {
@@ -114,11 +114,11 @@ class MotoristasController extends Controller
                     'preference' => $this->request->preference ?? null,
                 ]
             );
-        
+
             $employee->id_bank = $bank->id;
             $employee->save();
             DB::commit();
-        
+
             return [
                 'route' => route('motoristas.editar', ['employee' => $employee->id]),
             ];
@@ -145,19 +145,18 @@ class MotoristasController extends Controller
             [
                 'type' => Employee::DRIVER,
                 'name' => $this->request->name,
-                'fantasy_name' => $this->request->fantasy_name ?? null,
-                'nickname' => $this->request->nickname ?? null,
                 'document' => preg_replace('/[^0-9]/', '', $this->request->document),
-                'armed' => 0,
-                'driver' => 0,
-                'phone' => $this->request->phone,
-                'email' => $this->request->email,
+                'armed' => $this->request->armed ?? 0,
                 'id_address' => $endereco->id,
                 'id_company' => $this->request->id_company ?? null,
-                'id_bank' => null,
-                'obs' => $this->request->obs ?? null,
-                'cnh' => $imgUrlCnh ?? $employee->cnh, // Manter a CNH existente se não houver nova selecionada
-                'photo' => $imgUrlFoto ?? $employee->photo, // Manter a foto existente se não houver nova selecionada
+                'fantasy_name' => $this->request->fantasy_name ?? $employee->fantasy_name ?? null,
+                'nickname' => $this->request->nickname ?? $employee->nickname ?? null,
+                'phone' => $this->request->phone ?? $employee->phone ?? null,
+                'email' => $this->request->email ?? $employee->email ?? null,
+                'id_bank' => $employee->id_bank ?? null,
+                'obs' => $this->request->obs ?? $employee->obs ?? null,
+                'cnh' => $imgUrlCnh ?? $employee->cnh ?? null,
+                'photo' => $imgUrlFoto ?? $employee->photo ?? null,
             ]
         );
 

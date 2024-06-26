@@ -16,6 +16,7 @@ class SelectComponent extends Component
     public $options;
     public $placeholder;
     public $name;
+    public $required;
     public $selected;
     public $selectedPrimaryId;
 
@@ -92,7 +93,7 @@ class SelectComponent extends Component
     public function brands()
     {
         return VehicleBrand::select('id', 'name')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'asc')
             ->get();
     }
 

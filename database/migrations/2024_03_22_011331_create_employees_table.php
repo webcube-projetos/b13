@@ -20,8 +20,8 @@ return new class extends Migration
             $table->integer('document');
             $table->integer('armed');
             $table->integer('driver')->nullable();
-            $table->string('phone');
-            $table->string('email', 100);
+            $table->string('phone')->nullable();
+            $table->string('email', 100)->nullable();
             $table->unsignedBigInteger('id_address');
             $table->unsignedBigInteger('id_company');
             $table->unsignedBigInteger('id_contact');
