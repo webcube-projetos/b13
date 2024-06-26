@@ -15,11 +15,11 @@
     </div>
     <div class="col-lg-4">
         <label for="email_contato">E-mail</label>
-        <input type="email" class="form-control" name="email_contato[]" id="email_contato" maxlength="30" required @isset($item) value="{{ $item->email }}" @endisset>
+        <input type="email" class="form-control" name="email_contato[]" id="email_contato" maxlength="30" @isset($item) value="{{ $item->email }}" @endisset>
     </div>
     <div class="col-lg-4">
         <label for="telefone_contato">Telefone</label>
-        <input type="text" class="form-control phone" name="telefone_contato[]" id="telefone_contato" maxlength="30" required @isset($item) value="{{ $item->phone }}" @endisset>
+        <input type="text" class="form-control phone" name="telefone_contato[]" id="telefone_contato" maxlength="30" @isset($item) value="{{ $item->phone }}" @endisset>
     </div>
     <div class="col-lg-4">
         <label for="whatsapp_contato">Whatsapp</label>
