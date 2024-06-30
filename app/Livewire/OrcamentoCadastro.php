@@ -15,6 +15,7 @@ class OrcamentoCadastro extends Component
     public $contato;
     public $paymentMethod;
     public $client;
+    public $os = null;
 
     use MontarForm;
 
@@ -50,6 +51,7 @@ class OrcamentoCadastro extends Component
             'status' => 0,
         ]);
 
+        $this->os = $os;
         $this->dispatch('osCreated', $os->id);
     }
 }

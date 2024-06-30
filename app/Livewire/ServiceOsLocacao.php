@@ -10,11 +10,12 @@ use Livewire\Component;
 class ServiceOsLocacao extends Component
 {
     public $serviceId;
+    public $id_locacao;
     public $inicio;
     public $termino;
     public $qtdDias = 0;
     public $qtdVeiculos = 0;
-    public $services = null;
+    public $servicesOS = null;
     public $vehiclesCategory;
     public $selectBrand;
     public $typesVehicle;
@@ -51,7 +52,7 @@ class ServiceOsLocacao extends Component
             $this->termino = $data['termino'];
             $this->qtdDias = $data['qtdDias'];
             $this->qtdVeiculos = $data['qtdVeiculos'];
-            $this->services = $data['services'];
+            $this->servicesOS = $data['servicesOS'];
             $this->vehiclesCategory = $data['vehiclesCategory'];
             $this->typesVehicle = $data['typesVehicle'];
             $this->idioma = $data['idioma'];
@@ -82,7 +83,7 @@ class ServiceOsLocacao extends Component
             'termino' => $this->termino,
             'qtdDias' => $this->qtdDias,
             'qtdVeiculos' => $this->qtdVeiculos,
-            'services' => $this->services,
+            'servicesOS' => $this->servicesOS,
             'vehiclesCategory' => $this->vehiclesCategory,
             'typesVehicle' => $this->typesVehicle,
             'idioma' => $this->idioma,
@@ -121,23 +122,28 @@ class ServiceOsLocacao extends Component
     #[On('osCreated')]
     public function saveOS($id)
     {
-        $osService = OsService::create([
-            'id_os' => $id,
-            'id_service' => $this->services,
-            'qtd_days' => $this->qtdDias,
-            'start' => $this->inicio,
-            'finish' => $this->termino,
-            'price' => $this->total,
-            'time' => $this->horaBase,
-            'extra_time' => $this->horaExtra,
-            'km' => $this->kmBase,
-            'km_extra' => $this->kmExtra,
-            'partner_cost' => $this->custoParceiro,
-            'partner_extra_time' => $this->extraParceiro,
-            'partner_extra_km' => $this->kmExtraParceiro,
-            'employee_cost' => $this->custoMotorista,
-            'employee_extra' => $this->horaExtraMotorista,
-        ]);
+        $id_locacao = OsService::updateOrCreate(
+            ['id' => $this->id_locacao, 'id_service' => $this->servicesOS],
+            [
+                'id_os' => $id,
+                'id_service' => $this->servicesOS,
+                'qtd_days' => $this->qtdDias,
+                'start' => $this->inicio,
+                'finish' => $this->termino,
+                'price' => $this->total,
+                'time' => $this->horaBase,
+                'extra_time' => $this->horaExtra,
+                'km' => $this->kmBase,
+                'km_extra' => $this->kmExtra,
+                'partner_cost' => $this->custoParceiro,
+                'partner_extra_time' => $this->extraParceiro,
+                'partner_extra_km' => $this->kmExtraParceiro,
+                'employee_cost' => $this->custoMotorista,
+                'employee_extra' => $this->horaExtraMotorista,
+            ]
+        );
+
+        $this->id_locacao = $id_locacao->id;
     }
 
     #[On('selectUpdated')]

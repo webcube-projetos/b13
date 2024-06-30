@@ -1,4 +1,5 @@
 <div>
+    <input type="hidden" name="id_seguranca" @if($id_seguranca) value="{{ $id_seguranca }}" @endif>
   <div class="row linha-add mt-3 position-relative">
     <div class="col-md-6 mb-4">
         <h5>Segurança</h5>
@@ -29,7 +30,7 @@
     </div>
     <div class="col-md-6 mb-3">
         <label for="servico">Serviço</label>
-        <livewire:select-component type="services" placeholder="Selecione o serviço" name="service[]" selected='' />
+        <livewire:select-component type="servicesOS" placeholder="Selecione o serviço" name="servicesOS[]" selected='' />
     </div>
     <div class="col-md-6 mb-3">
         <label for="categoriaVeiculo">Categoria de veículo</label>

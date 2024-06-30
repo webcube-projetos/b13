@@ -8,13 +8,13 @@ use Livewire\Attributes\On;
 
 class ServiceOS extends Component
 {
-    public $services = [];
+    public $servicesOS = [];
     public $totals = [];
     public $totalGlobal = 0.00;
 
     public function mount()
     {
-        $this->services = [];
+        $this->servicesOS = [];
     }
 
     protected $listeners = [
@@ -29,14 +29,14 @@ class ServiceOS extends Component
     public function handleAddLinhaServicoLocacao()
     {
         $id = uniqid();
-        $this->services[] = ['type' => 'locacao', 'id' => $id];
+        $this->servicesOS[] = ['type' => 'locacao', 'id' => $id];
         $this->totals[$id] = 0;
     }
 
     public function handleAddLinhaServicoSeguranca()
     {
         $id = uniqid();
-        $this->services[] = ['type' => 'seguranca', 'id' => $id];
+        $this->servicesOS[] = ['type' => 'seguranca', 'id' => $id];
         $this->totals[$id] = 0;
     }
 
@@ -49,13 +49,13 @@ class ServiceOS extends Component
 
     public function handleClonarLinha($serviceId, $data)
     {
-        foreach ($this->services as $index => $service) {
+        foreach ($this->servicesOS as $index => $service) {
             if ($service['id'] === $serviceId) {
                 $newService = $service;
                 $newService['id'] = uniqid();
                 $newService['data'] = $data;
 
-                $this->services[] = $newService;
+                $this->servicesOS[] = $newService;
                 $this->totals[$newService['id']] = $this->totals[$serviceId];
                 break;
             }
@@ -66,13 +66,13 @@ class ServiceOS extends Component
 
     public function handleDeletarLinha($serviceId)
     {
-        $services = $this->services;
-        $services = array_filter($services, function ($service) use ($serviceId) {
+        $servicesOS = $this->servicesOS;
+        $servicesOS = array_filter($servicesOS, function ($service) use ($serviceId) {
             return $service['id'] !== $serviceId;
         });
-        $services = array_values($services);
+        $servicesOS = array_values($servicesOS);
 
-        $this->services = $services;
+        $this->servicesOS = $servicesOS;
 
         unset($this->totals[$serviceId]);
         $this->totalGlobal = array_sum($this->totals);

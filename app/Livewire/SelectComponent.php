@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\PaymentMethod;
+use App\Models\Service;
 use App\Models\Specialization;
 use App\Models\Vehicle;
 use App\Models\VehicleBrand;
@@ -32,7 +33,7 @@ class SelectComponent extends Component
             'especialization_primary' => $this->especialization(true),
             'empresas' => $this->empresas(),
             'typesVehicle' => $this->typesVehicle(),
-            'categoryVehicle' => $this->categoryVehicle(),
+            'vehiclesCategory' => $this->categoryVehicle(),
             'selectBrand' => $this->brands(),
             'armored' => $this->armored(),
             'armed' => $this->armored(),
@@ -40,6 +41,7 @@ class SelectComponent extends Component
             'securityType' => $this->securityType(),
             'client' => $this->client(),
             'services' => $this->services(),
+            'servicesOS' => $this->servicesOS(),
             'vehiclesCategory' => $this->vehiclesCategory(),
             'vehicles' => $this->vehicles(),
             'paymentMethod' => $this->paymentMethod(),
@@ -128,6 +130,13 @@ class SelectComponent extends Component
     {
         return Category::select('id', 'name')
             ->whereHas('type', fn ($query) => $query->where('name', 'Service'))
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    public function servicesOS()
+    {
+        return Service::select('id', 'name')
             ->orderBy('created_at', 'desc')
             ->get();
     }

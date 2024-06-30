@@ -77,3 +77,25 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+@endpush
+
+@script
+<script>
+    $wire.on('osCreated', () => {
+        Toastify({
+            text: "Cadastro realizado com sucesso!",
+            className: "info",
+            close: true,
+            gravity: "bottom",
+            position: "right",
+            style: {
+            background: "#FF9921",
+            }
+      }).showToast();
+    });
+</script>
+@endscript

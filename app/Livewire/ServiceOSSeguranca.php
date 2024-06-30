@@ -9,11 +9,12 @@ use Livewire\Component;
 class ServiceOSSeguranca extends Component
 {
     public $serviceId;
+    public $id_seguranca;
     public $inicio;
     public $termino;
     public $qtdDias;
     public $qtdSegurancas;
-    public $services = null;
+    public $servicesOS = null;
     public $vehiclesCategory;
     public $precoBase = 0;
     public $horaBase = 0;
@@ -41,7 +42,7 @@ class ServiceOSSeguranca extends Component
             $this->termino = $data['termino'];
             $this->qtdDias = $data['qtdDias'];
             $this->qtdSegurancas = $data['qtdSegurancas'];
-            $this->services = $data['services'];
+            $this->servicesOS = $data['servicesOS'];
             $this->vehiclesCategory = $data['vehiclesCategory'];
             $this->precoBase = $data['precoBase'];
             $this->horaBase = $data['horaBase'];
@@ -72,7 +73,7 @@ class ServiceOSSeguranca extends Component
             'termino' => $this->termino,
             'qtdDias' => $this->qtdDias,
             'qtdSegurancas' => $this->qtdSegurancas,
-            'services' => $this->services,
+            'servicesOS' => $this->servicesOS,
             'vehiclesCategory' => $this->vehiclesCategory,
             'precoBase' => $this->precoBase,
             'horaBase' => $this->horaBase,
@@ -92,23 +93,27 @@ class ServiceOSSeguranca extends Component
     #[On('osCreated')]
     public function saveOS($id)
     {
-        $osService = OsService::create([
-            'id_os' => $id,
-            'id_service' => $this->services,
-            'qtd_days' => $this->qtdDias,
-            'start' => $this->inicio,
-            'finish' => $this->termino,
-            'price' => $this->total,
-            'time' => $this->horaBase,
-            'extra_time' => $this->horaExtra,
-            'km' => $this->kmBase,
-            'km_extra' => $this->kmExtra,
-            'partner_cost' => $this->custoParceiro,
-            'partner_extra_time' => $this->extraParceiro,
-            'partner_extra_km' => $this->kmExtraParceiro,
-            'employee_cost' => $this->custoSeguranca,
-            'employee_extra' => $this->horaExtraSeguranca,
-        ]);
+        $id_seguranca = OsService::updateOrCreate(
+            ['id' => $this->id_seguranca, 'id_service' => $this->servicesOS],
+            [
+                'id_os' => $id,
+                'id_service' => $this->servicesOS,
+                'qtd_days' => $this->qtdDias,
+                'start' => $this->inicio,
+                'finish' => $this->termino,
+                'price' => $this->total,
+                'time' => $this->horaBase,
+                'extra_time' => $this->horaExtra,
+                'km' => $this->kmBase,
+                'km_extra' => $this->kmExtra,
+                'partner_cost' => $this->custoParceiro,
+                'partner_extra_time' => $this->extraParceiro,
+                'partner_extra_km' => $this->kmExtraParceiro,
+                'employee_cost' => $this->custoSeguranca,
+                'employee_extra' => $this->horaExtraSeguranca,
+            ]
+        );
+        $this->id_seguranca = $id_seguranca->id;
     }
 
     public function handleDeletarLinha($serviceId)
