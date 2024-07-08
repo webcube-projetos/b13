@@ -299,7 +299,7 @@ trait MontarPagina
       'actions' => $actions,
     ]);
 
-    $header = collect(['Serviço', 'Nome', 'Tipo', 'Veículo', 'Blindado/Armado', 'Bilingue', 'Preço Base', 'Ações']);
+    $header = collect(['Categoria', 'Tipo', 'Nome', 'Veículo', 'Blindado', 'Bilingue', 'Preço Base', 'Ações']);
 
 
     return [$config, $header];
@@ -347,7 +347,7 @@ trait MontarPagina
       'actions' => $actions,
     ]);
 
-    $header = collect(['Serviço', 'Nome', 'Tipo', 'Veículo', 'Blindado/Armado', 'Bilingue', 'Preço Base', 'Ações']);
+    $header = collect(['Serviço', 'Tipo', 'Nome', 'Armado', 'Bilingue', 'Motorista', 'Preço Base', 'Ações']);
 
 
     return [$config, $header];

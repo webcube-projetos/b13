@@ -16,13 +16,13 @@
     @foreach($dados as $service)
 
       <td>
-        {{$service->serviceType->name}}
-      </td>
-      <td>
-        {{$service->name}}
+        {{$service->categoryEspec->name}}
       </td>
       <td>
         {{$service->categoryService->name}}
+      </td>
+      <td>
+        {{$service->name}}
       </td>
       <td>
         {{ optional($service->vehicleType)->name ?? '-' }}

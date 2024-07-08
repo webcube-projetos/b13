@@ -45,6 +45,11 @@ class Service extends Model
         return $this->belongsTo(Category::class, 'id_category_service', 'id');
     }
 
+    public function categoryEspec()
+    {
+        return $this->belongsTo(Category::class, 'id_category_espec', 'id');
+    }
+
     public function vehicleType()
     {
         return $this->belongsTo(VehicleType::class, 'id_vehicle', 'id');
