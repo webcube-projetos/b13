@@ -13,6 +13,7 @@ use App\Traits\MontarForm;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EmpresasController extends Controller
 {
@@ -179,5 +180,74 @@ class EmpresasController extends Controller
         return [
             'route' => route('empresas.editar', ['company' => $company->id]),
         ];
+    }
+
+    public function delete()
+    {
+        $company = Company::find($this->request->id);
+
+        if (!$company) {
+            return redirect()->back()->with('error', 'Empresa não encontrada.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // Remover conta bancária associada à empresa
+            if ($company->bank) {
+                $company->bank->delete();
+            }
+
+            // Remover contatos associados à empresa
+            foreach ($company->contacts as $contact) {
+                // Remover relacionamento na tabela pivot (company_contacts)
+                CompanyContact::where('contact_id', $contact->id)->delete();
+
+                // Excluir o contato
+                $contact->delete();
+            }
+
+            // Excluir a própria empresa
+            $company->delete();
+
+            DB::commit();
+
+            return $this->listar(); // Redirecionar para a lista de empresas após a exclusão
+        } catch (\Exception $e) {
+            DB::rollback();
+            // Lidar com erros, logar ou notificar
+            Log::error('Erro ao excluir empresa: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erro ao excluir empresa: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteAddressAndAssociatedCompanies($addressId)
+    {
+        $address = Address::find($addressId);
+
+        if (!$address) {
+            return redirect()->back()->with('error', 'Endereço não encontrado.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            foreach ($address->companies as $company) {
+                // Excluir todas as empresas associadas ao endereço
+                $company->delete();
+            }
+
+            // Agora que todas as empresas foram excluídas, podemos excluir o endereço
+            $address->delete();
+
+            DB::commit();
+
+            return true; // Operação concluída com sucesso
+        } catch (\Exception $e) {
+            DB::rollback();
+            // Lidar com erros, logar ou notificar
+            Log::error('Erro ao excluir endereço e empresas associadas: ' . $e->getMessage());
+            return false;
+        }
     }
 }

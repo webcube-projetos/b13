@@ -87,4 +87,22 @@ class EspecializacoesController extends Controller
         $dados = $this->montarForm('especializacao', $specialization);
         return view('register.formRegisterSingle', compact('dados'));
     }
+
+    public function delete()
+    {
+        $specialization = Specialization::find($this->request->id);
+
+        if ($specialization) {
+            if ($specialization->drivers->count() > 0) {
+                $specialization->drivers->delete();
+            }
+            $specialization->delete();
+        }
+
+        $prefix = $this->prefix;
+        $config = $this->montarPaginaDupla('especializacao');
+        $lista = $this->query()->paginate(10);
+
+        return view('listagem.tableListPage', compact('prefix', 'config', 'lista'));
+    }
 }

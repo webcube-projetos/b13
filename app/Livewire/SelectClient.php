@@ -33,7 +33,7 @@ class SelectClient extends Component
     public function clients()
     {
         return Client::select('id', 'name')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'ASC')
             ->get();
     }
     public function contacts($selectedPrimary)

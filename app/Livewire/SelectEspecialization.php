@@ -32,7 +32,7 @@ class SelectEspecialization extends Component
     public function especialization($primary = false, $selectedPrimaryId = null)
     {
         return Specialization::select('id', 'name')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'ASC')
             ->when($primary, fn ($query) => $query->whereNull('id_ascendent'))
             ->when(!$primary, fn ($query) => $query->where('id_ascendent', intval($selectedPrimaryId)))
             ->get();

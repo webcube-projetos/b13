@@ -25,7 +25,16 @@
         {{$service->categoryService->name}}
       </td>
       <td>
-        R$ {{$service->price}}
+        {{ optional($service->vehicleType)->name ?? '-' }}
+      </td>
+      <td>
+        {{ $service->blindado_armado ? 'Sim' : 'Não' }}
+      </td>
+      <td>
+        {{ $service->bilingual ? 'Sim' : 'Não' }}
+      </td>
+      <td>
+        R$ {{ number_format($service->price, 2, ',', '.') }}
       </td>
 
       <td class="text-right">

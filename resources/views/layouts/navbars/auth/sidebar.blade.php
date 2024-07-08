@@ -1,7 +1,7 @@
 @php
   $menus = [
     'Operações' => [
-      [
+      /*[
         'title' => 'Orçamentos',
         'route' => 'orcamentos.index',
         'icon' => 'fa fa-list-alt',
@@ -12,7 +12,7 @@
         'route' => 'os.index',
         'icon' => 'fa fa-bar-chart',
         'permission' => 1,
-      ],
+      ],*/
       [
         'title' => 'Clientes',
         'route' => 'clientes.index',
@@ -47,26 +47,32 @@
       ],
     ],
     'Gestão' => [
-      [
+      /*[
         'title' => 'Financeiro',
         'route' => 'financeiro.index',
         'icon' => 'fa fa-money',
         'permission' => 1,
+      ],*/
+      [
+        'title' => 'Serviços Locação',
+        'route' => 'servicos.index',
+        'icon' => 'fa fa-plus-square-o',
+        'permission' => 1,
       ],
       [
-        'title' => 'Serviços',
-        'route' => 'servicos.index',
+        'title' => 'Serviços Segurança',
+        'route' => 'servicos.seguranca.index',
         'icon' => 'fa fa-plus-square-o',
         'permission' => 1,
       ],
     ],
     'Configurações' => [
-      [
+      /*[
         'title' => 'Procedimentos',
         'route' => 'procedimentos.index',
         'icon' => 'fa fa-align-left',
         'permission' => 1,
-      ],
+      ],*/
       [
         'title' => 'Categoria de Serviços',
         'route' => 'categorias.servicos.index',
@@ -98,14 +104,14 @@
         'permission' => 1,
       ],
     ],
-    'Usuarios' => [
+    /*'Usuarios' => [
       [
         'title' => 'Editar Perfil',
         'route' => 'editar.perfil.index',
         'icon' => 'fa fa-user-circle-o',
         'permission' => 1,
       ],
-    ],
+    ],*/
 
   ]
 @endphp
@@ -113,7 +119,7 @@
   <div class="sidenav-header">
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
     <a class="align-items-center d-flex m-0 navbar-brand text-wrap" href="{{ route('dashboard') }}">
-        <img src="../assets/img/logo.png" class="navbar-brand-img h-100" alt="...">
+        <img src="{{ asset('assets/img/logo.png') }}" class="navbar-brand-img h-100" alt="...">
         <span class="ms-3 font-weight-bold">B13 Company</span>
     </a>
   </div>

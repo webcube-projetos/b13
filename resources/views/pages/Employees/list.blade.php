@@ -32,6 +32,12 @@
       <td>
         {{$employee->address->city}}
       </td>
+      <td>
+        {{$employee->armed ? 'Sim' : 'Não'}}
+      </td>
+      <td>
+        {{$employee->driver ? 'Sim' : 'Não'}}
+      </td>
 
       <td class="ps-4">
           <span class="ball {{ ($employee->status == 1) ? 'active' : 'inactive' }}"></span>
@@ -43,6 +49,8 @@
               <button 
                   class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
                   data-toggle="tooltip" 
+                  data-id="{{ $employee->id }}"
+                  data-route="{{ route($botao['route']) ?? '' }}"
                   data-original-title="{{ $botao['title'] ?? ''}}"
                   @if($botao['onClick']) onclick="{{ $botao['onClick'] }}" @endif
                 >
