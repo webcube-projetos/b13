@@ -14,24 +14,23 @@
     <!-- REGISTROS TABELA -->
     <tbody>
       @foreach($dados as $service)
-  
-        <td>
-          {{$service->serviceType->name}}
-        </td>
-        <td>
-          {{$service->name}}
-        </td>
         <td>
           {{$service->categoryService->name}}
         </td>
         <td>
-          {{ optional($service->vehicleType)->name ?? '-' }}
+          {{$service->categoryEspec->name}}
+        </td>
+        <td>
+          {{$service->name}}
         </td>
         <td>
           {{ $service->blindado_armado ? 'Sim' : 'Não' }}
         </td>
         <td>
           {{ $service->bilingual ? 'Sim' : 'Não' }}
+        </td>
+        <td>
+          {{ $service->driver ? 'Sim' : 'Não' }}
         </td>
         <td>
           R$ {{ number_format($service->price, 2, ',', '.') }}
