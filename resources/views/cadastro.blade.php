@@ -107,71 +107,52 @@
             </div>
         </div>
     </div>
-@elseif ( $prefix === 'servicos' )
-    <div>
-        <div class="container-fluid py-4">
-            <div class="row mb-4">
-                <div class="col-lg-4">
-                    <div class="nav-wrapper position-relative end-0">
-                        <ul class="nav nav-pills nav-fill p-1" role="tablist">
-                            @if((isset($servico) && $servico->serviceType->name == 'Locação') || !isset($servico))
-                            <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 active" id="locacao-tab" data-bs-toggle="tab" data-bs-target="#locacao" type="button" role="tab" aria-controls="locacao" aria-selected="true">Locação</a>
-                            </li>
-                            @endif
-                            @if((isset($servico) && $servico->serviceType->name == 'Segurança') || !isset($servico))
-                            <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1" id="seguranca-tab" data-bs-toggle="tab" data-bs-target="#seguranca" type="button" role="tab" aria-controls="seguranca" aria-selected="true">Segurança</a>
-                            </li>
-                            @endif
-                        </ul>
-                    </div>
+    
+@elseif ( $prefix === 'servicos-locacao' )
+    <div class="container-fluid py-4">            
+        <div class="row">
+            <div class="card">
+                <div class="card-body pt-4 p-3">
+                    <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left" id="{{ $dados['pageInfo']['id'] }}" enctype="multipart/form-data">
+                        <input type="hidden" name="id_service_type" value="Locação">
+                        <input type="hidden" name="id" @isset($dados['pageInfo']['value']) value="{{ $dados['pageInfo']['value']->id }}" @endisset>
+    
+                        @csrf
+                        <div class="row">
+                            <p class="fw-bold mt-4">Locação</p>
+                            @foreach ($dados['sessions']['locacao'] as $key => $group)
+                                @include('register.formRegisterLocacao')
+                            @endforeach
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ $dados['pageInfo']['label_button'] }}</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="locacao" role="tabpanel" aria-labelledby="locacao-tab">
-                    <div class="card">
-                        <div class="card-body pt-4 p-3">
-                                <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left" id="{{ $dados['pageInfo']['id'] }}" enctype="multipart/form-data">
-                                <input type="hidden" name="id_service_type" value="Locação">
-                                <input type="hidden" name="id" @isset($dados['pageInfo']['value']) value="{{ $dados['pageInfo']['value']->id }}" @endisset>
+        </div>
+    </div>
 
-                                @csrf
-                                <div class="row">
-                                    <p class="fw-bold mt-4">Locação</p>
-                                    @foreach ($dados['sessions']['locacao'] as $key => $group)
-                                        @include('register.formRegisterLocacao')
-                                    @endforeach
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ $dados['pageInfo']['label_button'] }}</button>
-                                </div>
-                            </form>
+@elseif ( $prefix === 'servicos-seguranca' )
+    <div class="container-fluid py-4"> 
+        <div class="row">
+            <div class="card">
+                <div class="card-body pt-4 p-3">
+                        <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left" id="{{ $dados['pageInfo']['id'] }}2" enctype="multipart/form-data">
+                        <input type="hidden" name="id_service_type" value="Segurança">
+                        <input type="hidden" name="id" @isset($dados['pageInfo']['value']) value="{{ $dados['pageInfo']['value']->id }}" @endisset>
+    
+                        @csrf
+                        <div class="row">
+                            <p class="fw-bold mt-4">Segurança</p>
+                            @foreach ($dados['sessions']['seguranca'] as $key => $group)
+                                @include('register.formRegisterSeguranca')
+                            @endforeach
                         </div>
-                    </div>
-                </div>
-
-                <div class="tab-pane fade show" id="seguranca" role="tabpanel" aria-labelledby="seguranca-tab">
-                    <div class="card">
-                        <div class="card-body pt-4 p-3">
-                                <form action="{{ route($dados['pageInfo']['form_action']) }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left" id="{{ $dados['pageInfo']['id'] }}" enctype="multipart/form-data">
-                                <input type="hidden" name="id_service_type" value="Segurança">
-                                <input type="hidden" name="id" @isset($dados['pageInfo']['value']) value="{{ $dados['pageInfo']['value']->id }}" @endisset>
-
-                                @csrf
-                                <div class="row">
-                                    <p class="fw-bold mt-4">Segurança</p>
-                                    @foreach ($dados['sessions']['seguranca'] as $key => $group)
-                                        @include('register.formRegisterSeguranca')
-                                    @endforeach
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ $dados['pageInfo']['label_button'] }}</button>
-                                </div>
-                            </form>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ $dados['pageInfo']['label_button'] }}</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

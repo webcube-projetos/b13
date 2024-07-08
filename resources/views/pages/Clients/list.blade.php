@@ -34,6 +34,8 @@
               <button 
                   class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
                   data-toggle="tooltip" 
+                  data-id="{{ $client->id }}"
+                  data-route="{{ route($botao['route']) ?? '' }}"
                   data-original-title="{{ $botao['title'] ?? ''}}"
                   @if($botao['onClick']) onclick="{{ $botao['onClick'] }}" @endif
                 >
@@ -145,5 +147,4 @@
   </div>
 </div>
 @endif
-
 {{ $dados->links('components.paginacaoAjax') }}

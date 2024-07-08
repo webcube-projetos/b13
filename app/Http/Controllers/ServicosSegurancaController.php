@@ -12,7 +12,7 @@ use Illuminate\Support\Fluent;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
 
-class ServicosController extends Controller
+class ServicosSegurancaController extends Controller
 {
     protected $prefix;
     protected $request;
@@ -22,7 +22,7 @@ class ServicosController extends Controller
 
     public function __construct(Request $request)
     {
-        $this->prefix = 'servicos-locacao';
+        $this->prefix = 'servicos-seguranca';
         $this->request = $request;
     }
     public function index()
@@ -31,30 +31,30 @@ class ServicosController extends Controller
 
         $dados = $this->search()->paginate(10);
 
-        [$config, $header] = $this->montarPagina('servicosLocacao');
+        [$config, $header] = $this->montarPagina('servicosSeguranca');
 
-        return view('pages.ServicesLocacao.index', compact('prefix', 'dados', 'config', 'header'));
+        return view('pages.ServicesSeguranca.index', compact('prefix', 'dados', 'config', 'header'));
     }
 
     public function search()
     {
         return Service::query()
-        ->where('id_service_type', 1);
+        ->where('id_service_type', 2);
     }
 
     public function listar()
     {
         $dados = $this->search()->paginate(10);
 
-        [$config, $header] = $this->montarPagina('servicosLocacao');
+        [$config, $header] = $this->montarPagina('servicosSeguranca');
 
-        return view('pages.ServicesLocacao.list', compact('dados', 'config', 'header'));
+        return view('pages.ServicesSeguranca.list', compact('dados', 'config', 'header'));
     }
 
     public function cadastro()
     {
         $prefix = $this->prefix;
-        $dados = $this->montarForm('servicosLocacao');
+        $dados = $this->montarForm('servicosSeguranca');
 
         return view('cadastro', compact('dados', 'prefix'));
     }
@@ -65,7 +65,7 @@ class ServicosController extends Controller
         $id = request()->query('servicos');
 
         $servico = Service::find($id);
-        $dados = $this->montarForm('servicosLocacao', $servico);
+        $dados = $this->montarForm('servicosSeguranca', $servico);
 
         return view('cadastro', compact('dados', 'prefix', 'servico'));
     }
@@ -96,6 +96,7 @@ class ServicosController extends Controller
                 'name_english' => $this->request->name_english ?? null,
                 'blindado_armado' => $this->request->armored,
                 'bilingual' => $this->request->bilingual,
+                'driver' => $this->request->driver,
                 'price' => $this->request->price,
                 'time' => $this->request->time,
                 'extra_price' => $this->request->extra_price,
@@ -112,12 +113,6 @@ class ServicosController extends Controller
                 'id_vehicle' => $this->request->id_vehicle ?? null,
             ];
 
-            // Adiciona o campo driver somente se estiver presente na solicitação
-            if ($this->request->has('driver')) {
-                $data['driver'] = $this->request->driver;
-                return response()->json(['route' => route('servicos.cadastro')]);
-            }
-
             // Cria ou atualiza o serviço
             $service = Service::updateOrCreate(
                 ['id' => $this->request->id],
@@ -127,7 +122,8 @@ class ServicosController extends Controller
             DB::commit();
 
             // Retorna o redirecionamento para a rota de edição com o ID do serviço
-            return response()->json(['route' => route('servicos.editar', ['servicos' => $service->id])]);
+            //return response()->json(['route' => route('servicos.seguranca.editar', ['servicos' => $service->id])]);
+            return redirect()->route('servicos.seguranca.editar', ['servicos' => $service->id]);
 
         } catch (\Exception $e) {
             DB::rollBack();

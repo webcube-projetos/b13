@@ -30,7 +30,7 @@ class SelectAditional extends Component
     public function additional()
     {
         return Additional::select('id', 'name')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'ASC')
             ->get();
     }
 }
