@@ -11,6 +11,7 @@ use App\Traits\MontarPagina;
 use App\Traits\MontarForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SegurancasController extends Controller
 {
@@ -182,4 +183,54 @@ class SegurancasController extends Controller
             'route' => route('segurancas.editar', ['employee' => $employee->id]),
         ];
     }
+
+    public function delete()
+    {
+        $employee = Employee::find($this->request->id);
+
+        if (!$employee) {
+            return redirect()->back()->with('error', 'Segurança não encontrado.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // Excluir a conta bancária associada ao segurança, se existir
+            if ($employee->bank) {
+                $employee->bank->delete();
+            }
+
+            // Excluir os contatos associados ao segurança
+            foreach ($employee->contacts as $contact) {
+                $contact->delete();
+            }
+
+            // Excluir as especializações ativas associadas ao segurança
+            ActiveSpecialization::where('id_employee', $employee->id)->delete();
+
+            // Excluir o próprio segurança
+            $employee->delete();
+
+            // Excluir o endereço associado, se não houver mais nenhum empregado referenciando-o
+            if ($employee->address) {
+                $address = $employee->address;
+                $employeeCountWithAddress = Employee::where('id_address', $address->id)->count();
+
+                if ($employeeCountWithAddress === 0) {
+                    $address->delete();
+                }
+            }
+
+            DB::commit();
+
+            return redirect()->route('segurancas.index')->with('success', 'Segurança excluído com sucesso.');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            // Lidar com erros, logar ou notificar
+            Log::error('Erro ao excluir segurança: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erro ao excluir segurança: ' . $e->getMessage());
+        }
+    }
+
 }

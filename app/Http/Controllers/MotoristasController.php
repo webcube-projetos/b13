@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\ActiveSpecialization;
 use App\Models\Address;
 use App\Models\BankAccount;
+use App\Models\Contact;
 use App\Models\Employee;
 use App\Models\Specialization;
 use App\Traits\MontarPagina;
 use App\Traits\MontarForm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 use Illuminate\Support\Facades\DB;
 
@@ -180,5 +182,45 @@ class MotoristasController extends Controller
         return [
             'route' => route('motoristas.editar', ['employee' => $employee->id]),
         ];
+    }
+
+    public function delete()
+    {
+        $employee = Employee::find($this->request->id);
+
+        if (!$employee) {
+            return redirect()->back()->with('error', 'Motorista não encontrado.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // Excluir a conta bancária associada ao motorista
+            if ($employee->bank) {
+                $employee->bank->delete();
+            }
+
+            // Excluir os contatos associados ao motorista
+            foreach ($employee->contacts as $contact) {
+                // Excluir o contato diretamente
+                $contact->delete();
+            }
+
+            // Excluir as especializações ativas associadas ao motorista
+            ActiveSpecialization::where('id_employee', $employee->id)->delete();
+
+            // Excluir o motorista
+            $employee->delete();
+
+            DB::commit();
+
+            return redirect()->route('motoristas.index')->with('success', 'Motorista excluído com sucesso.');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            // Lidar com erros, logar ou notificar
+            Log::error('Erro ao excluir motorista: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erro ao excluir motorista: ' . $e->getMessage());
+        }
     }
 }
