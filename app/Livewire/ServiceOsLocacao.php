@@ -114,6 +114,13 @@ class ServiceOsLocacao extends Component
         $this->dispatch('deletarLinhaparent', $this->serviceId);
     }
 
+    public function updated($property)
+    {
+        $this->total = $this->precoBase + $this->horaBase + $this->horaExtra + $this->kmBase + $this->kmExtra + $this->custoParceiro + $this->extraParceiro + $this->kmExtraParceiro + $this->custoMotorista + $this->horaExtraMotorista;
+
+        $this->dispatch('totalUpdated', $this->serviceId, $this->total);
+    }
+
     public function handleSelectedOptions($type, $key)
     {
         $this->{$type} = $key;
@@ -150,13 +157,6 @@ class ServiceOsLocacao extends Component
     public function handleSelectUpdated($type, $value)
     {
         $this->{$type} = $value;
-    }
-
-    public function updated($property)
-    {
-        $this->total = $this->precoBase + $this->horaBase + $this->horaExtra + $this->kmBase + $this->kmExtra + $this->custoParceiro + $this->extraParceiro + $this->kmExtraParceiro + $this->custoMotorista + $this->horaExtraMotorista;
-
-        $this->dispatch('totalUpdated', $this->serviceId, $this->total);
     }
 
     public function render()
