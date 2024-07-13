@@ -10,7 +10,8 @@ use Livewire\Component;
 class ServiceOsLocacao extends Component
 {
     public $serviceId;
-    public $id_locacao;
+    public $type;
+    public $idGlobal;
     public $inicio;
     public $termino;
     public $qtdDias = 0;
@@ -42,10 +43,11 @@ class ServiceOsLocacao extends Component
         'selectUpdated' => 'handleSelectedOptions',
     ];
 
-    public function mount($serviceId, $data = null)
+    public function mount($serviceId, $type, $data = null)
     {
         $this->serviceId = $serviceId;
         $this->data = $data;
+        $this->type = $type;
 
         if ($this->data) {
             $this->inicio = $data['inicio'];
@@ -114,13 +116,6 @@ class ServiceOsLocacao extends Component
         $this->dispatch('deletarLinhaparent', $this->serviceId);
     }
 
-    public function updated($property)
-    {
-        $this->total = $this->precoBase + $this->horaBase + $this->horaExtra + $this->kmBase + $this->kmExtra + $this->custoParceiro + $this->extraParceiro + $this->kmExtraParceiro + $this->custoMotorista + $this->horaExtraMotorista;
-
-        $this->dispatch('totalUpdated', $this->serviceId, $this->total);
-    }
-
     public function handleSelectedOptions($type, $key)
     {
         $this->{$type} = $key;
@@ -129,8 +124,8 @@ class ServiceOsLocacao extends Component
     #[On('osCreated')]
     public function saveOS($id)
     {
-        $id_locacao = OsService::updateOrCreate(
-            ['id' => $this->id_locacao, 'id_service' => $this->servicesOS],
+        $idGlobal = OsService::updateOrCreate(
+            ['id' => $this->idGlobal, 'id_service' => $this->servicesOS],
             [
                 'id_os' => $id,
                 'id_service' => $this->servicesOS,
@@ -150,13 +145,20 @@ class ServiceOsLocacao extends Component
             ]
         );
 
-        $this->id_locacao = $id_locacao->id;
+        $this->idGlobal = $idGlobal->id;
     }
 
     #[On('selectUpdated')]
     public function handleSelectUpdated($type, $value)
     {
         $this->{$type} = $value;
+    }
+
+    public function updated($property)
+    {
+        $this->total = $this->precoBase * $this->qtdDias;
+
+        $this->dispatch('totalUpdated', $this->serviceId, $this->total);
     }
 
     public function render()

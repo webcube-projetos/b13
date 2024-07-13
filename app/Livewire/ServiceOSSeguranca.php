@@ -9,10 +9,11 @@ use Livewire\Component;
 class ServiceOSSeguranca extends Component
 {
     public $serviceId;
-    public $id_seguranca;
+    public $type;
+    public $idGlobal;
     public $inicio;
     public $termino;
-    public $qtdDias;
+    public $qtdDias = 0;
     public $qtdSegurancas;
     public $servicesOS = null;
     public $vehiclesCategory;
@@ -33,9 +34,10 @@ class ServiceOSSeguranca extends Component
         'deletarLinha' => 'handleDeletarLinha',
     ];
 
-    public function mount($serviceId, $data = null)
+    public function mount($serviceId, $type, $data = null)
     {
         $this->serviceId = $serviceId;
+        $this->type = $type;
 
         if ($data) {
             $this->inicio = $data['inicio'];
@@ -57,7 +59,12 @@ class ServiceOSSeguranca extends Component
             $this->total = $data['total'];
         }
     }
+    public function updated($property)
+    {
+        $this->total = $this->precoBase * $this->qtdDias;
 
+        $this->dispatch('totalUpdated', $this->serviceId, $this->total);
+    }
     public function handleClonarLinha($serviceId)
     {
         if ($serviceId != $this->serviceId) {
@@ -85,27 +92,11 @@ class ServiceOSSeguranca extends Component
         $this->dispatch('clonarLinhaparent', $this->serviceId, $data);
     }
 
-    public function handleDeletarLinha($serviceId)
-    {
-        if ($serviceId != $this->serviceId) {
-            return;
-        }
-
-        $this->dispatch('deletarLinhaparent', $this->serviceId);
-    }
-
-    public function updated($property)
-    {
-        $this->total = $this->precoBase + $this->horaBase + $this->horaExtra + $this->kmBase + $this->kmExtra + $this->custoParceiro + $this->extraParceiro + $this->kmExtraParceiro + $this->custoSeguranca + $this->horaExtraSeguranca;
-
-        $this->dispatch('totalUpdated', $this->serviceId, $this->total);
-    }
-    
     #[On('osCreated')]
     public function saveOS($id)
     {
-        $id_seguranca = OsService::updateOrCreate(
-            ['id' => $this->id_seguranca, 'id_service' => $this->servicesOS],
+        $idGlobal = OsService::updateOrCreate(
+            ['id' => $this->idGlobal, 'id_service' => $this->servicesOS],
             [
                 'id_os' => $id,
                 'id_service' => $this->servicesOS,
@@ -124,7 +115,16 @@ class ServiceOSSeguranca extends Component
                 'employee_extra' => $this->horaExtraSeguranca,
             ]
         );
-        $this->id_seguranca = $id_seguranca->id;
+        $this->idGlobal = $idGlobal->id;
+    }
+
+    public function handleDeletarLinha($serviceId)
+    {
+        if ($serviceId != $this->serviceId) {
+            return;
+        }
+
+        $this->dispatch('deletarLinhaparent', $this->serviceId);
     }
 
     #[On('selectUpdated')]
