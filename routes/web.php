@@ -21,6 +21,7 @@ use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\OrcamentosController;
 use App\Http\Controllers\OrdemDeServicoController;
 use App\Http\Controllers\ProcedimentosController;
+use App\Http\Controllers\ServicosSegurancaController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\TipoVeiculoController;
 use App\Http\Controllers\VeiculosController;
@@ -55,6 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/cadastro', [ClientesController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [ClientesController::class, 'editar'])->name('editar');
 		Route::post('/salvar', [ClientesController::class, 'salvar'])->name('salvar');
+		Route::post('/delete', [ClientesController::class, 'delete'])->name('delete');
 	});
 
 	Route::prefix('empresas')->name('empresas.')->group(function () {
@@ -63,6 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/cadastro', [EmpresasController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [EmpresasController::class, 'editar'])->name('editar');
 		Route::post('/salvar', [EmpresasController::class, 'salvar'])->name('salvar');
+		Route::post('/delete', [EmpresasController::class, 'delete'])->name('delete');
 	});
 
 	Route::prefix('veiculos')->name('veiculos.')->group(function () {
@@ -80,6 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/cadastro', [MotoristasController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [MotoristasController::class, 'editar'])->name('editar');
 		Route::post('/salvar', [MotoristasController::class, 'salvar'])->name('salvar');
+		Route::post('/delete', [MotoristasController::class, 'delete'])->name('delete');
 	});
 
 	Route::prefix('segurancas')->name('segurancas.')->group(function () {
@@ -88,15 +92,27 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/cadastro', [SegurancasController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [SegurancasController::class, 'editar'])->name('editar');
 		Route::post('/salvar', [SegurancasController::class, 'salvar'])->name('salvar');
+		Route::post('/delete', [SegurancasController::class, 'delete'])->name('delete');
 	});
 
 	Route::prefix('servicos')->name('servicos.')->group(function () {
+		// Rotas do ServicosController
 		Route::get('/', [ServicosController::class, 'index'])->name('index');
 		Route::get('/listar', [ServicosController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [ServicosController::class, 'cadastro'])->name('cadastro');
 		Route::get('/editar', [ServicosController::class, 'editar'])->name('editar');
 		Route::post('/salvar', [ServicosController::class, 'salvar'])->name('salvar');
 		Route::post('/delete', [ServicosController::class, 'delete'])->name('delete');
+		
+		// Rotas do ServicosSegurancaController
+		Route::prefix('seguranca')->name('seguranca.')->group(function () {
+			Route::get('/', [ServicosSegurancaController::class, 'index'])->name('index');
+			Route::get('/listar', [ServicosSegurancaController::class, 'listar'])->name('listar');
+			Route::get('/cadastro', [ServicosSegurancaController::class, 'cadastro'])->name('cadastro');
+			Route::get('/editar', [ServicosSegurancaController::class, 'editar'])->name('editar');
+			Route::post('/salvar', [ServicosSegurancaController::class, 'salvar'])->name('salvar');
+			Route::post('/delete', [ServicosSegurancaController::class, 'delete'])->name('delete');
+		});
 	});
 
 	Route::prefix('financeiro')->name('financeiro.')->group(function () {

@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\ActiveSpecialization;
 use App\Models\Address;
 use App\Models\BankAccount;
+use App\Models\Contact;
 use App\Models\Employee;
 use App\Models\Specialization;
 use App\Traits\MontarPagina;
 use App\Traits\MontarForm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 use Illuminate\Support\Facades\DB;
 
@@ -79,7 +81,7 @@ class MotoristasController extends Controller
         $imgUrlFoto = null;
         $imgUrlCnh = null;
 
-        $employee = null; // Inicialize $employee fora dos condicionais para garantir que esteja disponível fora deles
+        $employee = null;
 
         if ($this->request->id) {
             $employee = Employee::find($this->request->id);
@@ -88,15 +90,15 @@ class MotoristasController extends Controller
         if ($this->request->photo) {
             $photo = json_decode($this->request->photo);
             $imgUrlFoto = $this->storeImageBase64($photo->data, 'segurancas');
-        } elseif ($employee && $employee->photo) { // Verifica se $employee existe e se possui uma foto existente
-            $imgUrlFoto = $employee->photo; // Mantém a foto existente
+        } elseif ($employee && $employee->photo) {
+            $imgUrlFoto = $employee->photo;
         }
 
         if ($this->request->cnh) {
             $cnh = json_decode($this->request->cnh);
             $imgUrlCnh = $this->storeImageBase64($cnh->data, 'segurancas');
-        } elseif ($employee && $employee->cnh) { // Verifica se $employee existe e se possui uma CNH existente
-            $imgUrlCnh = $employee->cnh; // Mantém a CNH existente
+        } elseif ($employee && $employee->cnh) {
+            $imgUrlCnh = $employee->cnh;
         }
 
         if ($this->request->tipo == 'bank') {
@@ -114,11 +116,11 @@ class MotoristasController extends Controller
                     'preference' => $this->request->preference ?? null,
                 ]
             );
-        
+
             $employee->id_bank = $bank->id;
             $employee->save();
             DB::commit();
-        
+
             return [
                 'route' => route('motoristas.editar', ['employee' => $employee->id]),
             ];
@@ -145,18 +147,18 @@ class MotoristasController extends Controller
             [
                 'type' => Employee::DRIVER,
                 'name' => $this->request->name,
-                'fantasy_name' => $this->request->fantasy_name ?? null,
-                'nickname' => $this->request->nickname ?? null,
                 'document' => preg_replace('/[^0-9]/', '', $this->request->document),
-                'armed' => 0,
-                'phone' => $this->request->phone,
-                'email' => $this->request->email,
+                'armed' => $this->request->armed ?? 0,
                 'id_address' => $endereco->id,
                 'id_company' => $this->request->id_company ?? null,
-                'id_bank' => null,
-                'obs' => $this->request->obs ?? null,
-                'cnh' => $imgUrlCnh ?? $employee->cnh, // Manter a CNH existente se não houver nova selecionada
-                'photo' => $imgUrlFoto ?? $employee->photo, // Manter a foto existente se não houver nova selecionada
+                'fantasy_name' => $this->request->fantasy_name ?? $employee->fantasy_name ?? null,
+                'nickname' => $this->request->nickname ?? $employee->nickname ?? null,
+                'phone' => $this->request->phone ?? $employee->phone ?? null,
+                'email' => $this->request->email ?? $employee->email ?? null,
+                'id_bank' => $employee->id_bank ?? null,
+                'obs' => $this->request->obs ?? $employee->obs ?? null,
+                'cnh' => $imgUrlCnh ?? $employee->cnh ?? null,
+                'photo' => $imgUrlFoto ?? $employee->photo ?? null,
             ]
         );
 
@@ -180,5 +182,45 @@ class MotoristasController extends Controller
         return [
             'route' => route('motoristas.editar', ['employee' => $employee->id]),
         ];
+    }
+
+    public function delete()
+    {
+        $employee = Employee::find($this->request->id);
+
+        if (!$employee) {
+            return redirect()->back()->with('error', 'Motorista não encontrado.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // Excluir a conta bancária associada ao motorista
+            if ($employee->bank) {
+                $employee->bank->delete();
+            }
+
+            // Excluir os contatos associados ao motorista
+            foreach ($employee->contacts as $contact) {
+                // Excluir o contato diretamente
+                $contact->delete();
+            }
+
+            // Excluir as especializações ativas associadas ao motorista
+            ActiveSpecialization::where('id_employee', $employee->id)->delete();
+
+            // Excluir o motorista
+            $employee->delete();
+
+            DB::commit();
+
+            return redirect()->route('motoristas.index')->with('success', 'Motorista excluído com sucesso.');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            // Lidar com erros, logar ou notificar
+            Log::error('Erro ao excluir motorista: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erro ao excluir motorista: ' . $e->getMessage());
+        }
     }
 }

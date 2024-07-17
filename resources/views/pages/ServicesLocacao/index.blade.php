@@ -29,13 +29,13 @@
               @endif
             </div>
             <div class="row">
-              <!-- FIM BOTÃO FILTRO
+              <!-- FIM BOTÃO FILTRO -->
               <div class="col-md-6">
                 <div class="card-header pb-0 pt-0">
                   <a href="#" class="btn bg-dark mt-4 mb-0 text-white"><i class="fa fa-bars"></i> FILTROS</a>
                 </div>
               </div>
-              FIM FILTRO -->
+              <!-- FIM FILTRO -->
               <!-- BOTÃO SEARCH -->
               @if ( $config->search ) 
                 <div class="col-md-6 text-end">
@@ -49,7 +49,7 @@
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0" id="tableList">
-								@include('listagem.tableList')
+								@include('pages.ServicesLocacao.list')
               </div>
             </div>
           </div>

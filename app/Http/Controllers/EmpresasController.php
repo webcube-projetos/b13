@@ -13,6 +13,7 @@ use App\Traits\MontarForm;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EmpresasController extends Controller
 {
@@ -77,12 +78,9 @@ class EmpresasController extends Controller
 
     public function salvar()
     {
-
         DB::beginTransaction();
 
-        if ($this->request->id) {
-            $company = Company::find($this->request->id);
-        }
+        $company = $this->request->id ? Company::find($this->request->id) : new Company();
 
         if ($this->request->tipo == 'bank') {
             $bank = BankAccount::updateOrCreate(
@@ -125,24 +123,25 @@ class EmpresasController extends Controller
             ]
         );
 
-        $company = Company::updateOrCreate(
-            [
-                'id' => $this->request->id ?? null
-            ],
-            [
-                'id_address' => $endereco->id,
-                'document' => preg_replace('/[^0-9]/', '', $this->request->cpfcnpj),
-                'name' => $this->request->razao,
-                'fantasy_name' => $this->request->nome_fantasia,
-                'nickname' => $this->request->apelido,
-                'phone' => $this->request->phone,
-                'email' => $this->request->email,
-            ]
-        );
+        $company->fill([
+            'id_address' => $endereco->id,
+            'document' => preg_replace('/[^0-9]/', '', $this->request->cpfcnpj),
+            'name' => $this->request->razao,
+            'fantasy_name' => $this->request->nome_fantasia,
+            'nickname' => $this->request->apelido,
+            'phone' => $this->request->phone,
+            'email' => $this->request->email,
+        ]);
+        $company->save();
 
+        // Processar contatos
+        $existingContactIds = $company->contacts->pluck('id')->toArray();
+        $requestContactIds = $this->request->id_contato ?? [];
+
+        // Atualizar ou criar contatos
         if ($this->request->nome_contato) {
             foreach ($this->request->nome_contato as $index => $contato) {
-                $contato = Contact::updateOrCreate(
+                $contact = Contact::updateOrCreate(
                     [
                         'id' => $this->request->id_contato[$index] ?? null
                     ],
@@ -159,16 +158,96 @@ class EmpresasController extends Controller
                 if (!$this->request->id_contato[$index]) {
                     CompanyContact::create([
                         'company_id' => $company->id,
-                        'contact_id' => $contato->id,
+                        'contact_id' => $contact->id,
                     ]);
+                }
+
+                // Remover do array de IDs existentes para que não seja deletado
+                if (($key = array_search($contact->id, $existingContactIds)) !== false) {
+                    unset($existingContactIds[$key]);
                 }
             }
         }
 
+        // Remover contatos que não estão mais presentes na solicitação
+        if (!empty($existingContactIds)) {
+            CompanyContact::whereIn('contact_id', $existingContactIds)->delete();
+            Contact::destroy($existingContactIds);
+        }
+        
         DB::commit();
 
         return [
             'route' => route('empresas.editar', ['company' => $company->id]),
         ];
+    }
+
+    public function delete()
+    {
+        $company = Company::find($this->request->id);
+
+        if (!$company) {
+            return redirect()->back()->with('error', 'Empresa não encontrada.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // Remover conta bancária associada à empresa
+            if ($company->bank) {
+                $company->bank->delete();
+            }
+
+            // Remover contatos associados à empresa
+            foreach ($company->contacts as $contact) {
+                // Remover relacionamento na tabela pivot (company_contacts)
+                CompanyContact::where('contact_id', $contact->id)->delete();
+
+                // Excluir o contato
+                $contact->delete();
+            }
+
+            // Excluir a própria empresa
+            $company->delete();
+
+            DB::commit();
+
+            return $this->listar(); // Redirecionar para a lista de empresas após a exclusão
+        } catch (\Exception $e) {
+            DB::rollback();
+            // Lidar com erros, logar ou notificar
+            Log::error('Erro ao excluir empresa: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erro ao excluir empresa: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteAddressAndAssociatedCompanies($addressId)
+    {
+        $address = Address::find($addressId);
+
+        if (!$address) {
+            return redirect()->back()->with('error', 'Endereço não encontrado.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            foreach ($address->companies as $company) {
+                // Excluir todas as empresas associadas ao endereço
+                $company->delete();
+            }
+
+            // Agora que todas as empresas foram excluídas, podemos excluir o endereço
+            $address->delete();
+
+            DB::commit();
+
+            return true; // Operação concluída com sucesso
+        } catch (\Exception $e) {
+            DB::rollback();
+            // Lidar com erros, logar ou notificar
+            Log::error('Erro ao excluir endereço e empresas associadas: ' . $e->getMessage());
+            return false;
+        }
     }
 }

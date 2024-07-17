@@ -22,10 +22,11 @@ return new class extends Migration
             $table->unsignedBigInteger('id_category');
             $table->foreign('id_category')->references('id')->on('category_types');
 
-            $table->unsignedBigInteger('id_brand')->nullable();
+            $table->unsignedBigInteger('id_brand');
             $table->foreign('id_brand')->references('id')->on('vehicle_brands');
 
-            $table->string('model', 50)->nullable();
+            $table->string('model', 50);
+            $table->string('color', 30)->nullable();
             $table->integer('year')->nullable();
             $table->boolean('armored');
             $table->integer('passengers')->nullable();

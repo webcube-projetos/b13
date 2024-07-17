@@ -49,7 +49,13 @@
                         />
                     @endif
                 @elseif($fields['type'] === 'selectComponent')
-                    <livewire:select-component type="{{$fields['typeSelect']}}" placeholder="{{$fields['placeholder']}}" name="{{$fields['name']}}" selected="{{$fields['value']}}" />
+                    <livewire:select-component 
+                        type="{{$fields['typeSelect']}}" 
+                        placeholder="{{$fields['placeholder']}}" 
+                        name="{{$fields['name']}}" 
+                        selected="{{$fields['value']}}" 
+                        required="{{$fields['required']}}"
+                    />
                 @elseif($fields['type'] === 'number' && $fields['name'] !== 'ano' || $fields['name'] !== 'malas' || $fields['name'] !== 'passageiros')
                     <input 
                         class="form-control" 

@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Fluent;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
 class ClientesController extends Controller
 {
@@ -79,9 +81,7 @@ class ClientesController extends Controller
 
 		DB::beginTransaction();
 
-		if ($this->request->id) {
-			$client = Client::find($this->request->id);
-		}
+		$client = $this->request->id ? Client::find($this->request->id) : new Client();
 
 		if ($this->request->tipo == 'bank') {
 			$bank = BankAccount::updateOrCreate(
@@ -124,24 +124,24 @@ class ClientesController extends Controller
 			]
 		);
 
-		$client = Client::updateOrCreate(
-			[
-				'id' => $this->request->id ?? null
-			],
-			[
-				'id_address' => $endereco->id,
-				'document' => preg_replace('/[^0-9]/', '', $this->request->cpfcnpj),
-				'name' => $this->request->razao,
-				'fantasy_name' => $this->request->nome_fantasia,
-				'nickname' => $this->request->apelido,
-				'phone' => $this->request->phone,
-                'email' => $this->request->email,
-			]
-		);
+		$client->fill([
+			'id_address' => $endereco->id,
+			'document' => preg_replace('/[^0-9]/', '', $this->request->cpfcnpj),
+			'name' => $this->request->razao,
+			'fantasy_name' => $this->request->nome_fantasia,
+			'nickname' => $this->request->apelido,
+			'phone' => $this->request->phone,
+			'email' => $this->request->email,
+		]);
+		$client->save();
 
+		$existingContactIds = $client->contacts->pluck('id')->toArray();
+    	$requestContactIds = $this->request->id_contato ?? [];
+
+		// Atualizar ou criar contatos
 		if ($this->request->nome_contato) {
 			foreach ($this->request->nome_contato as $index => $contato) {
-				$contato = Contact::updateOrCreate(
+				$contact = Contact::updateOrCreate(
 					[
 						'id' => $this->request->id_contato[$index] ?? null
 					],
@@ -158,10 +158,21 @@ class ClientesController extends Controller
 				if (!$this->request->id_contato[$index]) {
 					ClientContact::create([
 						'client_id' => $client->id,
-						'contact_id' => $contato->id,
+                    	'contact_id' => $contact->id,
 					]);
 				}
+
+				// Remover do array de IDs existentes para que não seja deletado
+				if (($key = array_search($contact->id, $existingContactIds)) !== false) {
+					unset($existingContactIds[$key]);
+				}
 			}
+		}
+
+		// Remover contatos que não estão mais presentes na solicitação
+		if (!empty($existingContactIds)) {
+			ClientContact::whereIn('contact_id', $existingContactIds)->delete();
+			Contact::destroy($existingContactIds);
 		}
 
 		DB::commit();
@@ -169,5 +180,62 @@ class ClientesController extends Controller
 		return [
 			'route' => route('clientes.editar', ['client' => $client->id]),
 		];
+	}
+	
+	public function delete()
+	{
+		$client = Client::find($this->request->id);
+
+		if (!$client) {
+			return redirect()->back()->with('error', 'Cliente não encontrado.');
+		}
+
+		DB::beginTransaction();
+
+		try {
+			// Obter o endereço associado ao cliente
+			$address = $client->address;
+
+			// Chamando a função para excluir o cliente e seu endereço associado
+			$this->deleteClientAndAssociatedAddress($client, $address);
+
+			DB::commit();
+
+			return redirect()->route('clientes.index')->with('success', 'Cliente excluído com sucesso.');
+
+		} catch (\Exception $e) {
+			DB::rollback();
+			// Lidar com erros, logar ou notificar
+			Log::error('Erro ao excluir cliente: ' . $e->getMessage());
+			return redirect()->back()->with('error', 'Erro ao excluir cliente: ' . $e->getMessage());
+		}
+	}
+
+	public function deleteClientAndAssociatedAddress(Client $client, Address $address)
+	{
+		DB::beginTransaction();
+
+		try {
+			// Remover contatos associados ao cliente
+			foreach ($client->contacts as $contact) {
+				ClientContact::where('contact_id', $contact->id)->delete();
+				$contact->delete();
+			}
+
+			// Excluir o cliente
+			$client->delete();
+
+			// Agora que o cliente foi excluído, podemos excluir o endereço
+			$address->delete();
+
+			DB::commit();
+
+			return true; // Operação concluída com sucesso
+		} catch (\Exception $e) {
+			DB::rollback();
+			// Lidar com erros, logar ou notificar
+			Log::error('Erro ao excluir cliente e endereço associado: ' . $e->getMessage());
+			return false;
+		}
 	}
 }

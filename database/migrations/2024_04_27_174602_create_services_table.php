@@ -16,14 +16,16 @@ return new class extends Migration
             $table->unsignedBigInteger('id_category_service');
             $table->unsignedBigInteger('id_category_espec');
             $table->unsignedBigInteger('id_service_type');
-            $table->unsignedBigInteger('id_vehicle');
+            $table->unsignedBigInteger('id_vehicle')->nullable();
 
             $table->string('name', 50);
             $table->string('name_english', 50);
             $table->tinyInteger('blindado_armado');
+            $table->tinyInteger('bilingual');
+            $table->tinyInteger('driver')->nullable();
             $table->float('price');
             $table->integer('time');
-            $table->float('extra_price');
+            $table->float('extra_price')->nullable();
             $table->integer('km')->nullable();
             $table->float('km_extra')->nullable();
             $table->float('partner_cost')->nullable();

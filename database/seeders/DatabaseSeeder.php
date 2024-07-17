@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             CategoryTypeSeeder::class,
             CategoryVehicleSeeder::class,
             CompanySeeder::class,
+            FreelanceSeeder::class,
             ServiceTypeSeeder::class,
             SpecializationsSeeder::class,
             UserSeeder::class,

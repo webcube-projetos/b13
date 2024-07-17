@@ -13,6 +13,8 @@ class Service extends Model
         'name',
         'name_english',
         'blindado_armado',
+        'bilingual',
+        'driver',
         'price',
         'time',
         'extra_price',
@@ -29,6 +31,10 @@ class Service extends Model
         'id_vehicle',
     ];
 
+    protected $attributes = [
+        'driver' => 0,
+    ];
+
     public function serviceType()
     {
         return $this->belongsTo(ServiceType::class, 'id_service_type', 'id');
@@ -37,5 +43,15 @@ class Service extends Model
     public function categoryService()
     {
         return $this->belongsTo(Category::class, 'id_category_service', 'id');
+    }
+
+    public function categoryEspec()
+    {
+        return $this->belongsTo(Category::class, 'id_category_espec', 'id');
+    }
+
+    public function vehicleType()
+    {
+        return $this->belongsTo(VehicleType::class, 'id_vehicle', 'id');
     }
 }

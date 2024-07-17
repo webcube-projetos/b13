@@ -12,4 +12,21 @@ class VehicleBrand extends Model
     protected $table = 'vehicle_brands';
 
     protected $fillable = ['name'];
+
+    public function getVehicleBrands()
+    {
+        // Consultar todas as marcas de veículos ordenadas alfabeticamente
+        $vehicleBrands = VehicleBrand::orderBy('nome', 'asc')->get();
+
+        // Transformar os resultados em um array no formato desejado
+        $data = [];
+        foreach ($vehicleBrands as $index => $brand) {
+            $data[] = [
+                'id' => $index,
+                'nome' => $brand->nome,
+            ];
+        }
+
+        return $data;
+    }
 }

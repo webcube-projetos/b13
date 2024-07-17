@@ -14,7 +14,8 @@ trait MontarPagina
       'veiculos' => $this->montarVeiculos(),
       'motoristas' => $this->montarMotoristas(),
       'segurancas' => $this->montarSegurancas(),
-      'servicos' => $this->montarServicos(),
+      'servicosSeguranca' => $this->montarServicosSeguranca(),
+      'servicosLocacao' => $this->montarServicosLocacao(),
       'financeiro' => $this->montarFinanceiro(),
       'orcamento' => $this->montarOrcamento(),
       'os' => $this->montarOs(),
@@ -43,7 +44,7 @@ trait MontarPagina
       'title' => 'Deletar',
       'route' => 'clientes.delete',
       'icon' => 'fa fa-trash',
-      'onClick' => 'deletar(this)',
+      'onClick' => 'deletar(event)',
       'class' => '',
     ]);
 
@@ -89,9 +90,9 @@ trait MontarPagina
 
     $deletar = collect([
       'title' => 'Deletar',
-      'route' => 'delete',
+      'route' => 'empresas.delete',
       'icon' => 'fa fa-trash',
-      'onClick' => 'deletar(this)',
+      'onClick' => 'deletar(event)',
       'class' => '',
     ]);
 
@@ -182,9 +183,9 @@ trait MontarPagina
 
     $deletar = collect([
       'title' => 'Deletar',
-      'route' => 'delete',
+      'route' => 'motoristas.delete',
       'icon' => 'fa fa-trash',
-      'onClick' => 'deletar(this)',
+      'onClick' => 'deletar(event)',
       'class' => '',
     ]);
 
@@ -229,12 +230,12 @@ trait MontarPagina
 
     $deletar = collect([
       'title' => 'Deletar',
-      'route' => 'delete',
+      'route' => 'segurancas.delete',
       'icon' => 'fa fa-trash',
-      'onClick' => 'deletar(this)',
+      'onClick' => 'deletar(event)',
       'class' => '',
     ]);
-
+    
     $actions = collect([
       $editar,
       $deletar,
@@ -250,13 +251,13 @@ trait MontarPagina
       'actions' => $actions,
     ]);
 
-    $header = collect(['Nome', 'Empresa', 'Cidade', 'Status', 'Ações']);
+    $header = collect(['Nome', 'Empresa', 'Cidade', 'Armado', 'Motorista', 'Status', 'Ações']);
 
 
     return [$config, $header];
   }
 
-  private function montarServicos()
+  private function montarServicosLocacao()
   {
     $search = new Fluent([
       'placeholder' => 'Pesquisar por Nome',
@@ -298,7 +299,55 @@ trait MontarPagina
       'actions' => $actions,
     ]);
 
-    $header = collect(['Tipo', 'Nome', 'Categoria', 'Preço Base', 'Ações']);
+    $header = collect(['Categoria', 'Tipo', 'Nome', 'Veículo', 'Blindado', 'Bilingue', 'Preço Base', 'Ações']);
+
+
+    return [$config, $header];
+  }
+
+  private function montarServicosSeguranca()
+  {
+    $search = new Fluent([
+      'placeholder' => 'Pesquisar por Nome',
+      'route' => 'pesquisar.servicos',
+      'label' => false,
+      'name' => 'search',
+      'id' => 'search',
+    ]);
+
+    $editar = collect([
+      'title' => 'Editar',
+      'route' => 'servicos.seguranca.editar',
+      'icon' => 'fa fa-pencil',
+      'onClick' => false,
+      'class' => '',
+    ]);
+
+    $deletar = collect([
+      'title' => 'Deletar',
+      'route' => 'servicos.seguranca.delete',
+      'icon' => 'fa fa-trash',
+      'onClick' => 'deletar(event)',
+      'class' => '',
+    ]);
+
+
+    $actions = collect([
+      $editar,
+      $deletar,
+    ]);
+
+    $config = new Fluent([
+      'title' => 'Todos os Serviços',
+      'button_top' => [
+        'name' => '+ Cadastrar serviços',
+        'route' => 'servicos.seguranca.cadastro',
+      ],
+      'search' => $search,
+      'actions' => $actions,
+    ]);
+
+    $header = collect(['Serviço', 'Tipo', 'Nome', 'Armado', 'Bilingue', 'Motorista', 'Preço Base', 'Ações']);
 
 
     return [$config, $header];

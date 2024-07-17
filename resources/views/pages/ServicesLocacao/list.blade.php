@@ -16,16 +16,25 @@
     @foreach($dados as $service)
 
       <td>
-        {{$service->serviceType->name}}
-      </td>
-      <td>
-        {{$service->name}}
+        {{$service->categoryEspec->name}}
       </td>
       <td>
         {{$service->categoryService->name}}
       </td>
       <td>
-        R$ {{$service->price}}
+        {{$service->name}}
+      </td>
+      <td>
+        {{ optional($service->vehicleType)->name ?? '-' }}
+      </td>
+      <td>
+        {{ $service->blindado_armado ? 'Sim' : 'Não' }}
+      </td>
+      <td>
+        {{ $service->bilingual ? 'Sim' : 'Não' }}
+      </td>
+      <td>
+        R$ {{ number_format($service->price, 2, ',', '.') }}
       </td>
 
       <td class="text-right">

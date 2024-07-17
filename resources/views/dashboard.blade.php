@@ -1,15 +1,15 @@
 @php
   $info = [
-    'os_encerradas' => 38,
-    'os_abertas' => 14,
-    'orcamentos' => 6,
-    'a_receber' => 1500,
-    'a_pagar' => 900,
-    'total' => 26000,
-    'carros' => 180,
-    'motoristas' => 100,
-    'clientes' => 96,
-    'empresas' => 43
+    'os_encerradas' => 0,
+    'os_abertas' => 0,
+    'orcamentos' => 0,
+    'a_receber' => 0,
+    'a_pagar' => 0,
+    'total' => 0,
+    'carros' => 0,
+    'motoristas' => 0,
+    'clientes' => 0,
+    'empresas' => 0
   ];
   $chart_Services = [
     'months' => [
@@ -19,10 +19,10 @@
       'Abril',
     ],
     'values' => [
-      16,
-      24,
-      56,
-      41
+      0,
+      0,
+      0,
+      0
     ],
   ]
 @endphp
@@ -296,7 +296,7 @@
             borderRadius: 4,
             borderSkipped: false,
             backgroundColor: "#fff",
-            data: [450, 200, 100, 220],
+            data: [0, 0, 0, 0],
             maxBarThickness: 6
           }, ],
         },
@@ -377,7 +377,7 @@
               borderWidth: 3,
               backgroundColor: gradientStroke1,
               fill: true,
-              data: [50, 40, 300, 220],
+              data: [0, 0, 0, 0],
               maxBarThickness: 6
 
             },
@@ -390,7 +390,7 @@
               borderWidth: 3,
               backgroundColor: gradientStroke2,
               fill: true,
-              data: [30, 90, 40, 140],
+              data: [0, 0, 0, 0],
               maxBarThickness: 6
             },
           ],

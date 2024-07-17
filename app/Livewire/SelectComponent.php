@@ -19,6 +19,7 @@ class SelectComponent extends Component
     public $options;
     public $placeholder;
     public $name;
+    public $required;
     public $selected;
     public $selectedPrimaryId;
     public $type;
@@ -58,7 +59,7 @@ class SelectComponent extends Component
     public function especialization($primary = false, $selectedPrimaryId = null)
     {
         return Specialization::select('id', 'name')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'ASC')
             ->when($primary, fn ($query) => $query->whereNull('id_ascendent'))
             ->when(!$primary, fn ($query) => $query->where('id_ascendent', $selectedPrimaryId))
             ->get();
@@ -67,14 +68,14 @@ class SelectComponent extends Component
     public function empresas()
     {
         return Company::select('id', 'name')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'ASC')
             ->get();
     }
 
     public function typesVehicle()
     {
         return VehicleType::select('id', 'name')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'ASC')
             ->get();
     }
 
@@ -82,27 +83,27 @@ class SelectComponent extends Component
     {
         return Category::select('id', 'name')
             ->whereHas('type', fn ($query) => $query->where('name', 'Vehicle'))
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'ASC')
             ->get();
     }
     public function categoryService()
     {
         return Category::select('id', 'name')
             ->whereHas('type', fn ($query) => $query->where('name', 'Service'))
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'ASC')
             ->get();
     }
     public function securityType()
     {
         return Category::select('id', 'name')
             ->whereHas('type', fn ($query) => $query->where('name', 'Security'))
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'ASC')
             ->get();
     }
     public function brands()
     {
         return VehicleBrand::select('id', 'name')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('name', 'ASC')
             ->get();
     }
 
