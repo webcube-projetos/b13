@@ -154,12 +154,11 @@ $(document).ready(function () {
             }
         });
     });
-
-    $(document).on('click', '.deletarLinha', function () {
-        // Encontrar a linha mais próxima e removê-la
-        var linha = $(this).closest('.linha-add');
-        linha.remove();
-    });
+    // $(document).on('click', '.deletarLinha', function () {
+    //     // Encontrar a linha mais próxima e removê-la
+    //     var linha = $(this).closest('.linha-add');
+    //     linha.remove();
+    // });
 
     addLinhasRotas()
 });

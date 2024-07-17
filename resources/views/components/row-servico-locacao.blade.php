@@ -38,36 +38,20 @@
         </div>
         <div class="col-md-5 mb-3">
             <label for="servico">Serviço</label>
-            <select name="servico[]" id="servico"  class="form-control">
-                <option value="" selected disabled>Selecione o serviço</option>
-                <option value="">Transfer In</option>
-                <option value="">Transfer Out</option>
-                <option value="">Diária 5h</option>
-            </select>
+            <livewire:select-component type="services" placeholder="Selecione o serviço" name="service[]" selected='' />
+
         </div>
         <div class="col-md-5 mb-3">
             <label for="categoriaVeiculo">Categoria de veículo</label>
-            <select name="categoriaVeiculo[]" id="categoriaVeiculo"  class="form-control">
-                <option value="">Luxo</option>
-            </select>
+            <livewire:select-component type="vehiclesCategory" placeholder="Selecione a categoria" name="vehiclesCategory[]" selected='' />
         </div>
         <div class="col-md-2 mb-3">
             <label for="tipoVeiculo">Tipo veículo</label>
-            <select name="tipoVeiculo[]" id="tipoVeiculo"  class="form-control">
-                <option value="">SUV</option>
-                <option value="">Sedan</option>
-            </select>
+            <livewire:select-component type="typesVehicle" placeholder="Selecione" name="typesVehicle[]" selected='' />
         </div>
         <div class="col-md-6 mb-3">
             <label for="modeloVeiculo">Modelo de veículo</label>
-            <select name="modeloVeiculo[]" id="modeloVeiculo"  class="form-control">
-                <option value="">Modelo 1</option>
-                <option value="">Modelo 2</option>
-                <option value="">Modelo 3</option>
-                <option value="">Modelo 4</option>
-                <option value="">Modelo 5</option>
-                <option value="">Modelo 6</option>
-            </select>
+            <livewire:select-component type="selectBrand" placeholder="Veiculos" name="selectBrand[]" selected='' />
         </div>
         <div class="col-md-3 mb-3">
             <div class="form-check align-items-center">
@@ -77,10 +61,7 @@
         </div>
         <div class="col-md-3 mb-3">
             <label for="blindado">Blindado</label>
-            <select name="blindado[]" id="blindado"  class="form-control">
-                <option value="">Sim</option>
-                <option value="">Não</option>
-            </select>
+                <livewire:select-component type="armored" placeholder="" name="armored[]" selected='' />
         </div>
     </div>
 

@@ -29,11 +29,7 @@
     </div>
     <div class="col-md-6 mb-3">
         <label for="servico">Serviço</label>
-        <select name="servico[]" id="servico"  class="form-control">
-            <option value="" selected disabled>Selecione o serviço</option>
-            <option value="">Diária 5h</option>
-            <option value="">Diária 12h</option>
-        </select>
+        <livewire:select-component type="services" placeholder="Selecione o serviço" name="service[]" selected='' />
     </div>
     <div class="col-md-6 mb-3">
         <label for="categoriaVeiculo">Categoria de serviço</label>

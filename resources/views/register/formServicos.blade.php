@@ -9,14 +9,14 @@
                     + Adicionar Serviço
                 </button>
                 <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
-                    <li><a href="javascript:;" id="addLinhaServicoLocacao">+ Locação</a></li>
-                    <li><a href="javascript:;" id="addLinhaServicoSeguranca">+ Segurança</a></li>
+                    <li><a x-on:click="$dispatch('addLinhaServicoLocacao')">+ Locação</a></li>
+                    <li><a x-on:click="$dispatch('addLinhaServicoSeguranca')">+ Segurança</a></li>
                 </ul>
             </div>
         </div>
 
         <div id="box-linhas-servico">
-            
+            <livewire:service-o-s/>
         </div>
     </div>
 </div>

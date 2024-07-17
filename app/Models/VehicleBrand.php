@@ -9,6 +9,8 @@ class VehicleBrand extends Model
 {
     use HasFactory;
 
+    protected $table = 'vehicle_brands';
+
     protected $fillable = ['name'];
 
     public function getVehicleBrands()

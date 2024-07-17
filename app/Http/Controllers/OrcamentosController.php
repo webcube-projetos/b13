@@ -12,13 +12,15 @@ use Faker\Factory as Faker;
 class OrcamentosController extends Controller
 {
     protected $prefix;
+    protected $request;
 
     use MontarPagina;
     use MontarForm;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->prefix = 'orcamento';
+        $this->request = $request;
     }
     public function index()
     {
@@ -61,10 +63,9 @@ class OrcamentosController extends Controller
 
     public function cadastro()
     {
-        $prefix = $this->prefix;
-        $dados = $this->montarForm('orcamentos');
+        $dados = $this->montarForm('orcamentos')->toArray();
 
-        return view('orcamento', compact('dados', 'prefix'));
+        return view('orcamento', compact('dados'));
     }
 
     public function editar()
