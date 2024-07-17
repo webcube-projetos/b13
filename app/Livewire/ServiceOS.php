@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -66,14 +67,10 @@ class ServiceOS extends Component
 
     public function handleDeletarLinha($serviceId)
     {
-        $servicesOS = $this->servicesOS;
-        $servicesOS = array_filter($servicesOS, function ($service) use ($serviceId) {
+        $this->servicesOS = array_values(array_filter($this->servicesOS, function ($service) use ($serviceId) {
             return $service['id'] !== $serviceId;
-        });
-        $servicesOS = array_values($servicesOS);
-
-        $this->servicesOS = $servicesOS;
-
+        }));
+        $this->servicesOS = collect($this->servicesOS)->values()->all();
         unset($this->totals[$serviceId]);
         $this->totalGlobal = array_sum($this->totals);
         $this->dispatch('update-global-total', $this->totalGlobal);

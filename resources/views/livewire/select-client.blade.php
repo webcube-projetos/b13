@@ -1,6 +1,6 @@
 <div class="row w-100">
     <div class="col-md-6">
-        <select class="dinamicSelect form-control" name="client_id" wire:model.live="selectedPrimary">
+        <select class="dinamicSelect form-control" name="client_id" id="cliente" wire:model.live="selectedPrimary">
             <option value="" selected >Selecione o Cliente</option>
             @foreach ($clients as $option)
                 <option value="{{ $option->id }}">{{ $option->name }}</option>

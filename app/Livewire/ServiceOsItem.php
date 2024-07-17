@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class ServiceOsLocacao extends Component
+class ServiceOsItem extends Component
 {
     public $serviceId;
     public $type;
@@ -15,7 +15,7 @@ class ServiceOsLocacao extends Component
     public $inicio;
     public $termino;
     public $qtdDias = 0;
-    public $qtdVeiculos = 0;
+    public $qtdServices = 0;
     public $servicesOS = null;
     public $vehiclesCategory;
     public $selectBrand;
@@ -31,12 +31,12 @@ class ServiceOsLocacao extends Component
     public $custoParceiro = 0;
     public $extraParceiro = 0;
     public $kmExtraParceiro = 0;
-    public $custoMotorista = 0;
-    public $horaExtraMotorista = 0;
+    public $custoEmployee = 0;
+    public $horaExtraEmployee = 0;
+    public $parceiro = false;
     public $total = 0;
     public $data = [];
-
-
+    
     protected $listeners = [
         'clonarLinha' => 'handleClonarLinha',
         'deletarLinha' => 'handleDeletarLinha',
@@ -53,7 +53,7 @@ class ServiceOsLocacao extends Component
             $this->inicio = $data['inicio'];
             $this->termino = $data['termino'];
             $this->qtdDias = $data['qtdDias'];
-            $this->qtdVeiculos = $data['qtdVeiculos'];
+            $this->qtdServices = $data['qtdServices'] ?? 0;
             $this->servicesOS = $data['servicesOS'];
             $this->vehiclesCategory = $data['vehiclesCategory'];
             $this->typesVehicle = $data['typesVehicle'];
@@ -69,8 +69,9 @@ class ServiceOsLocacao extends Component
             $this->custoParceiro = $data['custoParceiro'];
             $this->extraParceiro = $data['extraParceiro'];
             $this->kmExtraParceiro = $data['kmExtraParceiro'];
-            $this->custoMotorista = $data['custoMotorista'];
-            $this->horaExtraMotorista = $data['horaExtraMotorista'];
+            $this->parceiro = $data['parceiro'];
+            $this->custoEmployee = $data['custoEmployee'] ?? 0;
+            $this->horaExtraEmployee = $data['horaExtraEmployee'] ?? 0;
             $this->total = $data['total'];
         }
     }
@@ -84,7 +85,7 @@ class ServiceOsLocacao extends Component
             'inicio' => $this->inicio,
             'termino' => $this->termino,
             'qtdDias' => $this->qtdDias,
-            'qtdVeiculos' => $this->qtdVeiculos,
+            'qtdServices' => $this->qtdServices,
             'servicesOS' => $this->servicesOS,
             'vehiclesCategory' => $this->vehiclesCategory,
             'typesVehicle' => $this->typesVehicle,
@@ -100,9 +101,10 @@ class ServiceOsLocacao extends Component
             'custoParceiro' => $this->custoParceiro,
             'extraParceiro' => $this->extraParceiro,
             'kmExtraParceiro' => $this->kmExtraParceiro,
-            'custoMotorista' => $this->custoMotorista,
-            'horaExtraMotorista' => $this->horaExtraMotorista,
-            'total' => $this->total,
+            'custoEmployee' => $this->custoEmployee,
+            'horaExtraEmployee' => $this->horaExtraEmployee,
+            'parceiro' => $this->parceiro,
+            'total' => $this->total,           
         ];
 
         $this->dispatch('clonarLinhaparent', $this->serviceId, $this->data);
@@ -114,11 +116,6 @@ class ServiceOsLocacao extends Component
             return;
         }
         $this->dispatch('deletarLinhaparent', $this->serviceId);
-    }
-
-    public function handleSelectedOptions($type, $key)
-    {
-        $this->{$type} = $key;
     }
 
     #[On('osCreated')]
@@ -140,8 +137,8 @@ class ServiceOsLocacao extends Component
                 'partner_cost' => $this->custoParceiro,
                 'partner_extra_time' => $this->extraParceiro,
                 'partner_extra_km' => $this->kmExtraParceiro,
-                'employee_cost' => $this->custoMotorista,
-                'employee_extra' => $this->horaExtraMotorista,
+                'employee_cost' => $this->custoEmployee,
+                'employee_extra' => $this->horaExtraEmployee,
             ]
         );
 
@@ -156,13 +153,31 @@ class ServiceOsLocacao extends Component
 
     public function updated($property)
     {
-        $this->total = $this->precoBase * $this->qtdDias;
+        $precoBase = (float) str_replace(',', '.', str_replace('.', '', $this->precoBase));
+        $qtdDias = (float) str_replace(',', '.', str_replace('.', '', $this->qtdDias));
+        $qtdServices = (float) str_replace(',', '.', str_replace('.', '', $this->qtdServices));
+
+        $this->total = $precoBase * $qtdDias * $qtdServices;
+
+        $this->dispatch('custosUpdated', $this->serviceId, [
+            'qtdDias' => $this->qtdDias,
+            'qtdServices' => $this->qtdServices,
+            'precoBase' => $this->precoBase,
+            'custoEmployee' => $this->custoEmployee,
+            'custoParceiro' => $this->custoParceiro,
+            'parceiro' => $this->parceiro, 
+        ]);
 
         $this->dispatch('totalUpdated', $this->serviceId, $this->total);
     }
 
+    public function handleSelectedOptions($type, $key)
+    {
+        $this->{$type} = $key;
+    }
+
     public function render()
     {
-        return view('livewire.service-os-locacao');
+        return view('livewire.service-os-item');
     }
 }

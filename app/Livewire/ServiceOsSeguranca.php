@@ -6,7 +6,7 @@ use App\Models\OsService;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class ServiceOSSeguranca extends Component
+class ServiceOsSeguranca extends Component
 {
     public $serviceId;
     public $type;
@@ -59,12 +59,7 @@ class ServiceOSSeguranca extends Component
             $this->total = $data['total'];
         }
     }
-    public function updated($property)
-    {
-        $this->total = $this->precoBase * $this->qtdDias;
-
-        $this->dispatch('totalUpdated', $this->serviceId, $this->total);
-    }
+    
     public function handleClonarLinha($serviceId)
     {
         if ($serviceId != $this->serviceId) {
@@ -90,6 +85,15 @@ class ServiceOSSeguranca extends Component
             'total' => $this->total,
         ];
         $this->dispatch('clonarLinhaparent', $this->serviceId, $data);
+    }
+
+    public function handleDeletarLinha($serviceId)
+    {
+        if ($serviceId != $this->serviceId) {
+            return;
+        }
+
+        $this->dispatch('deletarLinhaparent', $this->serviceId);
     }
 
     #[On('osCreated')]
@@ -118,19 +122,20 @@ class ServiceOSSeguranca extends Component
         $this->idGlobal = $idGlobal->id;
     }
 
-    public function handleDeletarLinha($serviceId)
-    {
-        if ($serviceId != $this->serviceId) {
-            return;
-        }
-
-        $this->dispatch('deletarLinhaparent', $this->serviceId);
-    }
-
     #[On('selectUpdated')]
     public function handleSelectUpdated($type, $value)
     {
         $this->{$type} = $value;
+    }
+
+    public function updated($property)
+    {
+        $precoBase = (float) str_replace(',', '.', str_replace('.', '', $this->precoBase));
+        $qtdDias = (float) str_replace(',', '.', str_replace('.', '', $this->qtdDias));
+        $qtdSegurancas = (float) str_replace(',', '.', str_replace('.', '', $this->qtdSegurancas));
+        $this->total = ($precoBase * $qtdDias) * $qtdSegurancas;
+
+        $this->dispatch('totalUpdated', $this->serviceId, $this->total);
     }
 
     public function render()
