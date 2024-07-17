@@ -5,4 +5,4 @@
             <option {{ $selected == $option->id ? 'selected' : '' }} value="{{ $option->id }}">{{ $option->name }}</option>
         @endforeach
     </select>
-</div
+</div>
