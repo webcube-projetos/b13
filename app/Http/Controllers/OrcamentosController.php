@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FakeModel;
+use App\Models\OS;
 use App\Traits\MontarPagina;
 use App\Traits\MontarForm;
 use Illuminate\Http\Request;
@@ -26,39 +27,11 @@ class OrcamentosController extends Controller
     {
         $prefix = $this->prefix;
 
-        $dados = $this->query()->paginate(10);
-
         [$config, $header] = $this->montarPagina('orcamento');
+        $config = $config->toArray();
+        $header = $header->toArray();
 
-        return view('listagem', compact('prefix', 'dados', 'config', 'header'));
-    }
-
-    public function query()
-    {
-        $faker = Faker::create('pt_BR');
-        $data = [];
-        $count = 700;
-        for ($i = 0; $i < 30; $i++) {
-            $data[] = [
-                '#' => $count,
-                'data_abertura' => $faker->date('d/m/Y'),
-                'empresa' => $faker->company,
-                'apelido' => '-',
-                'valor' => 'R$800,00',
-            ];
-            $count++;
-        }
-
-        return new FakeModel($data);
-    }
-
-    public function listar()
-    {
-        $dados = $this->query()->paginate(10);
-
-        [$config, $header] = $this->montarPagina('orcamento');
-
-        return view('listagem.tableList', compact('dados', 'config', 'header'));
+        return view('listagem', compact('prefix', 'config', 'header'));
     }
 
     public function cadastro()
