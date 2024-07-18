@@ -29,36 +29,15 @@
         R$ {{ number_format($os->services->sum('price'), 2, ',', '.') }}
       </td>
       <td class="text-right">
-          @foreach($config['actions'] as $botao)
-            @if (isset($botao['onClick']) && $botao['onClick'])
-              <button 
-                  class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
-                  data-toggle="tooltip" 
-                  data-id="{{ $os->id }}"
-                  data-original-title="{{ $botao['title'] ?? ''}}"
-                  @if($botao['onClick']) onclick="{{ $botao['onClick'] }}" @endif
-                >
-                  <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
-              </button>
-              @elseif (isset($botao['route']))
-              <button 
-                class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
-                data-toggle="tooltip" 
-                data-original-title="{{ $botao['title'] ?? ''}}"
-                @if($botao['onClick']) onclick="{{ $botao['onClick'] }}" @endif
-              >
-                <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
-            </button>
-            @elseif ($botao['name'] === 'modal')
-              <button 
-                type="button" 
-                class="button-actions text-secondary font-weight-bold text-xs me-2 {{ $botao['class'] }}" 
-                data-bs-toggle="modal" 
-                data-bs-target="#{{ $botao['target'] }}">
-                <i class="{{ $botao['icon'] }}" aria-hidden="true"></i>
-              </button>
-            @endif
-          @endforeach
+        <button class="button-actions text-secondary font-weight-bold text-xs me-2">
+          <i class="fa fa-pencil"></i>
+        </button>
+        <button class="button-actions text-secondary font-weight-bold text-xs me-2" wire:click="deleteModal({{ $os->id }})">
+          <i class="fa fa-trash"></i>
+        </button>
+        <button class="button-actions text-secondary font-weight-bold text-xs me-2">
+          <i class="fa fa-clone"></i>
+        </button>
       </td>
     </tr>
     @endforeach

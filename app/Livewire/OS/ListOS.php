@@ -16,6 +16,7 @@ class ListOS extends Component
     public $search;
     public $contato;
     public $data;
+    public $idDelete = null;
 
     public function render()
     {
@@ -35,5 +36,18 @@ class ListOS extends Component
             ->get();
 
         return view('livewire.o-s.list-o-s');
+    }
+
+    public function deleteModal($id)
+    {
+        $this->idDelete = $id;
+        $this->dispatch('modal-delete');
+    }
+
+    public function delete()
+    {
+        $os = OS::find($this->idDelete);
+        $os->delete();
+        $this->idDelete = null;
     }
 }
