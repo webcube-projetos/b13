@@ -27,11 +27,6 @@
       </div>
 
       <div x-data="{ dangerModalIsOpen: false, idItem: null }" @modal-delete.window="dangerModalIsOpen = true;">
-        <!-- Botão de Ação -->
-        <button x-on:click="dangerModalIsOpen = true" class="tw-text-secondary tw-font-bold tw-text-xs tw-me-2">
-          <i class="fa fa-trash"></i>
-        </button>
-      
         <!-- Modal -->
         <div x-cloak x-show="dangerModalIsOpen" x-transition.opacity.duration.200ms x-trap.inert.noscroll="dangerModalIsOpen" @keydown.esc.window="dangerModalIsOpen = false" x-on:click.self="dangerModalIsOpen = false" class="tw-fixed tw-inset-0 tw-z-[999] tw-flex tw-items-center tw-justify-center tw-bg-black/20 tw-p-4 tw-backdrop-blur-md tw-z-[999]" role="dialog" aria-modal="true" aria-labelledby="dangerModalTitle">
           <!-- Dialog -->
@@ -51,8 +46,8 @@
             </div>
             <!-- Body -->
             <div class="tw-text-center tw-mb-4">
-              <h3 id="dangerModalTitle" class="tw-text-lg tw-font-semibold tw-text-gray-900">Deletar OS</h3>
-              <p>Você tem certeza que deseja deletar esta OS?</p>
+              <h3 id="dangerModalTitle" class="tw-text-lg tw-font-semibold tw-text-gray-900">Deletar Orçamento</h3>
+              <p>Você tem certeza que deseja deletar esse orçamento?</p>
             </div>
             <!-- Footer -->
             <div class="tw-flex tw-justify-center">
