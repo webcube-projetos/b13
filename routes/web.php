@@ -103,7 +103,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/editar', [ServicosController::class, 'editar'])->name('editar');
 		Route::post('/salvar', [ServicosController::class, 'salvar'])->name('salvar');
 		Route::post('/delete', [ServicosController::class, 'delete'])->name('delete');
-		
+
 		// Rotas do ServicosSegurancaController
 		Route::prefix('seguranca')->name('seguranca.')->group(function () {
 			Route::get('/', [ServicosSegurancaController::class, 'index'])->name('index');
