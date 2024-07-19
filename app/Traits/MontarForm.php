@@ -2044,7 +2044,7 @@ trait MontarForm
                         'label' => 'Cliente',
                         'type' => 'selectClient',
                         'placeholder' => '',
-                        'required' => false,
+                        'required' => true,
                         'id' => 'cliente',
                         'name' => 'client_id',
                         'function' => false,

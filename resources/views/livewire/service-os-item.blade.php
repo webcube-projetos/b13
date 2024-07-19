@@ -41,11 +41,11 @@
                     <livewire:select-component type="bilingue" placeholder="" name="bilingue[]" :selected="$bilingue" />
                 </div>
                 <div class="col-md-3 mb-3">
-                    <label for="service[]">Tipo de Serviço</label>
+                    <label for="categoryService[]">Tipo de Serviço</label>
                     <livewire:select-component type="categoryService" placeholder="Selecione o tipo" name="categoryService[]" :selected="$categoryService" />
                 </div>
                 <div class="col-md-2 mb-3">
-                    <label for="service[]">Quantidade de Horas</label>
+                    <label for="qtdHoras">Quantidade de Horas</label>
                     <input type="number" min="0" class="form-control" wire:model.live="qtdHoras" name="qtdHoras[]" id="qtdHoras" required>
                 </div>
                 <div class="col-md-2 mb-3">
@@ -61,11 +61,13 @@
                     <livewire:select-component type="armored" placeholder="" name="armored[]" :selected="$armored" />
                 </div>
                 @if ($servicoCadastrado == 1)
-                    <select class="form-control" disabled>
-                        <option value="{{ $serviceTemp->id }}">
-                            {{ $serviceTemp->name }} ({{ $serviceTemp->name_english }})
-                        </option>
-                    </select>
+                    <div class="col-12">
+                        <select class="form-control" name="service_id" id="service_id" readonly>
+                            <option value="{{ $serviceTemp->id }}">
+                                {{ $serviceTemp->name }} ({{ $serviceTemp->name_english }})
+                            </option>
+                        </select>
+                    </div>
                 @elseif ($servicoCadastrado == 2)
                     <div class="col-md-6 mb-3">
                         <input type="text" class="form-control" placeholder="Nome" wire:model="nomeServico">
@@ -75,12 +77,12 @@
                     </div>
                 @endif
                 <div class="col-md-9 mb-3">
-                    <label for="selectBrand[]">Modelo de veículo</label>
+                    <label for="modelVehicle">Modelo de veículo</label>
                     <input type="text" class="form-control" wire:model.live="modelVehicle" name="modelVehicle[]" id="modelVehicle" required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <div class="form-check align-items-center">
-                        <input class="form-check-input" type="checkbox" wire:model="similar" value="" id="similar" checked="">
+                        <input class="form-check-input" type="checkbox" wire:model="similar" value="" id="similar">
                         <label class="custom-control-label" for="similar">Similar</label>
                     </div>
                 </div>
@@ -90,7 +92,7 @@
             <div class="row">
                 <div class="col-md-3 mb-3">
                     <label for="precoBase">Valor franquia</label>
-                    <input type="number" min="0" class="form-control" wire:model.live="precoBase" name="precoBase[]" id="precoBase" required>
+                    <input type="number" min="0" class="form-control" wire:model="precoBase" name="precoBase[]" id="precoBase" required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="horaExtra">Hora extra</label>
@@ -107,7 +109,7 @@
         
                 <div class="col-md-2 mb-3">
                     <label for="custoParceiro">Custo Parceiro</label>
-                    <input type="number" min="0" class="form-control" wire:model.live="custoParceiro" name="custoParceiro[]" id="custoParceiro" required>
+                    <input type="number" min="0" class="form-control" wire:model="custoParceiro" name="custoParceiro[]" id="custoParceiro" required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="extraParceiro">Hora Extra parceiro</label>
@@ -119,7 +121,7 @@
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="custoEmployee">Custo Motorista</label>
-                    <input type="number" min="0" class="form-control" wire:model.live="custoEmployee" name="custoEmployee[]" id="custoEmployee" required>
+                    <input type="number" min="0" class="form-control" wire:model="custoEmployee" name="custoEmployee[]" id="custoEmployee" required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="horaExtraEmployee">Custo Extra Motorista</label>
@@ -167,23 +169,23 @@
                 <input type="nummber" class="form-control" wire:model.live="qtdServices" name="qtdServices[]" id="qtdServices" required>
             </div>
             <div class="col-md-2 mb-3">
-                <label for="servico">Tipo de Serviço</label>
+                <label for="categoryService[]"">Tipo de Serviço</label>
                 <livewire:select-component type="categoryService" placeholder="Selecione o tipo" name="categoryService[]" :selected="$categoryService" />
             </div>
             <div class="col-md-2 mb-3">
-                <label for="securityType">Tipo de Segurança</label>
+                <label for="securityType[]">Tipo de Segurança</label>
                 <livewire:select-component type="securityType" placeholder="Selecione o tipo" name="securityType[]" :selected="$securityType" />
             </div>
             <div class="col-md-2 mb-3">
-                <label for="service[]">Quantidade de Horas</label>
+                <label for="qtdHoras">Quantidade de Horas</label>
                 <input type="number" min="0" class="form-control" wire:model.live="qtdHoras" name="qtdHoras[]" id="qtdHoras" required>
             </div>
             <div class="col-md-2 mb-3">
-                <label for="bilingual[]">Bilingue</label>
+                <label for="bilingue[]">Bilingue</label>
                 <livewire:select-component type="bilingue" placeholder="" name="bilingue[]" :selected="$bilingue" />
             </div>
             <div class="col-md-2 mb-3">
-                <label for="armed[]">Armado</label>
+                <label for="armored[]">Armado</label>
                 <livewire:select-component type="armed" placeholder="" name="armored[]" :selected="$armed" />
             </div>
             <div class="col-md-2 mb-3">
@@ -191,11 +193,13 @@
                 <livewire:select-component type="driver" placeholder="" name="driver[]" :selected="$driver" />
             </div>
             @if ($servicoCadastrado == 1)
-                <select class="form-control" disabled>
-                    <option value="{{ $serviceTemp->id }}">
-                        {{ $serviceTemp->name }} ({{ $serviceTemp->name_english }})
-                    </option>
-                </select>
+                <div class="col-12">
+                    <select class="form-control" name="service_id" id="service_id" readonly>
+                        <option value="{{ $serviceTemp->id }}">
+                            {{ $serviceTemp->name }} ({{ $serviceTemp->name_english }})
+                        </option>
+                    </select>
+                </div>
             @elseif ($servicoCadastrado == 2)
                 <div class="col-md-6 mb-3">
                     <input type="text" class="form-control" placeholder="Nome" wire:model="nomeServico">
@@ -207,7 +211,7 @@
 
             <div class="col-md-4 mb-3">
                 <label for="precoBase">Valor franquia</label>
-                <input type="number" min="0" class="form-control" wire:model.live="precoBase" name="precoBase[]" id="precoBase" required>
+                <input type="number" min="0" class="form-control" wire:model="precoBase" name="precoBase[]" id="precoBase" required>
             </div>
             <div class="col-md-4 mb-3">
                 <label for="horaBase">Hora franquia</label>
@@ -220,7 +224,7 @@
 
             <div class="col-md-3 mb-3">
                 <label for="custoParceiro">Custo Parceiro</label>
-                <input type="number" min="0" class="form-control" wire:model.live="custoParceiro" name="custoParceiro[]" id="custoParceiro" required>
+                <input type="number" min="0" class="form-control" wire:model="custoParceiro" name="custoParceiro[]" id="custoParceiro" required>
             </div>
             <div class="col-md-3 mb-3">
                 <label for="extraParceiro">Hora Extra parceiro</label>
@@ -228,7 +232,7 @@
             </div>
             <div class="col-md-3 mb-3">
                 <label for="custoEmployee">Custo Segurança</label>
-                <input type="number" min="0" class="form-control" wire:model.live="custoEmployee" name="custoEmployee[]" id="custoEmployee" required>
+                <input type="number" min="0" class="form-control" wire:model="custoEmployee" name="custoEmployee[]" id="custoEmployee" required>
             </div>
             <div class="col-md-3 mb-3">
                 <label for="horaExtraEmployee">Hora Extra Segurança</label>
