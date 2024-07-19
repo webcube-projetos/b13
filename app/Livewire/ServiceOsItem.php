@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Service;
 use App\Models\OsService;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
@@ -9,20 +10,33 @@ use Livewire\Component;
 
 class ServiceOsItem extends Component
 {
+    //Gerencia se o serviço existe ou não
+    public $servicoCadastrado = null;
+
+    //Recebe as informações do serviço existente
+    public $serviceTemp = null;
+
     public $serviceId;
     public $type;
     public $idGlobal;
+    public $parceiro = false;
     public $inicio;
     public $termino;
     public $qtdDias = 0;
     public $qtdServices = 0;
-    public $servicesOS = null;
-    public $vehiclesCategory;
-    public $selectBrand;
+    public $bilingue;
+    public $armed;
+    public $driver;
+    public $categoryService;
+    public $securityType;
+    public $qtdHoras = 0;
     public $typesVehicle;
+    public $vehiclesCategory;
+    public $armored;
+    public $modelVehicle;
     public $similar;
-    public $idioma = '';
-    public $armored = false;
+    public $nomeServico;
+    public $nomeServicoIngles;
     public $precoBase = 0;
     public $horaBase = 0;
     public $horaExtra = 0;
@@ -33,7 +47,6 @@ class ServiceOsItem extends Component
     public $kmExtraParceiro = 0;
     public $custoEmployee = 0;
     public $horaExtraEmployee = 0;
-    public $parceiro = false;
     public $total = 0;
     public $data = [];
     
@@ -50,17 +63,24 @@ class ServiceOsItem extends Component
         $this->type = $type;
 
         if ($this->data) {
+            $this->parceiro = $data['parceiro'];
             $this->inicio = $data['inicio'];
             $this->termino = $data['termino'];
             $this->qtdDias = $data['qtdDias'];
             $this->qtdServices = $data['qtdServices'] ?? 0;
-            $this->servicesOS = $data['servicesOS'];
-            $this->vehiclesCategory = $data['vehiclesCategory'];
+            $this->bilingue = $data['bilingue'];
+            $this->armed = $data['armed'] ?? false;
+            $this->driver = $data['driver'] ?? false;
+            $this->categoryService = $data['categoryService'] ?? null;
+            $this->securityType = $data['securityType'] ?? null;
+            $this->qtdHoras = $data['qtdHoras'];
             $this->typesVehicle = $data['typesVehicle'];
-            $this->idioma = $data['idioma'];
-            $this->selectBrand = $data['selectBrand'];
-            $this->similar = $data['similar'];
+            $this->vehiclesCategory = $data['vehiclesCategory'];
             $this->armored = $data['armored'];
+            $this->modelVehicle = $data['modelVehicle'];
+            $this->similar = $data['similar'];
+            $this->nomeServico = $data['nomeServico'] ?? null;
+            $this->nomeServicoIngles = $data['nomeServicoIngles'] ?? null;
             $this->precoBase = $data['precoBase'];
             $this->horaBase = $data['horaBase'];
             $this->horaExtra = $data['horaExtra'];
@@ -69,7 +89,6 @@ class ServiceOsItem extends Component
             $this->custoParceiro = $data['custoParceiro'];
             $this->extraParceiro = $data['extraParceiro'];
             $this->kmExtraParceiro = $data['kmExtraParceiro'];
-            $this->parceiro = $data['parceiro'];
             $this->custoEmployee = $data['custoEmployee'] ?? 0;
             $this->horaExtraEmployee = $data['horaExtraEmployee'] ?? 0;
             $this->total = $data['total'];
@@ -82,17 +101,23 @@ class ServiceOsItem extends Component
             return;
         }
         $this->data = [
+            'parceiro' => $this->parceiro,
             'inicio' => $this->inicio,
             'termino' => $this->termino,
             'qtdDias' => $this->qtdDias,
             'qtdServices' => $this->qtdServices,
-            'servicesOS' => $this->servicesOS,
-            'vehiclesCategory' => $this->vehiclesCategory,
-            'typesVehicle' => $this->typesVehicle,
-            'idioma' => $this->idioma,
-            'selectBrand' => $this->selectBrand,
-            'similar' => $this->similar,
+            'bilingue' => $this->bilingue,
             'armored' => $this->armored,
+            'driver' => $this->driver,
+            'categoryService' => $this->categoryService,
+            'securityType' => $this->securityType,
+            'qtdHoras' => $this->qtdHoras,
+            'typesVehicle' => $this->typesVehicle,
+            'vehiclesCategory' => $this->vehiclesCategory,
+            'modelVehicle' => $this->modelVehicle,
+            'similar' => $this->similar,
+            'nomeServico' => $this->nomeServico,
+            'nomeServicoIngles' => $this->nomeServicoIngles,
             'precoBase' => $this->precoBase,
             'horaBase' => $this->horaBase,
             'horaExtra' => $this->horaExtra,
@@ -103,7 +128,6 @@ class ServiceOsItem extends Component
             'kmExtraParceiro' => $this->kmExtraParceiro,
             'custoEmployee' => $this->custoEmployee,
             'horaExtraEmployee' => $this->horaExtraEmployee,
-            'parceiro' => $this->parceiro,
             'total' => $this->total,           
         ];
 
@@ -146,13 +170,22 @@ class ServiceOsItem extends Component
     }
 
     #[On('selectUpdated')]
-    public function handleSelectUpdated($type, $value)
+    public function handleSelectUpdated($t, $value)
     {
-        $this->{$type} = $value;
+        $this->{$t} = $value;
+        $this->updated($t);
     }
 
     public function updated($property)
     {
+        $this->serviceTemp = $this->buscarServicoCadastrado(); // Busca o serviço
+        // Lógica condicional para exibição dos campos (Nome/Nome Inglês ou Select):
+        if ($this->serviceTemp && $this->serviceTemp->price > 0) {
+            $this->preencherCamposDoServico(); // Preenche os campos com os dados do serviço
+        } else {
+            $this->zerarCamposDoServico();
+        }
+
         $precoBase = (float) str_replace(',', '.', str_replace('.', '', $this->precoBase));
         $qtdDias = (float) str_replace(',', '.', str_replace('.', '', $this->qtdDias));
         $qtdServices = (float) str_replace(',', '.', str_replace('.', '', $this->qtdServices));
@@ -174,6 +207,58 @@ class ServiceOsItem extends Component
     public function handleSelectedOptions($type, $key)
     {
         $this->{$type} = $key;
+    }
+
+    private function buscarServicoCadastrado()
+    {
+        if ($this->type == 'locacao') {
+            // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
+            return Service::where('id_category_service', $this->categoryService)
+                ->where('id_category_espec', $this->vehiclesCategory)
+                ->where('id_vehicle', $this->typesVehicle)
+                ->where('blindado_armado', $this->armored)
+                ->where('bilingual', $this->bilingue)
+                ->where('time', $this->qtdHoras)
+                ->first(); // Retorna o primeiro serviço encontrado ou null
+        } else {
+            // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
+            return Service::where('id_category_service', $this->categoryService)
+                ->where('id_category_espec', $this->securityType)
+                ->where('blindado_armado', $this->armed)
+                ->where('bilingual', $this->bilingue)
+                ->where('driver', $this->driver)
+                ->where('time', $this->qtdHoras)
+                ->first(); // Retorna o primeiro serviço encontrado ou null
+        }
+    }
+
+    private function preencherCamposDoServico()
+    {
+        
+        $this->servicoCadastrado = 1;
+        $this->precoBase = $this->serviceTemp->price;
+        $this->horaExtra = $this->serviceTemp->extra_price;
+        $this->kmBase = $this->serviceTemp->km;
+        $this->kmExtra = $this->serviceTemp->km_extra;
+        $this->custoParceiro = $this->serviceTemp->partner_cost;
+        $this->extraParceiro = $this->serviceTemp->partner_extra_time;
+        $this->kmExtraParceiro = $this->serviceTemp->partner_extra_km;
+        $this->custoEmployee = $this->serviceTemp->employee_cost;
+        $this->horaExtraEmployee = $this->serviceTemp->employee_extra;
+    }
+    
+    private function zerarCamposDoServico()
+    {
+        $this->servicoCadastrado = 2;
+        $this->precoBase = 0;
+        $this->horaExtra = 0;
+        $this->kmBase = 0;
+        $this->kmExtra = 0;
+        $this->custoParceiro = 0;
+        $this->extraParceiro = 0;
+        $this->kmExtraParceiro = 0;
+        $this->custoEmployee = 0;
+        $this->horaExtraEmployee = 0;
     }
 
     public function render()

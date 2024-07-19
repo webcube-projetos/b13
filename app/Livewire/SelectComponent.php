@@ -37,14 +37,19 @@ class SelectComponent extends Component
             'vehiclesCategory' => $this->categoryVehicle(),
             'selectBrand' => $this->brands(),
             'armored' => $this->armored(),
-            'armed' => $this->armored(),
+            'bilingue' => $this->bilingue(),
+            'armed' => $this->armed(),
+            'driver' => $this->driver(),
             'categoryService' => $this->categoryService(),
             'securityType' => $this->securityType(),
             'client' => $this->client(),
             'services' => $this->services(),
             'servicesOS' => $this->servicesOS(),
+            'servicesOSLoc' => $this->servicesOSLoc(),
+            'servicesOSSeg' => $this->servicesOSSeg(),
             'vehiclesCategory' => $this->vehiclesCategory(),
             'vehicles' => $this->vehicles(),
+            'languages' => $this->languages(),
             'paymentMethod' => $this->paymentMethod(),
             default => $this->especialization(),
         };
@@ -62,6 +67,14 @@ class SelectComponent extends Component
             ->orderBy('name', 'ASC')
             ->when($primary, fn ($query) => $query->whereNull('id_ascendent'))
             ->when(!$primary, fn ($query) => $query->where('id_ascendent', $selectedPrimaryId))
+            ->get();
+    }
+
+    public function languages()
+    {
+        return Specialization::select('id', 'name')
+            ->where('id_ascendent', 1)
+            ->orderBy('name', 'ASC')
             ->get();
     }
 
@@ -86,6 +99,7 @@ class SelectComponent extends Component
             ->orderBy('name', 'ASC')
             ->get();
     }
+    
     public function categoryService()
     {
         return Category::select('id', 'name')
@@ -93,6 +107,7 @@ class SelectComponent extends Component
             ->orderBy('name', 'ASC')
             ->get();
     }
+
     public function securityType()
     {
         return Category::select('id', 'name')
@@ -100,6 +115,7 @@ class SelectComponent extends Component
             ->orderBy('name', 'ASC')
             ->get();
     }
+    
     public function brands()
     {
         return VehicleBrand::select('id', 'name')
@@ -108,6 +124,36 @@ class SelectComponent extends Component
     }
 
     public function armored()
+    {
+        return collect([
+            ['id' => 1, 'name' => 'Sim'],
+            ['id' => 0, 'name' => 'Não'],
+        ])->map(function ($item) {
+            return (object) $item;
+        });
+    }
+
+    public function bilingue()
+    {
+        return collect([
+            ['id' => 1, 'name' => 'Sim'],
+            ['id' => 0, 'name' => 'Não'],
+        ])->map(function ($item) {
+            return (object) $item;
+        });
+    }
+
+    public function armed()
+    {
+        return collect([
+            ['id' => 1, 'name' => 'Sim'],
+            ['id' => 0, 'name' => 'Não'],
+        ])->map(function ($item) {
+            return (object) $item;
+        });
+    }
+
+    public function driver()
     {
         return collect([
             ['id' => 1, 'name' => 'Sim'],
@@ -138,6 +184,22 @@ class SelectComponent extends Component
     public function servicesOS()
     {
         return Service::select('id', 'name')
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    public function servicesOSLoc()
+    {
+        return Service::select('id', 'name')
+            ->where('id_service_type', 1)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    public function servicesOSSeg()
+    {
+        return Service::select('id', 'name')
+            ->where('id_service_type', 2)
             ->orderBy('created_at', 'desc')
             ->get();
     }

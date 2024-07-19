@@ -1642,9 +1642,9 @@ trait MontarForm
                         'categoria' => [
                             'container_tag' => 'div',
                             'container_class' => 'col-md-3',
-                            'label' => 'Categoria de Serviço',
+                            'label' => 'Categoria do Veículo',
                             'type' => 'selectComponent',
-                            'typeSelect' => 'categoryVehicle',
+                            'typeSelect' => 'vehiclesCategory',
                             'placeholder' => '',
                             'route' => 'CategoriaController',
                             'required' => true,
