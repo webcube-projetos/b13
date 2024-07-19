@@ -235,7 +235,7 @@ trait MontarPagina
       'onClick' => 'deletar(event)',
       'class' => '',
     ]);
-    
+
     $actions = collect([
       $editar,
       $deletar,
@@ -390,13 +390,13 @@ trait MontarPagina
 
   private function montarOrcamento()
   {
-    $search = new Fluent([
+    $search = [
       'placeholder' => 'Pesquisar por Nome',
       'route' => 'pesquisar.orcamento',
       'label' => false,
       'name' => 'search',
       'id' => 'search',
-    ]);
+    ];
 
     $editar = collect([
       'title' => 'Editar',
@@ -446,13 +446,13 @@ trait MontarPagina
 
   private function montarOs()
   {
-    $search = new Fluent([
+    $search = [
       'placeholder' => 'Pesquisar por Nome',
       'route' => 'pesquisar.servicos',
       'label' => false,
       'name' => 'search',
       'id' => 'search',
-    ]);
+    ];
 
     $editar = collect([
       'title' => 'Editar',

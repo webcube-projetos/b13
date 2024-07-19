@@ -2084,7 +2084,7 @@ trait MontarForm
                         'id' => 'cliente',
                         'name' => 'cliente',
                         'function' => false,
-                        'value' => $value['cliente'] ?? null,
+                        'value' => $value->client->name ?? null,
                     ],
                     'contato' => [
                         'container_tag' => 'div',
@@ -2097,7 +2097,7 @@ trait MontarForm
                         'id' => 'contato',
                         'name' => 'contato',
                         'function' => false,
-                        'value' => $value['contato'] ?? null,
+                        'value' => $value->contact->name ?? null,
                     ],
                 ]
             ]

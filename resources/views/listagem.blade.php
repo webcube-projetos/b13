@@ -15,43 +15,20 @@
               <!-- TÍTULO TABELA -->
               <div class="col-md-6">
                 <div class="card-header pb-0">
-                  <h6>{{ $config->title }}</h6>
+                  <h6>{{ $config['title'] }}</h6>
                 </div>
               </div>
               <!-- FIM TÍTULO TABELA -->
               <!-- BOTÃO CADASTRAR -->
-              @if ( $config->button_top ) 
+              @if ( $config['button_top'] ) 
                 <div class="col-md-6 text-end">
                   <div class="card-header pb-0">
-                    <a href="{{ route($config->button_top['route']) }}" class="btn bg-gradient-info mt-4 mb-0">{{ $config->button_top['name'] }}</a>
+                    <a href="{{ route($config['button_top']['route']) }}" class="btn bg-gradient-info mt-4 mb-0">{{ $config['button_top']['name'] }}</a>
                   </div>
                 </div> 
               @endif
             </div>
-            <div class="row">
-              <!-- FIM BOTÃO FILTRO
-              <div class="col-md-6">
-                <div class="card-header pb-0 pt-0">
-                  <a href="#" class="btn bg-dark mt-4 mb-0 text-white"><i class="fa fa-bars"></i> FILTROS</a>
-                </div>
-              </div>
-              FIM FILTRO -->
-              <!-- BOTÃO SEARCH -->
-              @if ( $config->search ) 
-                <div class="col-md-6 text-end">
-                  <div class="card-header pb-0">
-                    <x-search-input :config="$config->search" />
-                  </div>
-                </div>
-              @endif
-              
-              <!-- FIM SEARCH -->
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0" id="tableList">
-								@include('listagem.tableList')
-              </div>
-            </div>
+            <livewire:o-s.list-o-s :config="$config" :header="$header" />
           </div>
         </div>
       </div>

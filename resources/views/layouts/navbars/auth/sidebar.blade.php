@@ -1,7 +1,7 @@
 @php
   $menus = [
     'Operações' => [
-      /*[
+      [
         'title' => 'Orçamentos',
         'route' => 'orcamentos.index',
         'icon' => 'fa fa-list-alt',
@@ -12,7 +12,7 @@
         'route' => 'os.index',
         'icon' => 'fa fa-bar-chart',
         'permission' => 1,
-      ],*/
+      ],
       [
         'title' => 'Clientes',
         'route' => 'clientes.index',

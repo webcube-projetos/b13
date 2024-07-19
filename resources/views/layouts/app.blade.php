@@ -51,7 +51,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
 
   <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
-
+  @vite(['resources/css/app.css'])
   @vite(['resources/scss/app.scss'])
   @vite(['resources/js/app.js'])
   @livewireStyles
