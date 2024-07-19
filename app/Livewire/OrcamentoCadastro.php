@@ -21,6 +21,8 @@ class OrcamentoCadastro extends Component
     public $custosParceiro = [];
     public $custoTotalEmployee = [];
     public $custoTotalParceiro = [];
+    public $id;
+    public $total = null;
 
     use MontarForm;
 
@@ -29,9 +31,19 @@ class OrcamentoCadastro extends Component
         'custosUpdated' => 'handleCustosUpdated',
     ];
 
-    public function mount($dados)
+    public function mount($dados, $id = null)
     {
         $this->dados = $dados;
+        $this->id = $id;
+
+        if ($this->id) {
+            $orcamento  = OS::find($this->id);
+
+            $this->contato = $orcamento->id_contact;
+            $this->paymentMethod = $orcamento->id_payment_method;
+            $this->client = $orcamento->id_client;
+            $this->total = $orcamento->services->sum('price');
+        }
     }
 
     #[On('selectUpdated')]
@@ -60,7 +72,7 @@ class OrcamentoCadastro extends Component
             'custosParceiro' => $this->custosParceiro,
         ]);
 
-        $this->dispatch('refreshComponent'); 
+        $this->dispatch('refreshComponent');
     }
 
     public function handleSaveOS()
@@ -74,6 +86,22 @@ class OrcamentoCadastro extends Component
 
         $this->os = $os;
         $this->dispatch('osCreated', $os->id);
+    }
+
+    public function editOS()
+    {
+        $os = OS::updateOrCreate(
+            ['id' => $this->id],
+            [
+                'id_contact' => $this->contato,
+                'id_client' => $this->client,
+                'id_payment_method' => $this->paymentMethod,
+                'status' => 0,
+            ]
+        );
+
+        $this->os = $os;
+        $this->dispatch('osUpdated', $os->id);
     }
 
     public function render()

@@ -37,17 +37,16 @@ class OrcamentosController extends Controller
     public function cadastro()
     {
         $dados = $this->montarForm('orcamentos')->toArray();
+        $id = null;
 
-        return view('orcamento', compact('dados'));
+        return view('orcamento', compact('dados', 'id'));
     }
 
     public function editar()
     {
-        $id = request()->route('id');
+        $id = $this->request->id;
+        $dados = $this->montarForm('orcamentos')->toArray();
 
-        $cliente = $this->queryCompleta()->first() ?? null;
-        $dados = $this->montarForm('orcamento', $cliente);
-
-        return view('orcamento', compact('dados'));
+        return view('orcamento', compact('dados', 'id'));
     }
 }

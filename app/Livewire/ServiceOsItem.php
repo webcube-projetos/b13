@@ -36,7 +36,7 @@ class ServiceOsItem extends Component
     public $parceiro = false;
     public $total = 0;
     public $data = [];
-    
+
     protected $listeners = [
         'clonarLinha' => 'handleClonarLinha',
         'deletarLinha' => 'handleDeletarLinha',
@@ -104,7 +104,7 @@ class ServiceOsItem extends Component
             'custoEmployee' => $this->custoEmployee,
             'horaExtraEmployee' => $this->horaExtraEmployee,
             'parceiro' => $this->parceiro,
-            'total' => $this->total,           
+            'total' => $this->total,
         ];
 
         $this->dispatch('clonarLinhaparent', $this->serviceId, $this->data);
@@ -122,9 +122,35 @@ class ServiceOsItem extends Component
     public function saveOS($id)
     {
         $idGlobal = OsService::updateOrCreate(
-            ['id' => $this->idGlobal, 'id_service' => $this->servicesOS],
+            ['id' => $this->idGlobal],
             [
                 'id_os' => $id,
+                'id_service' => $this->servicesOS,
+                'qtd_days' => $this->qtdDias,
+                'start' => $this->inicio,
+                'finish' => $this->termino,
+                'price' => $this->total,
+                'time' => $this->horaBase,
+                'extra_time' => $this->horaExtra,
+                'km' => $this->kmBase,
+                'km_extra' => $this->kmExtra,
+                'partner_cost' => $this->custoParceiro,
+                'partner_extra_time' => $this->extraParceiro,
+                'partner_extra_km' => $this->kmExtraParceiro,
+                'employee_cost' => $this->custoEmployee,
+                'employee_extra' => $this->horaExtraEmployee,
+            ]
+        );
+
+        $this->idGlobal = $idGlobal->id;
+    }
+
+    #[On('osUpdated')]
+    public function handleOsUpdated($id)
+    {
+        $idGlobal = OsService::updateOrCreate(
+            ['id' => $this->serviceId, 'id_os' => $id],
+            [
                 'id_service' => $this->servicesOS,
                 'qtd_days' => $this->qtdDias,
                 'start' => $this->inicio,
@@ -165,7 +191,7 @@ class ServiceOsItem extends Component
             'precoBase' => $this->precoBase,
             'custoEmployee' => $this->custoEmployee,
             'custoParceiro' => $this->custoParceiro,
-            'parceiro' => $this->parceiro, 
+            'parceiro' => $this->parceiro,
         ]);
 
         $this->dispatch('totalUpdated', $this->serviceId, $this->total);
