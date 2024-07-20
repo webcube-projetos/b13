@@ -183,6 +183,7 @@ class ServiceOsItem extends Component
                 'bilingual' => $this->bilingue,
                 'driver' => $this->driver ?? 0,
                 'price' => $this->precoBase,
+            ]);
 
             $idGlobal = OsService::updateOrCreate(
                 ['id' => $this->idGlobal], // Removemos o filtro por id_service aqui
