@@ -15,12 +15,15 @@ class SelectClient extends Component
     public $contacts = null;
     public $selectedPrimary = null;
     public $contato = null;
+    public $cliente;
 
-    public function mount($name, $selected)
+    public function mount($name, $contato, $cliente)
     {
         $this->name = $name;
-        $this->selected = $selected ?? null;
         $this->clients = $this->clients();
+
+        $this->contato = $contato;
+        $this->selectedPrimary = $cliente;
     }
     public function render()
     {

@@ -49,7 +49,7 @@ class ServiceOsItem extends Component
     public $horaExtraEmployee;
     public $total;
     public $data = [];
-    
+
     protected $listeners = [
         'clonarLinha' => 'handleClonarLinha',
         'deletarLinha' => 'handleDeletarLinha',
@@ -128,7 +128,8 @@ class ServiceOsItem extends Component
             'kmExtraParceiro' => $this->kmExtraParceiro,
             'custoEmployee' => $this->custoEmployee,
             'horaExtraEmployee' => $this->horaExtraEmployee,
-            'total' => $this->total,           
+            'parceiro' => $this->parceiro,
+            'total' => $this->total,
         ];
 
         $this->dispatch('clonarLinhaparent', $this->serviceId, $this->data);
@@ -182,16 +183,6 @@ class ServiceOsItem extends Component
                 'bilingual' => $this->bilingue,
                 'driver' => $this->driver ?? 0,
                 'price' => $this->precoBase,
-                'time' => $this->horaBase,
-                'extra_price' => $this->horaExtra,
-                'km' => $this->kmBase,
-                'km_extra' => $this->kmExtra,
-                'partner_cost' => $this->custoParceiro,
-                'partner_extra_time' => $this->extraParceiro,
-                'partner_extra_km' => $this->kmExtraParceiro,
-                'employee_cost' => $this->custoEmployee,
-                'employee_extra' => $this->horaExtraEmployee,
-            ]);
 
             $idGlobal = OsService::updateOrCreate(
                 ['id' => $this->idGlobal], // Removemos o filtro por id_service aqui
@@ -217,6 +208,32 @@ class ServiceOsItem extends Component
                 ]
             );
         }
+
+        $this->idGlobal = $idGlobal->id;
+    }
+
+    #[On('osUpdated')]
+    public function handleOsUpdated($id)
+    {
+        $idGlobal = OsService::updateOrCreate(
+            ['id' => $this->serviceId, 'id_os' => $id],
+            [
+                'id_service' => $this->servicesOS,
+                'qtd_days' => $this->qtdDias,
+                'start' => $this->inicio,
+                'finish' => $this->termino,
+                'price' => $this->total,
+                'time' => $this->horaBase,
+                'extra_time' => $this->horaExtra,
+                'km' => $this->kmBase,
+                'km_extra' => $this->kmExtra,
+                'partner_cost' => $this->custoParceiro,
+                'partner_extra_time' => $this->extraParceiro,
+                'partner_extra_km' => $this->kmExtraParceiro,
+                'employee_cost' => $this->custoEmployee,
+                'employee_extra' => $this->horaExtraEmployee,
+            ]
+        );
 
         $this->idGlobal = $idGlobal->id;
     }
@@ -250,7 +267,7 @@ class ServiceOsItem extends Component
             'precoBase' => $this->precoBase,
             'custoEmployee' => $this->custoEmployee,
             'custoParceiro' => $this->custoParceiro,
-            'parceiro' => $this->parceiro, 
+            'parceiro' => $this->parceiro,
         ]);
 
         $this->dispatch('totalUpdated', $this->serviceId, $this->total);

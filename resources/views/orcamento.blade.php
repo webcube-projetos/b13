@@ -6,6 +6,6 @@
 	@vite(['resources/js/app.js'])
 @endpush
 
-<livewire:orcamento-cadastro :dados="$dados" />
+<livewire:orcamento-cadastro :dados="$dados" :id="$id" />
 
 @endsection

@@ -38,14 +38,27 @@
 
                                 <div class="col-lg-6 mt-4">
                                     <label for="paymentMethod">Forma de pagamento</label>
-                                    <livewire:select-component type="paymentMethod" placeholder="Selecione a forma de pagamento" name="paymentMethod" id="paymentMethod" selected='' />
+                                    <livewire:select-component type="paymentMethod" placeholder="Selecione a forma de pagamento" name="paymentMethod" id="paymentMethod" selected='{{ $paymentMethod }}' />
                                 </div>
-                                <div class="col-lg-6 text-end mt-4" @update-global-total.window="total = $event.detail; console.log(total)">
-                                    <h2><span class="text-sm">Total:</span> <span id="totalOrcamento">R$<span x-text="total"></span></span></h2>
+                                <div class="col-lg-6 text-end mt-4" @update-global-total.window="total = $event.detail">
+                                    <h2>
+                                        <span class="text-sm">Total:</span> 
+                                        <span id="totalOrcamento">R$
+                                            @if($total) {{ $total }} @else <span x-text="total"></span> @endif
+                                        </span>
+                                    </h2>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button x-on:click="$event.preventDefault() ;$dispatch('saveOS')" type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ $dados['pageInfo']['label_button'] }}</button>
+                                @if($id)
+                                    <button x-on:click="$event.preventDefault()" wire:click="editOS" type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">
+                                        Editar Orçamento
+                                    </button>
+                                @else
+                                    <button x-on:click="$event.preventDefault() ;$dispatch('saveOS')" type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">
+                                    {{ $dados['pageInfo']['label_button'] }}
+                                </button>
+                                @endif
                             </div>
                         </form>
                     </div>
@@ -81,6 +94,19 @@
     $wire.on('osCreated', () => {
         Toastify({
             text: "Cadastro realizado com sucesso!",
+            className: "info",
+            close: true,
+            gravity: "bottom",
+            position: "right",
+            style: {
+            background: "#FF9921",
+            }
+      }).showToast();
+    });
+
+    $wire.on('osUpdated', () => {
+        Toastify({
+            text: "Orçamento editado com sucesso!",
             className: "info",
             close: true,
             gravity: "bottom",

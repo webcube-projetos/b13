@@ -16,7 +16,7 @@
         </div>
 
         <div id="box-linhas-servico">
-            <livewire:service-o-s/>
+            <livewire:service-o-s :id="$id"/>
         </div>
     </div>
 </div>
