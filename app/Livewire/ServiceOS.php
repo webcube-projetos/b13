@@ -45,39 +45,43 @@ class ServiceOS extends Component
 
     public function handleCreateLines($services)
     {
-        foreach ($services as $service) {
+        foreach ($services as $serviceOS) {
             $data = [
-                'inicio' => $service->start,
-                'termino' => $service->finish,
-                'qtdDias' => $service->qtd_days,
-                'qtdServices' => $service->time,
-                'servicesOS' => $service->id_service,
-                'vehiclesCategory' => null,
-                'typesVehicle' => null,
+                'inicio' => $serviceOS->start,
+                'termino' => $serviceOS->finish,
+                'qtdDias' => $serviceOS->qtd_days,
+                'qtdServices' => $serviceOS->time,
+                'servicesOS' => $serviceOS->id_service,
+                'modelVehicle' => $serviceOS->modelo_veiculo,
+                'vehiclesCategory' => $serviceOS->service->id_category_espec,
+                'categoryService' => $serviceOS->service->id_category_service,
+                'typesVehicle' => $serviceOS->service->id_vehicle,
                 'idioma' => null,
                 'selectBrand' => null,
-                'similar' => null,
-                'armored' => null,
-                'precoBase' => $service->price,
-                'horaBase' => $service->time,
-                'horaExtra' => $service->extra_price,
-                'kmBase' => $service->km,
-                'kmExtra' => $service->km_extra,
-                'custoParceiro' => $service->partner_cost,
-                'extraParceiro' => $service->extraParceiro,
-                'kmExtraParceiro' => $service->partner_extra_cost,
-                'custoEmployee' => $service->employee_cost,
-                'horaExtraEmployee' => $service->employee_extra,
+                'similar' => $serviceOS->similar,
+                'armored' => $serviceOS->service->blindado_armado,
+                'bilingue' => $serviceOS->service->bilingual,
+                'qtdHoras' => null,
+                'precoBase' => $serviceOS->price,
+                'horaBase' => $serviceOS->time,
+                'horaExtra' => $serviceOS->extra_price,
+                'kmBase' => $serviceOS->km,
+                'kmExtra' => $serviceOS->km_extra,
+                'custoParceiro' => $serviceOS->partner_cost,
+                'extraParceiro' => $serviceOS->extraParceiro,
+                'kmExtraParceiro' => $serviceOS->partner_extra_cost,
+                'custoEmployee' => $serviceOS->employee_cost,
+                'horaExtraEmployee' => $serviceOS->employee_extra,
                 'parceiro' => null,
-                'total' => $service->price,
+                'total' => $serviceOS->price,
             ];
 
-            $newService = ['type' => $service->km > 0 ? 'locacao' : 'seguranca', 'id' => $service->id];
+            $newService = ['type' => $serviceOS->km > 0 ? 'locacao' : 'seguranca', 'id' => $serviceOS->id];
             $newService['data'] = $data;
             $this->servicesOS[] = $newService;
-            $this->totals[$newService['id']] = $this->totals[$service->id] ?? 0;
+            $this->totals[$newService['id']] = $this->totals[$serviceOS->id] ?? 0;
 
-            $this->totals[$service->id] = $service->price;
+            $this->totals[$serviceOS->id] = $serviceOS->price;
         }
         $this->totalGlobal = array_sum($this->totals);
         $this->dispatch('update-global-total', number_format($this->totalGlobal, 2, ',', '.'));
