@@ -60,8 +60,8 @@
                             <livewire:select-client 
                                 placeholder="{{$fields['placeholder']}}" 
                                 name="{{$fields['name']}}" 
-                                contato='{{ $contato }}'
-                                cliente='{{ $client }}'
+                                contato='{{ $contato ?? '' }}'
+                                cliente='{{ $client ?? '' }}'
                             />
                         @elseif($fields['type'] === 'number' && $fields['name'] !== 'ano' || $fields['name'] !== 'malas' || $fields['name'] !== 'passageiros')
                             <input 

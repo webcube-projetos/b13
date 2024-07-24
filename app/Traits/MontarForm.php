@@ -2075,31 +2075,18 @@ trait MontarForm
                 'Dados do Cliente' => [
                     'cliente' => [
                         'container_tag' => 'div',
-                        'container_class' => 'col-md-6',
+                        'container_class' => 'col-12',
                         'label' => 'Cliente',
-                        'type' => 'select',
+                        'type' => 'selectClient',
                         'placeholder' => '',
-                        'route' => 'ClientesControllersa',
-                        'required' => false,
+                        'required' => true,
                         'id' => 'cliente',
-                        'name' => 'cliente',
+                        'name' => 'client_id',
                         'function' => false,
-                        'value' => $value->client->name ?? null,
-                    ],
-                    'contato' => [
-                        'container_tag' => 'div',
-                        'container_class' => 'col-md-6',
-                        'label' => 'Contato',
-                        'type' => 'select',
-                        'placeholder' => '',
-                        'route' => 'ClientesController',
-                        'required' => false,
-                        'id' => 'contato',
-                        'name' => 'contato',
-                        'function' => false,
-                        'value' => $value->contact->name ?? null,
+                        'value' => $value->client_id ?? null,
                     ],
                 ]
+
             ]
         ]);
 
