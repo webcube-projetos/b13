@@ -155,7 +155,7 @@ class ServiceOsItem extends Component
                     'qtd_days' => $this->qtdDias,
                     'qtd_service' => $this->qtdServices,
                     'modelo_veiculo' => $this->modelVehicle,
-                    'similar' => $this->similar,
+                    'similar' => $this->similar ? 1 : 0,
                     'start' => $this->inicio,
                     'finish' => $this->termino,
                     'price' => $this->precoBase,
@@ -173,16 +173,25 @@ class ServiceOsItem extends Component
         } else {
             // Novo serviço
             $service = Service::create([
-                'id_category_service' => $this->categoryService,
-                'id_category_espec' => $this->type === 'locacao' ? $this->vehiclesCategory : $this->securityType,
-                'id_service_type' => $this->type === 'locacao' ? 1 : 2,
-                'id_vehicle' => $this->type === 'locacao' ? $this->typesVehicle : null,
                 'name' => $this->nomeServico,
                 'name_english' => $this->nomeServicoIngles,
                 'blindado_armado' => $this->type === 'locacao' ? $this->armored : $this->armed,
                 'bilingual' => $this->bilingue,
                 'driver' => $this->driver ?? 0,
                 'price' => $this->precoBase,
+                'time' => $this->qtdHoras,
+                'extra_price' => $this->horaExtra,
+                'km' => $this->kmBase,
+                'km_extra' => $this->kmExtra,
+                'partner_cost' => $this->custoParceiro,
+                'partner_extra_time' => $this->extraParceiro,
+                'partner_extra_km' => $this->kmExtraParceiro,
+                'employee_cost' => $this->custoEmployee,
+                'employee_extra' => $this->horaExtraEmployee,
+                'id_category_service' => $this->categoryService,
+                'id_category_espec' => $this->type === 'locacao' ? $this->vehiclesCategory : $this->securityType,
+                'id_service_type' => $this->type === 'locacao' ? 1 : 2,
+                'id_vehicle' => $this->type === 'locacao' ? $this->typesVehicle : null,
             ]);
 
             $idGlobal = OsService::updateOrCreate(
@@ -193,12 +202,12 @@ class ServiceOsItem extends Component
                     'qtd_days' => $this->qtdDias,
                     'qtd_service' => $this->qtdServices,
                     'modelo_veiculo' => $this->modelVehicle ?? null,
-                    'similar' => $this->similar,
+                    'similar' => $this->similar ? 1 : 0,
                     'start' => $this->inicio,
                     'finish' => $this->termino,
                     'price' => $this->total,
                     'time' => $this->horaBase,
-                    'extra_time' => $this->horaExtra,
+                    'extra_price' => $this->horaExtra,
                     'km' => $this->kmBase,
                     'km_extra' => $this->kmExtra,
                     'partner_cost' => $this->custoParceiro,
@@ -225,7 +234,7 @@ class ServiceOsItem extends Component
                 'finish' => $this->termino,
                 'price' => $this->total,
                 'time' => $this->horaBase,
-                'extra_time' => $this->horaExtra,
+                'extra_price' => $this->horaExtra,
                 'km' => $this->kmBase,
                 'km_extra' => $this->kmExtra,
                 'partner_cost' => $this->custoParceiro,
@@ -253,7 +262,7 @@ class ServiceOsItem extends Component
         if ($this->serviceTemp && $this->serviceTemp->price > 0) {
             $this->preencherCamposDoServico(); // Preenche os campos com os dados do serviço
         } else {
-            $this->zerarCamposDoServico();
+            $this->servicoCadastrado = 2;
         }
 
         $precoBase = (float) str_replace(',', '.', str_replace('.', '', $this->precoBase));
@@ -315,7 +324,7 @@ class ServiceOsItem extends Component
         $this->custoEmployee = $this->serviceTemp->employee_cost;
         $this->horaExtraEmployee = $this->serviceTemp->employee_extra;
     }
-    
+
     private function zerarCamposDoServico()
     {
         $this->servicoCadastrado = 2;
