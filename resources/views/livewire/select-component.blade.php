@@ -1,5 +1,5 @@
 <div>
-    <select class="dinamicSelect form-control" name="{{ $name }}" id="{{ $name }}" wire:model.change="selected">
+    <select class="dinamicSelect form-control" name="{{ $name }}" id="{{ $name }}" wire:model.change="selected" wire:ignore>
         <option value="" selected>{{ $placeholder }}</option>
         @foreach ($options as $option)
             <option {{ $selected == $option->id ? 'selected' : '' }} value="{{ $option->id }}">{{ $option->name }}</option>

@@ -20,6 +20,9 @@ class OsService extends Model
         'price',
         'time',
         'extra_price',
+        'qtd_service',
+        'modelo_veiculo',
+        'similar',
         'km',
         'km_extra',
         'partner_cost',
@@ -28,4 +31,9 @@ class OsService extends Model
         'employee_cost',
         'employee_extra',
     ];
+
+    public function service()
+    {
+        return $this->hasOne(Service::class, 'id', 'id_service');
+    }
 }
