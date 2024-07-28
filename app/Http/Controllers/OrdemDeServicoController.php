@@ -20,16 +20,16 @@ class OrdemDeServicoController extends Controller
     {
         $this->prefix = 'os';
     }
-    
+
     public function index()
     {
         $prefix = $this->prefix;
 
-        $dados = $this->query()->paginate(10);
-
         [$config, $header] = $this->montarPagina('os');
+        $config = $config->toArray();
+        $header = $header->toArray();
 
-        return view('listagem', compact('prefix', 'dados', 'config', 'header'));
+        return view('listagem', compact('prefix', 'config', 'header'));
     }
 
     public function query()
@@ -63,9 +63,10 @@ class OrdemDeServicoController extends Controller
     public function cadastro()
     {
         $prefix = $this->prefix;
-        $dados = $this->montarForm('os');
+        $dados = $this->montarForm('os')->toArray();
+        $id = null;
 
-        return view('os', compact('dados', 'prefix'));
+        return view('os', compact('dados', 'prefix', 'id'));
     }
 
     public function editar()
