@@ -154,11 +154,11 @@
             </div>
             <div class="col-md-3 mb-3">
                 <label for="inicio">Início</label>
-                <input type="date" class="form-control" wire:model.live="inicio" name="inicio[]" id="inicio" maxlength="30">
+                <input type="date" class="form-control" wire:model="inicio" name="inicio[]" id="inicio" maxlength="30">
             </div>
             <div class="col-md-3 mb-3">
                 <label for="termino">Término</label>
-                <input type="date" class="form-control" wire:model.live="termino" name="termino[]" id="termino" maxlength="30">
+                <input type="date" class="form-control" wire:model="termino" name="termino[]" id="termino" maxlength="30">
             </div>
             <div class="col-md-3 mb-3">
                 <label for="qtdDias">Qtd. Dias</label>
@@ -202,10 +202,10 @@
                 </div>
             @elseif ($servicoCadastrado == 2)
                 <div class="col-md-6 mb-3">
-                    <input type="text" class="form-control" placeholder="Nome" wire:model.live="nomeServico">
+                    <input type="text" class="form-control" placeholder="Nome" wire:model="nomeServico">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <input type="text" class="form-control" placeholder="Nome em Inglês" wire:model.live="nomeServicoIngles">
+                    <input type="text" class="form-control" placeholder="Nome em Inglês" wire:model="nomeServicoIngles">
                 </div>
             @endif
 
@@ -215,11 +215,11 @@
             </div>
             <div class="col-md-4 mb-3">
                 <label for="horaBase">Hora franquia</label>
-                <input type="number" min="0" class="form-control" wire:model.live="horaBase" name="horaBase[]" id="horaBase" required>
+                <input type="number" min="0" class="form-control" wire:model="horaBase" name="horaBase[]" id="horaBase" required>
             </div>
             <div class="col-md-4 mb-3">
                 <label for="horaExtra">Hora extra</label>
-                <input type="number" min="0" class="form-control" wire:model.live="horaExtra" name="horaExtra[]" id="horaExtra" required>
+                <input type="number" min="0" class="form-control" wire:model="horaExtra" name="horaExtra[]" id="horaExtra" required>
             </div>
 
             <div class="col-md-3 mb-3">
@@ -228,7 +228,7 @@
             </div>
             <div class="col-md-3 mb-3">
                 <label for="extraParceiro">Hora Extra parceiro</label>
-                <input type="number" min="0" class="form-control" wire:model.live="extraParceiro" name="extraParceiro[]" id="extraParceiro" required>
+                <input type="number" min="0" class="form-control" wire:model="extraParceiro" name="extraParceiro[]" id="extraParceiro" required>
             </div>
             <div class="col-md-3 mb-3">
                 <label for="custoEmployee">Custo Segurança</label>
@@ -236,7 +236,7 @@
             </div>
             <div class="col-md-3 mb-3">
                 <label for="horaExtraEmployee">Hora Extra Segurança</label>
-                <input type="number" min="0" class="form-control" wire:model.live="horaExtraEmployee" name="horaExtraEmployee[]" id="horaExtraEmployee" required>
+                <input type="number" min="0" class="form-control" wire:model="horaExtraEmployee" name="horaExtraEmployee[]" id="horaExtraEmployee" required>
             </div>
             <div class="col-12 text-end mt-3">
                 <h3>Total: <span id="total-linha">R$ {{ number_format($total, 2, ',', '.') }}</span></h3>
