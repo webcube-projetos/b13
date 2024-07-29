@@ -231,6 +231,9 @@ class ServiceOsItem extends Component
             [
                 'id_service' => $this->data['servicesOS'],
                 'qtd_days' => $this->qtdDias,
+                'qtd_service' => $this->qtdServices,
+                'modelo_veiculo' => $this->modelVehicle,
+                'similar' => $this->similar ? 1 : 0,
                 'start' => $this->inicio,
                 'finish' => $this->termino,
                 'price' => $this->precoBase,
