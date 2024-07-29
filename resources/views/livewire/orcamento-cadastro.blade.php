@@ -44,7 +44,7 @@
                                     <h2>
                                         <span class="text-sm">Total:</span> 
                                         <span id="totalOrcamento">R$
-                                            @if($total) {{ $total }} @else <span x-text="total"></span> @endif
+                                            @if($total) {{ number_format($total, 2, ',', '.') }} @else <span x-text="total"></span> @endif
                                         </span>
                                     </h2>
                                 </div>

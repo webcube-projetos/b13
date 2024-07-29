@@ -54,6 +54,7 @@ class ServiceOsItem extends Component
         'clonarLinha' => 'handleClonarLinha',
         'deletarLinha' => 'handleDeletarLinha',
         'selectUpdated' => 'handleSelectedOptions',
+        'servicesOS' => 'handleServicesOS'
     ];
 
     public function mount($serviceId, $type, $data = null)
@@ -159,7 +160,7 @@ class ServiceOsItem extends Component
                     'start' => $this->inicio,
                     'finish' => $this->termino,
                     'price' => $this->precoBase,
-                    'time' => $this->horaBase,
+                    'time' => $this->qtdHoras,
                     'extra_price' => $this->horaExtra,
                     'km' => $this->kmBase,
                     'km_extra' => $this->kmExtra,
@@ -205,8 +206,8 @@ class ServiceOsItem extends Component
                     'similar' => $this->similar ? 1 : 0,
                     'start' => $this->inicio,
                     'finish' => $this->termino,
-                    'price' => $this->total,
-                    'time' => $this->horaBase,
+                    'price' => $this->precoBase,
+                    'time' => $this->qtdHoras,
                     'extra_price' => $this->horaExtra,
                     'km' => $this->kmBase,
                     'km_extra' => $this->kmExtra,
@@ -228,11 +229,11 @@ class ServiceOsItem extends Component
         $idGlobal = OsService::updateOrCreate(
             ['id' => $this->serviceId, 'id_os' => $id],
             [
-                'id_service' => $this->servicesOS,
+                'id_service' => $this->data['servicesOS'],
                 'qtd_days' => $this->qtdDias,
                 'start' => $this->inicio,
                 'finish' => $this->termino,
-                'price' => $this->total,
+                'price' => $this->precoBase,
                 'time' => $this->horaBase,
                 'extra_price' => $this->horaExtra,
                 'km' => $this->kmBase,
