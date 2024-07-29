@@ -9,7 +9,7 @@
                 <div class="col-md-6 mb-4 text-end">
                     <div class="d-flex align-items-center justify-content-end">
                         <div class="form-check align-items-center me-2">
-                            <input class="form-check-input" type="checkbox" wire:model.live.live="parceiro" value="" id="parceiro">
+                            <input class="form-check-input" type="checkbox" wire:model.live="parceiro" value="" id="parceiro">
                             <label class="custom-control-label" for="parceiro">Parceiro</label>
                         </div>
                         <button type="button" x-on:click="$dispatch('clonarLinha', { serviceId: '{{ $serviceId }}' })" class="button-actions text-secondary font-weight-bold text-xs me-2">
@@ -22,19 +22,19 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="inicio">Início</label>
-                    <input type="date" class="form-control" wire:model.live="inicio" name="inicio[]" id="inicio" maxlength="30">
+                    <input type="date" class="form-control" wire:model="inicio" name="inicio[]" id="inicio" maxlength="30">
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="termino">Término</label>
-                    <input type="date" class="form-control" wire:model.live="termino" name="termino[]" id="termino" maxlength="30">
+                    <input type="date" class="form-control" wire:model="termino" name="termino[]" id="termino" maxlength="30">
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="qtdDias">Qtd. Dias</label>
-                    <input type="number" class="form-control" wire:model.live.live="qtdDias" name="qtdDias[]" id="qtdDias" required>
+                    <input type="number" class="form-control" wire:model.live="qtdDias" name="qtdDias[]" id="qtdDias" required>
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="qtdServices">Qtd. Veículos</label>
-                    <input type="number" class="form-control" wire:model.live.live="qtdServices" name="qtdServices[]" id="qtdServices" required>
+                    <input type="number" class="form-control" wire:model.live="qtdServices" name="qtdServices[]" id="qtdServices" required>
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="bilingue[]">Bilingue</label>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="qtdHoras">Quantidade de Horas</label>
-                    <input type="number" min="0" class="form-control" wire:model.live.live="qtdHoras" name="qtdHoras[]" id="qtdHoras" required>
+                    <input type="number" min="0" class="form-control" wire:model.live="qtdHoras" name="qtdHoras[]" id="qtdHoras" required>
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="typesVehicle[]">Tipo veículo</label>
@@ -70,19 +70,19 @@
                     </div>
                 @elseif ($servicoCadastrado == 2)
                     <div class="col-md-6 mb-3">
-                        <input type="text" class="form-control" placeholder="Nome" wire:model.live="nomeServico">
+                        <input type="text" class="form-control" placeholder="Nome" wire:model="nomeServico">
                     </div>
                     <div class="col-md-6 mb-3">
-                        <input type="text" class="form-control" placeholder="Nome em Inglês" wire:model.live="nomeServicoIngles">
+                        <input type="text" class="form-control" placeholder="Nome em Inglês" wire:model="nomeServicoIngles">
                     </div>
                 @endif
                 <div class="col-md-9 mb-3">
                     <label for="modelVehicle">Modelo de veículo</label>
-                    <input type="text" class="form-control" wire:model.live.live="modelVehicle" name="modelVehicle[]" id="modelVehicle" required>
+                    <input type="text" class="form-control" wire:model="modelVehicle" name="modelVehicle[]" id="modelVehicle" required>
                 </div>
                 <div class="col-md-3">
                     <div class="form-check align-items-center">
-                        <input class="form-check-input" type="checkbox" wire:model.live="similar" value="" id="similar">
+                        <input class="form-check-input" type="checkbox" wire:model="similar" value="" id="similar">
                         <label class="custom-control-label" for="similar">Similar</label>
                     </div>
                 </div>
@@ -96,15 +96,15 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="horaExtra">Hora extra</label>
-                    <input type="number" min="0" class="form-control" wire:model.live="horaExtra" name="horaExtra[]" id="horaExtra" required>
+                    <input type="number" min="0" class="form-control" wire:model="horaExtra" name="horaExtra[]" id="horaExtra" required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="kmBase">KM franquia</label>
-                    <input type="number" min="0" class="form-control" wire:model.live="kmBase" name="kmBase[]" id="kmBase" required>
+                    <input type="number" min="0" class="form-control" wire:model="kmBase" name="kmBase[]" id="kmBase" required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="kmExtra">KM extra</label>
-                    <input type="number" min="0" class="form-control" wire:model.live="kmExtra" name="kmExtra[]" id="kmExtra" required>
+                    <input type="number" min="0" class="form-control" wire:model="kmExtra" name="kmExtra[]" id="kmExtra" required>
                 </div>
         
                 <div class="col-md-2 mb-3">
@@ -113,11 +113,11 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="extraParceiro">Hora Extra parceiro</label>
-                    <input type="number" min="0" class="form-control" wire:model.live="extraParceiro" name="extraParceiro[]" id="extraParceiro" required>
+                    <input type="number" min="0" class="form-control" wire:model="extraParceiro" name="extraParceiro[]" id="extraParceiro" required>
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="kmExtraParceiro">Km Extra Parceiro</label>
-                    <input type="number" min="0" class="form-control" wire:model.live="kmExtraParceiro" name="kmExtraParceiro[]" id="kmExtraParceiro" required>
+                    <input type="number" min="0" class="form-control" wire:model="kmExtraParceiro" name="kmExtraParceiro[]" id="kmExtraParceiro" required>
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="custoEmployee">Custo Motorista</label>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="horaExtraEmployee">Custo Extra Motorista</label>
-                    <input type="number" min="0" class="form-control"  wire:model.live="horaExtraEmployee" name="horaExtraEmployee[]" id="horaExtraEmployee" required>
+                    <input type="number" min="0" class="form-control"  wire:model="horaExtraEmployee" name="horaExtraEmployee[]" id="horaExtraEmployee" required>
                 </div>
                 <div class="col-12 text-end mt-3">
                     <h3>Total: <span id="total-linha">R$ {{ number_format($total, 2, ',', '.') }}</span></h3>
@@ -141,7 +141,7 @@
             <div class="col-md-6 mb-4 text-end">
                 <div class="d-flex align-items-center justify-content-end">
                     <div class="form-check align-items-center me-2">
-                        <input class="form-check-input" type="checkbox" wire:model.live.live="parceiro" value="" id="parceiro">
+                        <input class="form-check-input" type="checkbox" wire:model.live="parceiro" value="" id="parceiro">
                         <label class="custom-control-label" for="parceiro">Parceiro</label>
                     </div>
                     <button type="button" x-on:click="$dispatch('clonarLinha', { serviceId: '{{ $serviceId }}' })" class="button-actions text-secondary font-weight-bold text-xs me-2">
@@ -162,14 +162,14 @@
             </div>
             <div class="col-md-3 mb-3">
                 <label for="qtdDias">Qtd. Dias</label>
-                <input type="nummber" class="form-control" wire:model.live.live="qtdDias" name="qtdDias[]" id="qtdDias" required>
+                <input type="nummber" class="form-control" wire:model.live="qtdDias" name="qtdDias[]" id="qtdDias" required>
             </div>
             <div class="col-md-3 mb-3">
                 <label for="qtdServices">Qtd. Seguranças</label>
-                <input type="nummber" class="form-control" wire:model.live.live="qtdServices" name="qtdServices[]" id="qtdServices" required>
+                <input type="nummber" class="form-control" wire:model.live="qtdServices" name="qtdServices[]" id="qtdServices" required>
             </div>
             <div class="col-md-2 mb-3">
-                <label for="categoryService[]"">Tipo de Serviço</label>
+                <label for="categoryService[]">Tipo de Serviço</label>
                 <livewire:select-component type="categoryService" placeholder="Selecione o tipo" name="categoryService[]" :selected="$categoryService" />
             </div>
             <div class="col-md-2 mb-3">
@@ -178,7 +178,7 @@
             </div>
             <div class="col-md-2 mb-3">
                 <label for="qtdHoras">Quantidade de Horas</label>
-                <input type="number" min="0" class="form-control" wire:model.live.live="qtdHoras" name="qtdHoras[]" id="qtdHoras" required>
+                <input type="number" min="0" class="form-control" wire:model.live="qtdHoras" name="qtdHoras[]" id="qtdHoras" required>
             </div>
             <div class="col-md-2 mb-3">
                 <label for="bilingue[]">Bilingue</label>

@@ -256,19 +256,30 @@ class ServiceOsItem extends Component
     public function handleSelectUpdated($t, $value)
     {
         $this->{$t} = $value;
-        $this->updated($t);
     }
 
+    //Preenche os campos de serviço apenas quando necessário
     public function updated($property)
     {
-        $this->serviceTemp = $this->buscarServicoCadastrado(); // Busca o serviço
-        // Lógica condicional para exibição dos campos (Nome/Nome Inglês ou Select):
+        if (in_array($property, ['categoryService', 'vehiclesCategory', 'typesVehicle', 'armored', 'bilingue', 'qtdHoras', 'driver'])) {
+            $this->updateServiceData();
+        } elseif (in_array($property, ['parceiro', 'qtdDias', 'qtdServices', 'precoBase', 'custoParceiro', 'custoEmployee'])) {
+            $this->updateCostsAndTotal();
+        }
+    }
+
+    public function updateServiceData()
+    {
+        $this->serviceTemp = $this->buscarServicoCadastrado();
         if ($this->serviceTemp && $this->serviceTemp->price > 0) {
-            $this->preencherCamposDoServico(); // Preenche os campos com os dados do serviço
+            $this->preencherCamposDoServico();
         } else {
             $this->servicoCadastrado = 2;
         }
+    }
 
+    public function updateCostsAndTotal()
+    {
         $precoBase = (float) str_replace(',', '.', str_replace('.', '', $this->precoBase));
         $qtdDias = (float) str_replace(',', '.', str_replace('.', '', $this->qtdDias));
         $qtdServices = (float) str_replace(',', '.', str_replace('.', '', $this->qtdServices));
@@ -318,6 +329,9 @@ class ServiceOsItem extends Component
     private function preencherCamposDoServico()
     {
         $this->servicoCadastrado = 1;
+        
+        $clonedService = clone $this->serviceTemp; 
+        
         $this->precoBase = $this->serviceTemp->price;
         $this->horaExtra = $this->serviceTemp->extra_price;
         $this->kmBase = $this->serviceTemp->km;
