@@ -125,8 +125,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/listar', [OrcamentosController::class, 'listar'])->name('listar');
 		Route::get('/cadastro', [OrcamentosController::class, 'cadastro'])->name('cadastro');
 		Route::post('/salvar', [OrcamentosController::class, 'salvar'])->name('salvar');
-
 		Route::get('/editar', [OrcamentosController::class, 'editar'])->name('editar');
+		Route::get('/gerarOrcamento/{osId}', [OrcamentosController::class, 'exportPdf'])->name('gerarOrcamento');
 	});
 
 	Route::prefix('os')->name('os.')->group(function () {
