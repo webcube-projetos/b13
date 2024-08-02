@@ -3,6 +3,7 @@
 namespace App\Livewire\OS;
 
 use App\Traits\MontarForm;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Cadastro extends Component
@@ -18,13 +19,24 @@ class Cadastro extends Component
     public $custosParceiro = [];
     public $custoTotalEmployee = [];
     public $custoTotalParceiro = [];
-    public $id;
+
     public $total = null;
+    public $servicesOS = [];
+    public $totals = [];
+    public $totalGlobal = 0.00;
+    public $id;
 
     use MontarForm;
 
     public function render()
     {
         return view('livewire.o-s.cadastro');
+    }
+
+    public function addLinhaServico()
+    {
+        $id = uniqid();
+        $this->servicesOS[] = ['type' => 'locacao', 'id' => $id];
+        $this->totals[$id] = 0;
     }
 }

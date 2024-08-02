@@ -104,6 +104,11 @@ class OrcamentoCadastro extends Component
         $this->dispatch('osUpdated', $os->id);
     }
 
+    public function sendOrcamento()
+    {
+        dd($this->id);
+    }
+
     public function render()
     {
         return view('livewire.orcamento-cadastro');
