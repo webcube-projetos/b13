@@ -27,6 +27,7 @@
                                 </div>
                                 <div class="col-lg-6 text-end mb-4">
                                     <a href="#" class="btn btn-dark">Converter para O.S</a>
+                                    <a wire:click="sendOrcamento" class="btn btn-dark">Enviar Orçamento</a>
                                 </div>
                                 @foreach ($dados['sessions'] as $key => $group)
                                     @include('register.formRegister')

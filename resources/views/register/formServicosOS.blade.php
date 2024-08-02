@@ -9,14 +9,24 @@
                     + Adicionar Serviço
                 </button>
                 <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
-                    <li><a href="javascript:;" id="addLinhaServicoLocacaoOs">+ Locação</a></li>
-                    <li><a href="javascript:;" id="addLinhaServicoSegurancaOs">+ Segurança</a></li>
+                    <li><a wire:click="addLinhaServico">+ Locação</a></li>
+                    <li><a wire:click="addLinhaServico">+ Segurança</a></li>
                 </ul>
             </div>
         </div>
 
         <div id="box-linhas-servico-os">
-            
+            <div>
+                @foreach ($servicesOS as $service)
+                    <livewire:o-s.services 
+                        wire:key="{{ $service['id'] }}" 
+                        :serviceId="$service['id']" 
+                        :type="$service['type']" 
+                        :data="$service['data'] ?? null" 
+                    />
+                @endforeach
+            </div>
+        
         </div>
     </div>
 </div>
