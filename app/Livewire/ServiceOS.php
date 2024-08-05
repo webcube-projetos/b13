@@ -50,7 +50,7 @@ class ServiceOS extends Component
                 'inicio' => $serviceOS->start,
                 'termino' => $serviceOS->finish,
                 'qtdDias' => $serviceOS->qtd_days,
-                'qtdServices' => $serviceOS->time,
+                'qtdServices' => $serviceOS->qtd_service,
                 'servicesOS' => $serviceOS->id_service,
                 'modelVehicle' => $serviceOS->modelo_veiculo,
                 'vehiclesCategory' => $serviceOS->service->id_category_espec,
@@ -61,19 +61,19 @@ class ServiceOS extends Component
                 'similar' => $serviceOS->similar,
                 'armored' => $serviceOS->service->blindado_armado,
                 'bilingue' => $serviceOS->service->bilingual,
-                'qtdHoras' => null,
+                'qtdHoras' => $serviceOS->time,
                 'precoBase' => $serviceOS->price,
                 'horaBase' => $serviceOS->time,
                 'horaExtra' => $serviceOS->extra_price,
                 'kmBase' => $serviceOS->km,
                 'kmExtra' => $serviceOS->km_extra,
                 'custoParceiro' => $serviceOS->partner_cost,
-                'extraParceiro' => $serviceOS->extraParceiro,
-                'kmExtraParceiro' => $serviceOS->partner_extra_cost,
+                'extraParceiro' => $serviceOS->partner_extra_time,
+                'kmExtraParceiro' => $serviceOS->partner_extra_km,
                 'custoEmployee' => $serviceOS->employee_cost,
                 'horaExtraEmployee' => $serviceOS->employee_extra,
                 'parceiro' => null,
-                'total' => $serviceOS->price,
+                'total' => ($serviceOS->price * $serviceOS->qtd_days) * $serviceOS->qtd_service,
             ];
 
             $newService = ['type' => $serviceOS->km > 0 ? 'locacao' : 'seguranca', 'id' => $serviceOS->id];
@@ -81,8 +81,9 @@ class ServiceOS extends Component
             $this->servicesOS[] = $newService;
             $this->totals[$newService['id']] = $this->totals[$serviceOS->id] ?? 0;
 
-            $this->totals[$serviceOS->id] = $serviceOS->price;
+            $this->totals[$serviceOS->id] = $serviceOS->total;
         }
+       
         $this->totalGlobal = array_sum($this->totals);
         $this->dispatch('update-global-total', number_format($this->totalGlobal, 2, ',', '.'));
     }

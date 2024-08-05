@@ -25,8 +25,9 @@
         {{$os->contact->name}}
       </td>
       <td>
-        {{-- formatar para preço brasil --}}
-        R$ {{ number_format($os->services->sum('price'), 2, ',', '.') }}
+        R$ {{ number_format($os->services->sum(function ($service) {
+          return $service->price * $service->qtd_days * $service->qtd_service;
+      }), 2, ',', '.') }}
       </td>
       <td class="text-right">
         <a href="{{ route('orcamentos.editar', ['id' => $os->id]) }}" class="button-actions text-secondary font-weight-bold text-xs me-2">

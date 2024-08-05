@@ -14,7 +14,7 @@
                 </div>
             </div>
         </div>
-
+        
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="cadastro" role="tabpanel" aria-labelledby="cadastro-tab">
                 <div class="card">
@@ -22,10 +22,13 @@
                         <form action="{{ $dados['pageInfo']['form_action'] ? route($dados['pageInfo']['form_action']) : '' }}" method="{{ $dados['pageInfo']['form_action'] ? $dados['pageInfo']['form_method'] : '' }}" role="form text-left" id="{{ $dados['pageInfo']['id'] }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row align-items-end">
-                                <div class="col-lg-6 mb-4">
+                                <div class="col-lg-3 mb-4">
                                     <p class="fw-bold mt-4">Orçamento</p>
                                 </div>
-                                <div class="col-lg-6 text-end mb-4">
+                                <div class="col-lg-9 text-end mb-4">
+                                    @if ($id)
+                                        <a href="{{ route('orcamentos.gerarOrcamento', ['osId' => $id]) }}" class="btn btn-gradient-primary">Gerar PDF</a>
+                                    @endif
                                     <a href="#" class="btn btn-dark">Converter para O.S</a>
                                     <a wire:click="sendOrcamento" class="btn btn-dark">Enviar Orçamento</a>
                                 </div>
@@ -45,7 +48,7 @@
                                     <h2>
                                         <span class="text-sm">Total:</span> 
                                         <span id="totalOrcamento">R$
-                                            @if($total) {{ $total }} @else <span x-text="total"></span> @endif
+                                            @if($total) {{ number_format($total, 2, ',', '.') }} @else <span x-text="total"></span> @endif
                                         </span>
                                     </h2>
                                 </div>
