@@ -28,7 +28,7 @@
             text-align: center;
         }
         h2 {
-            font-size: 42px;
+            font-size: 32px;
             color: #252525;
             font-weight: bold;
         }
@@ -43,10 +43,18 @@
             margin-bottom: 0px;
         }
         /*SPACING*/
+        .mb-0 {
+            margin-bottom: -10px;
+        }
+        .pb-0 {
+            padding-bottom: 0;
+        }
         .my-2 {
             margin: 32px 0;
         }
-
+        .mb-3 {
+            margin-bottom: 32px;
+        }
         /*PAGE*/
         header {
             margin-top: -5px;
@@ -102,14 +110,14 @@
             display: inline-block;
             background-color: #252525;
             color: #fff; 
-            padding: 16px 32px; 
-            font-size: 24px; 
+            padding: 8px 16px; 
+            font-size: 20px; 
             text-transform: uppercase;
             font-weight: bold;
         }
         footer {
             background-color: #252525;
-            padding: 16px 32px; 
+            padding: 0px 16p 4px 16px; 
             margin-top: 32px;
         }
         footer p {
@@ -118,7 +126,7 @@
             font-weight: bold;
         }
     </style>
-    <img src="{{ public_path('assets/img/orcamento-header.jpg') }}" alt="Cabeçalho Orçamento">
+    <img src="{{ public_path('assets/img/orcamento-header.png') }}" alt="Cabeçalho Orçamento">
     <header>
         <div>
             <p><span>Cliente:</span> {{ $os->client->name }} <br> <span>Contato:</span> {{ $os->contact->name }}</p>
@@ -128,22 +136,21 @@
         </div>
     </header>
     <div class="corpo">
-        <h2 class="text-center">Orçamento <span class="orange">{{ $os->id }}</span></h2>
+        <h2 class="text-center">ORÇAMENTO <span class="orange">{{ $os->id }}</span></h2>
         <table class="table">
             <thead>
                 <tr>
                     <th>Início</th>
                     <th>Término</th>
-                    <th class="text-center">Qtd <span>Diárias</span></th>
-                    <th class="text-center">Qtd <span>Veículos</span></th>
+                    <th class="text-center">Qtd <br><span>Diárias</span></th>
+                    <th class="text-center">Qtd <br><span>Veículos</span></th>
                     <th>Veículo</th>
-                    <th>Categoria</th>
                     <th class="text-center">Blindado</th>
-                    <th>Qtd <span>Passageiros</span></th>
-                    <th>Qtd <span>Malas</span></th>
+                    <th>Qtd <br><span>Passageiros</span></th>
+                    <th>Qtd <br><span>Malas</span></th>
                     <th>Serviço</th>
                     <th class="text-center">Franquia</th>
-                    <th class="text-center">Bilíngue</th>
+                    <th class="text-center">Motorista <br><span>Bilíngue</span></th>
                     <th>Valor <br><span>Diária</span></th>
                     <th>Valor <br><span>Hora Extra</span></th>
                     <th>Valor <br><span>Km Extra</span></th>
@@ -157,12 +164,11 @@
                         <td class="nobreak">{{ $service->finish }}</td>
                         <td>{{ $service->qtd_days }}</td>
                         <td>{{ $service->qtd_service }}</td>
-                        <td>{{ $service->modelo_veiculo ? $service->modelo_veiculo : $service['service']->vehicleType->name}}</td>
-                        <td>{{ $service['service']->categoryEspec->name}}</td>
+                        <td class="nobreak">{{ $service->modelo_veiculo ? $service->modelo_veiculo : $service['service']->vehicleType->name}}</td>
                         <td>{{ $service['service']->blindado_armado ? 'Sim' : 'Não'}}</td>
                         <td>-</td>
                         <td>-</td>
-                        <td>{{ $service['service']->categoryService->name . ' ' . $service['service']->time . ' horas'}}</td>{{--Diária--}}
+                        <td class="nobreak">{{ $service['service']->categoryService->name . ' ' . $service['service']->time . ' horas'}}</td>{{--Diária--}}
                         <td>{{ $service['service']->km . 'km'}}</td>
                         <td>{{ $service['service']->bilingual ? 'Sim' : 'Não'}}</td>
                         <td>R${{ number_format($service['service']->price, 2, ',', '.') }}</td>
@@ -176,11 +182,11 @@
         </table>
     </div>
     <div class="obs">
-        <p><span style="font-weight:bold">OBS:</span> Estacionamento e pedágios serão cobrados a parte caso tenha precise, o valor inclui a taxa de R$50,00 do receptivo no aeroporto</p>
+        <p class="mb-3"><span style="font-weight:bold">OBS:</span> Estacionamento e pedágios serão cobrados a parte caso tenha precise, o valor inclui a taxa de R$50,00 do receptivo no aeroporto</p>
     </div>
-    <div class="rodape">
+    <div class="rodape my-2">
         <div id="left">
-            <p style="font-weight:bold">Método de Pagamento: 50% na reserva + 50% no término do serviço</p>
+            <p style="font-weight:bold;" class="mb-0 pb-0">Condições de Pagamento: 50% na reserva + 50% no término do serviço</p>
             <p style="font-weight:bold">Forma de pagamento: Depósito Bancário</p>
         </div>
         <div id="right">
