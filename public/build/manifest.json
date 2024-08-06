@@ -8,17 +8,19 @@
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-l0sNRNKZ.js",
+    "file": "assets/app-DJiMwLO_.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/addLines.js": {
-    "file": "assets/addLines-BpIZOkiY.js",
+    "file": "assets/addLines-CFHC9e3H.js",
+    "name": "addLines",
     "src": "resources/js/addLines.js",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-Cw8AxfhU.js",
+    "file": "assets/app-DI7fycMZ.js",
+    "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
@@ -26,26 +28,29 @@
       "resources/js/listagens.js"
     ],
     "css": [
-      "assets/app-BFr9Ws09.css"
+      "assets/app-BLK3IXhO.css"
     ]
   },
   "resources/js/doublePage.js": {
     "file": "assets/doublePage-DmyMIxvB.js",
+    "name": "doublePage",
     "src": "resources/js/doublePage.js",
     "isEntry": true
   },
   "resources/js/listagens.js": {
     "file": "assets/listagens-Cf_HiCAz.js",
+    "name": "listagens",
     "src": "resources/js/listagens.js",
     "isEntry": true
   },
   "resources/js/selectComponent.js": {
     "file": "assets/selectComponent-l0sNRNKZ.js",
+    "name": "selectComponent",
     "src": "resources/js/selectComponent.js",
     "isEntry": true
   },
   "resources/scss/app.scss": {
-    "file": "assets/app-DP4AuJP_.css",
+    "file": "assets/app-CyO8aqr_.css",
     "src": "resources/scss/app.scss",
     "isEntry": true
   }
