@@ -36,13 +36,13 @@
       [
         'title' => 'Motoristas',
         'route' => 'motoristas.index',
-        'icon' => 'fa fa-id-card-o',
+        'icon' => 'fa fa-user-tie',
         'permission' => 1,
       ],
       [
         'title' => 'Seguranças',
         'route' => 'segurancas.index',
-        'icon' => 'fa fa-shield',
+        'icon' => 'fa fa-user-shield',
         'permission' => 1,
       ],
     ],
@@ -56,13 +56,13 @@
       [
         'title' => 'Serviços Locação',
         'route' => 'servicos.index',
-        'icon' => 'fa fa-plus-square-o',
+        'icon' => 'fa fa-car-side',
         'permission' => 1,
       ],
       [
         'title' => 'Serviços Segurança',
         'route' => 'servicos.seguranca.index',
-        'icon' => 'fa fa-plus-square-o',
+        'icon' => 'fa fa-gun',
         'permission' => 1,
       ],
     ],
