@@ -91,7 +91,7 @@
         
             <div class="row">
                 <div class="col-md-3 mb-3">
-                    <label for="precoBase">Valor franquia</label>
+                    <label for="precoBase">Valor</label>
                     <input type="number" min="0" class="form-control" wire:model.live="precoBase" name="precoBase[]" id="precoBase" required>
                 </div>
                 <div class="col-md-3 mb-3">
@@ -210,7 +210,7 @@
             @endif
 
             <div class="col-md-4 mb-3">
-                <label for="precoBase">Valor franquia</label>
+                <label for="precoBase">Valo</label>
                 <input type="number" min="0" class="form-control" wire:model.live="precoBase" name="precoBase[]" id="precoBase" required>
             </div>
             <div class="col-md-4 mb-3">
