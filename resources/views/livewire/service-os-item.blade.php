@@ -44,19 +44,16 @@
                     <label for="categoryService[]">Tipo de Serviço</label>
                     <livewire:select-component type="categoryService" placeholder="Selecione o tipo" name="categoryService[]" :selected="$categoryService" />
                 </div>
-                <div class="col-md-2 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="qtdHoras">Quantidade de Horas</label>
                     <input type="number" min="0" class="form-control" wire:model.live="qtdHoras" name="qtdHoras[]" id="qtdHoras" required>
                 </div>
-                <div class="col-md-2 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="typesVehicle[]">Tipo veículo</label>
                     <livewire:select-component type="typesVehicle" placeholder="Selecione" name="typesVehicle[]" :selected="$typesVehicle" />
                 </div>
+  
                 <div class="col-md-3 mb-3">
-                    <label for="vehiclesCategory[]">Categoria de veículo</label>
-                    <livewire:select-component type="vehiclesCategory" placeholder="Selecione" name="vehiclesCategory[]" id="vehiclesCategory" :selected="$vehiclesCategory" />
-                </div>
-                <div class="col-md-2 mb-3">
                     <label for="armored[]">Blindado</label>
                     <livewire:select-component type="armored" placeholder="" name="armored[]" :selected="$armored" />
                 </div>
@@ -76,17 +73,22 @@
                         <input type="text" class="form-control" placeholder="Nome em Inglês" wire:model="nomeServicoIngles">
                     </div>
                 @endif
-                <div class="col-md-9 mb-3">
+                <div class="col-md-3 mb-3">
+                    <label for="vehiclesCategory[]">Categoria de veículo</label>
+                    <livewire:select-component type="vehiclesCategory" placeholder="Selecione" name="vehiclesCategory[]" id="vehiclesCategory" :selected="$vehiclesCategory" />
+                </div>
+                <div class="col-md-3 mb-3">
                     <label for="modelVehicle">Modelo de veículo</label>
                     <input type="text" class="form-control" wire:model="modelVehicle" name="modelVehicle[]" id="modelVehicle" required>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-check align-items-center">
-                        <input class="form-check-input" type="checkbox" wire:model="similar" value="" id="similar">
-                        <label class="custom-control-label" for="similar">Similar</label>
-                    </div>
+                <div class="col-md-3 mb-3">
+                    <label for="modelVehicle">Passageiros</label>
+                    <input type="text" class="form-control" wire:model="passageiros" name="passageiros" id="passageiros" required>
                 </div>
-                
+                <div class="col-md-3 mb-3">
+                    <label for="modelVehicle">Malas</label>
+                    <input type="text" class="form-control" wire:model="bags" name="bags" id="bags" required>
+                </div>
             </div>
         
             <div class="row">
@@ -126,6 +128,18 @@
                 <div class="col-md-3 mb-3">
                     <label for="horaExtraEmployee">Custo Extra Motorista</label>
                     <input type="number" min="0" class="form-control"  wire:model="horaExtraEmployee" name="horaExtraEmployee[]" id="horaExtraEmployee" required>
+                </div>
+                <div class="col-3">
+                    <label for="horaExtraEmployee">Tipo desconto</label>
+                    <select name="tipodesconto[]" wire:model="tipodesconto" class="form-control">
+                        <option value="">Selecione</option>
+                        <option value="porcentagem">Porcentagem</option>
+                        <option value="valor">Valor</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <label for="desconto">Desconto</label>
+                    <input type="number" class="form-control" wire:model="desconto" name="desconto[]" id="desconto" required>
                 </div>
                 <div class="col-12 text-end mt-3">
                     <h3>Total: <span id="total-linha">R$ {{ number_format($total, 2, ',', '.') }}</span></h3>
@@ -210,7 +224,7 @@
             @endif
 
             <div class="col-md-4 mb-3">
-                <label for="precoBase">Valo</label>
+                <label for="precoBase">Valor</label>
                 <input type="number" min="0" class="form-control" wire:model.live="precoBase" name="precoBase[]" id="precoBase" required>
             </div>
             <div class="col-md-4 mb-3">
@@ -237,6 +251,18 @@
             <div class="col-md-3 mb-3">
                 <label for="horaExtraEmployee">Hora Extra Segurança</label>
                 <input type="number" min="0" class="form-control" wire:model="horaExtraEmployee" name="horaExtraEmployee[]" id="horaExtraEmployee" required>
+            </div>
+            <div class="col-3">
+                <label for="horaExtraEmployee">Tipo desconto</label>
+                <select name="tipodesconto[]" wire:model="tipodesconto" class="form-control">
+                    <option value="">Selecione</option>
+                    <option value="porcentagem">Porcentagem</option>
+                    <option value="valor">Valor</option>
+                </select>
+            </div>
+            <div class="col-3">
+                <label for="desconto">Desconto</label>
+                <input type="number" class="form-control" wire:model="desconto" name="desconto[]" id="desconto" required>
             </div>
             <div class="col-12 text-end mt-3">
                 <h3>Total: <span id="total-linha">R$ {{ number_format($total, 2, ',', '.') }}</span></h3>

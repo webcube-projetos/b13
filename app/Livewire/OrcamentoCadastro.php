@@ -15,6 +15,7 @@ class OrcamentoCadastro extends Component
     public $selectedPrimary;
     public $contato;
     public $paymentMethod;
+    public $obs;
     public $client;
     public $os = null;
     public $custosEmployees = [];
@@ -41,6 +42,7 @@ class OrcamentoCadastro extends Component
 
             $this->contato = $orcamento->id_contact;
             $this->paymentMethod = $orcamento->id_payment_method;
+            $this->obs = $orcamento->obs;
             $this->client = $orcamento->id_client;
             $this->total = $orcamento->services->sum(function ($service) {
                 return $service->price * $service->qtd_days * $service->qtd_service;
