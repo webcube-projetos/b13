@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\OS;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
@@ -13,8 +14,19 @@ class FormCustos extends Component
     public $totalGeral = 0;
     public $custosEmployees = [];  // Initialize as an empty array
     public $custosParceiro = [];   // Initialize as an empty array
+    public $id;
 
     protected $listeners = ['updateFormCustos'];
+
+    public function mount()
+    {
+        if ($this->id) {
+            $orcamento  = OS::find($this->id);
+
+            $this->custoTotalEmployee = $orcamento->services->sum('employee_cost');
+            $this->custoTotalParceiro = $orcamento->services->sum('partner_cost');
+        }
+    }
 
     public function updateFormCustos($data)
     {
@@ -26,15 +38,15 @@ class FormCustos extends Component
         $this->custoTotalEmployee = array_sum($this->custosEmployees);
         $this->custoTotalParceiro = array_sum($this->custosParceiro);
 
-        $this->calculateTotalGeral(); 
+        $this->calculateTotalGeral();
     }
 
-    public function updatedCustosAdicionais() 
+    public function updatedCustosAdicionais()
     {
-        $this->calculateTotalGeral(); 
+        $this->calculateTotalGeral();
     }
 
-    public function calculateTotalGeral() 
+    public function calculateTotalGeral()
     {
         $employee = (float) str_replace(['.', ','], ['', '.'], $this->custoTotalEmployee);
         $parceiro = (float) str_replace(['.', ','], ['', '.'], $this->custoTotalParceiro);

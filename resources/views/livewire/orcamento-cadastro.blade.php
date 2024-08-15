@@ -81,7 +81,7 @@
                         <div class="row">
                             <p class="fw-bold mt-4">Custos</p>
                         
-                            <livewire:form-custos />
+                            <livewire:form-custos :id="$id"/>
 
                             <div class="d-flex justify-content-end">
                                 <button type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">Atualizar dados</button>

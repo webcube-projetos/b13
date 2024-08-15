@@ -82,8 +82,8 @@ class ServiceOsItem extends Component
             $this->vehiclesCategory = $data['vehiclesCategory'];
             $this->armored = $data['armored'];
             $this->modelVehicle = $data['modelVehicle'];
-            $this->passageiros = $data['passageiros'];
-            $this->bags = $data['bags'];
+            $this->passageiros = $data['passageiros'] ?? null;
+            $this->bags = $data['bags'] ?? null;
             $this->nomeServico = $data['nomeServico'] ?? null;
             $this->nomeServicoIngles = $data['nomeServicoIngles'] ?? null;
             $this->precoBase = $data['precoBase'];
@@ -96,8 +96,8 @@ class ServiceOsItem extends Component
             $this->kmExtraParceiro = $data['kmExtraParceiro'];
             $this->custoEmployee = $data['custoEmployee'];
             $this->horaExtraEmployee = $data['horaExtraEmployee'];
-            $this->tipodesconto = $data['tipodesconto'];
-            $this->desconto = $data['desconto'];
+            $this->tipodesconto = $data['tipodesconto'] ?? null;
+            $this->desconto = $data['desconto'] ?? null;
             $this->total = $data['total'];
         }
     }
