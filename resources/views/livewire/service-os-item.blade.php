@@ -210,11 +210,11 @@
             @endif
 
             <div class="col-md-4 mb-3">
-                <label for="precoBase">Valo</label>
+                <label for="precoBase">Valor</label>
                 <input type="number" min="0" class="form-control" wire:model.live="precoBase" name="precoBase[]" id="precoBase" required>
             </div>
             <div class="col-md-4 mb-3">
-                <label for="horaBase">Hora franquia</label>
+                <label for="horaBase">Hora</label>
                 <input type="number" min="0" class="form-control" wire:model="horaBase" name="horaBase[]" id="horaBase" required>
             </div>
             <div class="col-md-4 mb-3">
