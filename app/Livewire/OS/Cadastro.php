@@ -33,10 +33,17 @@ class Cadastro extends Component
         return view('livewire.o-s.cadastro');
     }
 
-    public function addLinhaServico()
+    public function addLinhaServicoLocacao()
     {
         $id = uniqid();
         $this->servicesOS[] = ['type' => 'locacao', 'id' => $id];
+        $this->totals[$id] = 0;
+    }
+
+    public function addLinhaServicoSeguranca()
+    {
+        $id = uniqid();
+        $this->servicesOS[] = ['type' => 'seguranca', 'id' => $id];
         $this->totals[$id] = 0;
     }
 }

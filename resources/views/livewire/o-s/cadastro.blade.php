@@ -2,7 +2,7 @@
     <div class="container-fluid py-4">
         <div class="row mb-4">
             <div class="col-lg-4">
-                <div class="nav-wrapper position-relative end-0">
+                <div class="nav-wrapper position-relative end-0" wire:ignore>
                     <ul class="nav nav-pills nav-fill p-1" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link mb-0 px-0 py-1 active" id="cadastro-tab" data-bs-toggle="tab" data-bs-target="#cadastro" type="button" role="tab" aria-controls="cadastro" aria-selected="true">Cadastro</a>
