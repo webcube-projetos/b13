@@ -83,48 +83,48 @@ class Services extends Component
 
         if ($data) {
             $this->data = $data;
-               $this->inicio = $data['inicio'] ?? '';
-               $this->termino = $data['termino'] ?? '';
-               $this->qtdDias = $data['qtdDias'] ?? '';
-               $this->qtdServices = $data['qtdServices'] ?? '';
-               $this->bilingue = $data['bilingue'] ?? '';
-               $this->driver = $data['driver'] ?? '';
-               $this->categoryService = $data['categoryService'] ?? '';
-               $this->securityType = $data['securityType'] ?? '';
-               $this->qtdHoras = $data['qtdHoras'] ?? '';
-               $this->typesVehicle = $data['typesVehicle'] ?? '';
-               $this->vehiclesCategory = $data['vehiclesCategory'] ?? '';
-               $this->armored = $data['armored'] ?? '';
-               $this->nomeServico = $data['nomeServico'] ?? '';
-               $this->nomeServicoIngles = $data['nomeServicoIngles'] ?? '';
+            $this->inicio = $data['inicio'] ?? '';
+            $this->termino = $data['termino'] ?? '';
+            $this->qtdDias = $data['qtdDias'] ?? '';
+            $this->qtdServices = $data['qtdServices'] ?? '';
+            $this->bilingue = $data['bilingue'] ?? '';
+            $this->driver = $data['driver'] ?? '';
+            $this->categoryService = $data['categoryService'] ?? '';
+            $this->securityType = $data['securityType'] ?? '';
+            $this->qtdHoras = $data['qtdHoras'] ?? '';
+            $this->typesVehicle = $data['typesVehicle'] ?? '';
+            $this->vehiclesCategory = $data['vehiclesCategory'] ?? '';
+            $this->armored = $data['armored'] ?? '';
+            $this->nomeServico = $data['nomeServico'] ?? '';
+            $this->nomeServicoIngles = $data['nomeServicoIngles'] ?? '';
 
-               $this->day = $data['day'] ?? '';
-               $this->identification = $data['identification'] ?? '';
-               $this->execucacao = $data['execucacao'] ?? '';
-               $this->employeeLanguage = $data['employeeLanguage'] ?? '';
-               $this->employeeSpeciality = $data['employeeSpeciality'] ?? '';
-               $this->employee = $data['employee'] ?? ''; 
-               $this->vehicleModel = $data['vehicleModel'] ?? ''; 
-               $this->empresas = $data['empresas'] ?? '';
-               $this->horarioInicio = $data['horarioInicio'] ?? ''; 
-               $this->horarioTermino = $data['horarioTermino'] ?? ''; 
-               $this->horasExcedidas = $data['horasExcedidas'] ?? ''; 
-               $this->kmInicio = $data['kmInicio'] ?? ''; 
-               $this->kmTermino = $data['kmTermino'] ?? ''; 
-               $this->kmPercorridos = $data['kmPercorridos'] ?? ''; 
-               $this->kmExcedidos = $data['kmExcedidos'] ?? ''; 
-               $this->pedagio = $data['pedagio'] ?? ''; 
-               $this->estacionamento = $data['estacionamento'] ?? ''; 
-               $this->despesas = $data['despesas'] ?? ''; 
+            $this->day = $data['day'] ?? '';
+            $this->identification = $data['identification'] ?? '';
+            $this->execucacao = $data['execucacao'] ?? '';
+            $this->employeeLanguage = $data['employeeLanguage'] ?? '';
+            $this->employeeSpeciality = $data['employeeSpeciality'] ?? '';
+            $this->employee = $data['employee'] ?? ''; 
+            $this->vehicleModel = $data['vehicleModel'] ?? ''; 
+            $this->empresas = $data['empresas'] ?? '';
+            $this->horarioInicio = $data['horarioInicio'] ?? ''; 
+            $this->horarioTermino = $data['horarioTermino'] ?? ''; 
+            $this->horasExcedidas = $data['horasExcedidas'] ?? ''; 
+            $this->kmInicio = $data['kmInicio'] ?? ''; 
+            $this->kmTermino = $data['kmTermino'] ?? ''; 
+            $this->kmPercorridos = $data['kmPercorridos'] ?? ''; 
+            $this->kmExcedidos = $data['kmExcedidos'] ?? ''; 
+            $this->pedagio = $data['pedagio'] ?? ''; 
+            $this->estacionamento = $data['estacionamento'] ?? ''; 
+            $this->despesas = $data['despesas'] ?? ''; 
 
-               $this->precoBase = $data['precoBase'] ?? '';
-               $this->kmBase = $data['kmBase'] ?? '';
-               $this->kmExtra = $data['kmExtra'] ?? '';
-               $this->custoParceiro = $data['custoParceiro'] ?? '';
-               $this->extraParceiro = $data['extraParceiro'] ?? '';
-               $this->kmExtraParceiro = $data['kmExtraParceiro'] ?? '';
-               $this->custoEmployee = $data['custoEmployee'] ?? '';
-               $this->horaExtraEmployee = $data['horaExtraEmployee'] ?? '';
+            $this->precoBase = $data['precoBase'] ?? '';
+            $this->kmBase = $data['kmBase'] ?? '';
+            $this->kmExtra = $data['kmExtra'] ?? '';
+            $this->custoParceiro = $data['custoParceiro'] ?? '';
+            $this->extraParceiro = $data['extraParceiro'] ?? '';
+            $this->kmExtraParceiro = $data['kmExtraParceiro'] ?? '';
+            $this->custoEmployee = $data['custoEmployee'] ?? '';
+            $this->horaExtraEmployee = $data['horaExtraEmployee'] ?? '';
         }
 
         $this->updateVehiclesOptions(); // Inicializar as opções de veículos
@@ -134,6 +134,7 @@ class Services extends Component
     public function handleSelectUpdated($type, $value)
     {
         $this->{$type} = $value;
+        dd($type);
         $this->updateServiceData(); // Chama a função para atualizar os dados do serviço
     }
 
