@@ -9,8 +9,8 @@
                     + Adicionar Serviço
                 </button>
                 <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
-                    <li><a wire:click="addLinhaServico">+ Locação</a></li>
-                    <li><a wire:click="addLinhaServico">+ Segurança</a></li>
+                    <li><a wire:click="addLinhaServicoLocacao">+ Locação</a></li>
+                    <li><a wire:click="addLinhaServicoSeguranca">+ Segurança</a></li>
                 </ul>
             </div>
         </div>

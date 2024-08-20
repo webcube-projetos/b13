@@ -274,6 +274,7 @@ class ServiceOsItem extends Component
         if ($this->serviceTemp && $this->serviceTemp->price > 0) {
             $this->preencherCamposDoServico();
         } else {
+            $this->zerarCamposDoServico();
             $this->servicoCadastrado = 2;
         }
     }
