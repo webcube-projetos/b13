@@ -69,6 +69,15 @@ class OrdemDeServicoController extends Controller
         return view('os', compact('dados', 'prefix', 'id'));
     }
 
+    public function test()
+    {
+        $prefix = $this->prefix;
+        $dados = $this->montarForm('os')->toArray();
+        $id = null;
+
+        return view('os', compact('dados', 'prefix', 'id'));
+    }
+
     public function editar()
     {
         $id = request()->route('id');
