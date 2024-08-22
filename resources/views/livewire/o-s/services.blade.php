@@ -164,6 +164,94 @@
                     
                 </div>
             </div>
+            <hr>
+            <div class="row linha-add position-relative">
+                <div class="col-md-1 mb-3">
+                    <!-- Esse vai ser o campo DIA da O.S. Exemplo: Dia 1, Dia 2, etc. -->
+                    <label for="day">Dia</label>
+                    <input type="number" class="form-control" name="day[]" id="day" required>
+                </div>
+                <div class="col-md-1 mb-3">
+                    <!-- Esse vai ser o campo ID da O.S. Exemplo: V1, V2, S1, S2, etc. -->
+                    <label for="identification">ID</label>
+                    <input type="text" class="form-control" name="identification[]" id="identification" maxlength="3" required>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="execucacao">Data de execução</label>
+                    <input type="date" class="form-control" name="execucao[]" id="execucao" maxlength="30" required>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="servico">Língua</label>
+                    <livewire:select-component type="languages" placeholder="Selecione a língua" name="employeeLanguage[]" id="employeeLanguage" selected='' />
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="servico">Especialidades</label>
+                    <livewire:select-component type="especialization_general" placeholder="Selecione a especialidade" name="employeeSpeciality[]" id="employeeSpeciality" selected='' />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="motoristaVeiculo">Motorista</label>
+                    <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="modeloVeiculo">Modelo de veículo</label>
+                    <livewire:select-component 
+                        type="vehicles_plate" 
+                        placeholder="Selecione o modelo do veículo" 
+                        name="vehicleModel[]" 
+                        id="vehicleModel" 
+                        :selected="$vehicleModel" 
+                        :filter-by-type="$typesVehicle"  
+                    /> 
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="company">Empresa</label>
+                    <livewire:select-component type="empresas" placeholder="Selecione a empresa" name="empresas[]" id="empresas" selected='' />
+                </div>                
+                
+                <div class="col-md-2 mb-3">
+                    <label for="horarioInicio">Horário Início</label>
+                    <input type="number" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="horarioTermino">Horário Término</label>
+                    <input type="number" class="form-control" name="horarioTermino[]" id="horarioTermino" required>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="horasExcedidas">Horas excedidas</label>
+                    <input type="number" class="form-control" name="horasExcedidas[]" id="horasExcedidas" readonly>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="kmInicio">Km Inicial</label>
+                    <input type="number" class="form-control" name="kmInicio[]" id="kmInicio" required>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="kmTermino">KM Final</label>
+                    <input type="number" class="form-control" name="kmTermino[]" id="kmTermino" required>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="kmPercorridos">KM Percorridos</label>
+                    <input type="number" class="form-control" name="kmPercorridos[]" id="kmPercorridos" readonly>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="kmExcedidos">KM Excedidos</label>
+                    <input type="number" class="form-control" name="kmExcedidos[]" id="kmExcedidos" readonly>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="pedagio">Pedágio</label>
+                    <input type="number" class="form-control" name="pedagio[]" id="pedagio" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="estacionamento">Estacionamento</label>
+                    <input type="number" class="form-control" name="estacionamento[]" id="estacionamento" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="despesas">Outras despesas</label>
+                    <input type="number" class="form-control" name="despesas[]" id="despesas" required>
+                </div>
+                <div class="col-12 box-rota" id="box-linhas-rota">
+                    
+                </div>
+            </div>            
         </div>
         <div class="tab-pane fade" id="precos" role="tabpanel" aria-labelledby="precos-tab">
             <div class="row linha-add position-relative">
