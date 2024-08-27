@@ -134,7 +134,6 @@ class Services extends Component
     public function handleSelectUpdated($type, $value)
     {
         $this->{$type} = $value;
-        dd($type);
         $this->updateServiceData(); // Chama a função para atualizar os dados do serviço
     }
 
