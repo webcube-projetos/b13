@@ -3,6 +3,15 @@
         <div class="col-lg-6 text-lg-start text-center">
             <h6 class="fw-bold">Dados de serviço</h6>
         </div>
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="servicos-tab" data-bs-toggle="tab" data-bs-target="#servicos" type="button" role="tab" aria-controls="servicos" aria-selected="true">Serviço</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="rotas-tab" data-bs-toggle="tab" data-bs-target="#rotas" type="button" role="tab" aria-controls="rotas" aria-selected="false">Execução</button>
+            </li>
+        </ul>
         <div class="col-lg-6 text-lg-end text-center">
             <div class="btn-group dropup mt-7">
                 <button type="button" class="btn bg-gradient-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -14,6 +23,7 @@
                 </ul>
             </div>
         </div>
+        
 
         <div id="box-linhas-servico-os">
             <div>
