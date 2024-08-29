@@ -5,7 +5,7 @@
         }
     </style>
     @if($type == 'locacao')
-        <div class="row linha-add position-relative align-items-center"> 
+        <div class="row linha-add position-relative align-items-center mt-4"> 
             <div class="accordion" id="accordionPanelsStayOpenExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingOne">
