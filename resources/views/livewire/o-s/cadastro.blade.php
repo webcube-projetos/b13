@@ -61,16 +61,27 @@
                                                             </ul>
                                                         </div>
                                                     </div>
+
+                                                    <div id="box-linhas-servico-os">
+                                                        <div>
+                                                            @foreach ($servicesOS as $service)
+                                                                <livewire:o-s.services 
+                                                                    wire:key="{{ $service['id'] }}" 
+                                                                    :serviceId="$service['id']" 
+                                                                    :type="$service['type']" 
+                                                                    :data="$service['data'] ?? null" 
+                                                                />
+                                                            @endforeach
+                                                        </div>
+                                                    
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="tab-pane fade" id="rotas" role="tabpanel" aria-labelledby="rotas-tab">
                                                 <div class="row linha-add position-relative">
                                                     <div class="col-12">
                                                         <div class="row align-items-center">
-                                                            <div class="col-lg-9">
-                                                                <h4 class="h4 mb-0">Diária 5 Horas Mini Van Executivo Blindado Bilingue</h4>
-                                                            </div>
-                                                            <div class="col-lg-3 text-end">
+                                                            <div class="col-12 text-end">
                                                                 <a href="#" class="btn bg-gradient-dark btn-md mt-4 mb-4">Adicionar rota</a>
                                                             </div>
                                                         </div>
@@ -84,6 +95,7 @@
                                                                         <th scope="col">Dia</th>
                                                                         <th scope="col">ID</th>
                                                                         <th scope="col">Data</th>
+                                                                        <th scope="col">Serviço</th>
                                                                         <th scope="col">Veículo</th>
                                                                         <th scope="col">Motorista</th>
                                                                         <th scope="col">Início</th>
@@ -108,6 +120,386 @@
                                                                         </td>
                                                                         <td>
                                                                             <input type="date" class="form-control" name="execucao[]" id="execucao" maxlength="30" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select name="" id="" class="form-control">
+                                                                                <option value="" selected disabled>Serviço</option>
+                                                                                <option value="">Diária 12H SUV</option>
+                                                                                <option value="">Transfer IN</option>
+                                                                                <option value="">Transfer OUT</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <livewire:select-component 
+                                                                                type="vehicles_plate" 
+                                                                                placeholder="Selecione o modelo do veículo" 
+                                                                                name="vehicleModel[]" 
+                                                                                id="vehicleModel" 
+                                                                                :selected="'test'" 
+                                                                                :filter-by-type="'test'"
+                                                                            /> 
+                                                                        </td>
+                                                                        <td>
+                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horarioTermino[]" id="horarioTermino" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horasExcedidas[]" id="horasExcedidas" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmInicio[]" id="kmInicio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmTermino[]" id="kmTermino" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmPercorridos[]" id="kmPercorridos" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmExcedidos[]" id="kmExcedidos" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="pedagio[]" id="pedagio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="estacionamento[]" id="estacionamento" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="despesas[]" id="despesas" required>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="day[]" id="day" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control" name="identification[]" id="identification" maxlength="3" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="date" class="form-control" name="execucao[]" id="execucao" maxlength="30" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select name="" id="" class="form-control">
+                                                                                <option value="" selected disabled>Serviço</option>
+                                                                                <option value="">Diária 12H SUV</option>
+                                                                                <option value="">Transfer IN</option>
+                                                                                <option value="">Transfer OUT</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <livewire:select-component 
+                                                                                type="vehicles_plate" 
+                                                                                placeholder="Selecione o modelo do veículo" 
+                                                                                name="vehicleModel[]" 
+                                                                                id="vehicleModel" 
+                                                                                :selected="'test'" 
+                                                                                :filter-by-type="'test'"
+                                                                            /> 
+                                                                        </td>
+                                                                        <td>
+                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horarioTermino[]" id="horarioTermino" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horasExcedidas[]" id="horasExcedidas" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmInicio[]" id="kmInicio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmTermino[]" id="kmTermino" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmPercorridos[]" id="kmPercorridos" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmExcedidos[]" id="kmExcedidos" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="pedagio[]" id="pedagio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="estacionamento[]" id="estacionamento" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="despesas[]" id="despesas" required>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="day[]" id="day" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control" name="identification[]" id="identification" maxlength="3" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="date" class="form-control" name="execucao[]" id="execucao" maxlength="30" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select name="" id="" class="form-control">
+                                                                                <option value="" selected disabled>Serviço</option>
+                                                                                <option value="">Diária 12H SUV</option>
+                                                                                <option value="">Transfer IN</option>
+                                                                                <option value="">Transfer OUT</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <livewire:select-component 
+                                                                                type="vehicles_plate" 
+                                                                                placeholder="Selecione o modelo do veículo" 
+                                                                                name="vehicleModel[]" 
+                                                                                id="vehicleModel" 
+                                                                                :selected="'test'" 
+                                                                                :filter-by-type="'test'"
+                                                                            /> 
+                                                                        </td>
+                                                                        <td>
+                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horarioTermino[]" id="horarioTermino" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horasExcedidas[]" id="horasExcedidas" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmInicio[]" id="kmInicio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmTermino[]" id="kmTermino" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmPercorridos[]" id="kmPercorridos" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmExcedidos[]" id="kmExcedidos" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="pedagio[]" id="pedagio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="estacionamento[]" id="estacionamento" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="despesas[]" id="despesas" required>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="day[]" id="day" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control" name="identification[]" id="identification" maxlength="3" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="date" class="form-control" name="execucao[]" id="execucao" maxlength="30" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select name="" id="" class="form-control">
+                                                                                <option value="" selected disabled>Serviço</option>
+                                                                                <option value="">Diária 12H SUV</option>
+                                                                                <option value="">Transfer IN</option>
+                                                                                <option value="">Transfer OUT</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <livewire:select-component 
+                                                                                type="vehicles_plate" 
+                                                                                placeholder="Selecione o modelo do veículo" 
+                                                                                name="vehicleModel[]" 
+                                                                                id="vehicleModel" 
+                                                                                :selected="'test'" 
+                                                                                :filter-by-type="'test'"
+                                                                            /> 
+                                                                        </td>
+                                                                        <td>
+                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horarioTermino[]" id="horarioTermino" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horasExcedidas[]" id="horasExcedidas" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmInicio[]" id="kmInicio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmTermino[]" id="kmTermino" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmPercorridos[]" id="kmPercorridos" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmExcedidos[]" id="kmExcedidos" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="pedagio[]" id="pedagio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="estacionamento[]" id="estacionamento" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="despesas[]" id="despesas" required>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="day[]" id="day" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control" name="identification[]" id="identification" maxlength="3" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="date" class="form-control" name="execucao[]" id="execucao" maxlength="30" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select name="" id="" class="form-control">
+                                                                                <option value="" selected disabled>Serviço</option>
+                                                                                <option value="">Diária 12H SUV</option>
+                                                                                <option value="">Transfer IN</option>
+                                                                                <option value="">Transfer OUT</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <livewire:select-component 
+                                                                                type="vehicles_plate" 
+                                                                                placeholder="Selecione o modelo do veículo" 
+                                                                                name="vehicleModel[]" 
+                                                                                id="vehicleModel" 
+                                                                                :selected="'test'" 
+                                                                                :filter-by-type="'test'"
+                                                                            /> 
+                                                                        </td>
+                                                                        <td>
+                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horarioTermino[]" id="horarioTermino" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horasExcedidas[]" id="horasExcedidas" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmInicio[]" id="kmInicio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmTermino[]" id="kmTermino" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmPercorridos[]" id="kmPercorridos" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmExcedidos[]" id="kmExcedidos" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="pedagio[]" id="pedagio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="estacionamento[]" id="estacionamento" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="despesas[]" id="despesas" required>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="day[]" id="day" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control" name="identification[]" id="identification" maxlength="3" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="date" class="form-control" name="execucao[]" id="execucao" maxlength="30" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select name="" id="" class="form-control">
+                                                                                <option value="" selected disabled>Serviço</option>
+                                                                                <option value="">Diária 12H SUV</option>
+                                                                                <option value="">Transfer IN</option>
+                                                                                <option value="">Transfer OUT</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <livewire:select-component 
+                                                                                type="vehicles_plate" 
+                                                                                placeholder="Selecione o modelo do veículo" 
+                                                                                name="vehicleModel[]" 
+                                                                                id="vehicleModel" 
+                                                                                :selected="'test'" 
+                                                                                :filter-by-type="'test'"
+                                                                            /> 
+                                                                        </td>
+                                                                        <td>
+                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horarioTermino[]" id="horarioTermino" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="time" class="form-control" name="horasExcedidas[]" id="horasExcedidas" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmInicio[]" id="kmInicio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmTermino[]" id="kmTermino" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmPercorridos[]" id="kmPercorridos" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="kmExcedidos[]" id="kmExcedidos" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="pedagio[]" id="pedagio" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="estacionamento[]" id="estacionamento" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="despesas[]" id="despesas" required>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="number" class="form-control" name="day[]" id="day" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control" name="identification[]" id="identification" maxlength="3" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="date" class="form-control" name="execucao[]" id="execucao" maxlength="30" required>
+                                                                        </td>
+                                                                        <td>
+                                                                            <select name="" id="" class="form-control">
+                                                                                <option value="" selected disabled>Serviço</option>
+                                                                                <option value="">Diária 12H SUV</option>
+                                                                                <option value="">Transfer IN</option>
+                                                                                <option value="">Transfer OUT</option>
+                                                                            </select>
                                                                         </td>
                                                                         <td>
                                                                             <livewire:select-component 
@@ -159,20 +551,6 @@
                                                     </div>
                                                 </div>  
                                             </div>
-                                        </div>                                       
-                                
-                                        <div id="box-linhas-servico-os">
-                                            <div>
-                                                @foreach ($servicesOS as $service)
-                                                    <livewire:o-s.services 
-                                                        wire:key="{{ $service['id'] }}" 
-                                                        :serviceId="$service['id']" 
-                                                        :type="$service['type']" 
-                                                        :data="$service['data'] ?? null" 
-                                                    />
-                                                @endforeach
-                                            </div>
-                                        
                                         </div>
                                     </div>
                                 </div>
