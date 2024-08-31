@@ -155,6 +155,10 @@
                                     <input type="date" class="form-control" name="termino[]" id="termino" maxlength="30" required>
                                 </div>
                                 <div class="col-md-3 mb-3">
+                                    <label for="company">Empresa</label>
+                                    <livewire:select-component type="empresas" placeholder="Selecione a empresa" name="empresas[]" id="empresas" selected='' />
+                                </div>
+                                <div class="col-md-3 mb-3">
                                     <label for="modeloVeiculo">Modelo de veículo</label>
                                     <livewire:select-component 
                                         type="vehicles_plate" 
@@ -164,10 +168,6 @@
                                         :selected="$vehicleModel" 
                                         :filter-by-type="$typesVehicle"  
                                     /> 
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="company">Empresa</label>
-                                    <livewire:select-component type="empresas" placeholder="Selecione a empresa" name="empresas[]" id="empresas" selected='' />
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label for="servico">Língua</label>
