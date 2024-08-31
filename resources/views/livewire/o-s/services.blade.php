@@ -16,11 +16,11 @@
                     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                         <div class="accordion-body">
                             <div class="row">                    
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-2 mb-3">
                                     <label for="inicio">Início</label>
                                     <input type="date" class="form-control" name="inicio[]" id="inicio" maxlength="30" required>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-2 mb-3">
                                     <label for="termino">Término</label>
                                     <input type="date" class="form-control" name="termino[]" id="termino" maxlength="30" required>
                                 </div>
@@ -29,6 +29,10 @@
                                     <input type="number" class="form-control" name="qtdDias[]" id="qtdDias" required>
                                 </div>
                                 <div class="col-md-3 mb-3">
+                                    <label for="qtdDias">Qtd. Veículos</label>
+                                    <input type="number" class="form-control" name="qtdDias[]" id="qtdDias" required>
+                                </div>
+                                <div class="col-md-2 mb-3">
                                     <label for="bilingue">Bilíngue</label>
                                     <livewire:select-component type="bilingue" placeholder="" name="bilingue[]" :selected="$bilingue" />
                                 </div>
@@ -126,7 +130,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingThree">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                            Veículos e Motoristas
+                            Veículos & Motoristas
                         </button>
                     </h2>
                     <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree"> 
@@ -135,15 +139,22 @@
                                 <div class="col-12">
                                     <div class="row align-items-center">
                                         <div class="col-md-6">
-                                            <h4 class="h4">Veículos</h4>
                                         </div>
                                         <div class="col-md-6 text-end">
-                                            <a href="#" class="btn bg-gradient-dark btn-md mt-4 mb-4">Adicionar veículo</a>
+                                            <a href="#" class="btn bg-gradient-dark btn-md mt-4 mb-4">Adicionar linha</a>
                                         </div>
                                     </div>
                                 </div>
-                    
-                                <div class="col-md-5 mb-3">
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="inicio">Início</label>
+                                    <input type="date" class="form-control" name="inicio[]" id="inicio" maxlength="30" required>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="termino">Término</label>
+                                    <input type="date" class="form-control" name="termino[]" id="termino" maxlength="30" required>
+                                </div>
+                                <div class="col-md-3 mb-3">
                                     <label for="modeloVeiculo">Modelo de veículo</label>
                                     <livewire:select-component 
                                         type="vehicles_plate" 
@@ -154,34 +165,10 @@
                                         :filter-by-type="$typesVehicle"  
                                     /> 
                                 </div>
-                                <div class="col-md-5 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="company">Empresa</label>
                                     <livewire:select-component type="empresas" placeholder="Selecione a empresa" name="empresas[]" id="empresas" selected='' />
                                 </div>
-                                <div class="col-md-1">
-                                    <a href="#">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </div>
-                                <div class="col-md-1">
-                                    <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        <i class="fa fa-circle-info"></i>
-                                    </a>
-                                </div>
-
-                                <hr class="my-4">
-
-                                <div class="col-12">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-6">
-                                            <h4 class="h4">Motoristas</h4>
-                                        </div>
-                                        <div class="col-md-6 text-end">
-                                            <a href="#" class="btn bg-gradient-dark btn-md mt-4 mb-4">Adicionar motorista</a>
-                                        </div>
-                                    </div>
-                                </div>
-                    
                                 <div class="col-md-3 mb-3">
                                     <label for="servico">Língua</label>
                                     <livewire:select-component type="languages" placeholder="Selecione a língua" name="employeeLanguage[]" id="employeeLanguage" selected='' />
@@ -200,10 +187,11 @@
                                     </a>
                                 </div>
                                 <div class="col-md-1">
-                                    <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                    <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         <i class="fa fa-circle-info"></i>
                                     </a>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -214,28 +202,21 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Informações do veículo</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Informações</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <p><strong>Placa do veículo:</strong> ABC1234</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Informações do motorista</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p><strong>Nome Completo:</strong> Jacinto P. Aquino</p>
+                            <p><strong>Cor:</strong> Prata</p>
+                            <p><strong>Marca:</strong> Jeep</p>
+                            <p><strong>Modelo:</strong> Commander</p>
+                            <p><strong>Passageiros:</strong> 4</p>
+                            <p><strong>Malas:</strong> 5</p>
+                            <hr class="my-4">
+                            <p><strong>Nome completo:</strong> Jorge Lucas</p>
+                            <p><strong>Endereço completo:</strong> Rua Numero Um, 123 - Bairro, Cidade - ES - 012345-678</p>
+                            <p><strong>Telefone:</strong> (11) 99123-4567</p>
+                            <p><strong>Email:</strong> email@corporativo.com</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
