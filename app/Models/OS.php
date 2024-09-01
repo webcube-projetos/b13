@@ -11,7 +11,7 @@ class OS extends Model
 
     protected $table = 'os';
 
-    protected $fillable = ['id_contact', 'id_client', 'id_payment_method', 'status', 'additional_cost'];
+    protected $fillable = ['id_contact', 'id_client', 'id_payment_method', 'obs', 'status', 'additional_cost'];
 
     public function contact()
     {

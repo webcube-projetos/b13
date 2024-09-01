@@ -39,7 +39,7 @@
                                 @if ($dados['pageInfo']['cadastro_servicos'])
                                     @include('register.formServicos')
                                 @endif
-
+                         
                                 <div class="col-lg-6 mt-4">
                                     <label for="paymentMethod">Forma de pagamento</label>
                                     <livewire:select-component type="paymentMethod" placeholder="Selecione a forma de pagamento" name="paymentMethod" id="paymentMethod" selected='{{ $paymentMethod }}' />
@@ -51,6 +51,12 @@
                                             @if($total) {{ number_format($total, 2, ',', '.') }} @else <span x-text="total"></span> @endif
                                         </span>
                                     </h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 mt-4">
+                                    <label for="obs">Observacão</label>
+                                    <textarea type="text" class="form-control" name="obs" id="obs" wire:model="obs"></textarea>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end">
@@ -75,7 +81,7 @@
                         <div class="row">
                             <p class="fw-bold mt-4">Custos</p>
                         
-                            <livewire:form-custos />
+                            <livewire:form-custos :id="$id"/>
 
                             <div class="d-flex justify-content-end">
                                 <button type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">Atualizar dados</button>

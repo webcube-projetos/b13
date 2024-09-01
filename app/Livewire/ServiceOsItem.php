@@ -31,10 +31,13 @@ class ServiceOsItem extends Component
     public $securityType;
     public $qtdHoras;
     public $typesVehicle;
+    public $tipodesconto;
+    public $desconto;
     public $vehiclesCategory;
     public $armored;
     public $modelVehicle;
-    public $similar;
+    public $passageiros;
+    public $bags;
     public $nomeServico;
     public $nomeServicoIngles;
     public $precoBase;
@@ -79,7 +82,8 @@ class ServiceOsItem extends Component
             $this->vehiclesCategory = $data['vehiclesCategory'];
             $this->armored = $data['armored'];
             $this->modelVehicle = $data['modelVehicle'];
-            $this->similar = $data['similar'];
+            $this->passageiros = $data['passageiros'] ?? null;
+            $this->bags = $data['bags'] ?? null;
             $this->nomeServico = $data['nomeServico'] ?? null;
             $this->nomeServicoIngles = $data['nomeServicoIngles'] ?? null;
             $this->precoBase = $data['precoBase'];
@@ -92,6 +96,8 @@ class ServiceOsItem extends Component
             $this->kmExtraParceiro = $data['kmExtraParceiro'];
             $this->custoEmployee = $data['custoEmployee'];
             $this->horaExtraEmployee = $data['horaExtraEmployee'];
+            $this->tipodesconto = $data['tipodesconto'] ?? null;
+            $this->desconto = $data['desconto'] ?? null;
             $this->total = $data['total'];
         }
     }
@@ -116,7 +122,8 @@ class ServiceOsItem extends Component
             'typesVehicle' => $this->typesVehicle,
             'vehiclesCategory' => $this->vehiclesCategory,
             'modelVehicle' => $this->modelVehicle,
-            'similar' => $this->similar,
+            'passageiros' => $this->passageiros,
+            'bags' => $this->bags,
             'nomeServico' => $this->nomeServico,
             'nomeServicoIngles' => $this->nomeServicoIngles,
             'precoBase' => $this->precoBase,
@@ -130,6 +137,8 @@ class ServiceOsItem extends Component
             'custoEmployee' => $this->custoEmployee,
             'horaExtraEmployee' => $this->horaExtraEmployee,
             'parceiro' => $this->parceiro,
+            'tipodesconto' => $this->tipodesconto,
+            'desconto' => $this->desconto,
             'total' => $this->total,
         ];
 
@@ -156,9 +165,12 @@ class ServiceOsItem extends Component
                     'qtd_days' => $this->qtdDias,
                     'qtd_service' => $this->qtdServices,
                     'modelo_veiculo' => $this->modelVehicle,
-                    'similar' => $this->similar ? 1 : 0,
+                    'passengers' => $this->passageiros,
+                    'bags' => $this->bags,
                     'start' => $this->inicio,
                     'finish' => $this->termino,
+                    'discount_type' => $this->tipodesconto,
+                    'discount' => $this->desconto,
                     'price' => $this->precoBase,
                     'time' => $this->qtdHoras,
                     'extra_price' => $this->horaExtra,
@@ -203,9 +215,12 @@ class ServiceOsItem extends Component
                     'qtd_days' => $this->qtdDias,
                     'qtd_service' => $this->qtdServices,
                     'modelo_veiculo' => $this->modelVehicle ?? null,
-                    'similar' => $this->similar ? 1 : 0,
+                    'passengers' => $this->passageiros,
+                    'bags' => $this->bags,
                     'start' => $this->inicio,
                     'finish' => $this->termino,
+                    'discount_type' => $this->tipodesconto,
+                    'discount' => $this->desconto,
                     'price' => $this->precoBase,
                     'time' => $this->qtdHoras,
                     'extra_price' => $this->horaExtra,
@@ -233,9 +248,12 @@ class ServiceOsItem extends Component
                 'qtd_days' => $this->qtdDias,
                 'qtd_service' => $this->qtdServices,
                 'modelo_veiculo' => $this->modelVehicle,
-                'similar' => $this->similar ? 1 : 0,
+                'passengers' => $this->passageiros,
+                'bags' => $this->bags,
                 'start' => $this->inicio,
                 'finish' => $this->termino,
+                'discount_type' => $this->tipodesconto,
+                'discount' => $this->desconto,
                 'price' => $this->precoBase,
                 'time' => $this->horaBase,
                 'extra_price' => $this->horaExtra,
@@ -330,9 +348,9 @@ class ServiceOsItem extends Component
     private function preencherCamposDoServico()
     {
         $this->servicoCadastrado = 1;
-        
-        $clonedService = clone $this->serviceTemp; 
-        
+
+        $clonedService = clone $this->serviceTemp;
+
         $this->precoBase = $this->serviceTemp->price;
         $this->horaExtra = $this->serviceTemp->extra_price;
         $this->kmBase = $this->serviceTemp->km;

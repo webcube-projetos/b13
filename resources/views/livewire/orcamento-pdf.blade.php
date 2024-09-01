@@ -166,8 +166,8 @@
                         <td>{{ $service->qtd_service }}</td>
                         <td class="nobreak">{{ $service->modelo_veiculo ? $service->modelo_veiculo : $service['service']->vehicleType->name}}</td>
                         <td>{{ $service['service']->blindado_armado ? 'Sim' : 'Não'}}</td>
-                        <td>-</td>
-                        <td>-</td>
+                        <td>{{ $service->passengers }}</td>
+                        <td>{{ $service->bags }}</td>
                         <td class="nobreak">{{ $service['service']->categoryService->name . ' ' . $service['service']->time . ' horas'}}</td>{{--Diária--}}
                         <td>{{ $service['service']->km . 'km'}}</td>
                         <td>{{ $service['service']->bilingual ? 'Sim' : 'Não'}}</td>

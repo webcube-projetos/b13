@@ -58,7 +58,6 @@ class ServiceOS extends Component
                 'typesVehicle' => $serviceOS->service->id_vehicle,
                 'idioma' => null,
                 'selectBrand' => null,
-                'similar' => $serviceOS->similar,
                 'armored' => $serviceOS->service->blindado_armado,
                 'bilingue' => $serviceOS->service->bilingual,
                 'qtdHoras' => $serviceOS->time,
@@ -73,6 +72,8 @@ class ServiceOS extends Component
                 'custoEmployee' => $serviceOS->employee_cost,
                 'horaExtraEmployee' => $serviceOS->employee_extra,
                 'parceiro' => null,
+                'desconto' => $serviceOS->discount,
+                'descontotipo' => $serviceOS->discount_type,
                 'total' => ($serviceOS->price * $serviceOS->qtd_days) * $serviceOS->qtd_service,
             ];
 
@@ -83,7 +84,7 @@ class ServiceOS extends Component
 
             $this->totals[$serviceOS->id] = $serviceOS->total;
         }
-       
+
         $this->totalGlobal = array_sum($this->totals);
         $this->dispatch('update-global-total', number_format($this->totalGlobal, 2, ',', '.'));
     }
