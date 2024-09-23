@@ -22,13 +22,13 @@
             <div class="tab-pane fade show active" id="cadastro" role="tabpanel" aria-labelledby="cadastro-tab">
                 <div class="card">
                     <div class="card-body pt-4 p-3">
-                        <form action="{{ $dados['pageInfo']['form_action'] }}" method="{{ $dados['pageInfo']['form_method'] }}" role="form text-left">
+                        <form action="{{ data_get($dados, 'pageInfo.form_action') }}" method="{{ data_get($dados, 'pageInfo.form_method') }}" role="form text-left">               
                             @csrf
                             <div class="row align-items-end">
                                 <p class="fw-bold mt-4">Ordem de Serviço</p>
-                                @foreach ($dados['sessions'] as $key => $group)
+                                {{-- @foreach ($dados['sessions'] as $key => $group)
                                     @include('register.formRegister')
-                                @endforeach
+                                @endforeach --}}
 
                                 <div class="cadastro-contatos mt-3" id="box-linhas-servico-os">
                                     <div class="row align-items-center">
@@ -66,7 +66,7 @@
                                                         <div>
                                                             @foreach ($servicesOS as $service)
                                                                 <livewire:o-s.services 
-                                                                    wire:key="{{ $service['id'] }}" 
+                                                                    wire:key="{{ $service['id']}}" 
                                                                     :serviceId="$service['id']" 
                                                                     :type="$service['type']" 
                                                                     :data="$service['data'] ?? null" 
@@ -137,10 +137,17 @@
                                                                                 id="vehicleModel" 
                                                                                 :selected="'test'" 
                                                                                 :filter-by-type="'test'"
+                                                                                wire:key="vehicles_plate-{{ rand() }}"
                                                                             /> 
                                                                         </td>
                                                                         <td>
-                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                            <livewire:select-component 
+                                                                                type="employee_driver"
+                                                                                placeholder="Selecione o motorista" name="employee[]" 
+                                                                                id="employee" 
+                                                                                selected='' 
+                                                                                wire:key="employee_driver-{{ rand() }}"
+                                                                             />
                                                                         </td>
                                                                         <td>
                                                                             <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
@@ -199,10 +206,15 @@
                                                                                 id="vehicleModel" 
                                                                                 :selected="'test'" 
                                                                                 :filter-by-type="'test'"
+                                                                                wire:key="vehicles_plate-{{ rand() }}"
                                                                             /> 
                                                                         </td>
                                                                         <td>
-                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                            <livewire:select-component 
+                                                                            type="employee_driver"
+                                                                             placeholder="Selecione o motorista" name="employee[]" id="employee" selected=''
+                                                                             wire:key="employee_driver-{{ rand() }}"
+                                                                             />
                                                                         </td>
                                                                         <td>
                                                                             <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
@@ -261,10 +273,11 @@
                                                                                 id="vehicleModel" 
                                                                                 :selected="'test'" 
                                                                                 :filter-by-type="'test'"
+                                                                                wire:key="vehicleModel-{{rand()}}"
                                                                             /> 
                                                                         </td>
                                                                         <td>
-                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' wire:key="employee-{{rand()}}" />
                                                                         </td>
                                                                         <td>
                                                                             <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
@@ -323,10 +336,11 @@
                                                                                 id="vehicleModel" 
                                                                                 :selected="'test'" 
                                                                                 :filter-by-type="'test'"
+                                                                                wire:key="vehicleModel-{{rand()}}"
                                                                             /> 
                                                                         </td>
                                                                         <td>
-                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' wire:key="employee-{{rand()}}" />
                                                                         </td>
                                                                         <td>
                                                                             <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
@@ -385,10 +399,11 @@
                                                                                 id="vehicleModel" 
                                                                                 :selected="'test'" 
                                                                                 :filter-by-type="'test'"
+                                                                                wire:key="vehicleModel-{{rand()}}"
                                                                             /> 
                                                                         </td>
                                                                         <td>
-                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' wire:key="employee-{{rand()}}" />
                                                                         </td>
                                                                         <td>
                                                                             <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
@@ -447,10 +462,17 @@
                                                                                 id="vehicleModel" 
                                                                                 :selected="'test'" 
                                                                                 :filter-by-type="'test'"
+                                                                                wire:key="vehicleModel-{{rand()}}"
                                                                             /> 
                                                                         </td>
                                                                         <td>
-                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                            <livewire:select-component
+                                                                                type="employee_driver" 
+                                                                                placeholder="Selecione o motorista" name="employee[]" 
+                                                                                id="employee" 
+                                                                                selected='' 
+                                                                                wire:key="employee-{{rand()}}"
+                                                                             />
                                                                         </td>
                                                                         <td>
                                                                             <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
@@ -509,10 +531,11 @@
                                                                                 id="vehicleModel" 
                                                                                 :selected="'test'" 
                                                                                 :filter-by-type="'test'"
+                                                                                wire:key="vehicleModel-{{rand()}}"
                                                                             /> 
                                                                         </td>
                                                                         <td>
-                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
+                                                                            <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' wire:key="employee-{{rand()}}" />
                                                                         </td>
                                                                         <td>
                                                                             <input type="time" class="form-control" name="horarioInicio[]" id="horarioInicio" required>

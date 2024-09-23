@@ -55,6 +55,7 @@
                                 name="{{$fields['name']}}" 
                                 selected="{{$fields['value']}}" 
                                 required="{{$fields['required']}}"
+                                wire:key="select-component-{{ $fields['id'] }}"
                             />
                         @elseif($fields['type'] === 'selectClient')
                             <livewire:select-client 
@@ -62,6 +63,7 @@
                                 name="{{$fields['name']}}" 
                                 contato='{{ $contato }}'
                                 cliente='{{ $client }}'
+                                wire:key="select-client-{{ $fields['id'] }}"
                             />
                         @elseif($fields['type'] === 'number' && $fields['name'] !== 'ano' || $fields['name'] !== 'malas' || $fields['name'] !== 'passageiros')
                             <input 
