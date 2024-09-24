@@ -6,7 +6,7 @@
 	@vite(['resources/js/app.js'])
 @endpush
 
-<livewire:o-s.cadastro :dados="$dados" :id="$id" />
+<livewire:o-s.cadastro :dados="$dados" :id="$id" wire:key="{{ $id }}" />
 
 
 @endsection

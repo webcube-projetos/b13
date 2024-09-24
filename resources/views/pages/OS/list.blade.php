@@ -30,7 +30,7 @@
       }), 2, ',', '.') }}
       </td>
       <td class="text-right">
-        <a href="{{ route('orcamentos.editar', ['id' => $os->id]) }}" class="button-actions text-secondary font-weight-bold text-xs me-2">
+        <a href="{{ route('os.editar', ['id' => $os->id]) }}" class="button-actions text-secondary font-weight-bold text-xs me-2">
           <i class="fa fa-pencil"></i>
         </a>
         <button class="button-actions text-secondary font-weight-bold text-xs me-2" wire:click="deleteModal({{ $os->id }})">

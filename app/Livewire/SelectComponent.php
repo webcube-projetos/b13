@@ -25,6 +25,7 @@ class SelectComponent extends Component
     public $selectedPrimaryId;
     public $type;
     public $filterByTypeId = null;
+    public $target = null;
 
     public function mount($type, $placeholder, $name, $selected, $filterByTypeId = null)
     {
@@ -54,14 +55,14 @@ class SelectComponent extends Component
             'servicesOSSeg' => $this->servicesOSSeg(),
             'vehiclesCategory' => $this->vehiclesCategory(),
             'vehicles' => $this->vehicles(),
-            'vehicles_plate' => $this->vehiclesBrandPlate(), 
+            'vehicles_plate' => $this->vehiclesBrandPlate(),
             'languages' => $this->languages(),
             'paymentMethod' => $this->paymentMethod(),
             default => $this->especialization(),
         };
         $this->filterByTypeId = $filterByTypeId; // Armazenar o ID do tipo de veículo
     }
-    
+
     public function render()
     {
         return view('livewire.select-component', [
@@ -73,8 +74,8 @@ class SelectComponent extends Component
     {
         return Specialization::select('id', 'name')
             ->orderBy('name', 'ASC')
-            ->when($primary, fn ($query) => $query->whereNull('id_ascendent'))
-            ->when(!$primary, fn ($query) => $query->where('id_ascendent', $selectedPrimaryId))
+            ->when($primary, fn($query) => $query->whereNull('id_ascendent'))
+            ->when(!$primary, fn($query) => $query->where('id_ascendent', $selectedPrimaryId))
             ->get();
     }
 
@@ -113,15 +114,15 @@ class SelectComponent extends Component
     public function categoryVehicle()
     {
         return Category::select('id', 'name')
-            ->whereHas('type', fn ($query) => $query->where('name', 'Vehicle'))
+            ->whereHas('type', fn($query) => $query->where('name', 'Vehicle'))
             ->orderBy('name', 'ASC')
             ->get();
     }
-    
+
     public function categoryService()
     {
         return Category::select('id', 'name')
-            ->whereHas('type', fn ($query) => $query->where('name', 'Service'))
+            ->whereHas('type', fn($query) => $query->where('name', 'Service'))
             ->orderBy('name', 'ASC')
             ->get();
     }
@@ -129,7 +130,7 @@ class SelectComponent extends Component
     public function securityType()
     {
         return Category::select('id', 'name')
-            ->whereHas('type', fn ($query) => $query->where('name', 'Security'))
+            ->whereHas('type', fn($query) => $query->where('name', 'Security'))
             ->orderBy('name', 'ASC')
             ->get();
     }
@@ -141,7 +142,7 @@ class SelectComponent extends Component
             ->orderBy('name', 'ASC')
             ->get();
     }
-    
+
     public function brands()
     {
         return VehicleBrand::select('id', 'name')
@@ -202,7 +203,7 @@ class SelectComponent extends Component
     public function services()
     {
         return Category::select('id', 'name')
-            ->whereHas('type', fn ($query) => $query->where('name', 'Service'))
+            ->whereHas('type', fn($query) => $query->where('name', 'Service'))
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -233,7 +234,7 @@ class SelectComponent extends Component
     public function vehiclesCategory()
     {
         return Category::select('id', 'name')
-            ->whereHas('type', fn ($query) => $query->where('name', 'Vehicle'))
+            ->whereHas('type', fn($query) => $query->where('name', 'Vehicle'))
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -263,6 +264,10 @@ class SelectComponent extends Component
 
     public function updatedSelected($value)
     {
+        if ($this->target) {
+            return $this->dispatch('selectUpdated', $this->type, $value, $this->target);
+        }
+
         $this->dispatch('selectUpdated', $this->type, $value);
     }
 }

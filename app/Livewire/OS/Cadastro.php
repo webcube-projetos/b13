@@ -40,6 +40,16 @@ class Cadastro extends Component
         $this->totals[$id] = 0;
     }
 
+    #[On('removeLinhaServico')]
+    public function removeLinhaServico($serviceId)
+    {
+        $servicos = array_values(array_filter($this->servicesOS, function ($servico) use ($serviceId) {
+            return $servico['id'] != $serviceId;
+        }));
+
+        $this->servicesOS = $servicos;
+    }
+
     public function addLinhaServicoSeguranca()
     {
         $id = uniqid();

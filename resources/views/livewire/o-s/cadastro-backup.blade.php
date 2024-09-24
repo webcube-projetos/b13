@@ -49,7 +49,7 @@
                                                     V1 | Jeep Commander ABC1234
                                                 </button>
                                             </h2>
-                                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show tw-bg-[#ffffff73]" aria-labelledby="panelsStayOpen-headingOne">
                                                 <div class="accordion-body">
                                                     <div class="row linha-add position-relative">
                                                         <div class="col-md-3 mb-3">
@@ -154,7 +154,7 @@
                                         </div>
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                                                <button class="accordion-button collapsed  border" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                                                <button class="accordion-button collapsed border tw-bg-[#ffffff73]" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
                                                     Execução
                                                 </button>
                                             </h2>

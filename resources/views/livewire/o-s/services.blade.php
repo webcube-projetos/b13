@@ -5,199 +5,54 @@
         }
     </style>
     @if($type == 'locacao')
-        <div class="row linha-add position-relative align-items-center mt-4"> 
-            <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="row linha-add position-relative align-items-center mt-4 tw-relative"> 
+            <div class="accordion" id="accordionPanelsStayOpenExample-{{$serviceId}}">
                 <div class="accordion-item">
-                    <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingOne-{{$serviceId}}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-{{$serviceId}}" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne-{{$serviceId}}">
                             Serviço
                         </button>
                     </h2>
-                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div id="panelsStayOpen-collapseOne-{{$serviceId}}" class="accordion-collapse collapse show tw-bg-[#ffffff73]" aria-labelledby="panelsStayOpen-headingOne-{{$serviceId}}">
                         <div class="accordion-body">
-                            <div class="row">                    
-                                <div class="col-md-2 mb-3">
-                                    <label for="inicio">Início</label>
-                                    <input type="date" class="form-control" name="inicio[]" id="inicio" maxlength="30" required>
-                                </div>
-                                <div class="col-md-2 mb-3">
-                                    <label for="termino">Término</label>
-                                    <input type="date" class="form-control" name="termino[]" id="termino" maxlength="30" required>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="qtdDias">Qtd. Dias</label>
-                                    <input type="number" class="form-control" name="qtdDias[]" id="qtdDias" required>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="qtdDias">Qtd. Veículos</label>
-                                    <input type="number" class="form-control" name="qtdDias[]" id="qtdDias" required>
-                                </div>
-                                <div class="col-md-2 mb-3">
-                                    <label for="bilingue">Bilíngue</label>
-                                    <livewire:select-component type="bilingue" placeholder="" name="bilingue[]" :selected="$bilingue" />
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="servico">Tipo de Serviço</label>
-                                    <livewire:select-component type="categoryService" placeholder="Selecione o serviço" name="categoryService[]" id="categoryService" selected='' />
-                                </div>
-                                <div class="col-md-2 mb-3">
-                                    <label for="qtdHoras">Qtd. Horas</label>
-                                    <input type="number" min="0" class="form-control" wire:model.live="qtdHoras" name="qtdHoras[]" id="qtdHoras" required>
-                                </div>
-                                <div class="col-md-2 mb-3">
-                                    <label for="tipoVeiculo">Tipo veículo</label>
-                                    <livewire:select-component type="typesVehicle" placeholder="Selecione" name="typesVehicle[]" :selected="$typesVehicle"/>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="vehiclesCategory[]">Categoria de veículo</label>
-                                    <livewire:select-component type="vehiclesCategory" placeholder="Selecione" name="vehiclesCategory[]" id="vehiclesCategory" :selected="$vehiclesCategory" />
-                                </div>
-                                <div class="col-md-2 mb-3">
-                                    <label for="blindado">Blindado</label>
-                                    <livewire:select-component type="armored" placeholder="" name="armored[]" :selected="$armored" />
-                                </div>
-                    
-                                @if ($servicoCadastrado == 1)
-                                    <div class="col-12">
-                                        <select class="form-control" name="service_id" id="service_id" readonly>
-                                            <option value="{{ $serviceTemp->id }}">
-                                                {{ $serviceTemp->name }} ({{ $serviceTemp->name_english }})
-                                            </option>
-                                        </select>
-                                    </div>
-                                @elseif ($servicoCadastrado == 2)
-                                    <div class="col-md-6 mb-3">
-                                        <input type="text" class="form-control" placeholder="Nome" wire:model="nomeServico">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <input type="text" class="form-control" placeholder="Nome em Inglês" wire:model="nomeServicoIngles">
-                                    </div>
-                                @endif
-                            </div>
+                            <livewire:o-s.campo-servico wire:key="servicos-{{$serviceId}}" />
                         </div>
                     </div>
                 </div>
+                
                 <div class="accordion-item">
-                    <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                    <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingTwo-{{$serviceId}}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo-{{$serviceId}}" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo-{{$serviceId}}">
                             Valores
                         </button>
                     </h2>
-                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                    <div id="panelsStayOpen-collapseTwo-{{$serviceId}}" class="accordion-collapse collapse tw-bg-[#ffffff73]" aria-labelledby="panelsStayOpen-headingTwo-{{$serviceId}}">
                         <div class="accordion-body">
-                            <div class="row">
-                                <div class="col-md-3 mb-3">
-                                    <label for="precoBase">Valor</label>
-                                    <input type="number" class="form-control" wire:model="precoBase" name="precoBase[]" id="precoBase" required>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="horaExtra">Hora extra</label>
-                                    <input type="number" class="form-control" wire:model="horaExtra" name="horaExtra[]" id="horaExtra" required>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="kmBase">KM franquia</label>
-                                    <input type="number" class="form-control" wire:model="kmBase" name="kmBase[]" id="kmBase" required>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="kmExtra">KM extra</label>
-                                    <input type="number" class="form-control" wire:model="kmExtra" name="kmExtra[]" id="kmExtra" required>
-                                </div>
-                                
-                                <div class="col-md-2 mb-3">
-                                    <label for="custoParceiro">Custo Parceiro</label>
-                                    <input type="number" class="form-control" wire:model="custoParceiro" name="custoParceiro[]" id="custoParceiro" required>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="extraParceiro">Hora Extra parceiro</label>
-                                    <input type="number" class="form-control" wire:model="extraParceiro" name="extraParceiro[]" id="extraParceiro" required>
-                                </div>
-                                <div class="col-md-2 mb-3">
-                                    <label for="kmExtraParceiro">Km Extra Parceiro</label>
-                                    <input type="number" class="form-control" wire:model="kmExtraParceiro" name="kmExtraParceiro[]" id="kmExtraParceiro" required>
-                                </div>
-                                <div class="col-md-2 mb-3">
-                                    <label for="custoEmployee">Custo Motorista</label>
-                                    <input type="number" class="form-control" wire:model="custoEmployee" name="custoEmployee[]" id="custoEmployee" required>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="horaExtraEmployee">Custo Extra Motorista</label>
-                                    <input type="number" class="form-control" wire:model="horaExtraEmployee" name="horaExtraEmployee[]" id="horaExtraEmployee" required>
-                                </div>
-                            </div>
+                            <livewire:o-s.campo-valores wire:key="servicos-{{$serviceId}}" />
                         </div>
                     </div>
                 </div>
+        
                 <div class="accordion-item">
-                    <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                    <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingThree-{{$serviceId}}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree-{{$serviceId}}" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree-{{$serviceId}}">
                             Veículos & Motoristas
                         </button>
                     </h2>
-                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree"> 
-                        <div class="accordion-body">
-                            <div class="row align-items-center">
-                                <div class="col-12">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-6">
-                                        </div>
-                                        <div class="col-md-6 text-end">
-                                            <a href="#" class="btn bg-gradient-dark btn-md mt-4 mb-4">Adicionar linha</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="inicio">Início</label>
-                                    <input type="date" class="form-control" name="inicio[]" id="inicio" maxlength="30" required>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="termino">Término</label>
-                                    <input type="date" class="form-control" name="termino[]" id="termino" maxlength="30" required>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="company">Empresa</label>
-                                    <livewire:select-component type="empresas" placeholder="Selecione a empresa" name="empresas[]" id="empresas" selected='' />
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="modeloVeiculo">Modelo de veículo</label>
-                                    <livewire:select-component 
-                                        type="vehicles_plate" 
-                                        placeholder="Selecione o modelo do veículo" 
-                                        name="vehicleModel[]" 
-                                        id="vehicleModel" 
-                                        :selected="$vehicleModel" 
-                                        :filter-by-type="$typesVehicle"  
-                                    /> 
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="servico">Língua</label>
-                                    <livewire:select-component type="languages" placeholder="Selecione a língua" name="employeeLanguage[]" id="employeeLanguage" selected='' />
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="servico">Especialidades</label>
-                                    <livewire:select-component type="especialization_general" placeholder="Selecione a especialidade" name="employeeSpeciality[]" id="employeeSpeciality" selected='' />
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="motoristaVeiculo">Motorista</label>
-                                    <livewire:select-component type="employee_driver" placeholder="Selecione o motorista" name="employee[]" id="employee" selected='' />
-                                </div>
-                                <div class="col-md-1">
-                                    <a href="#">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </div>
-                                <div class="col-md-1">
-                                    <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        <i class="fa fa-circle-info"></i>
-                                    </a>
-                                </div>
-
-                            </div>
+                    <div id="panelsStayOpen-collapseThree-{{$serviceId}}" class="accordion-collapse collapse tw-bg-[#ffffff73] tw-p-[10px]" aria-labelledby="panelsStayOpen-headingThree-{{$serviceId}}"> 
+                        <div class="accordion-body tw-p-0">
+                            <livewire:o-s.motorista-list wire:key="motoristas-{{$serviceId}}" />
                         </div>
                     </div>
                 </div>
             </div>
-
+            <button 
+                class="tw-absolute tw-top-[14px] tw-right-[28px] tw-w-[15px]"
+                x-on:click="$event.preventDefault(); $dispatch('removeLinhaServico',{serviceId: '{{$serviceId}}'})" 
+                >
+                <i class="fa fa-trash"></i>
+            </button>
+        
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -225,6 +80,7 @@
                 </div>
             </div>
         </div>
+    
     @else 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">

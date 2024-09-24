@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FakeModel;
+use App\Models\OS;
 use App\Traits\MontarPagina;
 use App\Traits\MontarForm;
 use Illuminate\Http\Request;
@@ -32,25 +33,6 @@ class OrdemDeServicoController extends Controller
         return view('listagem', compact('prefix', 'config', 'header'));
     }
 
-    public function query()
-    {
-        $faker = Faker::create('pt_BR');
-        $data = [];
-        $count = 483;
-        for ($i = 0; $i < 30; $i++) {
-            $data[] = [
-                '#' => $count,
-                'data_abertura' => $faker->date('d/m/Y'),
-                'empresa' => $faker->company,
-                'apelido' => '-',
-                'valor' => 'R$1.800,00',
-            ];
-            $count++;
-        }
-
-        return new FakeModel($data);
-    }
-
     public function listar()
     {
         $dados = $this->query()->paginate(10);
@@ -69,22 +51,16 @@ class OrdemDeServicoController extends Controller
         return view('os', compact('dados', 'prefix', 'id'));
     }
 
-    public function test()
-    {
-        $prefix = $this->prefix;
-        $dados = $this->montarForm('os')->toArray();
-        $id = null;
-
-        return view('os', compact('dados', 'prefix', 'id'));
-    }
 
     public function editar()
     {
         $id = request()->route('id');
 
-        $cliente = $this->queryCompleta()->first() ?? null;
-        $dados = $this->montarForm('os', $cliente);
+        $cliente = OS::where('id', $id)
+            ->first();
 
-        return view('os', compact('dados'));
+        $dados = $this->montarForm('os', $cliente)->toArray();
+
+        return view('os', compact('dados', 'id'));
     }
 }
