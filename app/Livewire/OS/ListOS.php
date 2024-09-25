@@ -17,6 +17,7 @@ class ListOS extends Component
     public $contato;
     public $data;
     public $idDelete = null;
+    public $type;
 
     public function render()
     {
@@ -31,7 +32,7 @@ class ListOS extends Component
                     $query->where('name', 'like', '%' . $this->contato . '%');
                 });
             })
-            ->when($this->data, fn ($query) => $query->whereDate('created_at', $this->data))
+            ->when($this->data, fn($query) => $query->whereDate('created_at', $this->data))
             ->orderBy('id', 'desc')
             ->get();
 

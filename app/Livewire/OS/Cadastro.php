@@ -2,6 +2,8 @@
 
 namespace App\Livewire\OS;
 
+use App\Models\OS;
+use App\Models\OsService;
 use App\Traits\MontarForm;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -28,6 +30,18 @@ class Cadastro extends Component
 
     use MontarForm;
 
+    public function mount($id = null)
+    {
+        $this->id = $id;
+        $servicesOS = OsService::where('id_os', $this->id)->get();
+
+        if ($servicesOS) {
+            foreach ($servicesOS as $service) {
+                $this->servicesOS[] = ['type' => $service->service->serviceType->name, 'id' => $service->id];
+            }
+        }
+    }
+
     public function render()
     {
         return view('livewire.o-s.cadastro');
@@ -36,7 +50,7 @@ class Cadastro extends Component
     public function addLinhaServicoLocacao()
     {
         $id = uniqid();
-        $this->servicesOS[] = ['type' => 'locacao', 'id' => $id];
+        $this->servicesOS[] = ['type' => 'Locação', 'id' => $id];
         $this->totals[$id] = 0;
     }
 
@@ -53,7 +67,7 @@ class Cadastro extends Component
     public function addLinhaServicoSeguranca()
     {
         $id = uniqid();
-        $this->servicesOS[] = ['type' => 'seguranca', 'id' => $id];
+        $this->servicesOS[] = ['type' => 'Segurança', 'id' => $id];
         $this->totals[$id] = 0;
     }
 }

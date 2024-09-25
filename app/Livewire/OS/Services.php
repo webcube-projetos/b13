@@ -13,6 +13,13 @@ class Services extends Component
     public $type;
     public $idGlobal;
 
+    public function mount($serviceId = null, $type = null, $idGlobal = null)
+    {
+        $this->serviceId = $serviceId;
+        $this->type = $type;
+        $this->idGlobal = $idGlobal;
+    }
+
 
     public function render()
     {

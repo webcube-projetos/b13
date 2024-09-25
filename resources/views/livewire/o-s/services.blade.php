@@ -4,7 +4,7 @@
             min-width: 50px;
         }
     </style>
-    @if($type == 'locacao')
+    @if($type == 'Locação')
         <div class="row linha-add position-relative align-items-center mt-4 tw-relative"> 
             <div class="accordion" id="accordionPanelsStayOpenExample-{{$serviceId}}">
                 <div class="accordion-item">
@@ -15,7 +15,7 @@
                     </h2>
                     <div id="panelsStayOpen-collapseOne-{{$serviceId}}" class="accordion-collapse collapse show tw-bg-[#ffffff73]" aria-labelledby="panelsStayOpen-headingOne-{{$serviceId}}">
                         <div class="accordion-body">
-                            <livewire:o-s.campo-servico wire:key="servicos-{{$serviceId}}" />
+                            <livewire:o-s.campo-servico wire:key="servicos-{{$serviceId}}" :serviceId="$serviceId" />
                         </div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                     </h2>
                     <div id="panelsStayOpen-collapseTwo-{{$serviceId}}" class="accordion-collapse collapse tw-bg-[#ffffff73]" aria-labelledby="panelsStayOpen-headingTwo-{{$serviceId}}">
                         <div class="accordion-body">
-                            <livewire:o-s.campo-valores wire:key="servicos-{{$serviceId}}" />
+                            <livewire:o-s.campo-valores :serviceId="$serviceId" wire:key="servicos-{{$serviceId}}" />
                         </div>
                     </div>
                 </div>

@@ -36,7 +36,9 @@ class OrcamentosController extends Controller
         $config = $config->toArray();
         $header = $header->toArray();
 
-        return view('listagem', compact('prefix', 'config', 'header'));
+        $type = 'orcamentos';
+
+        return view('listagem', compact('prefix', 'config', 'header', 'type'));
     }
 
     public function cadastro()
@@ -65,22 +67,22 @@ class OrcamentosController extends Controller
             $options->set('dpi', 120);
 
             $dompdf = new Dompdf($options);
-            $dompdf->setPaper('A3', 'landscape'); 
+            $dompdf->setPaper('A3', 'landscape');
 
             $os = OS::find($osId);
-    
+
             if (!$os) {
                 return abort(404); // Orçamento não encontrado
             }
-    
+
             // Renderiza o componente Livewire
             $component = app(OrcamentoPdf::class, ['osId' => $osId]);
-            $component->os = $os; 
+            $component->os = $os;
             $html = $component->render()->render(); // Renderiza a view do componente
-    
+
             $dompdf->loadHtml($html);
             $dompdf->render();
-    
+
             return $dompdf->stream('orcamento_' . $osId . '.pdf');
         } catch (\Throwable $e) {
             Log::error('Erro ao gerar PDF: ' . $e->getMessage());

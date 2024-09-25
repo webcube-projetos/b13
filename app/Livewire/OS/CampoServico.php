@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OS;
 
+use App\Models\OsService;
 use App\Models\Service;
 use App\Models\Vehicle;
 use Livewire\Attributes\On;
@@ -39,24 +40,27 @@ class CampoServico extends Component
     public $type;
     public $idGlobal;
 
-    public function mount($data = null)
+    public function mount($serviceId = null)
     {
+        $this->serviceId = $serviceId;
+        $data = OsService::find($this->serviceId);
+
         if ($data) {
+            $this->inicio = $data->start ?? '';
+            $this->termino = $data->finish ?? '';
+            $this->qtdDias = $data->qtd_days ?? '';
+            $this->qtdServices = $data->qtd_service ?? '';
+            $this->bilingue = $data->service->bilingual ?? '';
+            $this->driver = $data->driver ?? '';
+            $this->categoryService = $data->categoryService ?? '';
+            $this->securityType = $data->securityType ?? '';
+            $this->qtdHoras = $data->time ?? '';
+            $this->typesVehicle = $data->typesVehicle ?? '';
+            $this->vehiclesCategory = $data->vehiclesCategory ?? '';
+            $this->armored = $data->service->blindado_armado ?? '';
+            $this->nomeServico = $data->nomeServico ?? '';
+            $this->nomeServicoIngles = $data->nomeServicoIngles ?? '';
             $this->data = $data;
-            $this->inicio = $data['inicio'] ?? '';
-            $this->termino = $data['termino'] ?? '';
-            $this->qtdDias = $data['qtdDias'] ?? '';
-            $this->qtdServices = $data['qtdServices'] ?? '';
-            $this->bilingue = $data['bilingue'] ?? '';
-            $this->driver = $data['driver'] ?? '';
-            $this->categoryService = $data['categoryService'] ?? '';
-            $this->securityType = $data['securityType'] ?? '';
-            $this->qtdHoras = $data['qtdHoras'] ?? '';
-            $this->typesVehicle = $data['typesVehicle'] ?? '';
-            $this->vehiclesCategory = $data['vehiclesCategory'] ?? '';
-            $this->armored = $data['armored'] ?? '';
-            $this->nomeServico = $data['nomeServico'] ?? '';
-            $this->nomeServicoIngles = $data['nomeServicoIngles'] ?? '';
         }
 
         $this->updateVehiclesOptions(); // Inicializar as opções de veículos
@@ -112,7 +116,7 @@ class CampoServico extends Component
 
     private function buscarServicoCadastrado()
     {
-        if ($this->type == 'locacao') {
+        if ($this->type == 'Locação') {
             // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
             return Service::where('id_category_service', $this->categoryService)
                 ->where('id_category_espec', $this->vehiclesCategory)

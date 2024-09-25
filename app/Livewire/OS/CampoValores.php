@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OS;
 
+use App\Models\OsService;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -16,8 +17,26 @@ class CampoValores extends Component
     public $kmExtraParceiro;
     public $custoEmployee;
     public $horaExtraEmployee;
+    public $osService;
 
     public $servicoCadastrado = null;
+
+    public function mount($serviceId = null)
+    {
+        if ($serviceId) {
+            $this->osService = OsService::find($serviceId);
+
+            $this->precoBase = $this->osService->price;
+            $this->horaExtra = $this->osService->extra_price;
+            $this->kmBase = $this->osService->km;
+            $this->kmExtra = $this->osService->km_extra;
+            $this->custoParceiro = $this->osService->partner_cost;
+            $this->extraParceiro = $this->osService->partner_extra_time;
+            $this->kmExtraParceiro = $this->osService->partner_extra_km;
+            $this->custoEmployee = $this->osService->employee_cost;
+            $this->horaExtraEmployee = $this->osService->employee_extra;
+        }
+    }
 
 
     #[On('preencherCamposDoServico')]
