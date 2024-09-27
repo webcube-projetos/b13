@@ -42,6 +42,12 @@ class Cadastro extends Component
         }
     }
 
+    #[On('OScreated')]
+    public function saveOS($id, $service)
+    {
+        dump($id, $service);
+    }
+
     public function render()
     {
         return view('livewire.o-s.cadastro');
