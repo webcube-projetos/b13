@@ -13,13 +13,15 @@ use Faker\Factory as Faker;
 class OrdemDeServicoController extends Controller
 {
     protected $prefix;
+    protected $request;
 
     use MontarPagina;
     use MontarForm;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->prefix = 'os';
+        $this->request = $request;
     }
 
     public function index()
@@ -29,8 +31,9 @@ class OrdemDeServicoController extends Controller
         [$config, $header] = $this->montarPagina('os');
         $config = $config->toArray();
         $header = $header->toArray();
+        $type = 'os';
 
-        return view('listagem', compact('prefix', 'config', 'header'));
+        return view('listagem', compact('prefix', 'config', 'header', 'type'));
     }
 
     public function listar()
@@ -39,7 +42,9 @@ class OrdemDeServicoController extends Controller
 
         [$config, $header] = $this->montarPagina('os');
 
-        return view('listagem.tableList', compact('dados', 'config', 'header'));
+        $type = 'os';
+
+        return view('listagem.tableList', compact('dados', 'config', 'header', 'type'));
     }
 
     public function cadastro()
@@ -54,7 +59,7 @@ class OrdemDeServicoController extends Controller
 
     public function editar()
     {
-        $id = request()->route('id');
+        $id = $this->request->id;
 
         $cliente = OS::where('id', $id)
             ->first();

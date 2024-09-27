@@ -400,7 +400,7 @@ trait MontarPagina
 
     $editar = collect([
       'title' => 'Editar',
-      'route' => 'editar',
+      'route' => 'orcamento.editar',
       'icon' => 'fa fa-pencil',
       'onClick' => 'editar(this)',
       'class' => '',

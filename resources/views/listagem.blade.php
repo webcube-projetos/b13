@@ -28,7 +28,7 @@
                 </div> 
               @endif
             </div>
-            <livewire:o-s.list-o-s :config="$config" :header="$header" />
+            <livewire:o-s.list-o-s :config="$config" :header="$header" :type="$type" />
           </div>
         </div>
       </div>
