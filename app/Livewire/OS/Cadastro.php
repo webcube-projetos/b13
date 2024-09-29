@@ -45,7 +45,16 @@ class Cadastro extends Component
     #[On('OScreated')]
     public function saveOS($id, $service)
     {
-        dump($id, $service);
+        $osService = OsService::find($id);
+
+        if (!$osService) {
+            $osService = new OsService();
+        }
+
+        $osService->fill($service)->save();
+        $osService->os->fill($service)->save();
+
+        $this->dispatch('os-service-created', $osService->id);
     }
 
     public function render()

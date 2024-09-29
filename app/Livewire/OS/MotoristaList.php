@@ -2,48 +2,53 @@
 
 namespace App\Livewire\OS;
 
+use App\Models\OsEmployeeVehicle;
+use App\Models\OsService;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 class MotoristaList extends Component
 {
     public $motoristas = [];
+    public $serviceId;
+
+    public function mount($serviceId = null)
+    {
+        if ($serviceId) {
+            $this->serviceId = $serviceId;
+            $this->getMotoristas();
+        }
+    }
+
+    public function getMotoristas()
+    {
+        $services = OsService::find($this->serviceId);
+
+        foreach ($services->motoristas as $motorista) {
+            $this->motoristas[] = ['id' => $motorista->id, 'serviceId' => $this->serviceId];
+        }
+    }
 
     public function addLinhaVM()
     {
-        $this->motoristas[] = ['id' => uniqid(), 'motorista' => []];
+        $this->motoristas[] = ['id' => uniqid(), 'serviceId' => $this->serviceId];
     }
 
     #[On('deleteMotorista')]
     public function removeMotorista($motoristaId)
     {
+        $motorista = OsEmployeeVehicle::find($motoristaId);
+
+        if ($motorista) {
+            $motorista->delete();
+        }
+
         $motoristas = array_values(array_filter($this->motoristas, function ($motorista) use ($motoristaId) {
             return $motorista['id'] != $motoristaId;
         }));
 
         $this->motoristas = $motoristas;
     }
-
-    #[On('selectUpdated')]
-    public function handleSelectUpdated($type, $value, $target = null)
-    {
-        if (!in_array($type, ['empresas', 'languages', 'vehicles', 'employeeSpeciality', 'employee_driver'])) {
-            return $this->skipRender();
-        }
-
-        if ($target) {
-            $targetParts = explode('-', $target);
-            $motoristaId = end($targetParts);
-
-            foreach ($this->motoristas as $index => $motorista) {
-                if ($motorista['id'] == $motoristaId) {
-                    $this->motoristas[$index]['motorista'][$type] = $value;
-                    break;
-                }
-            }
-        }
-    }
-
 
     public function render()
     {

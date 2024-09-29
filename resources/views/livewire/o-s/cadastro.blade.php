@@ -594,7 +594,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button wire:click="$dispatch('saveOS')" type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ $dados['pageInfo']['label_button'] }}</button>
+                                <button x-on:click="$event.preventDefault()" wire:click="$dispatch('saveOS')" type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">{{ $dados['pageInfo']['label_button'] }}</button>
                             </div>
                         </form>
                     </div>
@@ -624,7 +624,34 @@
     </div>
 </div>
 
-<script>
-    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-</script>
+@script
+    <script>
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
+        $wire.on('saveOS', () => {
+            Toastify({
+                    text: "Cadastro realizado com sucesso!",
+                    className: "info",
+                    close: true,
+                    gravity: "bottom",
+                    position: "right",
+                    style: {
+                    background: "#FF9921",
+                    }
+            }).showToast();
+
+            const tabs = document.querySelectorAll('#myTab .nav-link');
+            const contents = document.querySelectorAll('#myTabContent2 .tab-pane');
+
+            tabs[0].classList.remove('active');
+            contents[0].classList.remove('show');
+            contents[0].classList.remove('active');
+
+            tabs[1].classList.add('active');
+            contents[1].classList.add('active');
+            contents[1].classList.add('show');
+            
+        });
+    </script>
+@endscript
