@@ -3,7 +3,9 @@
 namespace App\Livewire\OS;
 
 use App\Models\OsEmployeeVehicle;
+use App\Models\OsExecution;
 use App\Models\OsService;
+use Carbon\Carbon;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -76,8 +78,6 @@ class MotoristaItem extends Component
                 $motoristas = new OsEmployeeVehicle();
             }
 
-            // dump($this->start, $this->end, $this->empresas, $this->languages, $this->vehicles, $this->especialization_general, $this->employee_driver);
-
             $motoristas->fill(
                 [
                     'start' => $this->start,
@@ -91,6 +91,19 @@ class MotoristaItem extends Component
                     'id_os' => $os
                 ]
             )->save();
+
+            $startDate = Carbon::parse($this->start);
+            $endDate = Carbon::parse($this->end);
+
+
+            while ($startDate->lte($endDate)) {
+                OsExecution::firstOrCreate([
+                    'id_employee_vehicle' => $motoristas->id,
+                    'date' => $startDate->format('Y-m-d'),
+                ]);
+
+                $startDate->addDay();
+            }
         }
     }
 

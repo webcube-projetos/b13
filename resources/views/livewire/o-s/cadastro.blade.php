@@ -49,7 +49,7 @@
                                                 <livewire:o-s.tab-servicos :id="$id" />
                                             </div>
                                             <div class="tab-pane fade" id="rotas" role="tabpanel" aria-labelledby="rotas-tab">
-                                                <livewire:o-s.tab-execucao/>
+                                                <livewire:o-s.tab-execucao :id="$id"/>
                                             </div>
                                         </div>
                                     </div>
@@ -118,6 +118,7 @@
                     }
             }).showToast();
 
+            $wire.dispatch('reload-executions');
             const tabs = document.querySelectorAll('#myTab .nav-link');
             const contents = document.querySelectorAll('#myTabContent2 .tab-pane');
 
