@@ -13,6 +13,12 @@ class Services extends Component
     public $type;
     public $idGlobal;
     public $service = [];
+    public $securityType;
+    public $bilingue;
+    public $armored;
+    public $driver;
+    public $serviceTemp;
+    public $servicoCadastrado;
     public $valoresComplete = false;
     public $servicoComplete = false;
 
@@ -21,6 +27,11 @@ class Services extends Component
         $this->serviceId = $serviceId;
         $this->type = $type;
         $this->idGlobal = $idGlobal;
+        $this->securityType = $this->securityType;
+        $this->bilingue = $this->bilingue;
+        $this->armored = $this->armored;
+        $this->driver = $this->driver;
+        $this->servicoCadastrado = $this->servicoCadastrado;
     }
 
     #[On('valoresCreated')]
@@ -49,8 +60,6 @@ class Services extends Component
             $this->dispatch('OScreated', $this->serviceId, $this->service);
         }
     }
-
-
 
     public function render()
     {

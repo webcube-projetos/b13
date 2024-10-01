@@ -31,7 +31,7 @@
             name="empresas[]" 
             id="empresas"
             selected="{{data_get($motorista, 'motorista.empresas')}}" 
-        /> 
+        />
     </div>
     <div class="mb-3 tw-w-[25%] tw-pr-[8px]">
         <label for="modeloVeiculo">Modelo de veículo</label>
@@ -43,8 +43,8 @@
             name="vehicleModel[]" 
             id="vehicleModel" 
             :selected="$vehicleModel ?? ''" 
-            :filter-by-type="$typesVehicle ?? ''"  
-        /> 
+            :filter-by-type="$typesVehicle ?? ''"
+        />
     </div>
     <div class="mb-3 tw-w-[25%] tw-pr-[8px]">
         <label for="servico">Língua</label>

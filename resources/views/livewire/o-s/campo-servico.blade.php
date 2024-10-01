@@ -22,16 +22,16 @@
 
     <div class="tw-w-[25%] mb-3">
         <label for="servico">Tipo de Serviço</label>
-        <livewire:select-component type="categoryService" placeholder="Selecione o serviço" name="categoryService[]" id="categoryService" selected='{{$data->service->categoryService->id}}' />
+        <livewire:select-component type="categoryService" placeholder="Selecione o serviço" name="categoryService[]" id="categoryService" selected='{{$data?->service?->categoryService?->id ?? null}}' />
     </div>
 
     <div class="tw-w-[25%] mb-3">
         <label for="tipoVeiculo">Tipo veículo</label>
-        <livewire:select-component type="typesVehicle" placeholder="Selecione" name="typesVehicle[]" selected="{{$data->service->vehicleType->id}}"/>
+        <livewire:select-component type="typesVehicle" placeholder="Selecione" name="typesVehicle[]" selected="{{$data?->service?->vehicleType?->id  ?? null}}"/>
     </div>
     <div class="tw-w-[15%] mb-3">
         <label for="vehiclesCategory[]">Categoria</label>
-        <livewire:select-component type="vehiclesCategory" placeholder="Selecione" name="vehiclesCategory[]" id="vehiclesCategory" selected="{{$data->service->categoryEspec->id}}" />
+        <livewire:select-component type="vehiclesCategory" placeholder="Selecione" name="vehiclesCategory[]" id="vehiclesCategory" selected="{{$data?->service?->categoryEspec?->id ?? null}}" />
     </div>
     <div class="tw-w-[15%] mb-3">
         <label for="blindado">Blindado</label>

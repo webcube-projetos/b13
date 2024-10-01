@@ -27,6 +27,7 @@ class SelectComponent extends Component
     public $filterByTypeId = null;
     public $target = null;
 
+
     public function mount($type, $placeholder, $name, $selected, $filterByTypeId = null)
     {
         $this->type = $type;
