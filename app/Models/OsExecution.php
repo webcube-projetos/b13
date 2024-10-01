@@ -28,4 +28,9 @@ class OsExecution extends Model
         'parking',
         'another_expenses',
     ];
+
+    public function motorista()
+    {
+        return $this->hasOne(OsEmployeeVehicle::class, 'id', 'id_employee_vehicle');
+    }
 }

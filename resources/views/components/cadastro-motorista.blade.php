@@ -14,12 +14,12 @@
         </div>
     </div>
     <div class="mb-3 tw-w-[25%] tw-pr-[8px]">
-      <label for="inicio">Início</label>
-      <input type="date" class="form-control" name="inicio[]" id="inicio" maxlength="30" required>
+      <label for="start">Início</label>
+      <input type="date" class="form-control" wire:model="start" name="start[]" id="start" maxlength="30" required>
     </div>
     <div class="mb-3 tw-w-[25%] tw-pr-[8px]">
-        <label for="termino">Término</label>
-        <input type="date" class="form-control" name="termino[]" id="termino" maxlength="30" required>
+        <label for="end">Término</label>
+        <input type="date" class="form-control" wire:model="end" name="end[]" id="end" maxlength="30" required>
     </div>
     <div class="mb-3 tw-w-[50%]">
         <label for="company">Empresa</label>
@@ -30,8 +30,8 @@
             placeholder="Selecione a empresa"    
             name="empresas[]" 
             id="empresas"
-            selected="{{data_get($motorista, 'motorista.empresas')}}" 
-        />
+            selected="${{$empresas ?? null}}" 
+        /> 
     </div>
     <div class="mb-3 tw-w-[25%] tw-pr-[8px]">
         <label for="modeloVeiculo">Modelo de veículo</label>
@@ -42,12 +42,13 @@
             placeholder="Selecione o modelo do veículo" 
             name="vehicleModel[]" 
             id="vehicleModel" 
-            :selected="$vehicleModel ?? ''" 
-            :filter-by-type="$typesVehicle ?? ''"
-        />
+            :selected="$vehicles ?? null" 
+            :filter-by-type="$typesVehicle ?? ''"  
+        /> 
     </div>
     <div class="mb-3 tw-w-[25%] tw-pr-[8px]">
         <label for="servico">Língua</label>
+        @dd($languages)
         <livewire:select-component
             wire:key="employeeLanguage-{{data_get($motorista, 'id')}}"
             type="languages"
@@ -55,7 +56,7 @@
             placeholder="Selecione a língua"
             name="employeeLanguage[]"
             id="employeeLanguage"
-            selected=''
+            selected='{{$languages ?? null}}'
          />
     </div>
     <div class="mb-3 tw-w-[25%] tw-pr-[8px]">
@@ -67,7 +68,7 @@
             placeholder="Selecione a especialidade"
             name="employeeSpeciality[]"
             id="employeeSpeciality"
-            selected='' 
+            selected='{{$especialization_general ?? null}}' 
         />
     </div>
     <div class="mb-3 tw-w-[25%]">
@@ -79,7 +80,7 @@
             placeholder="Selecione o motorista"
             name="employee[]"
             id="employee"
-            selected='' 
+            selected='{{$employee_driver ?? null}}' 
         />
     </div>
   

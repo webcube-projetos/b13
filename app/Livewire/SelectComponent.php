@@ -26,13 +26,15 @@ class SelectComponent extends Component
     public $type;
     public $filterByTypeId = null;
     public $target = null;
+    public $targetClass = null;
 
-
-    public function mount($type, $placeholder, $name, $selected, $filterByTypeId = null)
+    public function mount($type, $placeholder, $name, $selected, $filterByTypeId = null, $targetClass = null)
     {
         $this->type = $type;
         $this->name = $name;
         $this->selected = $selected ?? null;
+        $this->targetClass = $targetClass;
+
         $this->options = match ($type) {
             'especialization' => $this->especialization(),
             'especialization_primary' => $this->especialization(true),
@@ -267,6 +269,10 @@ class SelectComponent extends Component
     {
         if ($this->target) {
             return $this->dispatch('selectUpdated', $this->type, $value, $this->target);
+        }
+
+        if ($this->targetClass) {
+            return $this->dispatch('selectUpdated', $this->type, $value)->to($this->targetClass);
         }
 
         $this->dispatch('selectUpdated', $this->type, $value);
