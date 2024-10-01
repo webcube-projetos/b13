@@ -75,7 +75,14 @@ class MotoristaItem extends Component
             $os = OsService::find($this->serviceId)->os->id;
 
             if (!$motoristas) {
-                $motoristas = new OsEmployeeVehicle();
+                $motoristas = OsEmployeeVehicle::where('start', $this->start)
+                    ->where('end', $this->end)
+                    ->where('id_service_os', $this->serviceId)
+                    ->first();
+
+                if (!$motoristas) {
+                    $motoristas = new OsEmployeeVehicle();
+                }
             }
 
             $motoristas->fill(
@@ -95,7 +102,6 @@ class MotoristaItem extends Component
             $startDate = Carbon::parse($this->start);
             $endDate = Carbon::parse($this->end);
 
-
             while ($startDate->lte($endDate)) {
                 OsExecution::firstOrCreate([
                     'id_employee_vehicle' => $motoristas->id,
@@ -104,6 +110,8 @@ class MotoristaItem extends Component
 
                 $startDate->addDay();
             }
+
+            $this->dispatch('reload-executions');
         }
     }
 

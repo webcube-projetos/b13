@@ -22,4 +22,9 @@ class OsEmployeeVehicle extends Model
         'start',
         'end'
     ];
+
+    public function executions()
+    {
+        return $this->hasMany(OsExecution::class, 'id_employee_vehicle', 'id');
+    }
 }

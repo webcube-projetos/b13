@@ -1,15 +1,56 @@
-<div class="row linha-add position-relative">
+<div class="row linha-add position-relative" x-data="{ showFilters: false}">
     <div class="col-12">
         <div class="row align-items-center">
-            <div class="col-12 text-end">
+            {{-- <div class="col-12 text-end">
                 <a href="#" class="btn bg-gradient-dark btn-md mt-4 mb-4">Adicionar rota</a>
+            </div> --}}
+
+            <div class="col-12">
+                <button x-on:click="$event.preventDefault(); showFilters = !showFilters" class="tw-px-[16px] btn bg-dark mt-4 mb-0 text-white tw-w-[150px]"><i class="fa fa-bars"></i> FILTROS</button>
+        
+                <div x-transition x-show="showFilters" class="filtros tw-flex tw-justify-start tw-mt-[16px] tw-w-full tw-gap-[16px] tw-mx-auto">
+                    <input type="date" name="data" wire:model.live="dataPesquisa" class="form-control d-block tw-w-[25%]" >
+                    <div class="tw-w-[25%]">
+                        <livewire:select-component 
+                            type="employee_driver" 
+                            placeholder="Selecione o motorista"
+                            name="employee_driver" 
+                            filterByTypeId=''
+                            targetClass="{{$targetClass}}"
+                            selected="" 
+                        />
+                    </div>
+                    <div class="tw-w-[25%]">
+                        <livewire:select-component 
+                            type="vehicles_plate" 
+                            placeholder="Selecione o modelo do veículo" 
+                            name="vehicleModel[]" 
+                            id="vehicleModel" 
+                            filterByTypeId=''
+                            targetClass="{{$targetClass}}"
+                            selected="" 
+                        />
+                    </div>
+                    <div class="tw-w-[25%]">
+                        <livewire:select-component 
+                            type="empresas" 
+                            placeholder="Selecione a empresa" 
+                            name="empresas[]" 
+                            id="empresas" 
+                            filterByTypeId=''
+                            targetClass="{{$targetClass}}"
+                            selected="" 
+                        />
+                    </div>
+                </div>
             </div>
+            
         </div>
     </div>
 
     <div class="col-12">
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped !tw-mt-[12px]">
                 <thead>
                     <tr>
                         <th scope="col">Dia</th>
@@ -40,4 +81,3 @@
         </div>
     </div>
 </div>  
-  

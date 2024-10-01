@@ -40,6 +40,7 @@ class MotoristaList extends Component
         $motorista = OsEmployeeVehicle::find($motoristaId);
 
         if ($motorista) {
+            $motorista->executions()->delete();
             $motorista->delete();
         }
 
@@ -48,6 +49,7 @@ class MotoristaList extends Component
         }));
 
         $this->motoristas = $motoristas;
+        $this->dispatch('reload-executions');
     }
 
     public function render()

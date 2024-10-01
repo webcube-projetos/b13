@@ -39,6 +39,7 @@ class TabServicos extends Component
         $osService->os->fill($service)->save();
 
         $this->dispatch('os-service-created', $osService->id);
+        $this->dispatch('reload-executions');
     }
 
 
