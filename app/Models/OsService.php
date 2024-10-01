@@ -39,4 +39,14 @@ class OsService extends Model
     {
         return $this->hasOne(Service::class, 'id', 'id_service');
     }
+
+    public function os()
+    {
+        return $this->hasOne(OS::class, 'id', 'id_os');
+    }
+
+    public function motoristas()
+    {
+        return $this->hasMany(OsEmployeeVehicle::class, 'id_service_os', 'id');
+    }
 }

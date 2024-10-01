@@ -26,6 +26,7 @@ class Services extends Component
     #[On('valoresCreated')]
     public function handleValoresCreated($id, $data)
     {
+        $this->skipRender();
         if ($id == $this->serviceId) {
             $this->service = array_merge($this->service, $data);
             $this->valoresComplete = true;
@@ -36,6 +37,7 @@ class Services extends Component
     #[On('servicoCreated')]
     public function handleServicoCreated($id, $data)
     {
+        $this->skipRender();
         if ($id == $this->serviceId) {
             $this->service = array_merge($this->service, $data);
             $this->servicoComplete = true;
@@ -49,8 +51,6 @@ class Services extends Component
             $this->dispatch('OScreated', $this->serviceId, $this->service);
         }
     }
-
-
 
     public function render()
     {

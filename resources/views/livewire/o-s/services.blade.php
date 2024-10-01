@@ -41,7 +41,7 @@
                     </h2>
                     <div id="panelsStayOpen-collapseThree-{{$serviceId}}" class="accordion-collapse collapse tw-bg-[#ffffff73] tw-p-[10px]" aria-labelledby="panelsStayOpen-headingThree-{{$serviceId}}"> 
                         <div class="accordion-body tw-p-0">
-                            <livewire:o-s.motorista-list wire:key="motoristas-{{$serviceId}}" />
+                            <livewire:o-s.motorista-list wire:key="motoristas-{{$serviceId}}" :serviceId="$serviceId" />
                         </div>
                     </div>
                 </div>
