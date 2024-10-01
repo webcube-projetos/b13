@@ -28,9 +28,9 @@
                                 <div class="col-lg-9 text-end mb-4">
                                     @if ($id)
                                         <a href="{{ route('orcamentos.gerarOrcamento', ['osId' => $id]) }}" class="btn btn-gradient-primary">Gerar PDF</a>
+                                        <a wire:click="sendOrcamento" class="btn btn-dark">Enviar Orçamento</a>
+                                        <a wire:click="converterParaOS" class="btn bg-gradient-primary">Converter para O.S</a>
                                     @endif
-                                    <a href="#" class="btn btn-dark">Converter para O.S</a>
-                                    <a wire:click="sendOrcamento" class="btn btn-dark">Enviar Orçamento</a>
                                 </div>
                                 @foreach ($dados['sessions'] as $key => $group)
                                     @include('register.formRegister')

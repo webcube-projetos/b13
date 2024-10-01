@@ -34,8 +34,6 @@ class CampoServico extends Component
     //Recebe as informações do serviço existente
     public $serviceTemp = null;
 
-    public $vehiclesOptions = null;
-
     public $serviceId;
     public $type;
     public $idGlobal;
@@ -62,9 +60,6 @@ class CampoServico extends Component
             $this->nomeServicoIngles = $data->nomeServicoIngles ?? '';
             $this->data = $data;
         }
-
-        $this->updateVehiclesOptions(); // Inicializar as opções de veículos
-
     }
 
     #[On('saveOS')]
@@ -86,24 +81,6 @@ class CampoServico extends Component
         ];
 
         $this->dispatch('servicoCreated', $this->serviceId, $data);
-    }
-
-    public function updatedTypesVehicle()
-    {
-        $this->updateVehiclesOptions(); // Atualizar as opções quando typesVehicle mudar
-    }
-
-    private function updateVehiclesOptions()
-    {
-        if ($this->id_vehicle) {
-            $this->vehiclesOptions = Vehicle::select('vehicles.id', 'vehicles.plate', 'vehicle_brands.name as brand_name', 'vehicles.model')
-                ->join('vehicle_brands', 'vehicles.id_brand', '=', 'vehicle_brands.id')
-                ->where('vehicles.id_type', $this->id_vehicle) // Filtrar pelo tipo de veículo
-                ->orderBy('vehicle_brands.name', 'asc')
-                ->get();
-        } else {
-            $this->vehiclesOptions = []; // Limpar as opções se nenhum tipo de veículo for selecionado
-        }
     }
 
     #[On('selectUpdated')]

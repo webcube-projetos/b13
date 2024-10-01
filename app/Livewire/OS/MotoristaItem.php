@@ -13,7 +13,6 @@ class MotoristaItem extends Component
 {
     public $motorista;
     public $index;
-
     public $empresas;
     public $languages;
     public $vehicles;

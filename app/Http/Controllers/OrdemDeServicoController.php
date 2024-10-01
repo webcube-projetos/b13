@@ -38,7 +38,7 @@ class OrdemDeServicoController extends Controller
 
     public function listar()
     {
-        $dados = $this->query()->paginate(10);
+        $dados = $this->query()->where('status', 5)->paginate(10);
 
         [$config, $header] = $this->montarPagina('os');
 
