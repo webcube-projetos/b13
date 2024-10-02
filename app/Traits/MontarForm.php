@@ -502,7 +502,7 @@ trait MontarForm
                         'container_class' => 'col-md-3',
                         'label' => 'Categoria',
                         'type' => 'selectComponent',
-                        'typeSelect' => 'categoryVehicle',
+                        'typeSelect' => 'vehiclesCategory',
                         'placeholder' => '',
                         'route' => 'CategoriaController',
                         'required' => true,

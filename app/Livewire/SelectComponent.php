@@ -268,12 +268,17 @@ class SelectComponent extends Component
     public function updatedSelected($value)
     {
         if ($this->target) {
+            if ($this->targetClass) {
+                return $this->dispatch('selectUpdated', $this->type, $value, $this->target)->to($this->targetClass);
+            }
+
             return $this->dispatch('selectUpdated', $this->type, $value, $this->target);
         }
 
         if ($this->targetClass) {
-            return $this->dispatch('selectUpdated', $this->type, $value)->to($this->targetClass);
+            return $this->dispatch('selectUpdated', $this->type, $value, $this->target)->to($this->targetClass);
         }
+
 
         $this->dispatch('selectUpdated', $this->type, $value);
     }

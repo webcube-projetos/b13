@@ -43,7 +43,7 @@
 				placeholder="Selecione o modelo do veículo" 
 				name="vehicleModel[]" 
 				id="vehicleModel" 
-				:selected="$vehicles ?? null" 
+				:selected="$vehicles_plate ?? null" 
 				:filter-by-type="$typesVehicle ?? ''"  
 			/> 
 		</div>
@@ -80,6 +80,7 @@
 				placeholder="Selecione o motorista"
 				name="employee[]"
 				id="employee"
+				targetClass="{{$targetClass}}"
 				selected='{{$employee_driver ?? null}}' 
 			/>
 		</div>

@@ -37,7 +37,7 @@ class TabExecucao extends Component
             })
             ->whereHas('motorista', function ($query) {
                 $query->when($this->employee_driver, function ($query) {
-                    $query->where('id_employee_driver', $this->employee_driver);
+                    $query->where('id_employee', $this->employee_driver);
                 })
                     ->when($this->vehicles_plate, function ($query) {
                         $query->where('id_vehicle', $this->vehicles_plate);
