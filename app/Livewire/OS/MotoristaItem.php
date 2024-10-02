@@ -15,7 +15,7 @@ class MotoristaItem extends Component
     public $index;
     public $empresas;
     public $languages;
-    public $vehicles;
+    public $vehicles_plate;
     public $especialization_general;
     public $employee_driver;
     public $start;
@@ -23,6 +23,8 @@ class MotoristaItem extends Component
 
     public $serviceId;
     public $motoristaId;
+
+    public $targetClass = MotoristaItem::class;
 
     public function mount($motorista = null)
     {
@@ -35,7 +37,7 @@ class MotoristaItem extends Component
             if ($motoristaCadastrado) {
                 $this->empresas = $motoristaCadastrado->id_company ?? '';
                 $this->languages = $motoristaCadastrado->language;
-                $this->vehicles = $motoristaCadastrado->id_vehicle;
+                $this->vehicles_plate = $motoristaCadastrado->id_vehicle;
                 $this->especialization_general = $motoristaCadastrado->speciality;
                 $this->employee_driver = $motoristaCadastrado->id_employee;
                 $this->start = $motoristaCadastrado->start;
@@ -52,7 +54,7 @@ class MotoristaItem extends Component
     #[On('selectUpdated')]
     public function handleSelectUpdated($type, $value, $target = null)
     {
-        if (!in_array($type, ['empresas', 'languages', 'vehicles', 'especialization_general', 'employee_driver'])) {
+        if (!in_array($type, ['empresas', 'languages', 'vehicles_plate', 'especialization_general', 'employee_driver'])) {
             return $this->skipRender();
         }
 
@@ -90,7 +92,7 @@ class MotoristaItem extends Component
                     'end' => $this->end,
                     'id_company' => $this->empresas,
                     'language' => $this->languages,
-                    'vehicles' => $this->vehicles,
+                    'id_vehicle' => $this->vehicles_plate,
                     'speciality' => $this->especialization_general,
                     'id_employee' => $this->employee_driver,
                     'id_service_os' => $this->serviceId,

@@ -120,15 +120,6 @@
 
             $wire.dispatch('reload-executions');
             const tabs = document.querySelectorAll('#myTab .nav-link');
-            const contents = document.querySelectorAll('#myTabContent2 .tab-pane');
-
-            tabs[0].classList.remove('active');
-            contents[0].classList.remove('show');
-            contents[0].classList.remove('active');
-
-            tabs[1].classList.add('active');
-            contents[1].classList.add('active');
-            contents[1].classList.add('show');
             
         });
     </script>

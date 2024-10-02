@@ -72,8 +72,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($execucoes as $execucao)
-                        <livewire:o-s.linhas-execucao :execucao="$execucao" wire:key="{{$execucao->id}}">
+                    <?php $day = 0; ?>
+                    @foreach($execucoes->groupBy('date') as $datas)
+                        <?php $day++; ?>
+                        @foreach($datas as $execucao)
+                            <livewire:o-s.linhas-execucao 
+                                :execucao="$execucao" 
+                                :day="$day" 
+                                wire:key="{{$execucao->id}}"
+                            >
+                        @endforeach
                     @endforeach
   
                 </tbody>
