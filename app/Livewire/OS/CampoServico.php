@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OS;
 
+use App\Models\Category;
 use App\Models\OsService;
 use App\Models\Service;
 use App\Models\Vehicle;
@@ -137,6 +138,8 @@ class CampoServico extends Component
 
     public function render()
     {
-        return view('livewire.o-s.campo-servico');
+        $serviceTypes = Category::where('type', 3)->get();
+
+        return view('livewire.o-s.campo-servico', compact('serviceTypes'));
     }
 }

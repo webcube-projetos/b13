@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\FakeModel;
 use App\Models\OS;
 use App\Traits\MontarPagina;

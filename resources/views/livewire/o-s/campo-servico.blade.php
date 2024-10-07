@@ -19,12 +19,10 @@
         <label for="qtdDias">Qtd. Veículos</label>
         <input type="number" class="form-control" wire:model="qtdServices" name="qtdServices[]" id="qtdServices" required>
     </div>
-
     <div class="tw-w-[25%] mb-3">
         <label for="servico">Tipo de Serviço</label>
-        <livewire:select-component type="categoryService" placeholder="Selecione o serviço" name="categoryService[]" id="categoryService" selected='{{$data?->service?->categoryService?->id ?? null}}' />
+        <x-os.select-categories :options="$serviceTypes" :name="'idCategoryService[]'" :id="'idCategoryService'"/>
     </div>
-
     <div class="tw-w-[25%] mb-3">
         <label for="tipoVeiculo">Tipo veículo</label>
         <livewire:select-component type="typesVehicle" placeholder="Selecione" name="typesVehicle[]" selected="{{$data?->service?->vehicleType?->id  ?? null}}"/>
