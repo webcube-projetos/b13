@@ -42,6 +42,7 @@ class LinhasExecucao extends Component
         $this->date = Carbon::parse($execucao->date)->format('Y-m-d');
 
         $this->start_time = $execucao->start_time;
+        $this->identification = $execucao->identification;
         $this->end_time = $execucao->end_time;
         $this->exceed_time = $execucao->exceed_time;
         $this->km_start = $execucao->km_start;
