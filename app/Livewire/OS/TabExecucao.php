@@ -36,6 +36,11 @@ class TabExecucao extends Component
         }
     }
 
+    public function updatedDataPesquisa($value)
+    {
+        $this->loadExecutions();
+    }
+
     public function loadExecutions()
     {
         $servicos = OsEmployeeVehicle::where('id_os', $this->id)->get();
