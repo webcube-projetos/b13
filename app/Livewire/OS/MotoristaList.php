@@ -39,10 +39,12 @@ class MotoristaList extends Component
     {
         $motorista = OsEmployeeVehicle::find($motoristaId);
 
-        if ($motorista) {
-            $motorista->executions()->delete();
-            $motorista->delete();
+        if (!$motorista) {
+            return;
         }
+
+        $motorista->executions()->delete();
+        $motorista->delete();
 
         $motoristas = array_values(array_filter($this->motoristas, function ($motorista) use ($motoristaId) {
             return $motorista['id'] != $motoristaId;

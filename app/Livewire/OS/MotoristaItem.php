@@ -103,6 +103,13 @@ class MotoristaItem extends Component
             $startDate = Carbon::parse($this->start);
             $endDate = Carbon::parse($this->end);
 
+            $execucoesCadastradas = OsExecution::where('id_employee_vehicle', $motoristas->id)->get();
+
+            $execucoesExcluidas = $execucoesCadastradas->whereNotBetween('date', [$startDate, $endDate]);
+            foreach ($execucoesExcluidas as $execucao) {
+                $execucao->delete();
+            }
+
             while ($startDate->lte($endDate)) {
                 OsExecution::firstOrCreate([
                     'id_employee_vehicle' => $motoristas->id,

@@ -61,7 +61,7 @@
                         <th scope="col">Motorista</th>
                         <th scope="col">Início</th>
                         <th scope="col">Término</th>
-                        <th scope="col">Execdias</th>
+                        <th scope="col">Excedidos</th>
                         <th scope="col">KM Inicial</th>
                         <th scope="col">KM Final</th>
                         <th scope="col">KM Percorridos</th>
@@ -72,18 +72,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $day = 0; ?>
-                    @foreach($execucoes->groupBy('date') as $datas)
-                        <?php $day++; ?>
-                        @foreach($datas as $execucao)
+                    @foreach($execucoes as $index => $execucao)
                             <livewire:o-s.linhas-execucao 
                                 :execucao="$execucao" 
-                                :day="$day" 
-                                wire:key="{{$execucao->id}}"
-                            >
-                        @endforeach
+                                :day="1"
+                                :key="'execution-'.$execucao->id.'-'.$index"
+                            />
                     @endforeach
-  
                 </tbody>
             </table>
         </div>
