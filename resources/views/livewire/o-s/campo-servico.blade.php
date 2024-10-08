@@ -13,7 +13,7 @@
     </div>
     <div class="tw-w-[15%] mb-3">
         <label for="qtdHoras">Qtd. Horas</label>
-        <input type="number" min="0" class="form-control" wire:model="qtdHoras" name="qtdHoras[]" id="qtdHoras" required>
+        <input type="number" min="0" class="form-control" wire:model.live="qtdHoras" name="qtdHoras[]" id="qtdHoras" required>
     </div>
     <div class="tw-w-[15%] mb-3">
         <label for="qtdDias">Qtd. Veículos</label>
