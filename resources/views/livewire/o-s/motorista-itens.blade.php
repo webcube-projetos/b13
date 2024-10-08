@@ -31,6 +31,7 @@
 				placeholder="Selecione a empresa"    
 				name="empresas[]" 
 				id="empresas"
+				targetClass="{{$targetClass}}"
 				selected="{{$empresas ?? null}}" 
 			/> 
 		</div>
@@ -45,6 +46,7 @@
 				id="vehicleModel" 
 				:selected="$vehicles_plate ?? null" 
 				:filter-by-type="$typesVehicle ?? ''"  
+				targetClass="{{$targetClass}}"
 			/> 
 		</div>
 		<div class="mb-3 tw-w-[25%] tw-pr-[8px]">
@@ -57,6 +59,7 @@
 				name="employeeLanguage[]"
 				id="employeeLanguage"
 				selected='{{$languages ?? null}}'
+				targetClass="{{$targetClass}}"
 			/>
 		</div>
 		<div class="mb-3 tw-w-[25%] tw-pr-[8px]">
@@ -69,6 +72,7 @@
 				name="employeeSpeciality[]"
 				id="employeeSpeciality"
 				selected='{{$especialization_general ?? null}}' 
+				targetClass="{{$targetClass}}"
 			/>
 		</div>
 		<div class="mb-3 tw-w-[25%]">
@@ -82,6 +86,7 @@
 				id="employee"
 				targetClass="{{$targetClass}}"
 				selected='{{$employee_driver ?? null}}' 
+				targetClass="{{$targetClass}}"
 			/>
 		</div>
 	
