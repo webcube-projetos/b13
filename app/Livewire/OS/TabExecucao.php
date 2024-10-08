@@ -4,14 +4,14 @@ namespace App\Livewire\OS;
 
 use App\Models\OsEmployeeVehicle;
 use App\Models\OsExecution;
-use App\Models\OsService;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Illuminate\Support\Collection;
 
 class TabExecucao extends Component
 {
     public $id;
-    public $execucoes;
+    public Collection $execucoes;
     public $dataPesquisa;
     public $employee_driver;
     public $vehicles_plate;
@@ -21,14 +21,28 @@ class TabExecucao extends Component
     public function mount($id = null)
     {
         $this->id = $id;
+        $this->execucoes = collect();
         $this->targetClass = TabExecucao::class;
 
-        $this->getExecutions();
+        $this->loadExecutions();
     }
 
-    public function getExecutions()
+    #[On('selectUpdated')]
+    public function handleSelectUpdated($type, $value)
     {
-        $this->execucoes = [];
+        if (in_array($type, ['employee_driver', 'vehicles_plate', 'empresas'])) {
+            $this->{$type} = $value;
+            $this->loadExecutions();
+        }
+    }
+
+    public function updatedDataPesquisa($value)
+    {
+        $this->loadExecutions();
+    }
+
+    public function loadExecutions()
+    {
         $servicos = OsEmployeeVehicle::where('id_os', $this->id)->get();
 
         $this->execucoes = OsExecution::whereIn('id_employee_vehicle', $servicos->pluck('id'))
@@ -51,24 +65,13 @@ class TabExecucao extends Component
     }
 
     #[On('reload-executions')]
-    public function saveOS()
+    public function reloadExecutions()
     {
-        $this->getExecutions();
-        $this->render();
+        $this->loadExecutions();
     }
-
-    #[On('selectUpdated')]
-    public function handleSelectUpdated($type, $value)
-    {
-        if (in_array($type, ['employee_driver', 'vehicles_plate', 'empresas'])) {
-            $this->{$type} = $value;
-        }
-    }
-
 
     public function render()
     {
-        $this->getExecutions();
         return view('livewire.o-s.tab-execucao');
     }
 }
