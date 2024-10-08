@@ -39,9 +39,13 @@ class CampoServico extends Component
     public $type;
     public $idGlobal;
 
-    public function mount($serviceId = null)
+    public $targetClass = CampoServico::class;
+
+    public function mount($serviceId = null, $type = null, $serviceTemp = null)
     {
         $this->serviceId = $serviceId;
+        $this->type = $type;
+        $this->serviceTemp = $serviceTemp;
         $data = OsService::find($this->serviceId);
 
         if ($data) {
@@ -87,35 +91,54 @@ class CampoServico extends Component
     #[On('selectUpdated')]
     public function handleSelectUpdated($type, $value)
     {
+        //dd('Handle: ', $type);
         if (in_array($type, ['empresas', 'languages', 'vehicles', 'employeeSpeciality', 'employee_driver'])) {
             return $this->skipRender();
         }
-
+    
+        if (in_array($type, ['categoryService', 'vehiclesCategory', 'typesVehicle', 'securityType', 'armored', 'bilingue', 'driver'])) {
+            $this->updateServiceData();
+        }
+    
         $this->{$type} = $value;
-        $this->updateServiceData();
     }
-
+    
+    public function updated($property)
+    {
+        // Ignora as propriedades que o 'handleSelectUpdated' já está gerenciando
+        if (in_array($property, ['categoryService', 'vehiclesCategory', 'typesVehicle', 'securityType', 'armored', 'bilingue', 'driver'])) {
+            return;
+        }
+    
+        // Executa a lógica apenas para 'qtdHoras'
+        if (in_array($property, ['qtdHoras'])) {
+            $this->updateServiceData();
+        }
+    }
+    
     public function updateServiceData()
     {
         $this->serviceTemp = $this->buscarServicoCadastrado();
+        dd($this->serviceTemp);
         if ($this->serviceTemp && $this->serviceTemp->price > 0) {
-            $this->dispatch('preencherCamposDoServico');
+            $this->dispatch('preencherCamposDoServico', $this->serviceTemp);
         } else {
             $this->dispatch('zerarCamposDoServico');
             $this->servicoCadastrado = 2;
         }
     }
 
-    public function updated($property)
-    {
-        if (in_array($property, ['categoryService', 'vehiclesCategory', 'typesVehicle', 'securityType', 'armored', 'bilingue', 'qtdHoras', 'driver'])) {
-            $this->updateServiceData();
-        }
-    }
-
     private function buscarServicoCadastrado()
     {
-        if ($this->type == 'Locação') {
+        if ($this->type == 'Locação') {
+            /*dd(
+                'Category Service:', $this->id_category_service, 
+                ' Category Espec:', $this->id_category_espec,
+                ' Id Vehicle:', $this->id_vehicle, 
+                ' Blindado Armado:', $this->armored,
+                ' Bilingual:', $this->bilingue, 
+                ' Time:', $this->qtdHoras
+            );*/
             // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
             return Service::where('id_category_service', $this->id_category_service)
                 ->where('id_category_espec', $this->id_category_espec)
@@ -125,6 +148,13 @@ class CampoServico extends Component
                 ->where('time', $this->qtdHoras)
                 ->first(); // Retorna o primeiro serviço encontrado ou null
         } else {
+            /*dd(
+                'Category Service:', $this->id_category_service, 
+                ' Category Espec:', $this->id_category_espec,
+                ' Blindado Armado:', $this->armored,
+                ' Bilingual:', $this->bilingue, 
+                ' Time:', $this->qtdHoras
+            );*/
             // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
             return Service::where('id_category_service', $this->id_category_service)
                 ->where('id_category_espec', $this->securityType)

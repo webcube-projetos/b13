@@ -15,7 +15,12 @@
                     </h2>
                     <div id="panelsStayOpen-collapseOne-{{$serviceId}}" class="accordion-collapse collapse show tw-bg-[#ffffff73]" aria-labelledby="panelsStayOpen-headingOne-{{$serviceId}}">
                         <div class="accordion-body">
-                            <livewire:o-s.campo-servico wire:key="servicos-{{$serviceId}}" :serviceId="$serviceId" />
+                            <livewire:o-s.campo-servico 
+                                wire:key="servicos-{{$serviceId}}" 
+                                :type="$type" 
+                                :serviceType="$serviceTemp"
+                                :serviceId="$serviceId" 
+                            />
                         </div>
                     </div>
                 </div>
@@ -28,7 +33,11 @@
                     </h2>
                     <div id="panelsStayOpen-collapseTwo-{{$serviceId}}" class="accordion-collapse collapse tw-bg-[#ffffff73]" aria-labelledby="panelsStayOpen-headingTwo-{{$serviceId}}">
                         <div class="accordion-body">
-                            <livewire:o-s.campo-valores :serviceId="$serviceId" wire:key="servicos-{{$serviceId}}" />
+                            <livewire:o-s.campo-valores 
+                                :serviceId="$serviceId"
+                                :serviceType="$serviceTemp"
+                                wire:key="servicos-{{$serviceId}}" 
+                            />
                         </div>
                     </div>
                 </div>
@@ -41,7 +50,10 @@
                     </h2>
                     <div id="panelsStayOpen-collapseThree-{{$serviceId}}" class="accordion-collapse collapse tw-bg-[#ffffff73] tw-p-[10px]" aria-labelledby="panelsStayOpen-headingThree-{{$serviceId}}"> 
                         <div class="accordion-body tw-p-0">
-                            <livewire:o-s.motorista-list wire:key="motoristas-{{$serviceId}}" :serviceId="$serviceId" />
+                            <livewire:o-s.motorista-list 
+                                wire:key="motoristas-{{$serviceId}}" 
+                                :serviceId="$serviceId" 
+                            />
                         </div>
                     </div>
                 </div>
@@ -80,7 +92,6 @@
                 </div>
             </div>
         </div>
-    
     @else 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">

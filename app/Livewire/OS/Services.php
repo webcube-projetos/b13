@@ -31,6 +31,7 @@ class Services extends Component
         $this->bilingue = $this->bilingue;
         $this->armored = $this->armored;
         $this->driver = $this->driver;
+        $this->serviceTemp = $this->serviceTemp ?? null;
         $this->servicoCadastrado = $this->servicoCadastrado;
     }
 

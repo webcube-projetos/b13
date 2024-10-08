@@ -19,10 +19,13 @@ class CampoValores extends Component
     public $horaExtraEmployee;
     public $osService;
     public $serviceId;
+    public $serviceTemp = null;
     public $servicoCadastrado = null;
 
-    public function mount($serviceId = null)
+    public function mount($serviceId = null, $serviceTemp = null)
     {
+        $this->serviceTemp = $serviceTemp;
+
         if ($serviceId) {
             $this->osService = OsService::find($serviceId);
 
@@ -60,21 +63,28 @@ class CampoValores extends Component
 
 
     #[On('preencherCamposDoServico')]
-    public function preencherCamposDoServico()
+    public function preencherCamposDoServico($serviceTemp)
     {
+        if (is_array($serviceTemp)) {
+            // Converte o array de volta para o modelo Eloquent
+            $clonedService = new \App\Models\Service($serviceTemp);
+        } else {
+            // Se já for um objeto, clona normalmente
+            $clonedService = clone $serviceTemp;
+        }
+
         $this->servicoCadastrado = 1;
+        //dd($this->serviceTemp );
 
-        $clonedService = clone $this->serviceTemp;
-
-        $this->precoBase = $this->serviceTemp->price;
-        $this->horaExtra = $this->serviceTemp->extra_price;
-        $this->kmBase = $this->serviceTemp->km;
-        $this->kmExtra = $this->serviceTemp->km_extra;
-        $this->custoParceiro = $this->serviceTemp->partner_cost;
-        $this->extraParceiro = $this->serviceTemp->partner_extra_time;
-        $this->kmExtraParceiro = $this->serviceTemp->partner_extra_km;
-        $this->custoEmployee = $this->serviceTemp->employee_cost;
-        $this->horaExtraEmployee = $this->serviceTemp->employee_extra;
+        $this->precoBase = $clonedService->price;
+        $this->horaExtra = $clonedService->extra_price;
+        $this->kmBase = $clonedService->km;
+        $this->kmExtra = $clonedService->km_extra;
+        $this->custoParceiro = $clonedService->partner_cost;
+        $this->extraParceiro = $clonedService->partner_extra_time;
+        $this->kmExtraParceiro = $clonedService->partner_extra_km;
+        $this->custoEmployee = $clonedService->employee_cost;
+        $this->horaExtraEmployee = $clonedService->employee_extra;
     }
 
     #[On('zerarCamposDoServico')]

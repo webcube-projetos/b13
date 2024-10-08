@@ -13,7 +13,7 @@
     </div>
     <div class="tw-w-[15%] mb-3">
         <label for="qtdHoras">Qtd. Horas</label>
-        <input type="number" min="0" class="form-control" wire:model="qtdHoras" name="qtdHoras[]" id="qtdHoras" required>
+        <input type="number" min="0" class="form-control" wire:model.live="qtdHoras" name="qtdHoras[]" id="qtdHoras" required>
     </div>
     <div class="tw-w-[15%] mb-3">
         <label for="qtdDias">Qtd. Veículos</label>
@@ -21,28 +21,54 @@
     </div>
     <div class="tw-w-[25%] mb-3">
         <label for="servico">Tipo de Serviço</label>
-        <x-os.select-categories 
-            :options="$serviceTypes" 
-            :name="'idCategoryService[]'" 
-            :id="'idCategoryService'" 
-            :selected="$data?->service?->categoryService?->id ?? null"
+        <livewire:select-component 
+            type="categoryService" 
+            placeholder="Selecione o serviço" 
+            name="categoryService[]" 
+            id="categoryService" 
+            selected='{{$data?->service?->categoryService?->id ?? null}}' 
+            targetClass="{{$targetClass}}"
         />
     </div>
     <div class="tw-w-[25%] mb-3">
         <label for="tipoVeiculo">Tipo veículo</label>
-        <livewire:select-component type="typesVehicle" placeholder="Selecione" name="typesVehicle[]" selected="{{$data?->service?->vehicleType?->id  ?? null}}"/>
+        <livewire:select-component 
+            type="typesVehicle" 
+            placeholder="Selecione" 
+            name="typesVehicle[]" 
+            selected="{{$data?->service?->vehicleType?->id  ?? null}}"
+            targetClass="{{$targetClass}}"
+        />
     </div>
     <div class="tw-w-[15%] mb-3">
         <label for="vehiclesCategory[]">Categoria</label>
-        <livewire:select-component type="vehiclesCategory" placeholder="Selecione" name="vehiclesCategory[]" id="vehiclesCategory" selected="{{$data?->service?->categoryEspec?->id ?? null}}" />
+        <livewire:select-component 
+            type="vehiclesCategory" 
+            placeholder="Selecione" 
+            name="vehiclesCategory[]" 
+            id="vehiclesCategory" selected="{{$data?->service?->categoryEspec?->id ?? null}}" 
+            targetClass="{{$targetClass}}"
+        />
     </div>
     <div class="tw-w-[15%] mb-3">
         <label for="blindado">Blindado</label>
-        <livewire:select-component type="armored" placeholder="" name="armored[]" :selected="$armored" />
+        <livewire:select-component 
+            type="armored" 
+            placeholder="" 
+            name="armored[]" 
+            :selected="$armored"
+            targetClass="{{$targetClass}}"
+        />
     </div>
     <div class="tw-w-[15%] mb-3">
         <label for="bilingue">Bilíngue</label>
-        <livewire:select-component type="bilingue" placeholder="" name="bilingue[]" :selected="$bilingue" />
+        <livewire:select-component 
+            type="bilingue" 
+            placeholder="" 
+            name="bilingue[]" 
+            :selected="$bilingue"
+            targetClass="{{$targetClass}}"
+        />
     </div>
 
     @if ($servicoCadastrado == 1)
