@@ -119,7 +119,6 @@ class CampoServico extends Component
     public function updateServiceData()
     {
         $this->serviceTemp = $this->buscarServicoCadastrado();
-        dd($this->serviceTemp);
         if ($this->serviceTemp && $this->serviceTemp->price > 0) {
             $this->dispatch('preencherCamposDoServico', $this->serviceTemp);
         } else {
