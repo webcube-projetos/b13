@@ -138,7 +138,7 @@ class CampoServico extends Component
 
     public function render()
     {
-        $serviceTypes = Category::where('type', 3)->get();
+        $serviceTypes = Category::where('type', 2)->get();
 
         return view('livewire.o-s.campo-servico', compact('serviceTypes'));
     }

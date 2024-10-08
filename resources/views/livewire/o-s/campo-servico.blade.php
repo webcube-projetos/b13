@@ -21,7 +21,12 @@
     </div>
     <div class="tw-w-[25%] mb-3">
         <label for="servico">Tipo de Serviço</label>
-        <x-os.select-categories :options="$serviceTypes" :name="'idCategoryService[]'" :id="'idCategoryService'"/>
+        <x-os.select-categories 
+            :options="$serviceTypes" 
+            :name="'idCategoryService[]'" 
+            :id="'idCategoryService'" 
+            :selected="$data?->service?->categoryService?->id ?? null"
+        />
     </div>
     <div class="tw-w-[25%] mb-3">
         <label for="tipoVeiculo">Tipo veículo</label>
