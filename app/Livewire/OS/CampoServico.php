@@ -39,12 +39,12 @@ class CampoServico extends Component
     public $type;
     public $idGlobal;
 
-    public function mount($serviceId = null)
+    public function mount($serviceId = null, $type)
     {
         $this->serviceId = $serviceId;
         $data = OsService::find($this->serviceId);
 
-        $this->type = $data->service->serviceType->name;
+        $this->type = $type;
 
         if ($data) {
             $this->inicio = $data->start ?? '';

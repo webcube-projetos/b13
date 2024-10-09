@@ -15,7 +15,11 @@
                     </h2>
                     <div id="panelsStayOpen-collapseOne-{{$serviceId}}" class="accordion-collapse collapse show tw-bg-[#ffffff73]" aria-labelledby="panelsStayOpen-headingOne-{{$serviceId}}">
                         <div class="accordion-body">
-                            <livewire:o-s.campo-servico wire:key="servicos-{{$serviceId}}" :serviceId="$serviceId" />
+                            <livewire:o-s.campo-servico 
+                                wire:key="servicos-{{$serviceId}}" 
+                                :serviceId="$serviceId" 
+                                :type="$type"
+                            />
                         </div>
                     </div>
                 </div>
