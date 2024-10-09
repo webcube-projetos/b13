@@ -24,6 +24,8 @@ class MotoristaList extends Component
     {
         $services = OsService::find($this->serviceId);
 
+        if (!$services) return;
+
         foreach ($services->motoristas as $motorista) {
             $this->motoristas[] = ['id' => $motorista->id, 'serviceId' => $this->serviceId];
         }

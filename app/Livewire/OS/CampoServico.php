@@ -44,6 +44,8 @@ class CampoServico extends Component
         $this->serviceId = $serviceId;
         $data = OsService::find($this->serviceId);
 
+        $this->type = $data->service->serviceType->name;
+
         if ($data) {
             $this->inicio = $data->start ?? '';
             $this->termino = $data->finish ?? '';
@@ -98,11 +100,13 @@ class CampoServico extends Component
     public function updateServiceData()
     {
         $this->serviceTemp = $this->buscarServicoCadastrado();
+
         if ($this->serviceTemp && $this->serviceTemp->price > 0) {
-            $this->dispatch('preencherCamposDoServico');
+            return $this->dispatch('preencherCamposDoServico', $this->serviceTemp, $this->serviceId);
         } else {
-            $this->dispatch('zerarCamposDoServico');
+            $this->serviceTemp = null;
             $this->servicoCadastrado = 2;
+            $this->dispatch('zerarCamposDoServico');
         }
     }
 
@@ -115,7 +119,7 @@ class CampoServico extends Component
 
     private function buscarServicoCadastrado()
     {
-        if ($this->type == 'Locação') {
+        if ($this->type == 'Locação') {
             // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
             return Service::where('id_category_service', $this->id_category_service)
                 ->where('id_category_espec', $this->id_category_espec)

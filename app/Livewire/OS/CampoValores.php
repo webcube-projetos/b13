@@ -60,26 +60,31 @@ class CampoValores extends Component
 
 
     #[On('preencherCamposDoServico')]
-    public function preencherCamposDoServico()
+    public function preencherCamposDoServico($serviceTemp, $serviceId)
     {
+        if ($serviceId != $this->serviceId) {
+            return;
+        }
+
+        dump($serviceTemp);
+
         $this->servicoCadastrado = 1;
 
-        $clonedService = clone $this->serviceTemp;
-
-        $this->precoBase = $this->serviceTemp->price;
-        $this->horaExtra = $this->serviceTemp->extra_price;
-        $this->kmBase = $this->serviceTemp->km;
-        $this->kmExtra = $this->serviceTemp->km_extra;
-        $this->custoParceiro = $this->serviceTemp->partner_cost;
-        $this->extraParceiro = $this->serviceTemp->partner_extra_time;
-        $this->kmExtraParceiro = $this->serviceTemp->partner_extra_km;
-        $this->custoEmployee = $this->serviceTemp->employee_cost;
-        $this->horaExtraEmployee = $this->serviceTemp->employee_extra;
+        $this->precoBase = data_get($serviceTemp, 'price');
+        $this->horaExtra = data_get($serviceTemp, 'extra_price');
+        $this->kmBase = data_get($serviceTemp, 'km');
+        $this->kmExtra = data_get($serviceTemp, 'km_extra');
+        $this->custoParceiro = data_get($serviceTemp, 'partner_cost');
+        $this->extraParceiro = data_get($serviceTemp, 'partner_extra_time');
+        $this->kmExtraParceiro = data_get($serviceTemp, 'partner_extra_km');
+        $this->custoEmployee = data_get($serviceTemp, 'employee_cost');
+        $this->horaExtraEmployee = data_get($serviceTemp, 'employee_extra');
     }
 
     #[On('zerarCamposDoServico')]
     public function zerarCamposDoServico()
     {
+        dump('zerar');
         $this->precoBase = 0;
         $this->horaExtra = 0;
         $this->kmBase = 0;
