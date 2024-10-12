@@ -63,10 +63,8 @@ class CampoValores extends Component
     public function preencherCamposDoServico($serviceTemp, $serviceId)
     {
         if ($serviceId != $this->serviceId) {
-            return;
+            return $this->skipRender();
         }
-
-        dump($serviceTemp);
 
         $this->servicoCadastrado = 1;
 
@@ -82,9 +80,12 @@ class CampoValores extends Component
     }
 
     #[On('zerarCamposDoServico')]
-    public function zerarCamposDoServico()
+    public function zerarCamposDoServico($serviceId)
     {
-        dump('zerar');
+        if ($serviceId != $this->serviceId) {
+            return $this->skipRender();
+        }
+
         $this->precoBase = 0;
         $this->horaExtra = 0;
         $this->kmBase = 0;

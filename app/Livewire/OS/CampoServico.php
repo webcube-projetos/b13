@@ -27,6 +27,7 @@ class CampoServico extends Component
     public $id_category_espec;
     public $nomeServico;
     public $nomeServicoIngles;
+    public $typesVehicle;
     /* FIM CAMPOS DE SERVIÇO */
 
     public $servicoCadastrado = null;
@@ -38,6 +39,8 @@ class CampoServico extends Component
     public $serviceId;
     public $type;
     public $idGlobal;
+    public $targetClass = CampoServico::class;
+    public $lastProcessedEvent = [];
 
     public function mount($serviceId = null, $type)
     {
@@ -56,7 +59,7 @@ class CampoServico extends Component
             $this->id_category_service = $data->service->categoryService->id ?? '';
             $this->securityType = $data->securityType ?? '';
             $this->qtdHoras = $data->time ?? '';
-            $this->id_vehicle = $data->service->vehicleType->id ?? '';
+            $this->typesVehicle = $data->service->vehicleType->id ?? '';
             $this->id_category_espec = $data->service->categoryEspec->id ?? '';
             $this->armored = $data->service->blindado_armado ?? '';
             $this->nomeServico = $data->nomeServico ?? '';
@@ -78,7 +81,7 @@ class CampoServico extends Component
             'id_category_service' => $this->id_category_service,
             'securityType' => $this->securityType,
             'time' => $this->qtdHoras,
-            'id_vehicle' => $this->id_vehicle,
+            'id_vehicle' => $this->typesVehicle,
             'id_category_espec' => $this->id_category_espec,
             'blindado_armado' => $this->armored,
         ];
@@ -87,8 +90,17 @@ class CampoServico extends Component
     }
 
     #[On('selectUpdated')]
-    public function handleSelectUpdated($type, $value)
+    public function handleSelectUpdated($type, $value, $target = null)
     {
+        if ($target) {
+            $targetParts = explode('-', $target);
+            $id = end($targetParts);
+
+            if ($id != $this->serviceId) {
+                return $this->skipRender();
+            }
+        }
+
         if (in_array($type, ['empresas', 'languages', 'vehicles', 'employeeSpeciality', 'employee_driver'])) {
             return $this->skipRender();
         }
@@ -102,17 +114,19 @@ class CampoServico extends Component
         $this->serviceTemp = $this->buscarServicoCadastrado();
 
         if ($this->serviceTemp && $this->serviceTemp->price > 0) {
+            $this->servicoCadastrado = 1;
+
             return $this->dispatch('preencherCamposDoServico', $this->serviceTemp, $this->serviceId);
         } else {
             $this->serviceTemp = null;
             $this->servicoCadastrado = 2;
-            $this->dispatch('zerarCamposDoServico');
+            $this->dispatch('zerarCamposDoServico', $this->serviceId);
         }
     }
 
     public function updated($property)
     {
-        if (in_array($property, ['categoryService', 'vehiclesCategory', 'typesVehicle', 'securityType', 'armored', 'bilingue', 'qtdHoras', 'driver'])) {
+        if (in_array($property, ['id_category_service', 'vehiclesCategory', 'typesVehicle', 'securityType', 'armored', 'bilingue', 'qtdHoras', 'driver'])) {
             $this->updateServiceData();
         }
     }
@@ -123,7 +137,7 @@ class CampoServico extends Component
             // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
             return Service::where('id_category_service', $this->id_category_service)
                 ->where('id_category_espec', $this->id_category_espec)
-                ->where('id_vehicle', $this->id_vehicle)
+                ->where('id_vehicle', $this->typesVehicle)
                 ->where('blindado_armado', $this->armored)
                 ->where('bilingual', $this->bilingue)
                 ->where('time', $this->qtdHoras)
