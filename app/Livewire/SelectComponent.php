@@ -31,6 +31,11 @@ class SelectComponent extends Component
     public function mount($type, $placeholder, $name, $selected, $filterByTypeId = null, $targetClass = null)
     {
         $this->type = $type;
+
+        if ($selected) {
+            $this->{$type} = $selected;
+        }
+
         $this->name = $name;
         $this->selected = $selected ?? null;
         $this->targetClass = $targetClass;
@@ -265,7 +270,7 @@ class SelectComponent extends Component
         return PaymentMethod::select('id', 'description as name')->get();
     }
 
-    public function updatedSelected($value)
+    public function updatingSelected($value)
     {
         if ($this->target) {
             if ($this->targetClass) {
@@ -280,6 +285,6 @@ class SelectComponent extends Component
         }
 
 
-        $this->dispatch('selectUpdated', $this->type, $value);
+        return $this->dispatch('selectUpdated', $this->type, $value);
     }
 }
