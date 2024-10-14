@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OS;
 
+use App\Livewire\SelectComponent;
 use App\Models\OsEmployeeVehicle;
 use App\Models\OsExecution;
 use App\Models\OsService;
@@ -24,6 +25,7 @@ class MotoristaItem extends Component
     public $serviceId;
     public $motoristaId;
 
+    public $typesVehicle;
     public $targetClass = MotoristaItem::class;
 
     public function mount($motorista = null)
@@ -31,6 +33,11 @@ class MotoristaItem extends Component
         if ($motorista) {
             $this->motoristaId = $motorista['id'];
             $this->serviceId = $motorista['serviceId'];
+
+            if ($this->serviceId) {
+                $services = OsService::find($this->serviceId);
+                $this->typesVehicle = $services->service->vehicleType->id ?? '';
+            }
 
             $motoristaCadastrado = OsEmployeeVehicle::find($motorista['id']);
 
@@ -44,6 +51,15 @@ class MotoristaItem extends Component
                 $this->end = $motoristaCadastrado->end;
             }
         }
+    }
+
+    #[On('typesVehicleUpdated')]
+    public function updatedtypesVehicle($value, $serviceId)
+    {
+        if ($serviceId != $this->serviceId) {
+            return $this->skipRender();
+        }
+        $this->typesVehicle = $value;
     }
 
     public function deleteMotorista($motoristaId)

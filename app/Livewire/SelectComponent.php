@@ -14,6 +14,7 @@ use App\Models\Employee;
 use Livewire\Component;
 use Illuminate\Support\Facades\Http;
 use Livewire\Attributes\Modelable;
+use Livewire\Attributes\On;
 
 class SelectComponent extends Component
 {
@@ -24,11 +25,11 @@ class SelectComponent extends Component
     public $selected;
     public $selectedPrimaryId;
     public $type;
-    public $filterByTypeId = null;
+    public $filter = null;
     public $target = null;
     public $targetClass = null;
 
-    public function mount($type, $placeholder, $name, $selected, $filterByTypeId = null, $targetClass = null)
+    public function mount($type, $placeholder, $name, $selected, $filter = null, $targetClass = null)
     {
         $this->type = $type;
 
@@ -36,11 +37,18 @@ class SelectComponent extends Component
             $this->{$type} = $selected;
         }
 
+        $this->getOptionsProperty();
+
         $this->name = $name;
         $this->selected = $selected ?? null;
         $this->targetClass = $targetClass;
 
-        $this->options = match ($type) {
+        $this->filter = $filter; // Armazenar o ID do tipo de veículo
+    }
+
+    public function getOptionsProperty()
+    {
+        $this->options = match ($this->type) {
             'especialization' => $this->especialization(),
             'especialization_primary' => $this->especialization(true),
             'especialization_general' => $this->especializationGeneral(true),
@@ -68,7 +76,6 @@ class SelectComponent extends Component
             'paymentMethod' => $this->paymentMethod(),
             default => $this->especialization(),
         };
-        $this->filterByTypeId = $filterByTypeId; // Armazenar o ID do tipo de veículo
     }
 
     public function render()
@@ -258,8 +265,8 @@ class SelectComponent extends Component
     {
         return Vehicle::select('vehicles.id', 'vehicles.plate', 'vehicle_brands.name as brand_name', 'vehicles.model')
             ->join('vehicle_brands', 'vehicles.id_brand', '=', 'vehicle_brands.id')
-            ->when($this->filterByTypeId, function ($query) { // Filtrar pelo tipo de veículo, se fornecido
-                $query->where('vehicles.id_type', $this->filterByTypeId);
+            ->when($this->filter, function ($query) {
+                $query->where('id_type', $this->filter);
             })
             ->orderBy('vehicle_brands.name', 'asc')
             ->get();

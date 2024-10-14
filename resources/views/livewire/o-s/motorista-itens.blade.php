@@ -38,14 +38,14 @@
 		<div class="mb-3 tw-w-[25%] tw-pr-[8px]">
 			<label for="modeloVeiculo">Modelo de veículo</label>
 			<livewire:select-component 
-				wire:key="vehicleModel-{{data_get($motorista, 'id')}}"
+				wire:key="vehicleModel-{{data_get($motorista, 'id') . $typesVehicle}}"
 				type="vehicles_plate" 
 				target="cadastro_motorista-{{data_get($motorista, 'id')}}"
 				placeholder="Selecione o modelo do veículo" 
 				name="vehicleModel[]" 
 				id="vehicleModel" 
 				:selected="$vehicles_plate ?? null" 
-				:filter-by-type="$typesVehicle ?? ''"  
+				:filter="$typesVehicle"  
 				targetClass="{{$targetClass}}"
 			/> 
 		</div>
