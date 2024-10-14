@@ -11,6 +11,7 @@ class MotoristaList extends Component
 {
     public $motoristas = [];
     public $serviceId;
+    public $typesVehicle = null;
 
     public function mount($serviceId = null)
     {
@@ -20,9 +21,20 @@ class MotoristaList extends Component
         }
     }
 
+    #[On('typesVehicleUpdated')]
+    public function updatedtypesVehicle($value, $serviceId)
+    {
+        if ($serviceId != $this->serviceId) {
+            return $this->skipRender();
+        }
+
+        $this->typesVehicle = $value;
+    }
+
     public function getMotoristas()
     {
         $services = OsService::find($this->serviceId);
+        $this->typesVehicle = $services->service->vehicleType->id ?? '';
 
         if (!$services) return;
 
@@ -33,6 +45,10 @@ class MotoristaList extends Component
 
     public function addLinhaVM()
     {
+        if (!$this->typesVehicle) {
+            return $this->dispatch('alert', ['type' => 'warning', 'message' => 'Selecione o tipo de veículo.']);
+        }
+
         $this->motoristas[] = ['id' => uniqid(), 'serviceId' => $this->serviceId];
     }
 
@@ -41,12 +57,10 @@ class MotoristaList extends Component
     {
         $motorista = OsEmployeeVehicle::find($motoristaId);
 
-        if (!$motorista) {
-            return;
+        if ($motorista) {
+            $motorista->executions()->delete();
+            $motorista->delete();
         }
-
-        $motorista->executions()->delete();
-        $motorista->delete();
 
         $motoristas = array_values(array_filter($this->motoristas, function ($motorista) use ($motoristaId) {
             return $motorista['id'] != $motoristaId;

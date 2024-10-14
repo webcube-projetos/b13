@@ -106,6 +106,11 @@ class CampoServico extends Component
         }
 
         $this->{$type} = $value;
+
+        if ($type == 'typesVehicle') {
+            $this->updatedTypesVehicle($value);
+        }
+
         $this->updateServiceData();
     }
 
@@ -129,6 +134,11 @@ class CampoServico extends Component
         if (in_array($property, ['id_category_service', 'vehiclesCategory', 'typesVehicle', 'securityType', 'armored', 'bilingue', 'qtdHoras', 'driver'])) {
             $this->updateServiceData();
         }
+    }
+
+    public function updatedTypesVehicle($value)
+    {
+        $this->dispatch('typesVehicleUpdated', $value, $this->serviceId);
     }
 
     private function buscarServicoCadastrado()
