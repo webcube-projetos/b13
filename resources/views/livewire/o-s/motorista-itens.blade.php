@@ -25,14 +25,14 @@
 		<div class="mb-3 tw-w-[50%]">
 			<label for="company">Empresa</label>
 			<livewire:select-component
-				wire:key="empresas-{{data_get($motorista, 'id')}}"
+				wire:key="empresas-{{data_get($motorista, 'id') . $vehicleCompany }}"
 				target="cadastro_motorista-{{data_get($motorista, 'id')}}"
 				type="empresas"
 				placeholder="Selecione a empresa"    
 				name="empresas[]" 
 				id="empresas"
 				targetClass="{{$targetClass}}"
-				selected="{{$empresas ?? null}}" 
+				selected="{{$vehicleCompany ?? $empresas ?? null}}" 
 			/> 
 		</div>
 		<div class="mb-3 tw-w-[25%] tw-pr-[8px]">

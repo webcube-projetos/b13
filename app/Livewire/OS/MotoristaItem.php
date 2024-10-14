@@ -6,6 +6,7 @@ use App\Livewire\SelectComponent;
 use App\Models\OsEmployeeVehicle;
 use App\Models\OsExecution;
 use App\Models\OsService;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -24,6 +25,7 @@ class MotoristaItem extends Component
 
     public $serviceId;
     public $motoristaId;
+    public $vehicleCompany;
 
     public $typesVehicle;
     public $targetClass = MotoristaItem::class;
@@ -80,6 +82,10 @@ class MotoristaItem extends Component
 
             if ($motoristaId == $this->motoristaId) {
                 $this->{$type} = $value;
+
+                if ($type == 'vehicles_plate') {
+                    $this->vehicleCompany = Vehicle::find($value)?->id_company;
+                }
             }
         }
     }
