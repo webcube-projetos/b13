@@ -1,5 +1,5 @@
 <div>
-    <select wire:key="{{ $type .'-'. implode('-', $filter) }}" class="dinamicSelect form-control" name="{{ $name }}" id="{{ $name }}" wire:model.live="selected">
+    <select  class="dinamicSelect form-control" name="{{ $name }}" id="{{ $name }}" wire:model.live="selected">
         <option value="">{{ $placeholder }}</option>
         @foreach ($options as $option)
             <option value="{{ $option->id }}">

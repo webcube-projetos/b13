@@ -12,6 +12,7 @@ use App\Models\VehicleBrand;
 use App\Models\VehicleType;
 use App\Models\Employee;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Livewire\Component;
 use Illuminate\Support\Facades\Http;
 use Livewire\Attributes\Modelable;
@@ -104,14 +105,16 @@ class SelectComponent extends Component
         return Specialization::select('id', 'name')
             ->orderBy('name', 'ASC')
             ->whereNotNull('id_ascendent')
-            ->where('id_ascendent', '!=', 1);
+            ->where('id_ascendent', '!=', 1)
+            ->get();
     }
 
     public function languages()
     {
         return Specialization::select('id', 'name')
             ->where('id_ascendent', 1)
-            ->orderBy('name', 'ASC');
+            ->orderBy('name', 'ASC')
+            ->get();
     }
 
     public function empresas()
@@ -269,15 +272,40 @@ class SelectComponent extends Component
         }
 
         foreach ($this->filter as $key => $value) {
-
-            if (is_array($value)) {
-                $query->whereIn($key, $value);
-            } elseif ($value) {
-                $query->where($key, $value);
+            // Verifica se o valor é um array, indicando que é um relacionamento
+            if (is_array($value) && $this->isRelationship($query->getModel(), $key)) {
+                foreach ($value as $relationKey => $relationValue) {
+                    $query->whereHas($key, function ($q) use ($value, $relationKey, $relationValue) {
+                        $relationTable = $q->getModel()->getTable();
+                        if (is_array($relationValue)) {
+                            $filtered = array_diff($relationValue, [null, '']);
+                            if (count($filtered) > 0) {
+                                $q->whereIn("$relationTable.$relationKey", $relationValue);
+                            }
+                        } elseif ($relationValue && !is_array($relationValue)) {
+                            $relationKey = preg_replace('/\d+/', '', $relationKey);
+                            $q->where("$relationTable.$relationKey", $relationValue);
+                        }
+                    });
+                }
+            } else {
+                // Pega a tabela principal
+                $mainTable = $query->getModel()->getTable();
+                if (is_array($value)) {
+                    $query->whereIn("$mainTable.$key", $value);
+                } elseif ($value) {
+                    $query->where("$mainTable.$key", $value);
+                }
             }
         }
 
+
         return $query;
+    }
+
+    protected function isRelationship($model, $key)
+    {
+        return method_exists($model, $key) && is_a($model->{$key}(), Relation::class);
     }
 
     public function updatingSelected($value)
