@@ -122,5 +122,21 @@
             const tabs = document.querySelectorAll('#myTab .nav-link');
             
         });
+
+        $wire.on('alert', (data) => {
+            data = data[0]
+            Toastify({
+                    text: data.message,
+                    className: data.type,
+                    close: true,
+                    gravity: "bottom",
+                    position: "right",
+                    style: {
+                    background: data.type === 'warning' ? '#ff4c4c' : '#FF9921',
+
+                }   
+            }).showToast();
+        });
+
     </script>
 @endscript

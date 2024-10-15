@@ -25,27 +25,27 @@
 		<div class="mb-3 tw-w-[50%]">
 			<label for="company">Empresa</label>
 			<livewire:select-component
-				wire:key="empresas-{{data_get($motorista, 'id')}}"
+				wire:key="empresas-{{data_get($motorista, 'id') . $vehicleCompany }}"
 				target="cadastro_motorista-{{data_get($motorista, 'id')}}"
 				type="empresas"
 				placeholder="Selecione a empresa"    
 				name="empresas[]" 
 				id="empresas"
 				targetClass="{{$targetClass}}"
-				selected="{{$empresas ?? null}}" 
+				selected="{{$vehicleCompany ?? $empresas ?? null}}" 
 			/> 
 		</div>
 		<div class="mb-3 tw-w-[25%] tw-pr-[8px]">
 			<label for="modeloVeiculo">Modelo de veículo</label>
 			<livewire:select-component 
-				wire:key="vehicleModel-{{data_get($motorista, 'id')}}"
+				wire:key="vehicleModel-{{data_get($motorista, 'id') . $typesVehicle . $empresas}}"
 				type="vehicles_plate" 
 				target="cadastro_motorista-{{data_get($motorista, 'id')}}"
 				placeholder="Selecione o modelo do veículo" 
 				name="vehicleModel[]" 
 				id="vehicleModel" 
 				:selected="$vehicles_plate ?? null" 
-				:filter-by-type="$typesVehicle ?? ''"  
+				:filter="['id_type' => $typesVehicle, 'id_company' => $empresas]"  
 				targetClass="{{$targetClass}}"
 			/> 
 		</div>
@@ -78,15 +78,17 @@
 		<div class="mb-3 tw-w-[25%]">
 			<label for="motoristaVeiculo">Motorista</label>
 			<livewire:select-component
-				wire:key="employee_driver-{{data_get($motorista, 'id')}}"
+				wire:key="employee_driver-{{data_get($motorista, 'id') . $especialization_general . $languages}}"
 				type="employee_driver"
 				target="cadastro_motorista-{{data_get($motorista, 'id')}}"
 				placeholder="Selecione o motorista"
 				name="employee[]"
 				id="employee"
+				:filter="['specializations' => ['id1' => $especialization_general, 'id2' => $languages]]"
 				targetClass="{{$targetClass}}"
 				selected='{{$employee_driver ?? null}}' 
 				targetClass="{{$targetClass}}"
+				search="true"
 			/>
 		</div>
 	

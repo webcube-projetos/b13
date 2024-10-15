@@ -11,9 +11,12 @@ use App\Models\Vehicle;
 use App\Models\VehicleBrand;
 use App\Models\VehicleType;
 use App\Models\Employee;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Livewire\Component;
 use Illuminate\Support\Facades\Http;
 use Livewire\Attributes\Modelable;
+use Livewire\Attributes\On;
 
 class SelectComponent extends Component
 {
@@ -24,23 +27,29 @@ class SelectComponent extends Component
     public $selected;
     public $selectedPrimaryId;
     public $type;
-    public $filterByTypeId = null;
+    public $filter = null;
     public $target = null;
     public $targetClass = null;
+    public $search = false;
+    public $searchTerm = '';
 
-    public function mount($type, $placeholder, $name, $selected, $filterByTypeId = null, $targetClass = null)
+    public function mount($type, $placeholder, $name, $selected, $filter = [], $targetClass = null, $search = false)
     {
         $this->type = $type;
 
-        if ($selected) {
-            $this->{$type} = $selected;
-        }
-
+        $this->search = $search;
         $this->name = $name;
         $this->selected = $selected ?? null;
         $this->targetClass = $targetClass;
 
-        $this->options = match ($type) {
+        $this->filter = $filter;
+
+        $this->getOptionsProperty();
+    }
+
+    public function getOptionsProperty()
+    {
+        $query = match ($this->type) {
             'especialization' => $this->especialization(),
             'especialization_primary' => $this->especialization(true),
             'especialization_general' => $this->especializationGeneral(true),
@@ -68,7 +77,14 @@ class SelectComponent extends Component
             'paymentMethod' => $this->paymentMethod(),
             default => $this->especialization(),
         };
-        $this->filterByTypeId = $filterByTypeId; // Armazenar o ID do tipo de veículo
+
+
+        if ($query instanceof Builder) {
+            $filteredQuery = $this->createFilter($query);
+            $this->options = $filteredQuery->get();
+        } else {
+            $this->options = $query;
+        }
     }
 
     public function render()
@@ -83,8 +99,7 @@ class SelectComponent extends Component
         return Specialization::select('id', 'name')
             ->orderBy('name', 'ASC')
             ->when($primary, fn($query) => $query->whereNull('id_ascendent'))
-            ->when(!$primary, fn($query) => $query->where('id_ascendent', $selectedPrimaryId))
-            ->get();
+            ->when(!$primary, fn($query) => $query->where('id_ascendent', $selectedPrimaryId));
     }
 
     public function especializationGeneral()
@@ -108,54 +123,47 @@ class SelectComponent extends Component
     public function empresas()
     {
         return Company::select('id', 'name')
-            ->orderBy('name', 'ASC')
-            ->get();
+            ->orderBy('name', 'ASC');
     }
 
     public function typesVehicle()
     {
         return VehicleType::select('id', 'name')
-            ->orderBy('name', 'ASC')
-            ->get();
+            ->orderBy('name', 'ASC');
     }
 
     public function categoryVehicle()
     {
         return Category::select('id', 'name')
             ->whereHas('type', fn($query) => $query->where('name', 'Vehicle'))
-            ->orderBy('name', 'ASC')
-            ->get();
+            ->orderBy('name', 'ASC');
     }
 
     public function categoryService()
     {
         return Category::select('id', 'name')
             ->whereHas('type', fn($query) => $query->where('name', 'Service'))
-            ->orderBy('name', 'ASC')
-            ->get();
+            ->orderBy('name', 'ASC');
     }
 
     public function securityType()
     {
         return Category::select('id', 'name')
             ->whereHas('type', fn($query) => $query->where('name', 'Security'))
-            ->orderBy('name', 'ASC')
-            ->get();
+            ->orderBy('name', 'ASC');
     }
 
     public function employee($type)
     {
         return Employee::select('id', 'name')
             ->where('type', $type)
-            ->orderBy('name', 'ASC')
-            ->get();
+            ->orderBy('name', 'ASC');
     }
 
     public function brands()
     {
         return VehicleBrand::select('id', 'name')
-            ->orderBy('name', 'ASC')
-            ->get();
+            ->orderBy('name', 'ASC');
     }
 
     public function armored()
@@ -212,62 +220,105 @@ class SelectComponent extends Component
     {
         return Category::select('id', 'name')
             ->whereHas('type', fn($query) => $query->where('name', 'Service'))
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->orderBy('created_at', 'desc');
     }
 
     public function servicesOS()
     {
         return Service::select('id', 'name')
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->orderBy('created_at', 'desc');
     }
 
     public function servicesOSLoc()
     {
         return Service::select('id', 'name')
             ->where('id_service_type', 1)
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->orderBy('created_at', 'desc');
     }
 
     public function servicesOSSeg()
     {
         return Service::select('id', 'name')
             ->where('id_service_type', 2)
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->orderBy('created_at', 'desc');
     }
 
     public function vehiclesCategory()
     {
         return Category::select('id', 'name')
             ->whereHas('type', fn($query) => $query->where('name', 'Vehicle'))
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->orderBy('created_at', 'desc');
     }
 
     public function vehicles()
     {
         return Vehicle::select('id', 'name')
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->orderBy('created_at', 'desc');
     }
 
     public function vehiclesBrandPlate()
     {
         return Vehicle::select('vehicles.id', 'vehicles.plate', 'vehicle_brands.name as brand_name', 'vehicles.model')
             ->join('vehicle_brands', 'vehicles.id_brand', '=', 'vehicle_brands.id')
-            ->when($this->filterByTypeId, function ($query) { // Filtrar pelo tipo de veículo, se fornecido
-                $query->where('vehicles.id_type', $this->filterByTypeId);
-            })
-            ->orderBy('vehicle_brands.name', 'asc')
-            ->get();
+            ->orderBy('vehicle_brands.name', 'asc');
     }
 
     public function paymentMethod()
     {
-        return PaymentMethod::select('id', 'description as name')->get();
+        return PaymentMethod::select('id', 'description as name');
+    }
+
+    public function createFilter($query)
+    {
+        if (!$this->filter) {
+            return $query;
+        }
+
+        foreach ($this->filter as $key => $value) {
+            // Verifica se o valor é um array, indicando que é um relacionamento
+            if (is_array($value) && $this->isRelationship($query->getModel(), $key)) {
+                foreach ($value as $relationKey => $relationValue) {
+                    $query->whereHas($key, function ($q) use ($value, $relationKey, $relationValue) {
+                        $relationTable = $q->getModel()->getTable();
+                        if (is_array($relationValue)) {
+                            $filtered = array_diff($relationValue, [null, '']);
+                            if (count($filtered) > 0) {
+                                $q->whereIn("$relationTable.$relationKey", $relationValue);
+                            }
+                        } elseif ($relationValue && !is_array($relationValue)) {
+                            $relationKey = preg_replace('/\d+/', '', $relationKey);
+                            $q->where("$relationTable.$relationKey", $relationValue);
+                        }
+                    });
+                }
+            } else {
+                // Pega a tabela principal
+                $mainTable = $query->getModel()->getTable();
+                if (is_array($value)) {
+                    $query->whereIn("$mainTable.$key", $value);
+                } elseif ($value) {
+                    $query->where("$mainTable.$key", $value);
+                }
+            }
+        }
+
+        if ($this->search && $this->searchTerm) {
+            $query->where(function ($q) {
+                $q->where('name', 'like', '%' . $this->searchTerm . '%');
+            });
+        }
+
+        return $query;
+    }
+
+    protected function isRelationship($model, $key)
+    {
+        return method_exists($model, $key) && is_a($model->{$key}(), Relation::class);
+    }
+
+    public function updatedSearchTerm($value)
+    {
+        $this->getOptionsProperty();
     }
 
     public function updatingSelected($value)

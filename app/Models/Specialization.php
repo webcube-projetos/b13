@@ -17,6 +17,11 @@ class Specialization extends Model
         return $this->hasMany(Specialization::class, 'id_ascendent', 'id');
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(Specialization::class, 'id_ascendent', 'id');
+    }
+
     public function drivers()
     {
         return $this->hasManyThrough(
