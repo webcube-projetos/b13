@@ -88,6 +88,7 @@
 				targetClass="{{$targetClass}}"
 				selected='{{$employee_driver ?? null}}' 
 				targetClass="{{$targetClass}}"
+				search="true"
 			/>
 		</div>
 	

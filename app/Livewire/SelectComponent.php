@@ -30,11 +30,14 @@ class SelectComponent extends Component
     public $filter = null;
     public $target = null;
     public $targetClass = null;
+    public $search = false;
+    public $searchTerm = '';
 
-    public function mount($type, $placeholder, $name, $selected, $filter = [], $targetClass = null)
+    public function mount($type, $placeholder, $name, $selected, $filter = [], $targetClass = null, $search = false)
     {
         $this->type = $type;
 
+        $this->search = $search;
         $this->name = $name;
         $this->selected = $selected ?? null;
         $this->targetClass = $targetClass;
@@ -299,6 +302,11 @@ class SelectComponent extends Component
             }
         }
 
+        if ($this->search && $this->searchTerm) {
+            $query->where(function ($q) {
+                $q->where('name', 'like', '%' . $this->searchTerm . '%');
+            });
+        }
 
         return $query;
     }
@@ -306,6 +314,11 @@ class SelectComponent extends Component
     protected function isRelationship($model, $key)
     {
         return method_exists($model, $key) && is_a($model->{$key}(), Relation::class);
+    }
+
+    public function updatedSearchTerm($value)
+    {
+        $this->getOptionsProperty();
     }
 
     public function updatingSelected($value)
