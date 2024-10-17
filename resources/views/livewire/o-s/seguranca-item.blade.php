@@ -44,7 +44,7 @@
                 wire:key="employee_security-{{ data_get($seguranca, 'id') . $especialization_general . $languages }}"
                 type="employee_security" target="cadastro_seguranca-{{ data_get($seguranca, 'id') }}"
                 placeholder="Selecione o seguranca" name="employee[]" id="employee" :filter="['specializations' => ['id1' => $especialization_general, 'id2' => $languages]]"
-                targetClass="{{ $targetClass }}" selected='{{ $employee_driver ?? null }}' search="true" />
+                targetClass="{{ $targetClass }}" selected='{{ $employee_security ?? null }}' search="true" />
         </div>
 
     </div>

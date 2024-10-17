@@ -20,7 +20,7 @@ class SegurancaItem extends Component
     public $languages;
     public $vehicles_plate;
     public $especialization_general;
-    public $employee_driver;
+    public $employee_security;
     public $start;
     public $end;
 
@@ -49,7 +49,7 @@ class SegurancaItem extends Component
                 $this->languages = $segurancaCadastrado->language;
                 $this->vehicles_plate = $segurancaCadastrado->id_vehicle;
                 $this->especialization_general = $segurancaCadastrado->speciality;
-                $this->employee_driver = $segurancaCadastrado->id_employee;
+                $this->employee_security = $segurancaCadastrado->id_employee;
                 $this->start = $segurancaCadastrado->start;
                 $this->end = $segurancaCadastrado->end;
             }
@@ -73,7 +73,7 @@ class SegurancaItem extends Component
     #[On('selectUpdated')]
     public function handleSelectUpdated($type, $value, $target = null)
     {
-        if (!in_array($type, ['empresas', 'languages', 'vehicles_plate', 'especialization_general', 'employee_driver'])) {
+        if (!in_array($type, ['empresas', 'languages', 'vehicles_plate', 'especialization_general', 'employee_security'])) {
             return $this->skipRender();
         }
 
@@ -117,7 +117,7 @@ class SegurancaItem extends Component
                     'language' => $this->languages,
                     'id_vehicle' => $this->vehicles_plate,
                     'speciality' => $this->especialization_general,
-                    'id_employee' => $this->employee_driver,
+                    'id_employee' => $this->employee_driver ?? $this->employee_security,
                     'id_service_os' => $this->serviceId,
                     'id_os' => $os
                 ]
