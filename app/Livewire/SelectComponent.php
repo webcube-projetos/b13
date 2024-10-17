@@ -80,8 +80,12 @@ class SelectComponent extends Component
 
 
         if ($query instanceof Builder) {
-            $filteredQuery = $this->createFilter($query);
-            $this->options = $filteredQuery->get();
+            try {
+                $filteredQuery = $this->createFilter($query);
+                $this->options = $filteredQuery->get();
+            } catch (\Exception $e) {
+                abort(406, 'Erro ao filtrar dados, confira os filtros e tente novamente');
+            }
         } else {
             $this->options = $query;
         }

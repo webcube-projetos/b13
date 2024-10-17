@@ -20,9 +20,12 @@ class CampoValores extends Component
     public $osService;
     public $serviceId;
     public $servicoCadastrado = null;
+    public $type = null;
 
-    public function mount($serviceId = null)
+    public function mount($serviceId = null, $type = null)
     {
+        $this->type = $type;
+
         if ($serviceId) {
             $this->osService = OsService::find($serviceId);
 
