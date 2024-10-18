@@ -113,7 +113,7 @@ class SegurancaItem extends Component
                 [
                     'start' => $this->start,
                     'end' => $this->end,
-                    'id_company' => $this->empresas,
+                    'id_company' => null,
                     'language' => $this->languages,
                     'id_vehicle' => $this->vehicles_plate,
                     'speciality' => $this->especialization_general,

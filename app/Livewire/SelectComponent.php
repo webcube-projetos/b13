@@ -32,10 +32,12 @@ class SelectComponent extends Component
     public $targetClass = null;
     public $search = false;
     public $searchTerm = '';
+    public $readonly = false;
 
-    public function mount($type, $placeholder, $name, $selected, $filter = [], $targetClass = null, $search = false)
+    public function mount($type, $placeholder, $name, $selected, $filter = [], $targetClass = null, $search = false, $readonly = false)
     {
         $this->type = $type;
+        $this->readonly = $readonly;
 
         $this->search = $search;
         $this->name = $name;
@@ -327,7 +329,6 @@ class SelectComponent extends Component
 
     public function updatingSelected($value)
     {
-        dump($value);
         if ($this->target) {
             if ($this->targetClass) {
                 return $this->dispatch('selectUpdated', $this->type, $value, $this->target)->to($this->targetClass);

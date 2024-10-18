@@ -53,11 +53,21 @@ class OsExecutionObserver
             $startTime = Carbon::parse($execution->start_time);
             $endTime = Carbon::parse($execution->end_time);
 
+            if ($endTime->lt($startTime)) {
+                $endTime->addDay();
+            }
+
             $execution->total_time = $startTime->diffInMinutes($endTime);
+
+            $horasRestantes = $execution->motorista->OsService->time * 60 - $execution->total_time;
+            $execution->exceed_time = max(0, -$horasRestantes);
         }
 
         if ($execution->km_start && $execution->km_end) {
-            $execution->km_total = $execution->km_end - $execution->km_start;
+            $execution->km_total = abs($execution->km_end - $execution->km_start);
+
+            $KMRestantes = $execution->motorista->OsService->km - $execution->km_total;
+            $execution->km_exceed = $KMRestantes > 0 ? 0 : $KMRestantes * -1;
         }
     }
 }
