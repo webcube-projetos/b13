@@ -4,102 +4,105 @@
             min-width: 50px;
         }
     </style>
-    @if($type == 'Locação')
-        <div class="row linha-add position-relative align-items-center mt-4 tw-relative"> 
-            <div class="accordion" id="accordionPanelsStayOpenExample-{{$serviceId}}">
-                <div class="accordion-item">
-                    <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingOne-{{$serviceId}}">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-{{$serviceId}}" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne-{{$serviceId}}">
-                            Serviço
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseOne-{{$serviceId}}" class="accordion-collapse collapse show tw-bg-[#ffffff73]" aria-labelledby="panelsStayOpen-headingOne-{{$serviceId}}">
-                        <div class="accordion-body">
-                            <livewire:o-s.campo-servico 
-                                wire:key="servicos-{{$serviceId}}" 
-                                :serviceId="$serviceId" 
-                                :type="$type"
-                            />
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="accordion-item">
-                    <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingTwo-{{$serviceId}}">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo-{{$serviceId}}" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo-{{$serviceId}}">
-                            Valores
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseTwo-{{$serviceId}}" class="accordion-collapse collapse tw-bg-[#ffffff73]" aria-labelledby="panelsStayOpen-headingTwo-{{$serviceId}}">
-                        <div class="accordion-body">
-                            <livewire:o-s.campo-valores :serviceId="$serviceId" wire:key="servicos-{{$serviceId}}" />
-                        </div>
-                    </div>
-                </div>
-        
-                <div class="accordion-item">
-                    <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingThree-{{$serviceId}}">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree-{{$serviceId}}" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree-{{$serviceId}}">
-                            Veículos & Motoristas
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseThree-{{$serviceId}}" class="accordion-collapse collapse tw-bg-[#ffffff73] tw-p-[10px]" aria-labelledby="panelsStayOpen-headingThree-{{$serviceId}}"> 
-                        <div class="accordion-body tw-p-0">
-                            <livewire:o-s.motorista-list wire:key="motoristas-{{$serviceId}}" :serviceId="$serviceId" />
-                        </div>
+    <div class="row linha-add position-relative align-items-center mt-4 tw-relative">
+        <div class="accordion" id="accordionPanelsStayOpenExample-{{ $serviceId }}">
+            <div class="accordion-item">
+                <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingOne-{{ $serviceId }}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne-{{ $serviceId }}" aria-expanded="true"
+                        aria-controls="panelsStayOpen-collapseOne-{{ $serviceId }}">
+                        Serviço
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne-{{ $serviceId }}"
+                    class="accordion-collapse collapse show tw-bg-[#ffffff73]"
+                    aria-labelledby="panelsStayOpen-headingOne-{{ $serviceId }}">
+                    <div class="accordion-body">
+                        <livewire:o-s.campo-servico :type="$type" wire:key="servicos-{{ $serviceId }}"
+                            :serviceId="$serviceId" :type="$type" />
                     </div>
                 </div>
             </div>
-            <button 
-                class="tw-absolute tw-top-[14px] tw-right-[28px] tw-w-[15px]"
-                x-on:click="$event.preventDefault(); $dispatch('removeLinhaServico',{serviceId: '{{$serviceId}}'})" 
-                >
-                <i class="fa fa-trash"></i>
-            </button>
-        
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Informações</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p><strong>Placa do veículo:</strong> ABC1234</p>
-                            <p><strong>Cor:</strong> Prata</p>
-                            <p><strong>Marca:</strong> Jeep</p>
-                            <p><strong>Modelo:</strong> Commander</p>
-                            <p><strong>Passageiros:</strong> 4</p>
-                            <p><strong>Malas:</strong> 5</p>
-                            <hr class="my-4">
-                            <p><strong>Nome completo:</strong> Jorge Lucas</p>
-                            <p><strong>Endereço completo:</strong> Rua Numero Um, 123 - Bairro, Cidade - ES - 012345-678</p>
-                            <p><strong>Telefone:</strong> (11) 99123-4567</p>
-                            <p><strong>Email:</strong> email@corporativo.com</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingTwo-{{ $serviceId }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseTwo-{{ $serviceId }}" aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseTwo-{{ $serviceId }}">
+                        Valores
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo-{{ $serviceId }}"
+                    class="accordion-collapse collapse tw-bg-[#ffffff73]"
+                    aria-labelledby="panelsStayOpen-headingTwo-{{ $serviceId }}">
+                    <div class="accordion-body">
+                        <livewire:o-s.campo-valores :type="$type" :serviceId="$serviceId"
+                            wire:key="servicos-{{ $serviceId }}" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header border bg-light" id="panelsStayOpen-headingThree-{{ $serviceId }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseThree-{{ $serviceId }}" aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseThree-{{ $serviceId }}">
+                        @if ($type == 'Locação')
+                            Veículos & Motoristas
+                        @else
+                            Seguranças
+                        @endif
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree-{{ $serviceId }}"
+                    class="accordion-collapse collapse tw-bg-[#ffffff73] tw-p-[10px]"
+                    aria-labelledby="panelsStayOpen-headingThree-{{ $serviceId }}">
+                    <div class="accordion-body tw-p-0">
+                        @if ($type == 'Locação')
+                            <livewire:o-s.motorista-list wire:key="motoristas-{{ $serviceId }}" :serviceId="$serviceId" />
+                        @else
+                            <livewire:o-s.seguranca-list wire:key="segurancas-{{ $serviceId }}" :serviceId="$serviceId" />
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-    
-    @else 
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="servicos-tab" data-bs-toggle="tab" data-bs-target="#servicos" type="button" role="tab" aria-controls="servicos" aria-selected="true">Serviço</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="rotas-tab" data-bs-toggle="tab" data-bs-target="#rotas" type="button" role="tab" aria-controls="rotas" aria-selected="false">Execução</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="precos-tab" data-bs-toggle="tab" data-bs-target="#precos" type="button" role="tab" aria-controls="precos" aria-selected="false">Preços</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="fechamento-tab" data-bs-toggle="tab" data-bs-target="#fechamento" type="button" role="tab" aria-controls="fechamento" aria-selected="false">Fechamento</button>
-        </li>
-    </ul>
+        <button class="tw-absolute tw-top-[14px] tw-right-[28px] tw-w-[15px]"
+            x-on:click="$event.preventDefault(); $dispatch('removeLinhaServico',{serviceId: '{{ $serviceId }}'})">
+            <i class="fa fa-trash"></i>
+        </button>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Informações</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Placa do veículo:</strong> ABC1234</p>
+                        <p><strong>Cor:</strong> Prata</p>
+                        <p><strong>Marca:</strong> Jeep</p>
+                        <p><strong>Modelo:</strong> Commander</p>
+                        <p><strong>Passageiros:</strong> 4</p>
+                        <p><strong>Malas:</strong> 5</p>
+                        <hr class="my-4">
+                        <p><strong>Nome completo:</strong> Jorge Lucas</p>
+                        <p><strong>Endereço completo:</strong> Rua Numero Um, 123 - Bairro, Cidade - ES - 012345-678
+                        </p>
+                        <p><strong>Telefone:</strong> (11) 99123-4567</p>
+                        <p><strong>Email:</strong> email@corporativo.com</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- @else
+
     <div class="tab-content mb-4" id="myTabContent">
         <div class="tab-pane fade show active" id="servicos" role="tabpanel" aria-labelledby="servicos-tab">
             <div class="row linha-add position-relative">
@@ -193,8 +196,8 @@
                 <div class="col-md-3 mb-3">
                     <label for="company">Empresa</label>
                     <livewire:select-component type="empresas" placeholder="Selecione a empresa" name="empresas[]" id="empresas" selected='' />
-                </div>                
-                
+                </div>
+
                 <div class="col-md-2 mb-3">
                     <label for="horarioInicio">Horário Início</label>
                     <input type="number" class="form-control" name="horarioInicio[]" id="horarioInicio" required>
@@ -244,6 +247,5 @@
         <div class="tab-pane fade" id="fechamento" role="tabpanel" aria-labelledby="fechamento-tab">
         </div>
       </div>
-    </div>
-    @endif
- </div>
+    </div> --}}
+</div>

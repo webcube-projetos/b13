@@ -55,13 +55,13 @@ class CampoServico extends Component
             $this->qtdDias = $data->qtd_days ?? '';
             $this->qtdServices = $data->qtd_service ?? '';
             $this->bilingue = $data->service->bilingual ?? '';
-            $this->driver = $data->driver ?? '';
             $this->id_category_service = $data->service->categoryService->id ?? '';
             $this->securityType = $data->securityType ?? '';
             $this->qtdHoras = $data->time ?? '';
             $this->typesVehicle = $data->service->vehicleType->id ?? '';
             $this->id_category_espec = $data->service->categoryEspec->id ?? '';
             $this->armored = $data->service->blindado_armado ?? '';
+            $this->driver = $data->service->driver ?? '';
             $this->nomeServico = $data->nomeServico ?? '';
             $this->nomeServicoIngles = $data->nomeServicoIngles ?? '';
             $this->data = $data;
@@ -155,8 +155,8 @@ class CampoServico extends Component
         } else {
             // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
             return Service::where('id_category_service', $this->id_category_service)
-                ->where('id_category_espec', $this->securityType)
-                ->where('blindado_armado', $this->armed)
+                ->where('id_category_espec', $this->id_category_espec)
+                ->where('blindado_armado', $this->armored)
                 ->where('bilingual', $this->bilingue)
                 ->where('driver', $this->driver)
                 ->where('time', $this->qtdHoras)
