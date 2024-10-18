@@ -27,11 +27,13 @@ class LinhasExecucao extends Component
     public $parking;
     public $another_expenses;
 
+    public $service = null;
     public $targetClass = LinhasExecucao::class;
 
     public function mount($execucao)
     {
         $this->execucao = $execucao;
+        $this->service = $execucao->motorista->oSService->service->id_category_service;
         $this->updateExecutions($execucao);
     }
 
@@ -44,11 +46,11 @@ class LinhasExecucao extends Component
         $this->start_time = $execucao->start_time;
         $this->identification = $execucao->identification;
         $this->end_time = $execucao->end_time;
-        $this->exceed_time = $execucao->exceed_time;
+        $this->exceed_time = $this->getFormattedExceedTimeProperty($execucao->exceed_time);
         $this->km_start = $execucao->km_start;
         $this->km_end = $execucao->km_end;
         $this->km_total = $execucao->km_total;
-        $this->km_exceeded = $execucao->km_exceeded;
+        $this->km_exceeded = $execucao->km_exceed;
         $this->toll = $execucao->toll;
         $this->parking = $execucao->parking;
         $this->another_expenses = $execucao->another_expenses;
@@ -61,6 +63,7 @@ class LinhasExecucao extends Component
         if (!$this->{$property}) return;
 
         $execution->{$property} = $this->{$property};
+
         $execution->save();
         $this->updateExecutions($execution);
     }
@@ -80,6 +83,18 @@ class LinhasExecucao extends Component
                 $this->{$type} = $value;
             }
         }
+    }
+
+    public function getFormattedExceedTimeProperty($exceed_time)
+    {
+        if (!is_numeric($exceed_time)) {
+            return '00:00';
+        }
+
+        $hours = floor($exceed_time / 60);
+        $minutes = $exceed_time % 60;
+
+        return sprintf('%02d:%02d', $hours, $minutes);
     }
 
     public function render()

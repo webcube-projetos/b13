@@ -27,4 +27,9 @@ class OsEmployeeVehicle extends Model
     {
         return $this->hasMany(OsExecution::class, 'id_employee_vehicle', 'id');
     }
+
+    public function oSService()
+    {
+        return $this->belongsTo(OsService::class, 'id_service_os', 'id');
+    }
 }

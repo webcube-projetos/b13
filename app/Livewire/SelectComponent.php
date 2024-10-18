@@ -32,10 +32,12 @@ class SelectComponent extends Component
     public $targetClass = null;
     public $search = false;
     public $searchTerm = '';
+    public $readonly = false;
 
-    public function mount($type, $placeholder, $name, $selected, $filter = [], $targetClass = null, $search = false)
+    public function mount($type, $placeholder, $name, $selected, $filter = [], $targetClass = null, $search = false, $readonly = false)
     {
         $this->type = $type;
+        $this->readonly = $readonly;
 
         $this->search = $search;
         $this->name = $name;
@@ -80,8 +82,12 @@ class SelectComponent extends Component
 
 
         if ($query instanceof Builder) {
-            $filteredQuery = $this->createFilter($query);
-            $this->options = $filteredQuery->get();
+            try {
+                $filteredQuery = $this->createFilter($query);
+                $this->options = $filteredQuery->get();
+            } catch (\Exception $e) {
+                abort(406, 'Erro ao filtrar dados, confira os filtros e tente novamente');
+            }
         } else {
             $this->options = $query;
         }
