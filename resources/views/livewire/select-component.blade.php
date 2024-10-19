@@ -29,7 +29,7 @@
                         direction: "asc"
                     },
                     onInitialize: function() {
-                        this.clear(true); // Limpa a seleção inicial
+                        // Limpa a seleção inicial
                     },
                     onType: function(str) {
                         @this.set('searchTerm', str);

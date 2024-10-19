@@ -15,6 +15,7 @@ class OrcamentoCadastro extends Component
     public $selectedPrimary;
     public $contato;
     public $paymentMethod;
+    public $paymentOptions;
     public $obs;
     public $client;
     public $os = null;
@@ -42,6 +43,7 @@ class OrcamentoCadastro extends Component
 
             $this->contato = $orcamento->id_contact;
             $this->paymentMethod = $orcamento->id_payment_method;
+            $this->paymentOptions = $orcamento->id_payment_options;
             $this->obs = $orcamento->obs;
             $this->client = $orcamento->id_client;
             $this->total = $orcamento->services->sum(function ($service) {
@@ -53,7 +55,7 @@ class OrcamentoCadastro extends Component
     #[On('selectUpdated')]
     public function handleSelectUpdated($type, $value)
     {
-        if (!in_array($type, ['contato', 'paymentMethod', 'client'])) {
+        if (!in_array($type, ['contato', 'paymentMethod', 'client', 'paymentOptions'])) {
             return;
         }
 
@@ -85,6 +87,7 @@ class OrcamentoCadastro extends Component
             'id_contact' => $this->contato,
             'id_client' => $this->client,
             'id_payment_method' => $this->paymentMethod,
+            'id_payment_options' => $this->paymentOptions,
             'status' => 0,
         ]);
 
@@ -100,6 +103,7 @@ class OrcamentoCadastro extends Component
                 'id_contact' => $this->contato,
                 'id_client' => $this->client,
                 'id_payment_method' => $this->paymentMethod,
+                'id_payment_options' => $this->paymentOptions,
                 'status' => 0,
             ]
         );

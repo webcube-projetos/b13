@@ -21,6 +21,7 @@ class CampoValores extends Component
     public $serviceId;
     public $servicoCadastrado = null;
     public $type = null;
+    public $total = 0;
 
     public function mount($serviceId = null, $type = null)
     {

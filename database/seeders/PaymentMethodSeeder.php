@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\OS;
 use App\Models\PaymentMethod;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,25 +15,22 @@ class PaymentMethodSeeder extends Seeder
     public function run(): void
     {
         $descriptions = [
-            [
-                'description' => 'Entrada 50% + 50% ',
-            ],
-            [
-                'description' => '100% antes do início do serviço',
-            ],
-            [
-                'description' => 'Entrada 50% + 25% + 25%',
-            ],
-            [
-                'description' => '100% após o início do serviço',
-            ],
-            [
-                'description' => '30/60/90',
-            ]
+            ['description' => 'A VISTA'],
+            ['description' => '50% NA RESERVA 50% NO TÉRMINO DO SERVIÇO'],
+            ['description' => '50% NA RESERVA 50% FATURADO PARA 30 DIAS'],
+            ['description' => '50% NA RESERVA - 50% ANTES DO INÍCIO DO SERVIÇO'],
+            ['description' => '100 % NA RESERVA'],
+            ['description' => '100% ANTES DO INÍCIO DO SERVIÇO'],
+            ['description' => '100% NO TÉRMINO DO SERVIÇO'],
+            ['description' => 'FATURADO - 15 DIAS'],
+            ['description' => 'FATURADO - 30 DIAS'],
         ];
 
         foreach ($descriptions as $description) {
             PaymentMethod::updateOrCreate($description);
         }
+
+        OS::query()->update(['id_payment_method' => NULL]);
+        PaymentMethod::whereNotIn('description', $descriptions)->delete();
     }
 }
