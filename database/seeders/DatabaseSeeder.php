@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PaymentOption;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,7 +31,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             VehicleBrandSeeder::class,
             VehicleTypeSeeder::class,
-            PaymentMethodSeeder::class
+            PaymentMethodSeeder::class,
+            PaymentOptionSeeder::class
         ]);
     }
 }

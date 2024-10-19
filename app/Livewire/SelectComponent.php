@@ -11,6 +11,7 @@ use App\Models\Vehicle;
 use App\Models\VehicleBrand;
 use App\Models\VehicleType;
 use App\Models\Employee;
+use App\Models\PaymentOption;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Livewire\Component;
@@ -77,6 +78,7 @@ class SelectComponent extends Component
             'vehicles_plate' => $this->vehiclesBrandPlate(),
             'languages' => $this->languages(),
             'paymentMethod' => $this->paymentMethod(),
+            'paymentOptions' => $this->paymentOptions(),
             default => $this->especialization(),
         };
 
@@ -272,6 +274,11 @@ class SelectComponent extends Component
     public function paymentMethod()
     {
         return PaymentMethod::select('id', 'description as name');
+    }
+
+    public function paymentOptions()
+    {
+        return PaymentOption::select('id', 'description as name');
     }
 
     public function createFilter($query)

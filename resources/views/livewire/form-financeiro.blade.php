@@ -9,11 +9,12 @@
                                 <h2>Entradas</h2>
                             </div>
                             <div class="col-md-6 text-end">
-                                <a href="javascript:;" id="addLinhaEntrada" class="btn bg-gradient-dark btn-md mt-4 mb-4">+ Adicionar entrada</a>
+                                <a href="javascript:;" id="addLinhaEntrada"
+                                    class="btn bg-gradient-dark btn-md mt-4 mb-4">+ Adicionar entrada</a>
                             </div>
                             <div class="col-12">
-                                <select name="formaDePagamento" id="formaDePagamento"  class="form-control">
-                                    <option value="" disabled selected>Selecione a forma de pagamento</option>
+                                <select name="formaDePagamento" id="formaDePagamento" class="form-control">
+                                    <option value="" disabled selected>Selecione a condição de pagamento</option>
                                     <option value="1">30 dias</option>
                                     <option value="2">30/60</option>
                                     <option value="3">30/60/90</option>
@@ -25,14 +26,14 @@
                             </div>
                             <div class="col-12">
                                 <div id="box-linhas-entrada">
-                
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-    
+
             <div class="col-12 mt-4">
                 <div class="card">
                     <div class="card-body pt-4 p-3">
@@ -41,17 +42,18 @@
                                 <h2>Saídas</h2>
                             </div>
                             <div class="col-md-6 text-end">
-                                <a href="javascript:;" id="addLinhaSaida" class="btn bg-gradient-dark btn-md mt-4 mb-4">+ Adicionar saída</a>
+                                <a href="javascript:;" id="addLinhaSaida"
+                                    class="btn bg-gradient-dark btn-md mt-4 mb-4">+ Adicionar saída</a>
                             </div>
                             <div class="col-12">
                                 <div id="box-linhas-saida">
-                
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
 </div>

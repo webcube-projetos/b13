@@ -8,11 +8,12 @@
                             <h2>Entradas</h2>
                         </div>
                         <div class="col-md-6 text-end">
-                            <a href="javascript:;" id="addLinhaEntrada" class="btn bg-gradient-dark btn-md mt-4 mb-4">+ Adicionar entrada</a>
+                            <a href="javascript:;" id="addLinhaEntrada" class="btn bg-gradient-dark btn-md mt-4 mb-4">+
+                                Adicionar entrada</a>
                         </div>
                         <div class="col-12">
-                            <select name="formaDePagamento" id="formaDePagamento"  class="form-control">
-                                <option value="" disabled selected>Selecione a forma de pagamento</option>
+                            <select name="formaDePagamento" id="formaDePagamento" class="form-control">
+                                <option value="" disabled selected>Selecione a condição de pagamento</option>
                                 <option value="">Entrada 50% + 50% </option>
                                 <option value="">100% antes do início do serviço</option>
                                 <option value="">100% após o início do serviço</option>
@@ -22,7 +23,7 @@
                         </div>
                         <div class="col-12">
                             <div id="box-linhas-entrada">
-            
+
                             </div>
                         </div>
                     </div>
@@ -38,11 +39,12 @@
                             <h2>Saídas</h2>
                         </div>
                         <div class="col-md-6 text-end">
-                            <a href="javascript:;" id="addLinhaSaida" class="btn bg-gradient-dark btn-md mt-4 mb-4">+ Adicionar saída</a>
+                            <a href="javascript:;" id="addLinhaSaida" class="btn bg-gradient-dark btn-md mt-4 mb-4">+
+                                Adicionar saída</a>
                         </div>
                         <div class="col-12">
                             <div id="box-linhas-saida">
-            
+
                             </div>
                         </div>
                     </div>
@@ -50,5 +52,5 @@
             </div>
         </div>
     </div>
-    
+
 </div>
