@@ -47,12 +47,12 @@
       ],
     ],
     'Gestão' => [
-      /*[
+      [
         'title' => 'Financeiro',
         'route' => 'financeiro.index',
         'icon' => 'fa fa-money',
         'permission' => 1,
-      ],*/
+      ],
       [
         'title' => 'Serviços Locação',
         'route' => 'servicos.index',
@@ -67,12 +67,12 @@
       ],
     ],
     'Configurações' => [
-      /*[
+      [
         'title' => 'Procedimentos',
         'route' => 'procedimentos.index',
         'icon' => 'fa fa-align-left',
         'permission' => 1,
-      ],*/
+      ],
       [
         'title' => 'Categoria de Serviços',
         'route' => 'categorias.servicos.index',
@@ -104,14 +104,14 @@
         'permission' => 1,
       ],
     ],
-    /*'Usuarios' => [
+    'Usuarios' => [
       [
         'title' => 'Editar Perfil',
         'route' => 'editar.perfil.index',
         'icon' => 'fa fa-user-circle-o',
         'permission' => 1,
       ],
-    ],*/
+    ],
 
   ]
 @endphp
