@@ -69,6 +69,7 @@
                         <th scope="col">Pedágio</th>
                         <th scope="col">Estacionamento</th>
                         <th scope="col">Outras Despesas</th>
+                        <th scope="col">Total</th>
                     </tr>
                 </thead>
                 <tbody>

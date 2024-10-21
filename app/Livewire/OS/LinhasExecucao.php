@@ -26,7 +26,7 @@ class LinhasExecucao extends Component
     public $toll;
     public $parking;
     public $another_expenses;
-
+    public $total; 
     public $service = null;
     public $targetClass = LinhasExecucao::class;
 

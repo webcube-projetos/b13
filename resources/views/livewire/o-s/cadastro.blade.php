@@ -71,17 +71,24 @@
 
                                 <div class="col-lg-6 mt-4">
                                     <label for="paymentMethod">Condição de pagamento</label>
-                                    <livewire:select-component type="paymentMethod"
-                                        placeholder="Selecione a condição de pagamento" name="paymentMethod"
-                                        id="paymentMethod" selected='{{ $paymentMethod }}'
-                                        targetClass="{{ $targetClass }}" />
+                                    <livewire:select-component 
+                                        type="paymentMethod"
+                                        placeholder="Selecione a condição de pagamento" 
+                                        name="paymentMethod"
+                                        id="paymentMethod" 
+                                        selected='{{ $paymentMethod }}'
+                                        targetClass="{{ $targetClass }}" 
+                                    />
                                 </div>
                                 <div class="col-lg-6 mt-4">
                                     <label for="paymentOptions">Forma de pagamento</label>
-                                    <livewire:select-component type="paymentOptions"
+                                    <livewire:select-component 
+                                        type="paymentOptions"
                                         placeholder="Selecione a forma de pagamento" name="paymentOptions"
-                                        id="paymentOptions" selected='{{ $paymentOptions }}'
-                                        targetClass="{{ $targetClass }}" />
+                                        id="paymentOptions" 
+                                        selected='{{ $paymentOptions }}'
+                                        targetClass="{{ $targetClass }}" 
+                                    />
                                 </div>
                                 <div class="col-lg-12 text-end mt-4">
                                     <h2><span class="text-sm">Total:</span> <span

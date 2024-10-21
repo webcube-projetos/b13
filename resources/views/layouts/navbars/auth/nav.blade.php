@@ -10,39 +10,52 @@
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 d-flex justify-content-end" id="navbar"> 
             <ul class="navbar-nav  justify-content-end">
+                <li class="nav-item d-flex align-items-center me-3">
+                    <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
+                        <a href="javascript:;" class="nav-link text-body p-0">
+                        <div class="sidenav-toggler-inner">
+                            <i class="fa fa-bars"></i>
+                        </div>
+                        </a>
+                    </div>
+                </li>
                 <li class="nav-item d-flex align-items-center">
                     <a href="{{ url('/logout')}}" class="nav-link text-body font-weight-bold px-0">
                         <i class="fa fa-user me-sm-1"></i>
                         <span class="d-sm-inline d-none">Sair</span>
                     </a>
                 </li>
+                <!-- TELA PARA ALTERAÇÃO DOS DADOS -->
                 <li class="nav-item px-3 d-flex align-items-center">
                     <a href="#" class="nav-link text-body p-0">
                         <i class="fa fa-cog cursor-pointer"></i>
                     </a>
                 </li>
-                <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-bell cursor-pointer"></i>
-                    </a>
-                    <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                        <li class="mb-2">
-                            <a class="dropdown-item border-radius-md" href="javascript:;">
-                                <div class="d-flex py-1">
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="text-sm font-weight-normal mb-1">
-                                            <span class="font-weight-bold">Entrada</span> R$1.800,00 - Netflix OS 0186
-                                        </h6>
-                                        <p class="text-xs text-secondary mb-0">
-                                            <i class="fa fa-clock me-1"></i>
-                                            23/02/2024
-                                        </p>
+                <!-- 
+                    NOTIFICAÇÕES
+                    <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-bell cursor-pointer"></i>
+                        </a>
+                        <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                            <li class="mb-2">
+                                <a class="dropdown-item border-radius-md" href="javascript:;">
+                                    <div class="d-flex py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="text-sm font-weight-normal mb-1">
+                                                <span class="font-weight-bold">Entrada</span> R$1.800,00 - Netflix OS 0186
+                                            </h6>
+                                            <p class="text-xs text-secondary mb-0">
+                                                <i class="fa fa-clock me-1"></i>
+                                                23/02/2024
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                -->
             </ul>
         </div>
     </div>

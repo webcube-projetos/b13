@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-10">
             <div class="card">
                 <div class="card-body pt-4 p-3">
                     <div class="row align-items-center">
@@ -12,13 +12,17 @@
                                 Adicionar entrada</a>
                         </div>
                         <div class="col-12">
-                            <select name="formaDePagamento" id="formaDePagamento" class="form-control">
+                            <select name="formaDePagamento" id="formaDePagamento" class="form-control" readonly>
                                 <option value="" disabled selected>Selecione a condição de pagamento</option>
-                                <option value="">Entrada 50% + 50% </option>
-                                <option value="">100% antes do início do serviço</option>
-                                <option value="">100% após o início do serviço</option>
-                                <option value="">Entrada 50% + 25% + 25%</option>
-                                <option value="">30/60/90</option>
+                                <option value="1">A VISTA</option>
+                                <option value="2">50% NA RESERVA 50% NO TÉRMINO DO SERVIÇO</option>
+                                <option value="2">50% NA RESERVA 50% FATURADO PARA 30 DIAS</option>
+                                <option value="2">50% NA RESERVA - 50% ANTES DO INÍCIO DO SERVIÇO</option>
+                                <option value="1">100% NA RESERVA</option>
+                                <option value="1">100% ANTES DO INÍCIO DO SERVIÇO</option>
+                                <option value="1">100% NO TÉRMINO DO SERVIÇO</option>
+                                <option value="1">FATURADO - 15 DIAS</option>
+                                <option value="1">FATURADO - 30 DIAS </option>
                             </select>
                         </div>
                         <div class="col-12">
