@@ -74,11 +74,11 @@
                 </thead>
                 <tbody>
                     @foreach($execucoes as $index => $execucao)
-                            <livewire:o-s.linhas-execucao 
-                                :execucao="$execucao" 
-                                :day="1"
-                                :key="'execution-'.$execucao->id.'-'.$index"
-                            />
+                        <livewire:o-s.linhas-execucao 
+                            :execucao="$execucao" 
+                            :day="1"
+                            :key="'execution-'.$execucao->id.'-'.$index"
+                        />
                     @endforeach
                 </tbody>
             </table>
