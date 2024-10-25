@@ -7,18 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Financial extends Model
 {
-    use HasFactory;
-
-    protected $table = 'financial';
+    const NAO_PAGO = 0;
+    const PAGO = 1;
+    const ENTRADA = 1;
+    const SAIDA = 0;
 
     protected $fillable = [
         'id_os',
-        'id_os_service',
-        'type_transaction',
         'id_client',
-        'id_employee',
         'id_company',
-        'quote',
-        'value',
+        'id_employee',
+        'installment',
+        'status',
+        'type_transaction',
+        'date',
+        'total',
     ];
+
+    use HasFactory;
 }

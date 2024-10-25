@@ -27,6 +27,7 @@ class OsExecution extends Model
         'toll',
         'parking',
         'another_expenses',
+        'total',
     ];
 
     public function motorista()

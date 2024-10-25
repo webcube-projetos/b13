@@ -32,4 +32,9 @@ class OsEmployeeVehicle extends Model
     {
         return $this->belongsTo(OsService::class, 'id_service_os', 'id');
     }
+
+    public function company()
+    {
+        return $this->hasOne(Company::class, 'id', 'id_company');
+    }
 }

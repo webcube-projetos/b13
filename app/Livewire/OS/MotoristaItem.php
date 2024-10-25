@@ -135,6 +135,7 @@ class MotoristaItem extends Component
             while ($startDate->lte($endDate)) {
                 OsExecution::firstOrCreate([
                     'id_employee_vehicle' => $motoristas->id,
+                    'id_os' => $os,
                     'date' => $startDate->format('Y-m-d'),
                 ]);
 

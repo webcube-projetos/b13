@@ -30,15 +30,15 @@ class CampoValores extends Component
         if ($serviceId) {
             $this->osService = OsService::find($serviceId);
 
-            $this->precoBase = $this->osService?->price;
-            $this->horaExtra = $this->osService?->extra_price;
+            $this->precoBase = $this->osService?->price / 100;
+            $this->horaExtra = $this->osService?->extra_price / 100;
             $this->kmBase = $this->osService?->km;
-            $this->kmExtra = $this->osService?->km_extra;
-            $this->custoParceiro = $this->osService?->partner_cost;
-            $this->extraParceiro = $this->osService?->partner_extra_time;
-            $this->kmExtraParceiro = $this->osService?->partner_extra_km;
-            $this->custoEmployee = $this->osService?->employee_cost;
-            $this->horaExtraEmployee = $this->osService?->employee_extra;
+            $this->kmExtra = $this->osService?->km_extra / 100;
+            $this->custoParceiro = $this->osService?->partner_cost / 100;
+            $this->extraParceiro = $this->osService?->partner_extra_time / 100;
+            $this->kmExtraParceiro = $this->osService?->partner_extra_km / 100;
+            $this->custoEmployee = $this->osService?->employee_cost / 100;
+            $this->horaExtraEmployee = $this->osService?->employee_extra / 100;
 
             $this->serviceId = $serviceId;
         }
@@ -50,7 +50,6 @@ class CampoValores extends Component
         $data = [
             'price' => $this->precoBase,
             'extra_price' => $this->horaExtra,
-            'km' => $this->kmBase,
             'km_extra' => $this->kmExtra,
             'partner_cost' => $this->custoParceiro,
             'partner_extra_time' => $this->extraParceiro,
@@ -59,9 +58,16 @@ class CampoValores extends Component
             'employee_extra' => $this->horaExtraEmployee,
         ];
 
+        foreach ($data as $key => $value) {
+            $value = str_replace('.', '', $value);
+            $data[$key] = (float)$value * 100;
+        }
+
+
+        $data['km'] = $this->kmBase;
+
         $this->dispatch('valoresCreated', $this->serviceId, $data);
     }
-
 
     #[On('preencherCamposDoServico')]
     public function preencherCamposDoServico($serviceTemp, $serviceId)
