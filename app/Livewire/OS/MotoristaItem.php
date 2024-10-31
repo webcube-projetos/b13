@@ -3,11 +3,13 @@
 namespace App\Livewire\OS;
 
 use App\Livewire\SelectComponent;
+use App\Models\Company;
 use App\Models\OsEmployeeVehicle;
 use App\Models\OsExecution;
 use App\Models\OsService;
 use App\Models\Vehicle;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -26,9 +28,13 @@ class MotoristaItem extends Component
     public $serviceId;
     public $motoristaId;
     public $vehicleCompany;
-
+    public $freelance;
     public $typesVehicle;
     public $targetClass = MotoristaItem::class;
+
+    public $ownVechicles = [];
+    public $ownCompany = ['Freelance', 'B13 COMPANY LTDA'];
+
 
     public function mount($motorista = null)
     {
@@ -52,6 +58,13 @@ class MotoristaItem extends Component
                 $this->start = $motoristaCadastrado->start;
                 $this->end = $motoristaCadastrado->end;
             }
+        }
+        $company = Company::where('id', $this->empresas)->first();
+
+        if ($company && in_array($company->name, $this->ownCompany)) {
+            $this->ownVechicles = Company::whereIn('name', $this->ownCompany)->pluck('id')->toArray();
+        } else {
+            $this->ownVechicles = $company ?? [];
         }
     }
 
@@ -86,6 +99,16 @@ class MotoristaItem extends Component
                 if ($type == 'vehicles_plate') {
                     $this->vehicleCompany = Vehicle::find($value)?->id_company;
                 }
+
+                if ($type == 'empresas') {
+                    $company = Company::where('id', $value)->first();
+
+                    if ($company && in_array($company->name, ['Freelance', 'B13 COMPANY LTDA'])) {
+                        $this->ownVechicles = Company::whereIn('name', $this->ownCompany)->pluck('id')->toArray();
+                    } else {
+                        $this->ownVechicles = $value ?? [];
+                    }
+                }
             }
         }
     }
@@ -93,6 +116,7 @@ class MotoristaItem extends Component
     #[On('os-service-created')]
     public function handleOsServiceCreated($id)
     {
+        DB::beginTransaction();
         if ($id == $this->serviceId) {
             $motoristas = OsEmployeeVehicle::find($this->motoristaId);
             $os = OsService::find($this->serviceId)->os->id;
@@ -144,6 +168,8 @@ class MotoristaItem extends Component
 
             $this->dispatch('reload-executions');
         }
+
+        DB::commit();
     }
 
 

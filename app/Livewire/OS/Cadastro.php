@@ -57,7 +57,7 @@ class Cadastro extends Component
     #[On('selectUpdated')]
     public function handleSelectUpdated($type, $value)
     {
-        if (!in_array($type, ['contato', 'paymentMethod', 'client', 'paymentOptions'])) {
+        if (!in_array($type, ['contato', 'client'])) {
             return;
         }
 

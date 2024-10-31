@@ -4,37 +4,73 @@ namespace App\Observers;
 
 use App\Models\Financial;
 use App\Models\FinancialEntry;
+use App\Models\FinancialItem;
 use App\Models\OsExecution;
 use App\Traits\FinancialTrait;
 use Carbon\Carbon;
 
 class OsExecutionObserver
 {
-    use FinancialTrait;
+    //Toda logica aqui presente pode se tornar lenta num sistema saas multitenant,
+    //Nesse caso a melhor abordagem seria transformar a logica aqui em triggers e procedures para melhorar o desempenho
+    //Assim todo processamento seria feito pelo banco de dados
 
+    use FinancialTrait;
     public function created(OsExecution $osExecution)
     {
-        $this->recalculateDays($osExecution->motorista->id_os);
-        $this->generateFinancialEntries($osExecution->motorista->id_os);
-        $this->generateFinancialExpenses($osExecution, $osExecution->motorista->id_os);
+        $this->recalculateDays($osExecution->id_os);
+        $this->generateFinancialEntries($osExecution->id_os);
+        $this->generateFinancialItensExpenses($osExecution, $osExecution->id_os);
+
+        $this->generateFinancialExpenses($osExecution->id_os, $osExecution);
     }
 
     public function updated(OsExecution $execution)
     {
         if ($execution->isDirty('date')) {
-            $this->recalculateDays($execution->motorista->id_os);
+            $this->recalculateDays($execution->id_os);
         }
 
         //Recalcular os valores do orcamento sempre que houver uma alteração em algum campo de valor
         if ($execution->isDirty('km_exceed') || $execution->isDirty('exceed_time')) {
-            $this->recalculateFinancial($execution->motorista->id_os);
+            $this->recalculateFinancial($execution->id_os);
+            $this->recalculateFinancialItensExpenses($execution);
             $this->recalculateFinancialExpenses($execution);
         }
     }
 
-    public function deleted(OsExecution $osExecution)
+    public function deleting(OsExecution $execution)
     {
-        $this->recalculateDays($osExecution->motorista->id_os);
+        $this->recalculateDays($execution->motorista->id_os);
+        $execution->expense?->delete();
+
+        $company = $execution->motorista->company;
+
+        $financial = Financial::where('id_os', $execution->motorista->id_os)
+            ->when($company->name == 'Freelance', function ($query) use ($execution) {
+                $query->where('id_employee', $execution->motorista->id_employee);
+            })
+            ->when(!in_array($company->name, ['Freelance', 'B13 COMPANY LTDA']), function ($query) use ($execution) {
+                $query->where('id_company', $execution->motorista->id_company);
+            })
+            ->where('type_transaction', Financial::SAIDA)
+            ->first();
+
+        $itensFinancial = FinancialItem::where('id_os', $execution->motorista->id_os)
+            ->when($company->name == 'Freelance', function ($query) use ($execution) {
+                $query->where('id_employee', $execution->motorista->id_employee);
+            })
+            ->when(!in_array($company->name, ['Freelance', 'B13 COMPANY LTDA']), function ($query) use ($execution) {
+                $query->where('id_company', $execution->motorista->id_company);
+            })
+            ->get();
+
+        if (!$itensFinancial->count()) {
+            $financial?->delete();
+        }
+
+        $this->recalculateFinancial($execution->motorista->id_os);
+        $this->recalculateFinancialExpenses($execution);
     }
 
     private function recalculateDays($idOs)
@@ -67,11 +103,11 @@ class OsExecutionObserver
         $total = $service->price;
 
         if ($execution->exceed_time > 0) {
-            $total += $execution->exceed_time * $service->extra_price;
+            $total = ($execution->exceed_time / 60) * $service->extra_price;
         }
 
         if ($execution->km_exceed > 0) {
-            $total += $execution->km_exceed * $service->km_extra;
+            $total = $execution->km_exceed * $service->km_extra;
         }
 
         if ($execution->toll > 0) {

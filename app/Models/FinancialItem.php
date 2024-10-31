@@ -9,7 +9,7 @@ class FinancialItem extends Model
 {
     use HasFactory;
 
-    protected $table = 'financial';
+    protected $table = 'financial_itens';
 
     protected $fillable = [
         'id_os',

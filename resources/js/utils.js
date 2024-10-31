@@ -128,8 +128,6 @@ var cpfMascara = function (val) {
 
 $('#cpfcnpj').mask(cpfMascara, cpfOptions);
 
-$('.money').maskMoney({ thousands: '.', decimal: ',', affixesStay: false });
-
 var telefoneMascara = function (val) {
     return val.replace(/\D/g, '').length > 10 ? '(00) 00000-0000' : '(00) 0000-00009';
 };
@@ -145,3 +143,13 @@ $('.phone').mask(telefoneMascara, telefoneOptions);
 Fancybox.bind("[data-fancybox]", {
     // Your custom options
 });
+
+function inputValor(el) {
+    el = $(el);
+    el.unmask().mask("#.##0,00", { reverse: true });
+
+    const length = el.val().length;
+    el[0].setSelectionRange(length, length);
+}
+
+window.inputValor = inputValor

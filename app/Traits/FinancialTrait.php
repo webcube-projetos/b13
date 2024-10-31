@@ -16,7 +16,9 @@ trait FinancialTrait
      */
     public function generateFinancialEntries($id_os)
     {
-        $financialEntries = Financial::where('id_os', $id_os)->get();
+        $financialEntries = Financial::where('id_os', $id_os)
+            ->where('type_transaction', Financial::ENTRADA)
+            ->get();
 
         if (!$financialEntries->count()) {
             $this->createFinancialEntries($id_os);
@@ -25,27 +27,114 @@ trait FinancialTrait
         $this->recalculateFinancial($id_os);
     }
 
-    public function generateFinancialExpenses($execution, $id_os)
+    /**
+     * Cria as saidas no financeiro e calcula seus valores
+     * @param $id_os
+     * @param OsExecution $execution
+     * @return void
+     */
+    public function generateFinancialExpenses($id_os, $execution)
+    {
+        $company = $execution->motorista->company;
+
+        $financialExpense = Financial::where('id_os', $id_os)
+            ->when($company->name == 'Freelance', function ($query) use ($execution) {
+                $query->where('id_employee', $execution->motorista->id_employee);
+            })
+            ->when(!in_array($company->name, ['Freelance', 'B13 COMPANY LTDA']), function ($query) use ($execution) {
+                $query->where('id_company', $execution->motorista->id_company);
+            })
+            ->where('type_transaction', Financial::SAIDA)
+            ->first();
+
+        if (!$financialExpense) {
+            $financialExpense = $this->createFinancialExpense($id_os, $execution);
+        }
+
+        $this->recalculateFinancialExpenses($execution);
+    }
+
+    /**
+     * Cria uma entrada no financeiro para despesa direcionada ao motorista ou empresa
+     * @param $id_os
+     * @return void
+     */
+    public function createFinancialExpense($id_os, $execution)
+    {
+        $company = $execution->motorista->company;
+
+        if ($company->name == 'B13 COMPANY LTDA') return;
+
+        return Financial::create([
+            'id_os' => $id_os,
+            'installment' => 1,
+            'id_company' => $company->name != 'Freelance' ? $company->id : null,
+            'id_employee' => $company->name == 'Freelance' ? $execution->motorista->id_employee : null,
+            'type_transaction' => Financial::SAIDA,
+            'total' => 0,
+        ]);
+    }
+
+    /**
+     * Cria os itens de despesas por execução
+     * @param OsExecution $execution
+     * @param $id_os
+     * @return void
+     */
+    public function generateFinancialItensExpenses($execution, $id_os)
     {
         $financial = FinancialItem::where('id_execution', $execution->id)
             ->first();
 
         $company = $execution->motorista->company;
 
-        if ($company->name == 'B13 Company') return;
+        if ($company->name == 'B13 COMPANY LTDA') return;
 
         if (!$financial) {
             return FinancialItem::create([
                 'id_os' => $id_os,
                 'id_execution' => $execution->id,
                 'id_company' => $company->name != 'Freelance' ? $company->id : null,
-                'id_employee' => $execution->motorista->id_employee,
+                'id_employee' => $company->name == 'Freelance' ? $execution->motorista->id_employee : null,
                 'total' => 0,
             ]);
         }
     }
 
+    /**
+     * Recalcula o valor das despesas no financeiro quando um motorista ou empresa foram contratadas para o serviço
+     * @param OsExecution $execution
+     * @return void
+     */
     public function recalculateFinancialExpenses($execution)
+    {
+        $company = $execution->motorista->company;
+
+        $financialExpense = Financial::where('id_os', $execution->id_os)
+            ->when($company->name == 'Freelance', function ($query) use ($execution) {
+                $query->where('id_employee', $execution->motorista->id_employee);
+            })
+            ->when(!in_array($company->name, ['Freelance', 'B13 COMPANY LTDA']), function ($query) use ($execution) {
+                $query->where('id_company', $execution->motorista->id_company);
+            })
+            ->where('type_transaction', Financial::SAIDA)
+            ->where('status', Financial::NAO_PAGO)
+            ->first();
+
+        if (!$financialExpense) return;
+
+        if ($financialExpense->id_company) $financialExpense->total = $financialExpense->companyExpenses->sum('total');
+        if ($financialExpense->id_employee) $financialExpense->total = $financialExpense->employeeExpenses->sum('total');
+
+        $financialExpense->save();
+    }
+
+    /**
+     * Recalcula o valor das despesas item a item geradas quando um motorista ou empresa foram contratadas para o serviço
+     * @param OsExecution $execution
+     * @return void
+     */
+    public function recalculateFinancialItensExpenses($execution)
     {
         $financialItem = FinancialItem::where('id_execution', $execution->id)
             ->first();
@@ -63,15 +152,28 @@ trait FinancialTrait
         }
     }
 
+    /**
+     * Calcula o valor de despesas que serão pagas para o motorista contratado
+     * @param OsExecution $execution
+     * @param FinancialItem $financialItem
+     * @return void
+     */
     public function calculateEmployeeExpenses($execution, $financialItem)
     {
         if ($execution->exceed_time > 0) {
-            $financialItem->total += $execution->exceed_time * $execution->motorista->oSService->employee_extra;
+            $financialItem->total = ($execution->exceed_time / 60) * $execution->motorista->oSService->employee_extra;
         }
 
         $financialItem->total += $execution->motorista->oSService->employee_cost;
+        $financialItem->save();
     }
 
+    /**
+     * Calcula o valor de despesas que serão pagas para o parceiro
+     * @param OsExecution $execution
+     * @param FinancialItem $financialItem
+     * @return void
+     */
     public function calculatePartnerExpenses($execution, $financialItem)
     {
         if ($execution->km_exceed > 0) {
@@ -83,6 +185,8 @@ trait FinancialTrait
         }
 
         $financialItem->total += $execution->motorista->oSService->partner_cost;
+
+        $financialItem->save();
     }
 
     /**
@@ -92,18 +196,18 @@ trait FinancialTrait
     public function recalculateFinancial($id_os)
     {
         $financialEntries = Financial::where('id_os', $id_os)
-            ->where('status', Financial::NAO_PAGO)
+            ->where('type_transaction', Financial::ENTRADA)
             ->get();
 
         $total = $financialEntries->sum('total');
 
-        $totalAtualizado = OS::find($id_os)->executions->sum('total');
+        $totalAtualizado = OS::find($id_os)->executions?->sum('total') ?? 0;
 
         if ($total != $totalAtualizado) {
             $totalForInstallment = $totalAtualizado / $financialEntries->count();
 
-            foreach ($financialEntries as $financial) {
-                $financial->total += $totalForInstallment;
+            foreach ($financialEntries->where('status', Financial::NAO_PAGO) as $financial) {
+                $financial->total = $totalForInstallment;
                 $financial->save();
             }
         }
@@ -117,7 +221,6 @@ trait FinancialTrait
     public function createFinancialEntries($id_os)
     {
         $os = OS::find($id_os);
-        $paymentMethod = $os->id_payment_method;
         $total = $os->executions->sum('total');
 
         for ($installment = 1; $installment <= $os->installments; $installment++) {

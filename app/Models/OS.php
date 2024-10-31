@@ -54,4 +54,9 @@ class OS extends Model
     {
         return $this->hasMany(OsExecution::class, 'id_os', 'id');
     }
+
+    public function financialEntries()
+    {
+        return $this->hasMany(Financial::class, 'id_os', 'id')->where('type_transaction', Financial::ENTRADA);
+    }
 }

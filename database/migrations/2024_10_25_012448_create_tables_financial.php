@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('installment');
             $table->boolean('status')->default(0);
             $table->tinyInteger('type_transaction');
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->unsignedBigInteger('total');
             $table->timestamps();
 

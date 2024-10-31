@@ -307,7 +307,7 @@ class SelectComponent extends Component
             } else {
                 // Pega a tabela principal
                 $mainTable = $query->getModel()->getTable();
-                if (is_array($value)) {
+                if (is_array($value) && count($value) > 0) {
                     $query->whereIn("$mainTable.$key", $value);
                 } elseif ($value) {
                     $query->where("$mainTable.$key", $value);

@@ -18,24 +18,50 @@
 @script
     <script>
         $(document).ready(function() {
-            const selects = document.querySelectorAll(".search")
 
-            selects.forEach(select => {
-                new TomSelect(select, {
-                    allowEmptyOption: true,
-                    create: false,
-                    sortField: {
-                        field: "text",
-                        direction: "asc"
-                    },
-                    onInitialize: function() {
-                        // Limpa a seleção inicial
-                    },
-                    onType: function(str) {
-                        @this.set('searchTerm', str);
+        });
+        Livewire.hook('element.init', ({
+            component,
+            el
+        }) => {
+            if (component.canonical.type == 'employee_driver') {
+                const selects = component.el.querySelectorAll('.search');
+                selects.forEach(select => {
+                    if (!select || !select.tagName || select.tagName.toLowerCase() !== 'select') {
+                        return;
                     }
-                })
-            })
+
+                    if (select.classList.contains('tomselected') || select.tomselect) {
+                        return;
+                    }
+
+                    if (select.options.length === 0) {
+                        const emptyOption = new Option('', '');
+                        select.appendChild(emptyOption);
+                    }
+
+                    try {
+                        new TomSelect(select, {
+                            allowEmptyOption: true,
+                            create: false,
+                            sortField: {
+                                field: "text",
+                                direction: "asc"
+                            },
+                            onInitialize: function() {
+                                // Limpa a seleção inicial
+                            },
+                            onType: function(str) {
+                                if (str !== null && str !== undefined) {
+                                    @this.set('searchTerm', str);
+                                }
+                            }
+                        });
+                    } catch (error) {
+                        console.error('Erro ao inicializar TomSelect:', error);
+                    }
+                });
+            }
         });
     </script>
 @endscript

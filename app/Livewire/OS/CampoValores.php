@@ -30,15 +30,15 @@ class CampoValores extends Component
         if ($serviceId) {
             $this->osService = OsService::find($serviceId);
 
-            $this->precoBase = $this->osService?->price / 100;
-            $this->horaExtra = $this->osService?->extra_price / 100;
+            $this->precoBase = $this->osService?->price;
+            $this->horaExtra = $this->osService?->extra_price;
             $this->kmBase = $this->osService?->km;
-            $this->kmExtra = $this->osService?->km_extra / 100;
-            $this->custoParceiro = $this->osService?->partner_cost / 100;
-            $this->extraParceiro = $this->osService?->partner_extra_time / 100;
-            $this->kmExtraParceiro = $this->osService?->partner_extra_km / 100;
-            $this->custoEmployee = $this->osService?->employee_cost / 100;
-            $this->horaExtraEmployee = $this->osService?->employee_extra / 100;
+            $this->kmExtra = $this->osService?->km_extra;
+            $this->custoParceiro = $this->osService?->partner_cost;
+            $this->extraParceiro = $this->osService?->partner_extra_time;
+            $this->kmExtraParceiro = $this->osService?->partner_extra_km;
+            $this->custoEmployee = $this->osService?->employee_cost;
+            $this->horaExtraEmployee = $this->osService?->employee_extra;
 
             $this->serviceId = $serviceId;
         }
@@ -59,10 +59,13 @@ class CampoValores extends Component
         ];
 
         foreach ($data as $key => $value) {
-            $value = str_replace('.', '', $value);
-            $data[$key] = (float)$value * 100;
+            if (is_string($value)) {
+                if (strpos($value, '.')) {
+                    $value = str_replace('.', '', $value);
+                }
+                $data[$key] = (int)$value * 100;
+            }
         }
-
 
         $data['km'] = $this->kmBase;
 

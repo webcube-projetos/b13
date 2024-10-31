@@ -12,6 +12,7 @@ class OsExecution extends Model
     protected $table = 'os_executions';
 
     protected $fillable = [
+        'id_os',
         'id_employee_vehicle',
         'day',
         'identification',
@@ -33,5 +34,10 @@ class OsExecution extends Model
     public function motorista()
     {
         return $this->hasOne(OsEmployeeVehicle::class, 'id', 'id_employee_vehicle');
+    }
+
+    public function expense()
+    {
+        return $this->hasOne(FinancialItem::class, 'id_execution', 'id');
     }
 }
