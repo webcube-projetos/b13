@@ -118,6 +118,13 @@ class Financeiro extends Component
         $this->itens = $itens;
     }
 
+    #[On('refresh-finance')]
+    public function refresh()
+    {
+        $this->entries = $this->entries();
+        $this->expenses = $this->expenses();
+    }
+
     public function render()
     {
         return view('livewire.o-s.financeiro');

@@ -65,6 +65,8 @@ class LinhasExecucao extends Component
         $execution->{$property} = $this->{$property};
 
         $execution->save();
+        $this->dispatch('refresh-finance');
+
         $this->updateExecutions($execution);
     }
 
