@@ -72,7 +72,7 @@
 
                                 <div class="col-lg-12 text-end mt-4">
                                     <h2><span class="text-sm">Total:</span> <span
-                                            id="totalOrcamento">R${{ number_format($total, 2) }}</span>
+                                            id="totalOrcamento">R${{ number_format($total / 100, 2, ',', '.') }}</span>
                                     </h2>
                                 </div>
                             </div>

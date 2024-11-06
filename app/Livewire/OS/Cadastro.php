@@ -47,9 +47,7 @@ class Cadastro extends Component
             $this->paymentOptions = $orcamento->id_payment_options;
             $this->obs = $orcamento->obs;
             $this->client = $orcamento->id_client;
-            $this->total = $orcamento->services->sum(function ($service) {
-                return $service->price * $service->qtd_days * $service->qtd_service;
-            });
+            $this->total = $orcamento->executions->sum('total');
         }
     }
 
