@@ -4,7 +4,7 @@
         name="{{ $name }}" id="{{ $name }}" wire:model.live="selected">
         <option value="">{{ $placeholder }}</option>
         @foreach ($options as $option)
-            <option value="{{ $option->id }}">
+            <option value="{{ $option->id }}" {{ $option->id == $selected ? 'selected' : '' }}>
                 @if ($name != 'vehicleModel[]')
                     {{ $option->name }}
                 @else
@@ -40,6 +40,8 @@
                         select.appendChild(emptyOption);
                     }
 
+                    console.log(select);
+
                     try {
                         new TomSelect(select, {
                             allowEmptyOption: true,
@@ -48,9 +50,7 @@
                                 field: "text",
                                 direction: "asc"
                             },
-                            onInitialize: function() {
-                                // Limpa a seleção inicial
-                            },
+
                             onType: function(str) {
                                 if (str !== null && str !== undefined) {
                                     @this.set('searchTerm', str);

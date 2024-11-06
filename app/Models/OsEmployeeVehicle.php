@@ -37,4 +37,9 @@ class OsEmployeeVehicle extends Model
     {
         return $this->hasOne(Company::class, 'id', 'id_company');
     }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class, 'id', 'id_employee');
+    }
 }

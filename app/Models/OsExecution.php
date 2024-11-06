@@ -31,10 +31,27 @@ class OsExecution extends Model
         'total',
     ];
 
+    protected $casts = [
+        'date' => 'date',
+    ];
+
     public function motorista()
     {
         return $this->hasOne(OsEmployeeVehicle::class, 'id', 'id_employee_vehicle');
     }
+
+    public function osService()
+    {
+        return $this->hasOneThrough(
+            OsService::class,
+            OsEmployeeVehicle::class,
+            'id',
+            'id',
+            'id_employee_vehicle',
+            'id_service_os'
+        );
+    }
+
 
     public function expense()
     {

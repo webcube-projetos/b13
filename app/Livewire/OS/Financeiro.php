@@ -16,6 +16,7 @@ class Financeiro extends Component
     public $paymentMethod;
     public $paymentOptions;
     public $payed = false;
+    public $itens = [];
     public $targetClass = Financeiro::class;
 
     public function mount($id = null)
@@ -105,6 +106,17 @@ class Financeiro extends Component
         }
     }
 
+    public function verDetalhes($id)
+    {
+        $financial = Financial::find($id);
+
+        $itens = match (true) {
+            $financial->id_company !== null => $financial->companyExpenses,
+            $financial->id_employee !== null => $financial->employeeExpenses,
+        };
+
+        $this->itens = $itens;
+    }
 
     public function render()
     {

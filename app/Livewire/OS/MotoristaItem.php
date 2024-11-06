@@ -64,7 +64,7 @@ class MotoristaItem extends Component
         if ($company && in_array($company->name, $this->ownCompany)) {
             $this->ownVechicles = Company::whereIn('name', $this->ownCompany)->pluck('id')->toArray();
         } else {
-            $this->ownVechicles = $company ?? [];
+            $this->ownVechicles = [$this->empresas] ?? [];
         }
     }
 
@@ -106,7 +106,7 @@ class MotoristaItem extends Component
                     if ($company && in_array($company->name, ['Freelance', 'B13 COMPANY LTDA'])) {
                         $this->ownVechicles = Company::whereIn('name', $this->ownCompany)->pluck('id')->toArray();
                     } else {
-                        $this->ownVechicles = $value ?? [];
+                        $this->ownVechicles = [$value] ?? [];
                     }
                 }
             }

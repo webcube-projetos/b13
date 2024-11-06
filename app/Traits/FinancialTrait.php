@@ -121,7 +121,9 @@ trait FinancialTrait
             ->where('status', Financial::NAO_PAGO)
             ->first();
 
-        if (!$financialExpense) return;
+        if (!$financialExpense) {
+            $financialExpense = $this->createFinancialExpense($execution->id_os, $execution);
+        }
 
         if ($financialExpense->id_company) $financialExpense->total = $financialExpense->companyExpenses->sum('total');
         if ($financialExpense->id_employee) $financialExpense->total = $financialExpense->employeeExpenses->sum('total');
@@ -140,7 +142,7 @@ trait FinancialTrait
             ->first();
 
         if (!$financialItem) {
-            $financialItem = $this->generateFinancialExpenses($execution, $execution->motorista->id_os);
+            $financialItem = $this->generateFinancialItensExpenses($execution, $execution->motorista->id_os);
         }
 
         if ($financialItem->id_company) {
@@ -160,11 +162,12 @@ trait FinancialTrait
      */
     public function calculateEmployeeExpenses($execution, $financialItem)
     {
+        $financialItem->total = $execution->motorista->oSService->employee_cost;
+
         if ($execution->exceed_time > 0) {
-            $financialItem->total = ($execution->exceed_time / 60) * $execution->motorista->oSService->employee_extra;
+            $financialItem->total += ($execution->exceed_time / 60) * $execution->motorista->oSService->employee_extra;
         }
 
-        $financialItem->total += $execution->motorista->oSService->employee_cost;
         $financialItem->save();
     }
 
@@ -176,6 +179,8 @@ trait FinancialTrait
      */
     public function calculatePartnerExpenses($execution, $financialItem)
     {
+        $financialItem->total = $execution->motorista->oSService->partner_cost;
+
         if ($execution->km_exceed > 0) {
             $financialItem->total += $execution->km_exceed * $execution->motorista->oSService->partner_extra_km;
         }
@@ -184,7 +189,6 @@ trait FinancialTrait
             $financialItem->total += $execution->exceed_time * $execution->motorista->oSService->partner_extra_time;
         }
 
-        $financialItem->total += $execution->motorista->oSService->partner_cost;
 
         $financialItem->save();
     }
@@ -204,9 +208,10 @@ trait FinancialTrait
         $totalAtualizado = OS::find($id_os)->executions?->sum('total') ?? 0;
 
         if ($total != $totalAtualizado) {
-            $totalForInstallment = $totalAtualizado / $financialEntries->count();
+            $finanancialEntriesNotPayed = $financialEntries->where('status', Financial::NAO_PAGO);
+            $totalForInstallment = ($totalAtualizado - $financialEntries->where('status', Financial::PAGO)->sum('total')) / $finanancialEntriesNotPayed->count();
 
-            foreach ($financialEntries->where('status', Financial::NAO_PAGO) as $financial) {
+            foreach ($finanancialEntriesNotPayed as $financial) {
                 $financial->total = $totalForInstallment;
                 $financial->save();
             }

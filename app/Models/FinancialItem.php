@@ -19,4 +19,9 @@ class FinancialItem extends Model
         'id_company',
         'total',
     ];
+
+    public function execution()
+    {
+        return $this->hasOne(OsExecution::class, 'id', 'id_execution');
+    }
 }

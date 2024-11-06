@@ -16,13 +16,14 @@ class OsExecutionObserver
     //Assim todo processamento seria feito pelo banco de dados
 
     use FinancialTrait;
-    public function created(OsExecution $osExecution)
+    public function created(OsExecution $execution)
     {
-        $this->recalculateDays($osExecution->id_os);
-        $this->generateFinancialEntries($osExecution->id_os);
-        $this->generateFinancialItensExpenses($osExecution, $osExecution->id_os);
+        $this->calculatedTotal($execution);
 
-        $this->generateFinancialExpenses($osExecution->id_os, $osExecution);
+        $this->recalculateDays($execution->id_os);
+        $this->generateFinancialEntries($execution->id_os);
+        $this->recalculateFinancialItensExpenses($execution);
+        $this->generateFinancialExpenses($execution->id_os, $execution);
     }
 
     public function updated(OsExecution $execution)
@@ -32,7 +33,7 @@ class OsExecutionObserver
         }
 
         //Recalcular os valores do orcamento sempre que houver uma alteração em algum campo de valor
-        if ($execution->isDirty('km_exceed') || $execution->isDirty('exceed_time')) {
+        if ($execution->isDirty('km_exceed') || $execution->isDirty('exceed_time') || $execution->isDirty('total')) {
             $this->recalculateFinancial($execution->id_os);
             $this->recalculateFinancialItensExpenses($execution);
             $this->recalculateFinancialExpenses($execution);
@@ -103,11 +104,11 @@ class OsExecutionObserver
         $total = $service->price;
 
         if ($execution->exceed_time > 0) {
-            $total = ($execution->exceed_time / 60) * $service->extra_price;
+            $total += ($execution->exceed_time / 60) * $service->extra_price;
         }
 
         if ($execution->km_exceed > 0) {
-            $total = $execution->km_exceed * $service->km_extra;
+            $total += $execution->km_exceed * $service->km_extra;
         }
 
         if ($execution->toll > 0) {
