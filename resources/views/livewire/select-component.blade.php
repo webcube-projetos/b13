@@ -24,7 +24,7 @@
             component,
             el
         }) => {
-            if (component.canonical.type == 'employee_driver') {
+            if (component.canonical.type == 'employee_driver' || component.canonical.type == 'employee_security') {
                 const selects = component.el.querySelectorAll('.search');
                 selects.forEach(select => {
                     if (!select || !select.tagName || select.tagName.toLowerCase() !== 'select') {
