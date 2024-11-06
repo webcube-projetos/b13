@@ -52,6 +52,7 @@ class ServiceOsItem extends Component
     public $horaExtraEmployee;
     public $total;
     public $data = [];
+    public $targetClass = ServiceOsItem::class;
 
     protected $listeners = [
         'clonarLinha' => 'handleClonarLinha',
@@ -274,6 +275,7 @@ class ServiceOsItem extends Component
     public function handleSelectUpdated($t, $value)
     {
         $this->{$t} = $value;
+        $this->updateServiceData();
     }
 
     //Preenche os campos de serviço apenas quando necessário

@@ -241,7 +241,7 @@
                 @php $company = $itens->first()->execution->motorista->company @endphp
                 @php $employee = $itens->first()->execution->motorista->employee @endphp
                 <p class="tw-ml-[16px]">
-                    {{ in_array($company->name, ['B13 COMPANY LTDA', 'Freelance']) ? $employee->name : $company->name }}
+                    {{ !$company || in_array($company->name, ['B13 COMPANY LTDA', 'Freelance']) ? $employee->name : $company->name }}
                 </p>
             @endif
         </div>
@@ -280,7 +280,7 @@
                                 </div>
                             </div>
 
-                            @if (in_array($execution->motorista->company->name, ['B13 COMPANY LTDA', 'Freelance']))
+                            @if (!$company || in_array($execution->motorista->company->name, ['B13 COMPANY LTDA', 'Freelance']))
                                 <div class="tw-space-y-2">
                                     <div class="tw-flex tw-justify-between">
                                         <span class="tw-text-gray-600 tw-text-sm">Parceiro</span>
