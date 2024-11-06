@@ -9,11 +9,11 @@
                                 data-bs-target="#cadastro" type="button" role="tab" aria-controls="cadastro"
                                 aria-selected="true">Cadastro</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link mb-0 px-0 py-1" id="custos-tab" data-bs-toggle="tab"
                                 data-bs-target="#custos" type="button" role="tab" aria-controls="custos"
                                 aria-selected="true">Custos</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link mb-0 px-0 py-1" id="financeiro-tab" data-bs-toggle="tab"
                                 data-bs-target="#financeiro" type="button" role="tab" aria-controls="financeiro"
@@ -69,20 +69,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6 mt-4">
-                                    <label for="paymentMethod">Condição de pagamento</label>
-                                    <livewire:select-component type="paymentMethod"
-                                        placeholder="Selecione a condição de pagamento" name="paymentMethod"
-                                        id="paymentMethod" selected='{{ $paymentMethod }}'
-                                        targetClass="{{ $targetClass }}" />
-                                </div>
-                                <div class="col-lg-6 mt-4">
-                                    <label for="paymentOptions">Forma de pagamento</label>
-                                    <livewire:select-component type="paymentOptions"
-                                        placeholder="Selecione a forma de pagamento" name="paymentOptions"
-                                        id="paymentOptions" selected='{{ $paymentOptions }}'
-                                        targetClass="{{ $targetClass }}" />
-                                </div>
+
                                 <div class="col-lg-12 text-end mt-4">
                                     <h2><span class="text-sm">Total:</span> <span
                                             id="totalOrcamento">R${{ number_format($total, 2) }}</span>
@@ -99,7 +86,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade show" id="custos" role="tabpanel" aria-labelledby="custos-tab">
+            {{-- <div class="tab-pane fade show" id="custos" role="tabpanel" aria-labelledby="custos-tab">
                 <div class="card">
                     <div class="card-body pt-4 p-3">
                         <div class="row">
@@ -114,10 +101,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="tab-pane fade show" id="financeiro" role="tabpanel" aria-labelledby="financeiro-tab">
-                @include('register.formFinanceiro')
+                <livewire:o-s.financeiro :id="$id" />
             </div>
         </div>
     </div>

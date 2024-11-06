@@ -27,4 +27,36 @@ class OS extends Model
     {
         return $this->hasMany(OsService::class, 'id_os', 'id');
     }
+
+    public function paymentMethod()
+    {
+        return $this->hasOne(PaymentMethod::class, 'id', 'id_payment_method');
+    }
+
+    public function getInstallmentsAttribute()
+    {
+        $description = $this->paymentMethod->description;
+
+        $twoTimesPayments = [
+            '50% NA RESERVA 50% NO TÉRMINO DO SERVIÇO',
+            '50% NA RESERVA 50% FATURADO PARA 30 DIAS',
+            '50% NA RESERVA - 50% ANTES DO INÍCIO DO SERVIÇO',
+        ];
+
+        if (in_array($description, $twoTimesPayments)) {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    public function executions()
+    {
+        return $this->hasMany(OsExecution::class, 'id_os', 'id');
+    }
+
+    public function financialEntries()
+    {
+        return $this->hasMany(Financial::class, 'id_os', 'id')->where('type_transaction', Financial::ENTRADA);
+    }
 }

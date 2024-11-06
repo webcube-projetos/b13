@@ -50,7 +50,6 @@ class CampoValores extends Component
         $data = [
             'price' => $this->precoBase,
             'extra_price' => $this->horaExtra,
-            'km' => $this->kmBase,
             'km_extra' => $this->kmExtra,
             'partner_cost' => $this->custoParceiro,
             'partner_extra_time' => $this->extraParceiro,
@@ -59,9 +58,19 @@ class CampoValores extends Component
             'employee_extra' => $this->horaExtraEmployee,
         ];
 
+        foreach ($data as $key => $value) {
+            if (is_string($value)) {
+                if (strpos($value, '.')) {
+                    $value = str_replace('.', '', $value);
+                }
+                $data[$key] = (int)$value * 100;
+            }
+        }
+
+        $data['km'] = $this->kmBase;
+
         $this->dispatch('valoresCreated', $this->serviceId, $data);
     }
-
 
     #[On('preencherCamposDoServico')]
     public function preencherCamposDoServico($serviceTemp, $serviceId)

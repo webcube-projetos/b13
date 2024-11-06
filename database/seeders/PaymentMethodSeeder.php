@@ -14,6 +14,7 @@ class PaymentMethodSeeder extends Seeder
      */
     public function run(): void
     {
+        //Se as desciptions mudarem, precisa ser atualizado na model OS
         $descriptions = [
             ['description' => 'A VISTA'],
             ['description' => '50% NA RESERVA 50% NO TÉRMINO DO SERVIÇO'],

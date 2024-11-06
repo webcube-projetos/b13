@@ -58,7 +58,11 @@ class MotoristaList extends Component
         $motorista = OsEmployeeVehicle::find($motoristaId);
 
         if ($motorista) {
-            $motorista->executions()->delete();
+            $motorista->executions->each(function ($execution) {
+                $execution->expense?->delete();
+                $execution->delete();
+            });
+
             $motorista->delete();
         }
 

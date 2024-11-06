@@ -12,6 +12,7 @@ class OsExecution extends Model
     protected $table = 'os_executions';
 
     protected $fillable = [
+        'id_os',
         'id_employee_vehicle',
         'day',
         'identification',
@@ -27,10 +28,33 @@ class OsExecution extends Model
         'toll',
         'parking',
         'another_expenses',
+        'total',
+    ];
+
+    protected $casts = [
+        'date' => 'date',
     ];
 
     public function motorista()
     {
         return $this->hasOne(OsEmployeeVehicle::class, 'id', 'id_employee_vehicle');
+    }
+
+    public function osService()
+    {
+        return $this->hasOneThrough(
+            OsService::class,
+            OsEmployeeVehicle::class,
+            'id',
+            'id',
+            'id_employee_vehicle',
+            'id_service_os'
+        );
+    }
+
+
+    public function expense()
+    {
+        return $this->hasOne(FinancialItem::class, 'id_execution', 'id');
     }
 }
