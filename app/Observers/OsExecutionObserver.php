@@ -48,20 +48,20 @@ class OsExecutionObserver
         $company = $execution->motorista->company;
 
         $financial = Financial::where('id_os', $execution->motorista->id_os)
-            ->when($company->name == 'Freelance', function ($query) use ($execution) {
+            ->when($company?->name == 'Freelance' || !$company, function ($query) use ($execution) {
                 $query->where('id_employee', $execution->motorista->id_employee);
             })
-            ->when(!in_array($company->name, ['Freelance', 'B13 COMPANY LTDA']), function ($query) use ($execution) {
+            ->when(!in_array($company && $company->name, ['Freelance', 'B13 COMPANY LTDA']), function ($query) use ($execution) {
                 $query->where('id_company', $execution->motorista->id_company);
             })
             ->where('type_transaction', Financial::SAIDA)
             ->first();
 
         $itensFinancial = FinancialItem::where('id_os', $execution->motorista->id_os)
-            ->when($company->name == 'Freelance', function ($query) use ($execution) {
+            ->when($company?->name == 'Freelance' || !$company, function ($query) use ($execution) {
                 $query->where('id_employee', $execution->motorista->id_employee);
             })
-            ->when(!in_array($company->name, ['Freelance', 'B13 COMPANY LTDA']), function ($query) use ($execution) {
+            ->when(!in_array($company && $company?->name, ['Freelance', 'B13 COMPANY LTDA']), function ($query) use ($execution) {
                 $query->where('id_company', $execution->motorista->id_company);
             })
             ->get();

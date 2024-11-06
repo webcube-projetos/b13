@@ -38,10 +38,10 @@ trait FinancialTrait
         $company = $execution->motorista->company;
 
         $financialExpense = Financial::where('id_os', $id_os)
-            ->when($company->name == 'Freelance', function ($query) use ($execution) {
+            ->when($company?->name == 'Freelance' || !$company, function ($query) use ($execution) {
                 $query->where('id_employee', $execution->motorista->id_employee);
             })
-            ->when(!in_array($company->name, ['Freelance', 'B13 COMPANY LTDA']), function ($query) use ($execution) {
+            ->when(!in_array($company?->name, ['Freelance', 'B13 COMPANY LTDA']), function ($query) use ($execution) {
                 $query->where('id_company', $execution->motorista->id_company);
             })
             ->where('type_transaction', Financial::SAIDA)
@@ -63,13 +63,13 @@ trait FinancialTrait
     {
         $company = $execution->motorista->company;
 
-        if ($company->name == 'B13 COMPANY LTDA') return;
+        if ($company && $company?->name == 'B13 COMPANY LTDA') return;
 
         return Financial::create([
             'id_os' => $id_os,
             'installment' => 1,
-            'id_company' => $company->name != 'Freelance' ? $company->id : null,
-            'id_employee' => $company->name == 'Freelance' ? $execution->motorista->id_employee : null,
+            'id_company' => $company && $company?->name != 'Freelance' ? $company->id : null,
+            'id_employee' => ($company?->name == 'Freelance' || !$company) ? $execution->motorista->id_employee : null,
             'type_transaction' => Financial::SAIDA,
             'total' => 0,
         ]);
@@ -88,14 +88,14 @@ trait FinancialTrait
 
         $company = $execution->motorista->company;
 
-        if ($company->name == 'B13 COMPANY LTDA') return;
+        if ($company && $company->name == 'B13 COMPANY LTDA') return;
 
         if (!$financial) {
             return FinancialItem::create([
                 'id_os' => $id_os,
                 'id_execution' => $execution->id,
-                'id_company' => $company->name != 'Freelance' ? $company->id : null,
-                'id_employee' => $company->name == 'Freelance' ? $execution->motorista->id_employee : null,
+                'id_company' => $company && $company?->name != 'Freelance' ? $company->id : null,
+                'id_employee' => ($company?->name == 'Freelance' || !$company) ? $execution->motorista->id_employee : null,
                 'total' => 0,
             ]);
         }
@@ -111,10 +111,10 @@ trait FinancialTrait
         $company = $execution->motorista->company;
 
         $financialExpense = Financial::where('id_os', $execution->id_os)
-            ->when($company->name == 'Freelance', function ($query) use ($execution) {
+            ->when($company?->name == 'Freelance' || !$company, function ($query) use ($execution) {
                 $query->where('id_employee', $execution->motorista->id_employee);
             })
-            ->when(!in_array($company->name, ['Freelance', 'B13 COMPANY LTDA']), function ($query) use ($execution) {
+            ->when(!in_array($company && $company->name, ['Freelance', 'B13 COMPANY LTDA']), function ($query) use ($execution) {
                 $query->where('id_company', $execution->motorista->id_company);
             })
             ->where('type_transaction', Financial::SAIDA)
