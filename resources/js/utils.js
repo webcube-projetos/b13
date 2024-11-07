@@ -57,6 +57,7 @@ function limpa_formulario_cep() {
     let bairro = document.getElementById('bairro');
     let cidade = document.getElementById('cidade');
     let uf = document.getElementById('estado');
+    let pais = document.getElementById('pais');
     logradouro.value = ("");
     logradouro.disabled = false;
     bairro.value = ("");
@@ -65,6 +66,8 @@ function limpa_formulario_cep() {
     cidade.disabled = false;
     uf.value = ("");
     uf.disabled = false;
+    pais.value = ("");
+    pais.disabled = false;
 }
 
 window.meu_callback = function (conteudo) {
@@ -73,6 +76,7 @@ window.meu_callback = function (conteudo) {
         let bairro = document.getElementById('bairro');
         let cidade = document.getElementById('cidade');
         let uf = document.getElementById('estado');
+        let pais = document.getElementById('pais');
         logradouro.value = (conteudo.logradouro);
         logradouro.readOnly = true;
         bairro.value = (conteudo.bairro);
@@ -81,6 +85,8 @@ window.meu_callback = function (conteudo) {
         cidade.readOnly = true;
         uf.value = (conteudo.uf);
         uf.readOnly = true;
+        pais.value = ('Brasil');
+        pais.readOnly = true;
     }
     else {
         limpa_formulario_cep();
@@ -99,6 +105,7 @@ window.pesquisaCep = function (valor) {
             document.getElementById('bairro').value = "...";
             document.getElementById('cidade').value = "...";
             document.getElementById('estado').value = "...";
+            document.getElementById('pais').value = "...";
 
             var script = document.createElement('script');
 
