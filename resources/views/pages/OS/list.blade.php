@@ -23,7 +23,13 @@
                     {{ $os->client->name }}
                 </td>
                 <td>
-                    {{ $os->contact->name }}
+                    @php
+                        if (isset($os->contact->name)) {
+                            echo $os->contact->name;
+                        } else { 
+                            echo '-';
+                        }
+                    @endphp
                 </td>
                 <td>
                     {{ 'R$ ' . number_format($os->executions->sum('total') / 100, 2, ',', '.') }}
