@@ -83,6 +83,10 @@ class OrcamentoCadastro extends Component
 
     public function handleSaveOS()
     {
+        $this->validate([
+            'client' => 'required',
+        ]);
+
         $os = OS::create([
             'id_contact' => $this->contato,
             'id_client' => $this->client,
@@ -93,6 +97,7 @@ class OrcamentoCadastro extends Component
 
         $this->os = $os;
         $this->dispatch('osCreated', $os->id);
+        return redirect()->to(route('orcamentos.editar', ['id' => $os->id]));
     }
 
     public function editOS()

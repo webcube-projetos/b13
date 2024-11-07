@@ -39,11 +39,13 @@
                     <label for="qtdDias">Qtd. Dias</label>
                     <input type="number" class="form-control" wire:model.live="qtdDias" name="qtdDias[]" id="qtdDias"
                         required>
+                    @error('qtdDias') <span class="badge bg-gradient-danger">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="qtdServices">Qtd. Veículos</label>
                     <input type="number" class="form-control" wire:model.live="qtdServices" name="qtdServices[]"
                         id="qtdServices" required>
+                    @error('qtdServices') <span class="badge bg-gradient-danger">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="bilingue[]">Bilingue</label>
@@ -89,7 +91,7 @@
                 <div class="col-md-3 mb-3">
                     <label for="vehiclesCategory[]">Categoria de veículo</label>
                     <livewire:select-component type="vehiclesCategory" placeholder="Selecione"
-                        name="vehiclesCategory[]" id="vehiclesCategory" :selected="$vehiclesCategory" />
+                        name="vehiclesCategory[]" :selected="$vehiclesCategory" />
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="modelVehicle">Modelo de veículo</label>
@@ -113,6 +115,7 @@
                     <label for="precoBase">Valor</label>
                     <input type="number" min="0" class="form-control" wire:model.live="precoBase"
                         name="precoBase[]" id="precoBase" required>
+                    @error('precoBase') <span class="badge bg-gradient-danger">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="horaExtra">Hora extra</label>

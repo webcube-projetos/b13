@@ -157,6 +157,12 @@ class ServiceOsItem extends Component
     #[On('osCreated')]
     public function saveOS($id)
     {
+        $this->validate([
+            'qtdDias' => 'required',
+            'qtdServices' => 'required',
+            'precoBase' => 'required',
+        ]);
+
         if ($this->serviceTemp) {
             $idGlobal = OsService::updateOrCreate(
                 ['id' => $this->idGlobal, 'id_service' => $this->serviceTemp->id],
@@ -242,6 +248,12 @@ class ServiceOsItem extends Component
     #[On('osUpdated')]
     public function handleOsUpdated($id)
     {
+        $this->validate([
+            'qtdDias' => 'required',
+            'qtdServices' => 'required',
+            'precoBase' => 'required',
+        ]);
+        
         $idGlobal = OsService::updateOrCreate(
             ['id' => $this->serviceId, 'id_os' => $id],
             [
