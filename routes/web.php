@@ -170,11 +170,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::prefix('categorias-segurancas')->name('categorias.segurancas.')->group(function () {
 		Route::get('/', [CategoriaSegurancaController::class, 'index'])->name('index');
-		Route::get('/editar', [CategoriaSegurancaController::class, 'editar'])->name('editar');
-		Route::get('/list', [CategoriaSegurancaController::class, 'list'])->name('list');
-		Route::get('/form', [CategoriaSegurancaController::class, 'form'])->name('form');
+		Route::post('/editar', [CategoriaSegurancaController::class, 'editar'])->name('editar');
 		Route::post('/salvar', [CategoriaSegurancaController::class, 'salvar'])->name('salvar');
 		Route::post('/delete', [CategoriaSegurancaController::class, 'delete'])->name('delete');
+		Route::get('/list', [CategoriaSegurancaController::class, 'list'])->name('list');
+		Route::get('/form', [CategoriaSegurancaController::class, 'form'])->name('form');
 	});
 
 	Route::prefix('categorias-servicos')->name('categorias.servicos.')->group(function () {
