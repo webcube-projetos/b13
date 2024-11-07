@@ -35,7 +35,7 @@ class SelectComponent extends Component
     public $searchTerm = '';
     public $readonly = false;
 
-    public function mount($type, $placeholder, $name, $selected, $filter = [], $targetClass = null, $search = false, $readonly = false)
+    public function mount($type, $placeholder, $name, $selected, $filter = [], $targetClass = null, $search = false, $readonly = false, $required = false)
     {
         $this->type = $type;
         $this->readonly = $readonly;
@@ -44,6 +44,8 @@ class SelectComponent extends Component
         $this->name = $name;
         $this->selected = $selected ?? null;
         $this->targetClass = $targetClass;
+
+        $this->required = $required;
 
         $this->filter = $filter;
 

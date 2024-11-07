@@ -1,5 +1,5 @@
 <div wire:ignore>
-    <select @if ($readonly) disabled @endif
+    <select @if ($readonly) disabled @endif @if ($required) required @endif
         class="@if ($search) search @else dinamicSelect form-control @endif"
         name="{{ $name }}" id="{{ $name }}" wire:model.live="selected">
         <option value="">{{ $placeholder }}</option>
