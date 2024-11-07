@@ -23,10 +23,24 @@
                     {{ $os->client->name }}
                 </td>
                 <td>
-                    {{ $os->contact->name }}
+                    @php
+                        if ( isset($os->contact->name) ) {
+                            echo $os->contact->name;
+                        } else {
+                            echo '-';
+                        }
+                    @endphp
                 </td>
                 <td>
-                    {{ 'R$ ' . number_format($os->executions->sum('total') / 100, 2, ',', '.') }}
+                    @php
+                        if (!$os->status) {
+                            //Se for orçamento
+                            echo 'R$ ' . number_format($os->services->sum('price') / 100, 2, ',', '.');
+                        } else {
+                            //Se for O.S.
+                            echo 'R$ ' . number_format($os->executions->sum('total') / 100, 2, ',', '.');
+                        }
+                    @endphp
                 </td>
                 <td class="text-right">
                     <a href="{{ route($type . '.editar', ['id' => $os->id]) }}"
