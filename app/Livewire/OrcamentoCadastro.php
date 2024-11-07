@@ -39,15 +39,28 @@ class OrcamentoCadastro extends Component
         $this->id = $id;
 
         if ($this->id) {
-            $orcamento  = OS::find($this->id);
-
+            $orcamento = OS::find($this->id);
+    
+            // Carregar os dados do orçamento
             $this->contato = $orcamento->id_contact;
             $this->paymentMethod = $orcamento->id_payment_method;
             $this->paymentOptions = $orcamento->id_payment_options;
             $this->obs = $orcamento->obs;
             $this->client = $orcamento->id_client;
+    
+            // Calcular o total inicial (sem desconto)
             $this->total = $orcamento->services->sum(function ($service) {
-                return $service->price * $service->qtd_days * $service->qtd_service;
+                // Calcula o preço base do serviço
+                $serviceTotal = ($service->price * $service->qtd_days * $service->qtd_service);
+                
+                // Aplica o desconto, se houver
+                if ($service->discount_type == 'porcentagem' && $service->discount > 0) {
+                    $serviceTotal -= ($serviceTotal * $service->discount) / 100;
+                } elseif ($service->discount_type == 'valor' && $service->discount > 0) {
+                    $serviceTotal -= $service->discount;
+                }
+
+                return $serviceTotal;
             });
         }
     }
@@ -55,11 +68,9 @@ class OrcamentoCadastro extends Component
     #[On('selectUpdated')]
     public function handleSelectUpdated($type, $value)
     {
-        if (!in_array($type, ['contato', 'paymentMethod', 'client', 'paymentOptions'])) {
+        if (!in_array($type, ['contato', 'paymentMethod', 'client', 'paymentOptions', 'tipodesconto', 'desconto'])) {
             return;
         }
-
-        $this->{$type} = $value;
     }
 
     public function handleCustosUpdated($serviceId, $data)

@@ -46,6 +46,20 @@ class ServiceOS extends Component
     public function handleCreateLines($services)
     {
         foreach ($services as $serviceOS) {
+            $totalBase = (($serviceOS->price * $serviceOS->qtd_days) * $serviceOS->qtd_service) / 100;
+
+            // Aplica o desconto dependendo do tipo
+            if ($serviceOS->discount_type === 'porcentagem') {
+                $descontoAplicado = $totalBase * ($serviceOS->discount / 100);
+            } elseif ($serviceOS->discount_type === 'valor') {
+                $descontoAplicado = $serviceOS->discount;
+            } else {
+                $descontoAplicado = 0; // Caso não haja desconto
+            }
+
+            // Calcula o total final com desconto aplicado
+            $totalComDesconto = $totalBase - $descontoAplicado;
+
             $data = [
                 'inicio' => $serviceOS->start,
                 'termino' => $serviceOS->finish,
@@ -73,8 +87,8 @@ class ServiceOS extends Component
                 'horaExtraEmployee' => $serviceOS->employee_extra / 100,
                 'parceiro' => null,
                 'desconto' => $serviceOS->discount,
-                'descontotipo' => $serviceOS->discount_type,
-                'total' => (($serviceOS->price * $serviceOS->qtd_days) * $serviceOS->qtd_service) / 100,
+                'tipodesconto' => $serviceOS->discount_type,
+                'total' => $totalComDesconto,
             ];
 
             $newService = ['type' => $serviceOS->km > 0 ? 'locacao' : 'seguranca', 'id' => $serviceOS->id];

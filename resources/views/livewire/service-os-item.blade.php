@@ -160,15 +160,15 @@
                 </div>
                 <div class="col-3">
                     <label for="horaExtraEmployee">Tipo desconto</label>
-                    <select name="tipodesconto[]" wire:model="tipodesconto" class="form-control">
+                    <select name="tipodesconto[]" wire:model.live="tipodesconto" class="form-control">
                         <option value="">Selecione</option>
-                        <option value="porcentagem">Porcentagem</option>
-                        <option value="valor">Valor</option>
+                        <option value="porcentagem" {{$tipodesconto == 'porcentagem' ? 'selected' : '' }}>Porcentagem</option>
+                        <option value="valor" {{$tipodesconto == 'valor' ? 'selected' : '' }}>Valor</option>
                     </select>
                 </div>
                 <div class="col-3">
                     <label for="desconto">Desconto</label>
-                    <input type="number" class="form-control" wire:model="desconto" name="desconto[]"
+                    <input type="number" class="form-control" wire:model.live="desconto" name="desconto[]"
                         id="desconto" required>
                 </div>
                 <div class="col-12 text-end mt-3">

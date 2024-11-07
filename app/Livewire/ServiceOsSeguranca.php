@@ -46,17 +46,17 @@ class ServiceOsSeguranca extends Component
             $this->qtdSegurancas = $data['qtdSegurancas'];
             $this->servicesOS = $data['servicesOS'];
             $this->vehiclesCategory = $data['vehiclesCategory'];
-            $this->precoBase = $data['precoBase'];
+            $this->precoBase = $data['precoBase'] / 100;
             $this->horaBase = $data['horaBase'];
-            $this->horaExtra = $data['horaExtra'];
+            $this->horaExtra = $data['horaExtra'] / 100;
             $this->kmBase = $data['kmBase'];
-            $this->kmExtra = $data['kmExtra'];
-            $this->custoParceiro = $data['custoParceiro'];
-            $this->extraParceiro = $data['extraParceiro'];
-            $this->kmExtraParceiro = $data['kmExtraParceiro'];
-            $this->custoSeguranca = $data['custoSeguranca'];
-            $this->horaExtraSeguranca = $data['horaExtraSeguranca'];
-            $this->total = $data['total'];
+            $this->kmExtra = $data['kmExtra'] / 100;
+            $this->custoParceiro = $data['custoParceiro'] / 100;
+            $this->extraParceiro = $data['extraParceiro'] / 100;
+            $this->kmExtraParceiro = $data['kmExtraParceiro'] / 100;
+            $this->custoSeguranca = $data['custoSeguranca'] / 100;
+            $this->horaExtraSeguranca = $data['horaExtraSeguranca'] / 100;
+            $this->total = $data['total'] / 100;
         }
     }
     
@@ -107,16 +107,16 @@ class ServiceOsSeguranca extends Component
                 'qtd_days' => $this->qtdDias,
                 'start' => $this->inicio,
                 'finish' => $this->termino,
-                'price' => $this->total,
+                'price' => $this->total * 100,
                 'time' => $this->horaBase,
-                'extra_time' => $this->horaExtra,
+                'extra_time' => $this->horaExtra * 100,
                 'km' => $this->kmBase,
-                'km_extra' => $this->kmExtra,
-                'partner_cost' => $this->custoParceiro,
-                'partner_extra_time' => $this->extraParceiro,
-                'partner_extra_km' => $this->kmExtraParceiro,
-                'employee_cost' => $this->custoSeguranca,
-                'employee_extra' => $this->horaExtraSeguranca,
+                'km_extra' => $this->kmExtra * 100,
+                'partner_cost' => $this->custoParceiro * 100,
+                'partner_extra_time' => $this->extraParceiro * 100,
+                'partner_extra_km' => $this->kmExtraParceiro * 100,
+                'employee_cost' => $this->custoSeguranca * 100,
+                'employee_extra' => $this->horaExtraSeguranca * 100,
             ]
         );
         $this->idGlobal = $idGlobal->id;

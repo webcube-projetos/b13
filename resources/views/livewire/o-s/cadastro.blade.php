@@ -33,9 +33,9 @@
                             @csrf
                             <div class="row align-items-end">
                                 <p class="fw-bold mt-4">Ordem de Serviço</p>
-                                {{-- @foreach ($dados['sessions'] as $key => $group)
+                                @foreach ($dados['sessions'] as $key => $group)
                                     @include('register.formRegister')
-                                @endforeach --}}
+                                @endforeach
 
                                 <div class="cadastro-contatos mt-3" id="box-linhas-servico-os">
                                     <div class="row align-items-center">

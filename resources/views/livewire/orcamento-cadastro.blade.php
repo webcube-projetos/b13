@@ -66,7 +66,7 @@
                                         <span class="text-sm">Total:</span>
                                         <span id="totalOrcamento">R$
                                             @if ($total)
-                                                {{ number_format($total, 2, ',', '.') }}
+                                                {{ number_format(($total / 100), 2, ',', '.') }}
                                             @else
                                                 <span x-text="total"></span>
                                             @endif
@@ -76,7 +76,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 mt-4">
-                                    <label for="obs">Observacão</label>
+                                    <label for="obs">Observação</label>
                                     <textarea type="text" class="form-control" name="obs" id="obs" wire:model="obs"></textarea>
                                 </div>
                             </div>

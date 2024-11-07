@@ -54,6 +54,8 @@ class ServiceOsItem extends Component
     public $data = [];
     public $targetClass = ServiceOsItem::class;
 
+    public $discountTotal = 0;
+
     protected $listeners = [
         'clonarLinha' => 'handleClonarLinha',
         'deletarLinha' => 'handleDeletarLinha',
@@ -295,7 +297,7 @@ class ServiceOsItem extends Component
     {
         if (in_array($property, ['categoryService', 'vehiclesCategory', 'typesVehicle', 'armored', 'bilingue', 'qtdHoras', 'driver'])) {
             $this->updateServiceData();
-        } elseif (in_array($property, ['parceiro', 'qtdDias', 'qtdServices', 'precoBase', 'custoParceiro', 'custoEmployee'])) {
+        } elseif (in_array($property, ['parceiro', 'qtdDias', 'qtdServices', 'precoBase', 'custoParceiro', 'custoEmployee', 'tipodesconto', 'desconto'])) {
             $this->updateCostsAndTotal();
         }
     }
@@ -317,7 +319,20 @@ class ServiceOsItem extends Component
         $qtdDias = (float) str_replace(',', '.', str_replace('.', '', $this->qtdDias));
         $qtdServices = (float) str_replace(',', '.', str_replace('.', '', $this->qtdServices));
 
-        $this->total = $precoBase * $qtdDias * $qtdServices;
+        $total = $precoBase * $qtdDias * $qtdServices;
+
+        // Verificação e aplicação do desconto
+        if ($this->tipodesconto == 'porcentagem' && $this->desconto > 0) {
+            $descontoTotal = ($this->total * $this->desconto) / 100;
+        } elseif ($this->tipodesconto == 'valor' && $this->desconto > 0) {
+            $descontoTotal = $this->desconto;
+        } else {
+            $descontoTotal = 0;
+        }
+
+        // Subtrai o desconto do total
+        $this->total = $total - $descontoTotal;
+
 
         $this->dispatch('custosUpdated', $this->serviceId, [
             'qtdDias' => $this->qtdDias,
@@ -335,6 +350,20 @@ class ServiceOsItem extends Component
     {
         $this->{$type} = $key;
     }
+
+    /*public function handleUpdateDiscount()
+    {
+        if ($this->tipodesconto == 'porcentagem' && $this->desconto > 0) {
+            $descontoTotal = ($this->total * $this->desconto) / 100;
+        } elseif ($this->tipodesconto == 'valor' && $this->desconto > 0) {
+            $descontoTotal = $this->desconto;
+        } else {
+            $descontoTotal = 0;
+        }
+
+        $this->total -= $descontoTotal;
+        $this->updateCostsAndTotal();
+    }*/
 
     private function buscarServicoCadastrado()
     {
@@ -365,15 +394,15 @@ class ServiceOsItem extends Component
 
         $clonedService = clone $this->serviceTemp;
 
-        $this->precoBase = $this->serviceTemp->price;
-        $this->horaExtra = $this->serviceTemp->extra_price;
+        $this->precoBase = $this->serviceTemp->price / 100;
+        $this->horaExtra = $this->serviceTemp->extra_price / 100;
         $this->kmBase = $this->serviceTemp->km;
-        $this->kmExtra = $this->serviceTemp->km_extra;
-        $this->custoParceiro = $this->serviceTemp->partner_cost;
-        $this->extraParceiro = $this->serviceTemp->partner_extra_time;
-        $this->kmExtraParceiro = $this->serviceTemp->partner_extra_km;
-        $this->custoEmployee = $this->serviceTemp->employee_cost;
-        $this->horaExtraEmployee = $this->serviceTemp->employee_extra;
+        $this->kmExtra = $this->serviceTemp->km_extra / 100;
+        $this->custoParceiro = $this->serviceTemp->partner_cost / 100;
+        $this->extraParceiro = $this->serviceTemp->partner_extra_time / 100;
+        $this->kmExtraParceiro = $this->serviceTemp->partner_extra_km / 100;
+        $this->custoEmployee = $this->serviceTemp->employee_cost / 100;
+        $this->horaExtraEmployee = $this->serviceTemp->employee_extra / 100;
     }
 
     private function zerarCamposDoServico()
