@@ -283,13 +283,16 @@ class SelectComponent extends Component
 
     public function createFilter($query)
     {
-        if (!$this->filter) {
+        $filtros = array_filter($this->filter, function ($item) {
+            return !is_array($item) || count(array_filter($item, fn($value) => !is_null($value))) > 0;
+        });
+
+        if (!$filtros || empty($filtros)) {
             return $query;
         }
 
         foreach ($this->filter as $key => $value) {
-            // Verifica se o valor é um array, indicando que é um relacionamento
-            if (is_array($value) && $this->isRelationship($query->getModel(), $key)) {
+            if ($this->isRelationship($query->getModel(), $key)) {
                 foreach ($value as $relationKey => $relationValue) {
                     $query->whereHas($key, function ($q) use ($value, $relationKey, $relationValue) {
                         $relationTable = $q->getModel()->getTable();
@@ -305,7 +308,6 @@ class SelectComponent extends Component
                     });
                 }
             } else {
-                // Pega a tabela principal
                 $mainTable = $query->getModel()->getTable();
                 if (is_array($value) && count($value) > 0) {
                     $query->whereIn("$mainTable.$key", $value);
