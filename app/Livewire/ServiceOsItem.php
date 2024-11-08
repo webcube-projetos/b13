@@ -323,7 +323,7 @@ class ServiceOsItem extends Component
 
         // Verificação e aplicação do desconto
         if ($this->tipodesconto == 'porcentagem' && $this->desconto > 0) {
-            $descontoTotal = ($this->total * $this->desconto) / 100;
+            $descontoTotal = ($total * $this->desconto) / 100;
         } elseif ($this->tipodesconto == 'valor' && $this->desconto > 0) {
             $descontoTotal = $this->desconto;
         } else {
@@ -332,7 +332,6 @@ class ServiceOsItem extends Component
 
         // Subtrai o desconto do total
         $this->total = $total - $descontoTotal;
-
 
         $this->dispatch('custosUpdated', $this->serviceId, [
             'qtdDias' => $this->qtdDias,
@@ -343,27 +342,13 @@ class ServiceOsItem extends Component
             'parceiro' => $this->parceiro,
         ]);
 
-        $this->dispatch('totalUpdated', $this->serviceId, $this->total);
+        //$this->dispatch('totalUpdated', $this->serviceId, $this->total);
     }
 
     public function handleSelectedOptions($type, $key)
     {
         $this->{$type} = $key;
     }
-
-    /*public function handleUpdateDiscount()
-    {
-        if ($this->tipodesconto == 'porcentagem' && $this->desconto > 0) {
-            $descontoTotal = ($this->total * $this->desconto) / 100;
-        } elseif ($this->tipodesconto == 'valor' && $this->desconto > 0) {
-            $descontoTotal = $this->desconto;
-        } else {
-            $descontoTotal = 0;
-        }
-
-        $this->total -= $descontoTotal;
-        $this->updateCostsAndTotal();
-    }*/
 
     private function buscarServicoCadastrado()
     {

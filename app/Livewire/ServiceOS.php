@@ -112,9 +112,11 @@ class ServiceOS extends Component
 
     public function handleTotalUpdated($serviceId, $total)
     {
+
         $this->totals[$serviceId] = $total;
         $this->totalGlobal = array_sum($this->totals);
-        $this->dispatch('update-global-total', number_format($this->totalGlobal, 2, ',', '.'));
+        $totalOrcamento = $this->totalGlobal;
+        $this->dispatch('totalUpdated', $totalOrcamento);
     }
 
     public function handleClonarLinha($serviceId, $data)

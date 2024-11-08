@@ -61,15 +61,11 @@
                                         placeholder="Selecione a forma de pagamento" name="paymentOptions"
                                         id="paymentOptions" selected='{{ $paymentOptions }}' />
                                 </div>
-                                <div class="col-lg-6 text-end mt-4" @update-global-total.window="total = $event.detail">
+                                <div class="col-lg-6 text-end mt-4">
                                     <h2>
                                         <span class="text-sm">Total:</span>
-                                        <span id="totalOrcamento">R$
-                                            @if ($total)
-                                                {{ number_format(($total / 100), 2, ',', '.') }}
-                                            @else
-                                                <span x-text="total"></span>
-                                            @endif
+                                        <span id="totalOrcamento">
+                                            R$ <span>{{ number_format($total, 2, ',', '.') }}</span>
                                         </span>
                                     </h2>
                                 </div>

@@ -31,6 +31,7 @@ class OrcamentoCadastro extends Component
     protected $listeners = [
         'saveOS' => 'handleSaveOS',
         'custosUpdated' => 'handleCustosUpdated',
+        'totalUpdated' => 'handleUpdateTotal',
     ];
 
     public function mount($dados, $id = null)
@@ -60,7 +61,7 @@ class OrcamentoCadastro extends Component
                     $serviceTotal -= $service->discount;
                 }
 
-                return $serviceTotal;
+                return $serviceTotal / 100;
             });
         }
     }
@@ -68,7 +69,7 @@ class OrcamentoCadastro extends Component
     #[On('selectUpdated')]
     public function handleSelectUpdated($type, $value)
     {
-        if (!in_array($type, ['contato', 'paymentMethod', 'client', 'paymentOptions', 'tipodesconto', 'desconto'])) {
+        if (!in_array($type, ['contato', 'paymentMethod', 'client', 'paymentOptions'])) {
             return;
         }
     }
@@ -150,6 +151,12 @@ class OrcamentoCadastro extends Component
             // Lidar com o caso em que o OS não foi encontrado
             session()->flash('error', 'Erro ao converter para OS.');
         }
+    }
+
+    public function handleUpdateTotal($totalUpdated)
+    {
+        $this->total = $totalUpdated;
+        $this->dispatch('refreshComponent');
     }
 
     public function render()

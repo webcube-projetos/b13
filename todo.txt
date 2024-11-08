@@ -1,2 +1,4 @@
 1. Orçamentos
 - Obrigar a cadastrar um serviço antes de cadastrar. 
+- Porcentagem está calculando com base no último desconto aplicado e não no preço total. 
+- Total da view principal (soma de todos os serviços) não está atualizando de forma dinâmica.
