@@ -88,9 +88,9 @@ class OrcamentoCadastro extends Component
 
     public function handleSaveOS()
     {
-        $this->validate([
+        /*$this->validate([
             'client' => 'required',
-        ]);
+        ]);*/
 
         $os = OS::create([
             'id_contact' => $this->contato,
