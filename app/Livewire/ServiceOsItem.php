@@ -267,14 +267,6 @@ class ServiceOsItem extends Component
             'qtdServices' => 'required',
             'precoBase' => 'required',
         ]);
-
-        /*if(isset($data['servicesOS'])) {
-            $id_service = $data['servicesOS'];
-        } else if (isset($this->serviceTemp->id) ) {
-            $id_service = $this->serviceTemp->id;
-        }
-        dd($data);    
-        */
         
         $data = [
             'price' => $this->precoBase,
@@ -370,7 +362,7 @@ class ServiceOsItem extends Component
             'parceiro' => $this->parceiro,
         ]);
 
-        //$this->dispatch('totalUpdated', $this->serviceId, $this->total);
+        $this->dispatch('totalUpdated', $this->serviceId, $this->total);
     }
 
     public function handleSelectedOptions($type, $key)
