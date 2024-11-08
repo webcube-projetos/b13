@@ -255,6 +255,14 @@ class ServiceOsItem extends Component
             'qtdServices' => 'required',
             'precoBase' => 'required',
         ]);
+
+        /*if(isset($data['servicesOS'])) {
+            $id_service = $data['servicesOS'];
+        } else if (isset($this->serviceTemp->id) ) {
+            $id_service = $this->serviceTemp->id;
+        }
+        dd($data);    
+        */
         
         $idGlobal = OsService::updateOrCreate(
             ['id' => $this->serviceId, 'id_os' => $id],

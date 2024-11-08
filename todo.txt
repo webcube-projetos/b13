@@ -2,3 +2,6 @@
 - Obrigar a cadastrar um serviço antes de cadastrar. 
 - Porcentagem está calculando com base no último desconto aplicado e não no preço total. 
 - Total da view principal (soma de todos os serviços) não está atualizando de forma dinâmica.
+- Os campos do serviço de segurança não estão sendo salvos corretamente (é a mesma lógica, mas os campos de locação estão corretos)?
+- Remover os campos de desconto de os_services e incluir em os. O desconto vai ser dado de forma geral no orçamento, e não serviço por serviço. 
+- Incluir a lógica de desconto na view do PDF de forma condicional - se tiver desconto aparece, se não tiver não aparece nem o campo desconto. 

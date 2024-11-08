@@ -33,6 +33,12 @@ class OS extends Model
         return $this->hasOne(PaymentMethod::class, 'id', 'id_payment_method');
     }
 
+    public function paymentOption()
+    {
+        return $this->hasOne(PaymentOption::class, 'id', 'id_payment_options');
+    }
+
+
     public function getInstallmentsAttribute()
     {
         $description = $this->paymentMethod->description;

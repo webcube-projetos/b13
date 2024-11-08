@@ -212,12 +212,12 @@
             </div>
             <div class="col-md-3 mb-3">
                 <label for="qtdDias">Qtd. Dias</label>
-                <input type="nummber" class="form-control" wire:model.live="qtdDias" name="qtdDias[]"
+                <input type="number" class="form-control" wire:model.live="qtdDias" name="qtdDias[]"
                     id="qtdDias" required>
             </div>
             <div class="col-md-3 mb-3">
                 <label for="qtdServices">Qtd. Seguranças</label>
-                <input type="nummber" class="form-control" wire:model.live="qtdServices" name="qtdServices[]"
+                <input type="number" class="form-control" wire:model.live="qtdServices" name="qtdServices[]"
                     id="qtdServices" required>
             </div>
             <div class="col-md-2 mb-3">
@@ -265,17 +265,12 @@
                 </div>
             @endif
 
-            <div class="col-md-4 mb-3">
+            <div class="col-md-6 mb-3">
                 <label for="precoBase">Valor</label>
                 <input type="number" min="0" class="form-control" wire:model.live="precoBase"
                     name="precoBase[]" id="precoBase" required>
             </div>
-            <div class="col-md-4 mb-3">
-                <label for="horaBase">Hora</label>
-                <input type="number" min="0" class="form-control" wire:model="horaBase" name="horaBase[]"
-                    id="horaBase" required>
-            </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-6 mb-3">
                 <label for="horaExtra">Hora extra</label>
                 <input type="number" min="0" class="form-control" wire:model="horaExtra" name="horaExtra[]"
                     id="horaExtra" required>
@@ -303,7 +298,7 @@
             </div>
             <div class="col-3">
                 <label for="horaExtraEmployee">Tipo desconto</label>
-                <select name="tipodesconto[]" wire:model="tipodesconto" class="form-control">
+                <select name="tipodesconto[]" wire:model.live="tipodesconto" class="form-control">
                     <option value="">Selecione</option>
                     <option value="porcentagem">Porcentagem</option>
                     <option value="valor">Valor</option>
@@ -311,7 +306,7 @@
             </div>
             <div class="col-3">
                 <label for="desconto">Desconto</label>
-                <input type="number" class="form-control" wire:model="desconto" name="desconto[]" id="desconto"
+                <input type="number" class="form-control" wire:model.live="desconto" name="desconto[]" id="desconto"
                     required>
             </div>
             <div class="col-12 text-end mt-3">

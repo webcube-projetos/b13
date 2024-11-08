@@ -204,30 +204,29 @@
                         </td>{{-- Diária --}}
                         <td>{{ $service['service']->km . 'km' }}</td>
                         <td>{{ $service['service']->bilingual ? 'Sim' : 'Não' }}</td>
-                        <td>R${{ number_format($service['service']->price, 2, ',', '.') }}</td>
-                        <td>R${{ number_format($service['service']->extra_price, 2, ',', '.') }}</td>
-                        <td>R${{ number_format($service['service']->km_extra, 2, ',', '.') }}</td>
-                        <td>R${{ number_format($service->price * $service->qtd_days * $service->qtd_service, 2, ',', '.') }}
+                        <td>R${{ number_format($service['service']->price / 100, 2, ',', '.') }}</td>
+                        <td>R${{ number_format($service['service']->extra_price / 100, 2, ',', '.') }}</td>
+                        <td>R${{ number_format($service['service']->km_extra / 100, 2, ',', '.') }}</td>
+                        <td>R${{ number_format(($service->price * $service->qtd_days * $service->qtd_service / 100), 2, ',', '.') }}
                         </td>
                     </tr>
-                    {{ $total += $service->price * $service->qtd_days * $service->qtd_service }}
+                    {{ $total += ($service->price * $service->qtd_days * $service->qtd_service / 100) }}
                 @endforeach
             </tbody>
         </table>
     </div>
     <div class="obs">
         <p class="mb-3"><span style="font-weight:bold">OBS:</span> Estacionamento e pedágios serão cobrados a parte
-            caso tenha precise, o valor inclui a taxa de R$50,00 do receptivo no aeroporto</p>
+            caso tenha necessidade. O valor inclui a taxa de R$50,00 do receptivo no aeroporto</p>
     </div>
     <div class="rodape my-2">
         <div id="left">
-            <p style="font-weight:bold;" class="mb-0 pb-0">Condições de Pagamento: 50% na reserva + 50% no término do
-                serviço</p>
-            <p style="font-weight:bold">Condição de pagamento: Depósito Bancário</p>
+            <p style="font-weight:bold;" class="mb-0 pb-0">Condições de Pagamento: {{ $os->paymentOption->description }} </p>
+            <p style="font-weight:bold">Condição de pagamento: {{ $os->paymentMethod->description }} </p>
         </div>
         <div id="right">
             <div class="total">
-                TOTAL: R${{ number_format($total, 2, ',', '.') }}
+                TOTAL: R${{ number_format(($total), 2, ',', '.') }}
             </div>
         </div>
     </div>
