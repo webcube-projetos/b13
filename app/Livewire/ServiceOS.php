@@ -74,6 +74,8 @@ class ServiceOS extends Component
                 'parceiro' => null,
                 'desconto' => $serviceOS->discount,
                 'descontotipo' => $serviceOS->discount_type,
+                'passageiros' => $serviceOS->passengers,
+                'malas' => $serviceOS->bags,
                 'total' => ($serviceOS->price * $serviceOS->qtd_days) * $serviceOS->qtd_service,
             ];
 

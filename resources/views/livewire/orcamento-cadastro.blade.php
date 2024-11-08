@@ -61,7 +61,8 @@
                                         placeholder="Selecione a forma de pagamento" name="paymentOptions"
                                         id="paymentOptions" selected='{{ $paymentOptions }}' />
                                 </div>
-                                <div class="col-lg-6 text-end mt-4" @update-global-total.window="total = $event.detail">
+                                <div class="col-lg-6 text-end mt-4 tw-ml-auto"
+                                    @update-global-total.window="total = $event.detail">
                                     <h2>
                                         <span class="text-sm">Total:</span>
                                         <span id="totalOrcamento">R$
