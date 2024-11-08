@@ -1931,7 +1931,7 @@ trait MontarForm
                             'id' => 'precoBase',
                             'name' => 'price',
                             'function' => false,
-                            'value' => $value->price ?? null,
+                            'value' => $value->price / 100 ?? null,
                         ],
                         'horasBase' => [
                             'container_tag' => 'div',
@@ -1957,7 +1957,7 @@ trait MontarForm
                             'id' => 'precoHoraExtra',
                             'name' => 'extra_price',
                             'function' => false,
-                            'value' => $value->extra_price ?? null,
+                            'value' => $value->extra_price / 100 ?? null,
                         ],
                     ],
                     'Custos' => [
@@ -1972,7 +1972,7 @@ trait MontarForm
                             'id' => 'custoParceiro',
                             'name' => 'partner_cost',
                             'function' => false,
-                            'value' => $value->partner_cost ?? null,
+                            'value' => $value->partner_cost / 100 ?? null,
                         ],
                         'horaExtraParceiro' => [
                             'container_tag' => 'div',
@@ -1985,7 +1985,7 @@ trait MontarForm
                             'id' => 'horaExtraParceiro',
                             'name' => 'partner_extra_time',
                             'function' => false,
-                            'value' => $value->partner_extra_time ?? null,
+                            'value' => $value->partner_extra_time / 100 ?? null,
                         ],
                         'custoMotorista' => [
                             'container_tag' => 'div',
@@ -1998,7 +1998,7 @@ trait MontarForm
                             'id' => 'custoMotorista',
                             'name' => 'employee_cost',
                             'function' => false,
-                            'value' => $value->employee_cost ?? null,
+                            'value' => $value->employee_cost / 100 ?? null,
                         ],
                         'custoMotoristaExtra' => [
                             'container_tag' => 'div',
@@ -2011,7 +2011,7 @@ trait MontarForm
                             'id' => 'custoMotoristaExtra',
                             'name' => 'employee_extra',
                             'function' => false,
-                            'value' => $value->employee_extra ?? null,
+                            'value' => $value->employee_extra / 100 ?? null,
                         ],
                     ],
                 ]
