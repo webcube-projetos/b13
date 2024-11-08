@@ -21,7 +21,7 @@ class ListOS extends Component
 
     public function render()
     {
-        if($this->type === 'orcamentos') {
+        if ($this->type === 'orcamentos') {
             $this->dados = OS::where('status', 0)
                 ->when($this->search, function ($query) {
                     $query->whereHas('client', function ($query) {
@@ -65,6 +65,9 @@ class ListOS extends Component
     public function delete()
     {
         $os = OS::find($this->idDelete);
+        $os->services->each(function ($service) {
+            $service->delete();
+        });
         $os->delete();
         $this->idDelete = null;
     }
