@@ -9,11 +9,6 @@
                                 data-bs-target="#cadastro" type="button" role="tab" aria-controls="cadastro"
                                 aria-selected="true">Cadastro</a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1" id="custos-tab" data-bs-toggle="tab"
-                                data-bs-target="#custos" type="button" role="tab" aria-controls="custos"
-                                aria-selected="true">Custos</a>
-                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link mb-0 px-0 py-1" id="financeiro-tab" data-bs-toggle="tab"
                                 data-bs-target="#financeiro" type="button" role="tab" aria-controls="financeiro"
@@ -85,23 +80,6 @@
                     </div>
                 </div>
             </div>
-
-            {{-- <div class="tab-pane fade show" id="custos" role="tabpanel" aria-labelledby="custos-tab">
-                <div class="card">
-                    <div class="card-body pt-4 p-3">
-                        <div class="row">
-                            <p class="fw-bold mt-4">Custos</p>
-
-                            @include('register.formCustos')
-
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn bg-gradient-primary btn-md mt-4 mb-4">Atualizar
-                                    dados</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
 
             <div class="tab-pane fade show" id="financeiro" role="tabpanel" aria-labelledby="financeiro-tab">
                 <livewire:o-s.financeiro :id="$id" />

@@ -24,9 +24,10 @@
                 </td>
                 <td>
                     @php
-                        if ( isset($os->contact->name) ) {
+
+                        if (isset($os->contact->name)) {
                             echo $os->contact->name;
-                        } else {
+                        } else { 
                             echo '-';
                         }
                     @endphp
