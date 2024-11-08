@@ -158,19 +158,6 @@
                     <input type="number" min="0" class="form-control" wire:model="horaExtraEmployee"
                         name="horaExtraEmployee[]" id="horaExtraEmployee" required>
                 </div>
-                <div class="col-3">
-                    <label for="horaExtraEmployee">Tipo desconto</label>
-                    <select name="tipodesconto[]" wire:model.live="tipodesconto" class="form-control">
-                        <option value="">Selecione</option>
-                        <option value="porcentagem" {{$tipodesconto == 'porcentagem' ? 'selected' : '' }}>Porcentagem</option>
-                        <option value="valor" {{$tipodesconto == 'valor' ? 'selected' : '' }}>Valor</option>
-                    </select>
-                </div>
-                <div class="col-3">
-                    <label for="desconto">Desconto</label>
-                    <input type="number" class="form-control" wire:model.live="desconto" name="desconto[]"
-                        id="desconto" required>
-                </div>
                 <div class="col-12 text-end mt-3">
                     <h3>Total: <span id="total-linha">R$ {{ number_format($total, 2, ',', '.') }}</span></h3>
                 </div>
@@ -295,19 +282,6 @@
                 <label for="horaExtraEmployee">Hora Extra Segurança</label>
                 <input type="number" min="0" class="form-control" wire:model="horaExtraEmployee"
                     name="horaExtraEmployee[]" id="horaExtraEmployee" required>
-            </div>
-            <div class="col-3">
-                <label for="horaExtraEmployee">Tipo desconto</label>
-                <select name="tipodesconto[]" wire:model.live="tipodesconto" class="form-control">
-                    <option value="">Selecione</option>
-                    <option value="porcentagem">Porcentagem</option>
-                    <option value="valor">Valor</option>
-                </select>
-            </div>
-            <div class="col-3">
-                <label for="desconto">Desconto</label>
-                <input type="number" class="form-control" wire:model.live="desconto" name="desconto[]" id="desconto"
-                    required>
             </div>
             <div class="col-12 text-end mt-3">
                 <h3>Total: <span id="total-linha">R$ {{ number_format($total, 2, ',', '.') }}</span></h3>

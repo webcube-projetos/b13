@@ -11,5 +11,6 @@ class PaymentOption extends Model
 
     protected $fillable = [
         'description',
+        'description_english',
     ];
 }

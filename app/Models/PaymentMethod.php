@@ -13,5 +13,6 @@ class PaymentMethod extends Model
 
     protected $fillable = [
         'description',
+        'description_english',
     ];
 }

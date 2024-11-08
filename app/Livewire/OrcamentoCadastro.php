@@ -49,17 +49,10 @@ class OrcamentoCadastro extends Component
             $this->obs = $orcamento->obs;
             $this->client = $orcamento->id_client;
     
-            // Calcular o total inicial (sem desconto)
+            // Calcular o total inicial
             $this->total = $orcamento->services->sum(function ($service) {
                 // Calcula o preço base do serviço
                 $serviceTotal = ($service->price * $service->qtd_days * $service->qtd_service);
-                
-                // Aplica o desconto, se houver
-                if ($service->discount_type == 'porcentagem' && $service->discount > 0) {
-                    $serviceTotal -= ($serviceTotal * $service->discount) / 100;
-                } elseif ($service->discount_type == 'valor' && $service->discount > 0) {
-                    $serviceTotal -= $service->discount;
-                }
 
                 return $serviceTotal / 100;
             });

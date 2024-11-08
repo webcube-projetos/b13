@@ -29,8 +29,6 @@ class OrcamentoPdf extends Component
 
     public function render() // Certifique-se de que o método é público
     {
-        //dd($this->os->paymentOption->description);
-        //dd($this->os->paymentMethod->description);
         return view('livewire.orcamento-pdf', [
             'os' => $this->os,
             'formattedCreatedAt' => $this->formattedCreatedAt,

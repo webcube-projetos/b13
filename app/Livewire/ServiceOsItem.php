@@ -31,8 +31,6 @@ class ServiceOsItem extends Component
     public $securityType;
     public $qtdHoras;
     public $typesVehicle;
-    public $tipodesconto;
-    public $desconto;
     public $vehiclesCategory;
     public $armored;
     public $modelVehicle;
@@ -53,8 +51,6 @@ class ServiceOsItem extends Component
     public $total;
     public $data = [];
     public $targetClass = ServiceOsItem::class;
-
-    public $discountTotal = 0;
 
     protected $listeners = [
         'clonarLinha' => 'handleClonarLinha',
@@ -99,8 +95,6 @@ class ServiceOsItem extends Component
             $this->kmExtraParceiro = $data['kmExtraParceiro'];
             $this->custoEmployee = $data['custoEmployee'];
             $this->horaExtraEmployee = $data['horaExtraEmployee'];
-            $this->tipodesconto = $data['tipodesconto'] ?? null;
-            $this->desconto = $data['desconto'] ?? null;
             $this->total = $data['total'];
         }
     }
@@ -140,8 +134,6 @@ class ServiceOsItem extends Component
             'custoEmployee' => $this->custoEmployee,
             'horaExtraEmployee' => $this->horaExtraEmployee,
             'parceiro' => $this->parceiro,
-            'tipodesconto' => $this->tipodesconto,
-            'desconto' => $this->desconto,
             'total' => $this->total,
         ];
 
@@ -178,8 +170,6 @@ class ServiceOsItem extends Component
                     'bags' => $this->bags,
                     'start' => $this->inicio,
                     'finish' => $this->termino,
-                    'discount_type' => $this->tipodesconto,
-                    'discount' => $this->desconto,
                     'price' => $this->precoBase * 100,
                     'time' => $this->qtdHoras,
                     'extra_price' => $this->horaExtra * 100,
@@ -228,8 +218,6 @@ class ServiceOsItem extends Component
                     'bags' => $this->bags,
                     'start' => $this->inicio,
                     'finish' => $this->termino,
-                    'discount_type' => $this->tipodesconto,
-                    'discount' => $this->desconto,
                     'price' => $this->precoBase * 100,
                     'time' => $this->qtdHoras,
                     'extra_price' => $this->horaExtra * 100,
@@ -275,8 +263,6 @@ class ServiceOsItem extends Component
                 'bags' => $this->bags,
                 'start' => $this->inicio,
                 'finish' => $this->termino,
-                'discount_type' => $this->tipodesconto,
-                'discount' => $this->desconto,
                 'price' => $this->precoBase * 100,
                 'time' => $this->horaBase,
                 'extra_price' => $this->horaExtra * 100,
@@ -305,7 +291,7 @@ class ServiceOsItem extends Component
     {
         if (in_array($property, ['categoryService', 'vehiclesCategory', 'typesVehicle', 'armored', 'bilingue', 'qtdHoras', 'driver'])) {
             $this->updateServiceData();
-        } elseif (in_array($property, ['parceiro', 'qtdDias', 'qtdServices', 'precoBase', 'custoParceiro', 'custoEmployee', 'tipodesconto', 'desconto'])) {
+        } elseif (in_array($property, ['parceiro', 'qtdDias', 'qtdServices', 'precoBase', 'custoParceiro', 'custoEmployee'])) {
             $this->updateCostsAndTotal();
         }
     }
@@ -329,17 +315,7 @@ class ServiceOsItem extends Component
 
         $total = $precoBase * $qtdDias * $qtdServices;
 
-        // Verificação e aplicação do desconto
-        if ($this->tipodesconto == 'porcentagem' && $this->desconto > 0) {
-            $descontoTotal = ($total * $this->desconto) / 100;
-        } elseif ($this->tipodesconto == 'valor' && $this->desconto > 0) {
-            $descontoTotal = $this->desconto;
-        } else {
-            $descontoTotal = 0;
-        }
-
-        // Subtrai o desconto do total
-        $this->total = $total - $descontoTotal;
+        $this->total = $total;
 
         $this->dispatch('custosUpdated', $this->serviceId, [
             'qtdDias' => $this->qtdDias,

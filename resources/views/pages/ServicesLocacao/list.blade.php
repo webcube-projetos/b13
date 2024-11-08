@@ -34,7 +34,7 @@
         {{ $service->bilingual ? 'Sim' : 'Não' }}
       </td>
       <td>
-        R$ {{ number_format($service->price, 2, ',', '.') }}
+        R$ {{ number_format(($service->price / 100), 2, ',', '.') }}
       </td>
 
       <td class="text-right">
