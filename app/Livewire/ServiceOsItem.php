@@ -95,6 +95,8 @@ class ServiceOsItem extends Component
             $this->kmExtraParceiro = $data['kmExtraParceiro'];
             $this->custoEmployee = $data['custoEmployee'];
             $this->horaExtraEmployee = $data['horaExtraEmployee'];
+            $this->passageiros = $data['passageiros'] ?? null;
+            $this->bags = $data['malas'] ?? null;
             $this->total = $data['total'];
         }
     }
@@ -151,11 +153,33 @@ class ServiceOsItem extends Component
     #[On('osCreated')]
     public function saveOS($id)
     {
+
         $this->validate([
             'qtdDias' => 'required',
             'qtdServices' => 'required',
             'precoBase' => 'required',
         ]);
+
+        $data = [
+            'price' => $this->precoBase,
+            'extra_price' => $this->horaExtra,
+            'km_extra' => $this->kmExtra,
+            'partner_cost' => $this->custoParceiro,
+            'partner_extra_time' => $this->extraParceiro,
+            'partner_extra_km' => $this->kmExtraParceiro,
+            'employee_cost' => $this->custoEmployee,
+            'employee_extra' => $this->horaExtraEmployee,
+        ];
+
+        foreach ($data as $key => $value) {
+            if (is_string($value)) {
+                if (strpos($value, '.')) {
+                    $value = str_replace('.', '', $value);
+                }
+                $data[$key] = (int)$value * 100;
+            }
+        }
+
 
         if ($this->serviceTemp) {
             $idGlobal = OsService::updateOrCreate(
@@ -170,16 +194,16 @@ class ServiceOsItem extends Component
                     'bags' => $this->bags,
                     'start' => $this->inicio,
                     'finish' => $this->termino,
-                    'price' => $this->precoBase * 100,
                     'time' => $this->qtdHoras,
-                    'extra_price' => $this->horaExtra * 100,
                     'km' => $this->kmBase,
-                    'km_extra' => $this->kmExtra * 100,
-                    'partner_cost' => $this->custoParceiro * 100,
-                    'partner_extra_time' => $this->extraParceiro * 100,
-                    'partner_extra_km' => $this->kmExtraParceiro * 100,
-                    'employee_cost' => $this->custoEmployee * 100,
-                    'employee_extra' => $this->horaExtraEmployee * 100,
+                    'price' => data_get($data, 'price'),
+                    'extra_price' => data_get($data, 'extra_price'),
+                    'km_extra' => data_get($data, 'km_extra'),
+                    'partner_cost' => data_get($data, 'partner_cost'),
+                    'partner_extra_time' => data_get($data, 'partner_extra_time'),
+                    'partner_extra_km' => data_get($data, 'partner_extra_km'),
+                    'employee_cost' => data_get($data, 'employee_cost'),
+                    'employee_extra' => data_get($data, 'employee_extra'),
                 ]
             );
         } else {
@@ -190,16 +214,16 @@ class ServiceOsItem extends Component
                 'blindado_armado' => $this->type === 'locacao' ? $this->armored : $this->armed,
                 'bilingual' => $this->bilingue,
                 'driver' => $this->driver ?? 0,
-                'price' => $this->precoBase * 100,
                 'time' => $this->qtdHoras,
-                'extra_price' => $this->horaExtra * 100,
                 'km' => $this->kmBase,
-                'km_extra' => $this->kmExtra * 100,
-                'partner_cost' => $this->custoParceiro * 100,
-                'partner_extra_time' => $this->extraParceiro * 100,
-                'partner_extra_km' => $this->kmExtraParceiro * 100,
-                'employee_cost' => $this->custoEmployee * 100,
-                'employee_extra' => $this->horaExtraEmployee * 100,
+                'price' => data_get($data, 'price'),
+                'extra_price' => data_get($data, 'extra_price'),
+                'km_extra' => data_get($data, 'km_extra'),
+                'partner_cost' => data_get($data, 'partner_cost'),
+                'partner_extra_time' => data_get($data, 'partner_extra_time'),
+                'partner_extra_km' => data_get($data, 'partner_extra_km'),
+                'employee_cost' => data_get($data, 'employee_cost'),
+                'employee_extra' => data_get($data, 'employee_extra'),
                 'id_category_service' => $this->categoryService,
                 'id_category_espec' => $this->type === 'locacao' ? $this->vehiclesCategory : $this->securityType,
                 'id_service_type' => $this->type === 'locacao' ? 1 : 2,
@@ -218,16 +242,16 @@ class ServiceOsItem extends Component
                     'bags' => $this->bags,
                     'start' => $this->inicio,
                     'finish' => $this->termino,
-                    'price' => $this->precoBase * 100,
                     'time' => $this->qtdHoras,
-                    'extra_price' => $this->horaExtra * 100,
                     'km' => $this->kmBase,
-                    'km_extra' => $this->kmExtra * 100,
-                    'partner_cost' => $this->custoParceiro * 100,
-                    'partner_extra_time' => $this->extraParceiro * 100,
-                    'partner_extra_km' => $this->kmExtraParceiro * 100,
-                    'employee_cost' => $this->custoEmployee * 100,
-                    'employee_extra' => $this->horaExtraEmployee * 100,
+                    'price' => data_get($data, 'price'),
+                    'extra_price' => data_get($data, 'extra_price'),
+                    'km_extra' => data_get($data, 'km_extra'),
+                    'partner_cost' => data_get($data, 'partner_cost'),
+                    'partner_extra_time' => data_get($data, 'partner_extra_time'),
+                    'partner_extra_km' => data_get($data, 'partner_extra_km'),
+                    'employee_cost' => data_get($data, 'employee_cost'),
+                    'employee_extra' => data_get($data, 'employee_extra'),
                 ]
             );
         }
@@ -252,6 +276,26 @@ class ServiceOsItem extends Component
         dd($data);    
         */
         
+        $data = [
+            'price' => $this->precoBase,
+            'extra_price' => $this->horaExtra,
+            'km_extra' => $this->kmExtra,
+            'partner_cost' => $this->custoParceiro,
+            'partner_extra_time' => $this->extraParceiro,
+            'partner_extra_km' => $this->kmExtraParceiro,
+            'employee_cost' => $this->custoEmployee,
+            'employee_extra' => $this->horaExtraEmployee,
+        ];
+
+        foreach ($data as $key => $value) {
+            if (is_string($value)) {
+                if (strpos($value, '.')) {
+                    $value = str_replace('.', '', $value);
+                }
+                $data[$key] = (int)$value * 100;
+            }
+        }
+
         $idGlobal = OsService::updateOrCreate(
             ['id' => $this->serviceId, 'id_os' => $id],
             [
@@ -263,16 +307,16 @@ class ServiceOsItem extends Component
                 'bags' => $this->bags,
                 'start' => $this->inicio,
                 'finish' => $this->termino,
-                'price' => $this->precoBase * 100,
                 'time' => $this->horaBase,
-                'extra_price' => $this->horaExtra * 100,
                 'km' => $this->kmBase,
-                'km_extra' => $this->kmExtra * 100,
-                'partner_cost' => $this->custoParceiro * 100,
-                'partner_extra_time' => $this->extraParceiro * 100,
-                'partner_extra_km' => $this->kmExtraParceiro * 100,
-                'employee_cost' => $this->custoEmployee * 100,
-                'employee_extra' => $this->horaExtraEmployee * 100,
+                'price' => data_get($data, 'price'),
+                'extra_price' => data_get($data, 'extra_price'),
+                'km_extra' => data_get($data, 'km_extra'),
+                'partner_cost' => data_get($data, 'partner_cost'),
+                'partner_extra_time' => data_get($data, 'partner_extra_time'),
+                'partner_extra_km' => data_get($data, 'partner_extra_km'),
+                'employee_cost' => data_get($data, 'employee_cost'),
+                'employee_extra' => data_get($data, 'employee_extra'),
             ]
         );
 

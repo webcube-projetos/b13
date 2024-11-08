@@ -71,7 +71,9 @@ class ServiceOS extends Component
                 'kmExtraParceiro' => $serviceOS->partner_extra_km / 100,
                 'custoEmployee' => $serviceOS->employee_cost / 100,
                 'horaExtraEmployee' => $serviceOS->employee_extra / 100,
-                'parceiro' => null,
+                'parceiro' => null,   
+                'passageiros' => $serviceOS->passengers,
+                'malas' => $serviceOS->bags,
                 'total' => (($serviceOS->price * $serviceOS->qtd_days) * $serviceOS->qtd_service) / 100,
             ];
 

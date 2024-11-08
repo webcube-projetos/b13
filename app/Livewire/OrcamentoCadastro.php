@@ -70,8 +70,8 @@ class OrcamentoCadastro extends Component
     public function handleCustosUpdated($serviceId, $data)
     {
         // Calculate costs for this specific line
-        $custoEmployeesLinha = $data['parceiro'] ? 0 : $data['custoEmployee'] * $data['qtdDias'] * $data['qtdServices'];
-        $custoParceiroLinha = $data['parceiro'] ? $data['custoParceiro'] * $data['qtdDias'] * $data['qtdServices'] : 0;
+        $custoEmployeesLinha = $data['parceiro'] ? 0 : floatval($data['custoEmployee']) * $data['qtdDias'] * $data['qtdServices'];
+        $custoParceiroLinha = $data['parceiro'] ? floatval($data['custoParceiro']) * $data['qtdDias'] * $data['qtdServices'] : 0;
 
         // Store the costs per line in the arrays
         $this->custosEmployees[$serviceId] = $custoEmployeesLinha;

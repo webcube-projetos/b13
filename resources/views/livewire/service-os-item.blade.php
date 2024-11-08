@@ -113,14 +113,17 @@
             <div class="row">
                 <div class="col-md-3 mb-3">
                     <label for="precoBase">Valor</label>
-                    <input type="number" min="0" class="form-control" wire:model.live="precoBase"
-                        name="precoBase[]" id="precoBase" required>
-                    @error('precoBase') <span class="badge bg-gradient-danger">{{ $message }}</span> @enderror
+
+                    <input type="text" min="0" class="form-control maskMoneyInputs"
+                        oninput="inputValor(this)" wire:model.live="precoBase" name="precoBase[]"
+                        id="precoBase maskMoneyInputs" oninput="inputValor(this)" required>
+
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="horaExtra">Hora extra</label>
-                    <input type="number" min="0" class="form-control" wire:model="horaExtra"
-                        name="horaExtra[]" id="horaExtra" required>
+                    <input type="text" min="0" class="form-control maskMoneyInputs"
+                        oninput="inputValor(this)" wire:model="horaExtra" name="horaExtra[]" id="horaExtra"
+                        required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="kmBase">KM franquia</label>
@@ -129,34 +132,39 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="kmExtra">KM extra</label>
-                    <input type="number" min="0" class="form-control" wire:model="kmExtra" name="kmExtra[]"
-                        id="kmExtra" required>
+                    <input type="text" min="0" class="form-control maskMoneyInputs"
+                        oninput="inputValor(this)" wire:model="kmExtra" name="kmExtra[]" id="kmExtra" required>
                 </div>
 
                 <div class="col-md-2 mb-3">
                     <label for="custoParceiro">Custo Parceiro</label>
-                    <input type="number" min="0" class="form-control" wire:model.live="custoParceiro"
-                        name="custoParceiro[]" id="custoParceiro" required>
+                    <input type="text" min="0" class="form-control maskMoneyInputs"
+                        oninput="inputValor(this)" wire:model.live="custoParceiro" name="custoParceiro[]"
+                        id="custoParceiro" required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="extraParceiro">Hora Extra parceiro</label>
-                    <input type="number" min="0" class="form-control" wire:model="extraParceiro"
-                        name="extraParceiro[]" id="extraParceiro" required>
+                    <input type="text" min="0" class="form-control maskMoneyInputs"
+                        oninput="inputValor(this)" wire:model="extraParceiro" name="extraParceiro[]"
+                        id="extraParceiro" required>
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="kmExtraParceiro">Km Extra Parceiro</label>
-                    <input type="number" min="0" class="form-control" wire:model="kmExtraParceiro"
-                        name="kmExtraParceiro[]" id="kmExtraParceiro" required>
+                    <input type="text" min="0" class="form-control maskMoneyInputs"
+                        oninput="inputValor(this)" wire:model="kmExtraParceiro" name="kmExtraParceiro[]"
+                        id="kmExtraParceiro" required>
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="custoEmployee">Custo Motorista</label>
-                    <input type="number" min="0" class="form-control" wire:model.live="custoEmployee"
-                        name="custoEmployee[]" id="custoEmployee" required>
+                    <input type="text" min="0" class="form-control maskMoneyInputs"
+                        oninput="inputValor(this)" wire:model.live="custoEmployee" name="custoEmployee[]"
+                        id="custoEmployee" required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="horaExtraEmployee">Custo Extra Motorista</label>
-                    <input type="number" min="0" class="form-control" wire:model="horaExtraEmployee"
-                        name="horaExtraEmployee[]" id="horaExtraEmployee" required>
+                    <input type="text" min="0" class="form-control maskMoneyInputs"
+                        oninput="inputValor(this)" wire:model="horaExtraEmployee" name="horaExtraEmployee[]"
+                        id="horaExtraEmployee" required>
                 </div>
                 <div class="col-12 text-end mt-3">
                     <h3>Total: <span id="total-linha">R$ {{ number_format($total, 2, ',', '.') }}</span></h3>
@@ -254,34 +262,34 @@
 
             <div class="col-md-6 mb-3">
                 <label for="precoBase">Valor</label>
-                <input type="number" min="0" class="form-control" wire:model.live="precoBase"
-                    name="precoBase[]" id="precoBase" required>
+                <input type="text" min="0" class="form-control maskMoneyInputs" oninput="inputValor(this)"
+                    wire:model.live="precoBase" name="precoBase[]" id="precoBase" required>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="horaExtra">Hora extra</label>
-                <input type="number" min="0" class="form-control" wire:model="horaExtra" name="horaExtra[]"
-                    id="horaExtra" required>
+                <input type="text" min="0" class="form-control maskMoneyInputs" oninput="inputValor(this)"
+                    wire:model="horaExtra" name="horaExtra[]" id="horaExtra" required>
             </div>
 
             <div class="col-md-3 mb-3">
                 <label for="custoParceiro">Custo Parceiro</label>
-                <input type="number" min="0" class="form-control" wire:model.live="custoParceiro"
-                    name="custoParceiro[]" id="custoParceiro" required>
+                <input type="text" min="0" class="form-control maskMoneyInputs" oninput="inputValor(this)"
+                    wire:model.live="custoParceiro" name="custoParceiro[]" id="custoParceiro" required>
             </div>
             <div class="col-md-3 mb-3">
                 <label for="extraParceiro">Hora Extra parceiro</label>
-                <input type="number" min="0" class="form-control" wire:model="extraParceiro"
-                    name="extraParceiro[]" id="extraParceiro" required>
+                <input type="text" min="0" class="form-control maskMoneyInputs" oninput="inputValor(this)"
+                    wire:model="extraParceiro" name="extraParceiro[]" id="extraParceiro" required>
             </div>
             <div class="col-md-3 mb-3">
                 <label for="custoEmployee">Custo Segurança</label>
-                <input type="number" min="0" class="form-control" wire:model.live="custoEmployee"
-                    name="custoEmployee[]" id="custoEmployee" required>
+                <input type="text" min="0" class="form-control maskMoneyInputs" oninput="inputValor(this)"
+                    wire:model.live="custoEmployee" name="custoEmployee[]" id="custoEmployee" required>
             </div>
             <div class="col-md-3 mb-3">
                 <label for="horaExtraEmployee">Hora Extra Segurança</label>
-                <input type="number" min="0" class="form-control" wire:model="horaExtraEmployee"
-                    name="horaExtraEmployee[]" id="horaExtraEmployee" required>
+                <input type="text" min="0" class="form-control maskMoneyInputs" oninput="inputValor(this)"
+                    wire:model="horaExtraEmployee" name="horaExtraEmployee[]" id="horaExtraEmployee" required>
             </div>
             <div class="col-12 text-end mt-3">
                 <h3>Total: <span id="total-linha">R$ {{ number_format($total, 2, ',', '.') }}</span></h3>
@@ -289,3 +297,11 @@
         </div>
     @endif
 </div>
+
+<script>
+    document.addEventListener('livewire:initialized', function() {
+        document.querySelectorAll('.maskMoneyInputs').forEach(input => {
+            inputValor(input);
+        });
+    });
+</script>
