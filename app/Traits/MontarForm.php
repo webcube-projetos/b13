@@ -1922,7 +1922,7 @@ trait MontarForm
                     'Cobranca' => [
                         'precoBase' => [
                             'container_tag' => 'div',
-                            'container_class' => 'col-md-4',
+                            'container_class' => 'col-md-3',
                             'label' => 'Valor',
                             'type' => 'number',
                             'placeholder' => '500',

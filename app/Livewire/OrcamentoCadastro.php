@@ -31,6 +31,7 @@ class OrcamentoCadastro extends Component
     protected $listeners = [
         'saveOS' => 'handleSaveOS',
         'custosUpdated' => 'handleCustosUpdated',
+        'totalUpdated' => 'handleUpdateTotal',
     ];
 
     public function mount($dados, $id = null)
@@ -39,15 +40,21 @@ class OrcamentoCadastro extends Component
         $this->id = $id;
 
         if ($this->id) {
-            $orcamento  = OS::find($this->id);
-
+            $orcamento = OS::find($this->id);
+    
+            // Carregar os dados do orçamento
             $this->contato = $orcamento->id_contact;
             $this->paymentMethod = $orcamento->id_payment_method;
             $this->paymentOptions = $orcamento->id_payment_options;
             $this->obs = $orcamento->obs;
             $this->client = $orcamento->id_client;
+    
+            // Calcular o total inicial
             $this->total = $orcamento->services->sum(function ($service) {
-                return $service->price * $service->qtd_days * $service->qtd_service;
+                // Calcula o preço base do serviço
+                $serviceTotal = ($service->price * $service->qtd_days * $service->qtd_service);
+
+                return $serviceTotal / 100;
             });
         }
     }
@@ -58,8 +65,6 @@ class OrcamentoCadastro extends Component
         if (!in_array($type, ['contato', 'paymentMethod', 'client', 'paymentOptions'])) {
             return;
         }
-
-        $this->{$type} = $value;
     }
 
     public function handleCustosUpdated($serviceId, $data)
@@ -83,6 +88,10 @@ class OrcamentoCadastro extends Component
 
     public function handleSaveOS()
     {
+        $this->validate([
+            'client' => 'required',
+        ]);
+
         $os = OS::create([
             'id_contact' => $this->contato,
             'id_client' => $this->client,
@@ -93,6 +102,7 @@ class OrcamentoCadastro extends Component
 
         $this->os = $os;
         $this->dispatch('osCreated', $os->id);
+        return redirect()->to(route('orcamentos.editar', ['id' => $os->id]));
     }
 
     public function editOS()
@@ -134,6 +144,12 @@ class OrcamentoCadastro extends Component
             // Lidar com o caso em que o OS não foi encontrado
             session()->flash('error', 'Erro ao converter para OS.');
         }
+    }
+
+    public function handleUpdateTotal($totalUpdated)
+    {
+        $this->total = $totalUpdated;
+        $this->dispatch('refreshComponent');
     }
 
     public function render()

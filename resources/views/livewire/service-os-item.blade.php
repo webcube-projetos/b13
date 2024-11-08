@@ -39,11 +39,13 @@
                     <label for="qtdDias">Qtd. Dias</label>
                     <input type="number" class="form-control" wire:model.live="qtdDias" name="qtdDias[]" id="qtdDias"
                         required>
+                    @error('qtdDias') <span class="badge bg-gradient-danger">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="qtdServices">Qtd. Veículos</label>
                     <input type="number" class="form-control" wire:model.live="qtdServices" name="qtdServices[]"
                         id="qtdServices" required>
+                    @error('qtdServices') <span class="badge bg-gradient-danger">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-md-2 mb-3">
                     <label for="bilingue[]">Bilingue</label>
@@ -89,7 +91,7 @@
                 <div class="col-md-3 mb-3">
                     <label for="vehiclesCategory[]">Categoria de veículo</label>
                     <livewire:select-component type="vehiclesCategory" placeholder="Selecione"
-                        name="vehiclesCategory[]" id="vehiclesCategory" :selected="$vehiclesCategory" />
+                        name="vehiclesCategory[]" :selected="$vehiclesCategory" />
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="modelVehicle">Modelo de veículo</label>
@@ -111,9 +113,11 @@
             <div class="row">
                 <div class="col-md-3 mb-3">
                     <label for="precoBase">Valor</label>
+
                     <input type="text" min="0" class="form-control maskMoneyInputs"
                         oninput="inputValor(this)" wire:model.live="precoBase" name="precoBase[]"
                         id="precoBase maskMoneyInputs" oninput="inputValor(this)" required>
+
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="horaExtra">Hora extra</label>
@@ -162,19 +166,6 @@
                         oninput="inputValor(this)" wire:model="horaExtraEmployee" name="horaExtraEmployee[]"
                         id="horaExtraEmployee" required>
                 </div>
-                <div class="col-3">
-                    <label for="horaExtraEmployee">Tipo desconto</label>
-                    <select name="tipodesconto[]" wire:model="tipodesconto" class="form-control">
-                        <option value="">Selecione</option>
-                        <option value="porcentagem">Porcentagem</option>
-                        <option value="valor">Valor</option>
-                    </select>
-                </div>
-                <div class="col-3">
-                    <label for="desconto">Desconto</label>
-                    <input type="number" class="form-control" wire:model="desconto" name="desconto[]"
-                        id="desconto" required>
-                </div>
                 <div class="col-12 text-end mt-3">
                     <h3>Total: <span id="total-linha">R$ {{ number_format($total, 2, ',', '.') }}</span></h3>
                 </div>
@@ -216,12 +207,12 @@
             </div>
             <div class="col-md-3 mb-3">
                 <label for="qtdDias">Qtd. Dias</label>
-                <input type="nummber" class="form-control" wire:model.live="qtdDias" name="qtdDias[]"
+                <input type="number" class="form-control" wire:model.live="qtdDias" name="qtdDias[]"
                     id="qtdDias" required>
             </div>
             <div class="col-md-3 mb-3">
                 <label for="qtdServices">Qtd. Seguranças</label>
-                <input type="nummber" class="form-control" wire:model.live="qtdServices" name="qtdServices[]"
+                <input type="number" class="form-control" wire:model.live="qtdServices" name="qtdServices[]"
                     id="qtdServices" required>
             </div>
             <div class="col-md-2 mb-3">
@@ -269,17 +260,12 @@
                 </div>
             @endif
 
-            <div class="col-md-4 mb-3">
+            <div class="col-md-6 mb-3">
                 <label for="precoBase">Valor</label>
                 <input type="text" min="0" class="form-control maskMoneyInputs" oninput="inputValor(this)"
                     wire:model.live="precoBase" name="precoBase[]" id="precoBase" required>
             </div>
-            <div class="col-md-4 mb-3">
-                <label for="horaBase">Hora</label>
-                <input type="number" min="0" class="form-control" wire:model="horaBase" name="horaBase[]"
-                    id="horaBase" required>
-            </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-6 mb-3">
                 <label for="horaExtra">Hora extra</label>
                 <input type="text" min="0" class="form-control maskMoneyInputs" oninput="inputValor(this)"
                     wire:model="horaExtra" name="horaExtra[]" id="horaExtra" required>
@@ -304,19 +290,6 @@
                 <label for="horaExtraEmployee">Hora Extra Segurança</label>
                 <input type="text" min="0" class="form-control maskMoneyInputs" oninput="inputValor(this)"
                     wire:model="horaExtraEmployee" name="horaExtraEmployee[]" id="horaExtraEmployee" required>
-            </div>
-            <div class="col-3">
-                <label for="horaExtraEmployee">Tipo desconto</label>
-                <select name="tipodesconto[]" wire:model="tipodesconto" class="form-control">
-                    <option value="">Selecione</option>
-                    <option value="porcentagem">Porcentagem</option>
-                    <option value="valor">Valor</option>
-                </select>
-            </div>
-            <div class="col-3">
-                <label for="desconto">Desconto</label>
-                <input type="number" class="form-control" wire:model="desconto" name="desconto[]" id="desconto"
-                    required>
             </div>
             <div class="col-12 text-end mt-3">
                 <h3>Total: <span id="total-linha">R$ {{ number_format($total, 2, ',', '.') }}</span></h3>

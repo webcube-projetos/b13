@@ -61,22 +61,20 @@ class ServiceOS extends Component
                 'armored' => $serviceOS->service->blindado_armado,
                 'bilingue' => $serviceOS->service->bilingual,
                 'qtdHoras' => $serviceOS->time,
-                'precoBase' => $serviceOS->price,
+                'precoBase' => $serviceOS->price / 100,
                 'horaBase' => $serviceOS->time,
-                'horaExtra' => $serviceOS->extra_price,
+                'horaExtra' => $serviceOS->extra_price / 100,
                 'kmBase' => $serviceOS->km,
-                'kmExtra' => $serviceOS->km_extra,
-                'custoParceiro' => $serviceOS->partner_cost,
-                'extraParceiro' => $serviceOS->partner_extra_time,
-                'kmExtraParceiro' => $serviceOS->partner_extra_km,
-                'custoEmployee' => $serviceOS->employee_cost,
-                'horaExtraEmployee' => $serviceOS->employee_extra,
-                'parceiro' => null,
-                'desconto' => $serviceOS->discount,
-                'descontotipo' => $serviceOS->discount_type,
+                'kmExtra' => $serviceOS->km_extra / 100,
+                'custoParceiro' => $serviceOS->partner_cost / 100,
+                'extraParceiro' => $serviceOS->partner_extra_time / 100,
+                'kmExtraParceiro' => $serviceOS->partner_extra_km / 100,
+                'custoEmployee' => $serviceOS->employee_cost / 100,
+                'horaExtraEmployee' => $serviceOS->employee_extra / 100,
+                'parceiro' => null,   
                 'passageiros' => $serviceOS->passengers,
                 'malas' => $serviceOS->bags,
-                'total' => ($serviceOS->price * $serviceOS->qtd_days) * $serviceOS->qtd_service,
+                'total' => (($serviceOS->price * $serviceOS->qtd_days) * $serviceOS->qtd_service) / 100,
             ];
 
             $newService = ['type' => $serviceOS->km > 0 ? 'locacao' : 'seguranca', 'id' => $serviceOS->id];
@@ -100,9 +98,11 @@ class ServiceOS extends Component
 
     public function handleTotalUpdated($serviceId, $total)
     {
+
         $this->totals[$serviceId] = $total;
         $this->totalGlobal = array_sum($this->totals);
-        $this->dispatch('update-global-total', number_format($this->totalGlobal, 2, ',', '.'));
+        $totalOrcamento = $this->totalGlobal;
+        $this->dispatch('totalUpdated', $totalOrcamento);
     }
 
     public function handleClonarLinha($serviceId, $data)

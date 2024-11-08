@@ -56,7 +56,7 @@
                         selected="{{$fields['value']}}" 
                         required="{{$fields['required']}}"
                     />
-                @elseif($fields['type'] === 'number' && $fields['name'] !== 'ano' || $fields['name'] !== 'malas' || $fields['name'] !== 'passageiros')
+                @elseif ($fields['id'] === 'precoBase' ||  $fields['id'] === 'precoHoraExtra' ||  $fields['id'] === 'kmExtra' ||  $fields['id'] === 'custoParceiro' ||  $fields['id'] === 'horaExtraParceiro' ||  $fields['id'] === 'kmExtraParceiro' ||  $fields['id'] === 'custoMotorista' ||  $fields['id'] === 'custoMotoristaExtra')
                     <input 
                         class="form-control" 
                         type="{{ $fields['type'] }}" 
@@ -64,7 +64,7 @@
                         id="{{ $fields['id'] }}"
                         name="{{ $fields['name'] }}" 
                         maxlength="{{ $fields['maxlenghtRoute'] ?? '' }}" 
-                        value="{{ $fields['value'] ?? '' }}"
+                        value="{{ $fields['value'] / 100 ?? '' }}"
                         step="0.010"
                         {{ $fields['function'] ? $fields['function']['type'] . '=' . $fields['function']['name'] : '' }}
                         {{ $fields['required'] ? 'required' : '' }}

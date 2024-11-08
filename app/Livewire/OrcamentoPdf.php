@@ -14,6 +14,8 @@ class OrcamentoPdf extends Component
         $this->os = OS::with([
             'contact', 
             'client', 
+            'paymentMethod',
+            'paymentOption'.
             'services.service' => function ($query) { // Eager loading aninhado
                 $query->with('serviceType', 'categoryService', 'categoryEspec', 'vehicleType');
             }

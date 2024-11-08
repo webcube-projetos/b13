@@ -31,8 +31,6 @@ class ServiceOsItem extends Component
     public $securityType;
     public $qtdHoras;
     public $typesVehicle;
-    public $tipodesconto;
-    public $desconto;
     public $vehiclesCategory;
     public $armored;
     public $modelVehicle;
@@ -97,8 +95,6 @@ class ServiceOsItem extends Component
             $this->kmExtraParceiro = $data['kmExtraParceiro'];
             $this->custoEmployee = $data['custoEmployee'];
             $this->horaExtraEmployee = $data['horaExtraEmployee'];
-            $this->tipodesconto = $data['tipodesconto'] ?? null;
-            $this->desconto = $data['desconto'] ?? null;
             $this->passageiros = $data['passageiros'] ?? null;
             $this->bags = $data['malas'] ?? null;
             $this->total = $data['total'];
@@ -140,8 +136,6 @@ class ServiceOsItem extends Component
             'custoEmployee' => $this->custoEmployee,
             'horaExtraEmployee' => $this->horaExtraEmployee,
             'parceiro' => $this->parceiro,
-            'tipodesconto' => $this->tipodesconto,
-            'desconto' => $this->desconto,
             'total' => $this->total,
         ];
 
@@ -159,6 +153,13 @@ class ServiceOsItem extends Component
     #[On('osCreated')]
     public function saveOS($id)
     {
+
+        $this->validate([
+            'qtdDias' => 'required',
+            'qtdServices' => 'required',
+            'precoBase' => 'required',
+        ]);
+
         $data = [
             'price' => $this->precoBase,
             'extra_price' => $this->horaExtra,
@@ -179,6 +180,7 @@ class ServiceOsItem extends Component
             }
         }
 
+
         if ($this->serviceTemp) {
             $idGlobal = OsService::updateOrCreate(
                 ['id' => $this->idGlobal, 'id_service' => $this->serviceTemp->id],
@@ -192,8 +194,6 @@ class ServiceOsItem extends Component
                     'bags' => $this->bags,
                     'start' => $this->inicio,
                     'finish' => $this->termino,
-                    'discount_type' => $this->tipodesconto,
-                    'discount' => $this->desconto,
                     'time' => $this->qtdHoras,
                     'km' => $this->kmBase,
                     'price' => data_get($data, 'price'),
@@ -242,8 +242,6 @@ class ServiceOsItem extends Component
                     'bags' => $this->bags,
                     'start' => $this->inicio,
                     'finish' => $this->termino,
-                    'discount_type' => $this->tipodesconto,
-                    'discount' => $this->desconto,
                     'time' => $this->qtdHoras,
                     'km' => $this->kmBase,
                     'price' => data_get($data, 'price'),
@@ -264,6 +262,20 @@ class ServiceOsItem extends Component
     #[On('osUpdated')]
     public function handleOsUpdated($id)
     {
+        $this->validate([
+            'qtdDias' => 'required',
+            'qtdServices' => 'required',
+            'precoBase' => 'required',
+        ]);
+
+        /*if(isset($data['servicesOS'])) {
+            $id_service = $data['servicesOS'];
+        } else if (isset($this->serviceTemp->id) ) {
+            $id_service = $this->serviceTemp->id;
+        }
+        dd($data);    
+        */
+        
         $data = [
             'price' => $this->precoBase,
             'extra_price' => $this->horaExtra,
@@ -295,8 +307,6 @@ class ServiceOsItem extends Component
                 'bags' => $this->bags,
                 'start' => $this->inicio,
                 'finish' => $this->termino,
-                'discount_type' => $this->tipodesconto,
-                'discount' => $this->desconto,
                 'time' => $this->horaBase,
                 'km' => $this->kmBase,
                 'price' => data_get($data, 'price'),
@@ -347,7 +357,9 @@ class ServiceOsItem extends Component
         $qtdDias = (float) str_replace(',', '.', str_replace('.', '', $this->qtdDias));
         $qtdServices = (float) str_replace(',', '.', str_replace('.', '', $this->qtdServices));
 
-        $this->total = $precoBase * $qtdDias * $qtdServices;
+        $total = $precoBase * $qtdDias * $qtdServices;
+
+        $this->total = $total;
 
         $this->dispatch('custosUpdated', $this->serviceId, [
             'qtdDias' => $this->qtdDias,
@@ -358,7 +370,7 @@ class ServiceOsItem extends Component
             'parceiro' => $this->parceiro,
         ]);
 
-        $this->dispatch('totalUpdated', $this->serviceId, $this->total);
+        //$this->dispatch('totalUpdated', $this->serviceId, $this->total);
     }
 
     public function handleSelectedOptions($type, $key)
@@ -395,15 +407,15 @@ class ServiceOsItem extends Component
 
         $clonedService = clone $this->serviceTemp;
 
-        $this->precoBase = $this->serviceTemp->price;
-        $this->horaExtra = $this->serviceTemp->extra_price;
+        $this->precoBase = $this->serviceTemp->price / 100;
+        $this->horaExtra = $this->serviceTemp->extra_price / 100;
         $this->kmBase = $this->serviceTemp->km;
-        $this->kmExtra = $this->serviceTemp->km_extra;
-        $this->custoParceiro = $this->serviceTemp->partner_cost;
-        $this->extraParceiro = $this->serviceTemp->partner_extra_time;
-        $this->kmExtraParceiro = $this->serviceTemp->partner_extra_km;
-        $this->custoEmployee = $this->serviceTemp->employee_cost;
-        $this->horaExtraEmployee = $this->serviceTemp->employee_extra;
+        $this->kmExtra = $this->serviceTemp->km_extra / 100;
+        $this->custoParceiro = $this->serviceTemp->partner_cost / 100;
+        $this->extraParceiro = $this->serviceTemp->partner_extra_time / 100;
+        $this->kmExtraParceiro = $this->serviceTemp->partner_extra_km / 100;
+        $this->custoEmployee = $this->serviceTemp->employee_cost / 100;
+        $this->horaExtraEmployee = $this->serviceTemp->employee_extra / 100;
     }
 
     private function zerarCamposDoServico()

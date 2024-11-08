@@ -28,6 +28,7 @@ class OrcamentosController extends Controller
         $this->prefix = 'orcamento';
         $this->request = $request;
     }
+    
     public function index()
     {
         $prefix = $this->prefix;

@@ -24,6 +24,7 @@
                 </td>
                 <td>
                     @php
+
                         if (isset($os->contact->name)) {
                             echo $os->contact->name;
                         } else { 
@@ -32,7 +33,15 @@
                     @endphp
                 </td>
                 <td>
-                    {{ 'R$ ' . number_format($os->executions->sum('total') / 100, 2, ',', '.') }}
+                    @php
+                        if (!$os->status) {
+                            //Se for orçamento
+                            echo 'R$ ' . number_format($os->services->sum('price') / 100, 2, ',', '.');
+                        } else {
+                            //Se for O.S.
+                            echo 'R$ ' . number_format($os->executions->sum('total') / 100, 2, ',', '.');
+                        }
+                    @endphp
                 </td>
                 <td class="text-right">
                     <a href="{{ route($type . '.editar', ['id' => $os->id]) }}"

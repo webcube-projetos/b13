@@ -65,6 +65,7 @@
                                 cliente='{{ $client }}'
                                 wire:key="select-client-{{ $fields['id'] }}"
                             />
+                            @error('client') <span class="badge bg-gradient-danger">{{ $message }}</span> @enderror
                         @elseif($fields['type'] === 'number' && $fields['name'] !== 'ano' || $fields['name'] !== 'malas' || $fields['name'] !== 'passageiros')
                             <input 
                                 class="form-control" 
