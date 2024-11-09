@@ -18,8 +18,6 @@ class OsService extends Model
         'start',
         'finish',
         'price',
-        'discount',
-        'discount_type',
         'time',
         'extra_price',
         'qtd_service',

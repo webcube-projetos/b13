@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\OS;
 use App\Traits\MontarForm;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -41,20 +42,20 @@ class OrcamentoCadastro extends Component
 
         if ($this->id) {
             $orcamento = OS::find($this->id);
-    
+
             // Carregar os dados do orçamento
             $this->contato = $orcamento->id_contact;
             $this->paymentMethod = $orcamento->id_payment_method;
             $this->paymentOptions = $orcamento->id_payment_options;
             $this->obs = $orcamento->obs;
             $this->client = $orcamento->id_client;
-    
+
             // Calcular o total inicial
             $this->total = $orcamento->services->sum(function ($service) {
                 // Calcula o preço base do serviço
                 $serviceTotal = ($service->price * $service->qtd_days * $service->qtd_service);
 
-                return $serviceTotal / 100;
+                return $serviceTotal;
             });
         }
     }
@@ -65,6 +66,8 @@ class OrcamentoCadastro extends Component
         if (!in_array($type, ['contato', 'paymentMethod', 'client', 'paymentOptions'])) {
             return;
         }
+
+        $this->{$type} = $value;
     }
 
     public function handleCustosUpdated($serviceId, $data)
@@ -88,9 +91,9 @@ class OrcamentoCadastro extends Component
 
     public function handleSaveOS()
     {
-        /*$this->validate([
+        $this->validate([
             'client' => 'required',
-        ]);*/
+        ]);
 
         $os = OS::create([
             'id_contact' => $this->contato,
@@ -102,21 +105,26 @@ class OrcamentoCadastro extends Component
 
         $this->os = $os;
         $this->dispatch('osCreated', $os->id);
-        return redirect()->to(route('orcamentos.editar', ['id' => $os->id]));
     }
 
     public function editOS()
     {
-        $os = OS::updateOrCreate(
-            ['id' => $this->id],
-            [
-                'id_contact' => $this->contato,
-                'id_client' => $this->client,
-                'id_payment_method' => $this->paymentMethod,
-                'id_payment_options' => $this->paymentOptions,
-                'status' => 0,
-            ]
-        );
+        try {
+            DB::beginTransaction();
+            $os = OS::updateOrCreate(
+                ['id' => $this->id],
+                [
+                    'id_contact' => $this->contato,
+                    'id_client' => $this->client,
+                    'id_payment_method' => $this->paymentMethod,
+                    'id_payment_options' => $this->paymentOptions,
+                    'status' => 0,
+                ]
+            );
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+
 
         $this->os = $os;
         $this->dispatch('osUpdated', $os->id);
@@ -146,7 +154,7 @@ class OrcamentoCadastro extends Component
         }
     }
 
-    public function handleUpdateTotal($totalUpdated)
+    public function handleUpdateTotal($serviceId, $totalUpdated)
     {
         $this->total = $totalUpdated;
         $this->dispatch('refreshComponent');
