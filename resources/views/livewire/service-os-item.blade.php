@@ -242,7 +242,7 @@
             </div>
             <div class="col-md-2 mb-3">
                 <label for="armored[]">Armado</label>
-                <livewire:select-component type="armed" placeholder="" name="armored[]" :selected="$armored" />
+                <livewire:select-component type="armored" placeholder="" name="armored[]" :selected="$armored" />
             </div>
             <div class="col-md-2 mb-3">
                 <label for="driver[]">Motorista</label>

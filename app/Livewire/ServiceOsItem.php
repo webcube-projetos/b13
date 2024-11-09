@@ -284,7 +284,7 @@ class ServiceOsItem extends Component
     //Preenche os campos de serviço apenas quando necessário
     public function updated($property)
     {
-        if (in_array($property, ['categoryService', 'vehiclesCategory', 'typesVehicle', 'armored', 'bilingue', 'qtdHoras', 'driver'])) {
+        if (in_array($property, ['categoryService', 'vehiclesCategory', 'typesVehicle', 'armored', 'bilingue', 'qtdHoras', 'driver', 'securityType'])) {
             $this->updateServiceData();
         } elseif (in_array($property, ['parceiro', 'qtdDias', 'qtdServices', 'precoBase', 'custoParceiro', 'custoEmployee'])) {
             $this->updateCostsAndTotal();
@@ -338,7 +338,7 @@ class ServiceOsItem extends Component
             // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
             return Service::where('id_category_service', $this->categoryService)
                 ->where('id_category_espec', $this->securityType)
-                ->where('blindado_armado', $this->armed)
+                ->where('blindado_armado', $this->armored)
                 ->where('bilingual', $this->bilingue)
                 ->where('driver', $this->driver)
                 ->where('time', $this->qtdHoras)

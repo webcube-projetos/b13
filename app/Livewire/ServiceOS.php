@@ -54,6 +54,7 @@ class ServiceOS extends Component
                 'servicesOS' => $serviceOS->id_service,
                 'modelVehicle' => $serviceOS->modelo_veiculo,
                 'vehiclesCategory' => $serviceOS->service->id_category_espec,
+                'securityType' => $serviceOS->service->id_category_espec,
                 'categoryService' => $serviceOS->service->id_category_service,
                 'typesVehicle' => $serviceOS->service->id_vehicle,
                 'idioma' => null,
