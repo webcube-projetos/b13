@@ -54,27 +54,29 @@ class ServiceOS extends Component
                 'servicesOS' => $serviceOS->id_service,
                 'modelVehicle' => $serviceOS->modelo_veiculo,
                 'vehiclesCategory' => $serviceOS->service->id_category_espec,
+                'securityType' => $serviceOS->service->id_category_espec,
                 'categoryService' => $serviceOS->service->id_category_service,
                 'typesVehicle' => $serviceOS->service->id_vehicle,
                 'idioma' => null,
                 'selectBrand' => null,
                 'armored' => $serviceOS->service->blindado_armado,
+                'driver' => $serviceOS->service->driver,
                 'bilingue' => $serviceOS->service->bilingual,
                 'qtdHoras' => $serviceOS->time,
-                'precoBase' => $serviceOS->price / 100,
+                'precoBase' => $serviceOS->price,
                 'horaBase' => $serviceOS->time,
-                'horaExtra' => $serviceOS->extra_price / 100,
+                'horaExtra' => $serviceOS->extra_price,
                 'kmBase' => $serviceOS->km,
-                'kmExtra' => $serviceOS->km_extra / 100,
-                'custoParceiro' => $serviceOS->partner_cost / 100,
-                'extraParceiro' => $serviceOS->partner_extra_time / 100,
-                'kmExtraParceiro' => $serviceOS->partner_extra_km / 100,
-                'custoEmployee' => $serviceOS->employee_cost / 100,
-                'horaExtraEmployee' => $serviceOS->employee_extra / 100,
-                'parceiro' => null,   
+                'kmExtra' => $serviceOS->km_extra,
+                'custoParceiro' => $serviceOS->partner_cost,
+                'extraParceiro' => $serviceOS->partner_extra_time,
+                'kmExtraParceiro' => $serviceOS->partner_extra_km,
+                'custoEmployee' => $serviceOS->employee_cost,
+                'horaExtraEmployee' => $serviceOS->employee_extra,
+                'parceiro' => null,
+                'bags' => $serviceOS->bags,
                 'passageiros' => $serviceOS->passengers,
-                'malas' => $serviceOS->bags,
-                'total' => (($serviceOS->price * $serviceOS->qtd_days) * $serviceOS->qtd_service) / 100,
+                'total' => ($serviceOS->price * $serviceOS->qtd_days) * $serviceOS->qtd_service,
             ];
 
             $newService = ['type' => $serviceOS->km > 0 ? 'locacao' : 'seguranca', 'id' => $serviceOS->id];
@@ -98,11 +100,9 @@ class ServiceOS extends Component
 
     public function handleTotalUpdated($serviceId, $total)
     {
-
         $this->totals[$serviceId] = $total;
         $this->totalGlobal = array_sum($this->totals);
-        $totalOrcamento = $this->totalGlobal;
-        $this->dispatch('totalUpdated', $totalOrcamento);
+        $this->dispatch('update-global-total', number_format($this->totalGlobal / 100, 2, ',', '.'));
     }
 
     public function handleClonarLinha($serviceId, $data)

@@ -59,10 +59,20 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener('livewire:initialized', function() {
-        document.querySelectorAll('.maskMoneyInputs').forEach(input => {
-            inputValor(input);
+@script
+    <script>
+        document.addEventListener('livewire:initialized', function() {
+            document.querySelectorAll('.maskMoneyInputs').forEach(input => {
+                inputValor(input);
+            });
         });
-    });
-</script>
+
+        $wire.on('masksUpdated', () => {
+            $nextTick(() => {
+                document.querySelectorAll('.maskMoneyInputs').forEach(input => {
+                    inputValor(input);
+                });
+            });
+        });
+    </script>
+@endscript

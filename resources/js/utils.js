@@ -154,7 +154,7 @@ Fancybox.bind("[data-fancybox]", {
 function inputValor(el) {
     el = $(el);
     el.unmask().mask("#.##0,00", { reverse: true });
-
+    console.log(el.val());
     const length = el.val().length;
     el[0].setSelectionRange(length, length);
 }

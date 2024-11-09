@@ -90,6 +90,8 @@ class CampoValores extends Component
         $this->kmExtraParceiro = data_get($serviceTemp, 'partner_extra_km');
         $this->custoEmployee = data_get($serviceTemp, 'employee_cost');
         $this->horaExtraEmployee = data_get($serviceTemp, 'employee_extra');
+
+        $this->dispatch('masksUpdated');
     }
 
     #[On('zerarCamposDoServico')]

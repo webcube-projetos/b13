@@ -13,7 +13,7 @@ export default defineConfig({
                 'resources/js/addLines.js',
                 'resources/js/doublePage.js',
             ],
-            refresh: true,
+            refresh: false,
         }),
     ],
 });

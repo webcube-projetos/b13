@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Service;
 use App\Models\OsService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -31,6 +32,8 @@ class ServiceOsItem extends Component
     public $securityType;
     public $qtdHoras;
     public $typesVehicle;
+    public $tipodesconto;
+    public $desconto;
     public $vehiclesCategory;
     public $armored;
     public $modelVehicle;
@@ -64,7 +67,6 @@ class ServiceOsItem extends Component
         $this->serviceId = $serviceId;
         $this->data = $data;
         $this->type = $type;
-
         if ($this->data) {
             $this->parceiro = $data['parceiro'];
             $this->inicio = $data['inicio'];
@@ -95,8 +97,10 @@ class ServiceOsItem extends Component
             $this->kmExtraParceiro = $data['kmExtraParceiro'];
             $this->custoEmployee = $data['custoEmployee'];
             $this->horaExtraEmployee = $data['horaExtraEmployee'];
+            $this->tipodesconto = $data['tipodesconto'] ?? null;
+            $this->desconto = $data['desconto'] ?? null;
             $this->passageiros = $data['passageiros'] ?? null;
-            $this->bags = $data['malas'] ?? null;
+            $this->bags = $data['bags'] ?? null;
             $this->total = $data['total'];
         }
     }
@@ -136,6 +140,8 @@ class ServiceOsItem extends Component
             'custoEmployee' => $this->custoEmployee,
             'horaExtraEmployee' => $this->horaExtraEmployee,
             'parceiro' => $this->parceiro,
+            'tipodesconto' => $this->tipodesconto,
+            'desconto' => $this->desconto,
             'total' => $this->total,
         ];
 
@@ -154,139 +160,91 @@ class ServiceOsItem extends Component
     public function saveOS($id)
     {
 
-        $this->validate([
-            'qtdDias' => 'required',
-            'qtdServices' => 'required',
-            'precoBase' => 'required',
-        ]);
+        try {
+            if ($this->serviceTemp) {
+                $idGlobal = OsService::updateOrCreate(
+                    ['id' => $this->idGlobal, 'id_service' => $this->serviceTemp->id],
+                    [
+                        'id_os' => $id,
+                        'id_service' => $this->serviceTemp->id,
+                        'qtd_days' => $this->qtdDias,
+                        'qtd_service' => $this->qtdServices,
+                        'modelo_veiculo' => $this->modelVehicle,
+                        'passengers' => $this->passageiros,
+                        'bags' => $this->bags,
+                        'start' => $this->inicio,
+                        'finish' => $this->termino,
+                        'time' => $this->qtdHoras,
+                        'km' => $this->kmBase,
+                        'price' => $this->convertPrice($this->precoBase),
+                        'extra_price' => $this->convertPrice($this->horaExtra),
+                        'km_extra' => $this->convertPrice($this->kmExtra),
+                        'partner_cost' => $this->convertPrice($this->custoParceiro),
+                        'partner_extra_time' => $this->convertPrice($this->extraParceiro),
+                        'partner_extra_km' => $this->convertPrice($this->kmExtraParceiro),
+                        'employee_cost' => $this->convertPrice($this->custoEmployee),
+                        'employee_extra' => $this->convertPrice($this->horaExtraEmployee),
+                    ]
+                );
+            } else {
+                $service = Service::create([
+                    'name' => $this->nomeServico,
+                    'name_english' => $this->nomeServicoIngles,
+                    'blindado_armado' => $this->type === 'locacao' ? $this->armored : $this->armed,
+                    'bilingual' => $this->bilingue,
+                    'driver' => $this->driver ?? 0,
+                    'time' => $this->qtdHoras,
+                    'km' => $this->kmBase,
+                    'price' => $this->convertPrice($this->precoBase),
+                    'extra_price' => $this->convertPrice($this->horaExtra),
+                    'km_extra' => $this->convertPrice($this->kmExtra),
+                    'partner_cost' => $this->convertPrice($this->custoParceiro),
+                    'partner_extra_time' => $this->convertPrice($this->extraParceiro),
+                    'partner_extra_km' => $this->convertPrice($this->kmExtraParceiro),
+                    'employee_cost' => $this->convertPrice($this->custoEmployee),
+                    'employee_extra' => $this->convertPrice($this->horaExtraEmployee),
+                    'id_category_service' => $this->categoryService,
+                    'id_category_espec' => $this->type === 'locacao' ? $this->vehiclesCategory : $this->securityType,
+                    'id_service_type' => $this->type === 'locacao' ? 1 : 2,
+                    'id_vehicle' => $this->type === 'locacao' ? $this->typesVehicle : null,
+                ]);
 
-        $data = [
-            'price' => $this->precoBase,
-            'extra_price' => $this->horaExtra,
-            'km_extra' => $this->kmExtra,
-            'partner_cost' => $this->custoParceiro,
-            'partner_extra_time' => $this->extraParceiro,
-            'partner_extra_km' => $this->kmExtraParceiro,
-            'employee_cost' => $this->custoEmployee,
-            'employee_extra' => $this->horaExtraEmployee,
-        ];
-
-        foreach ($data as $key => $value) {
-            if (is_string($value)) {
-                if (strpos($value, '.')) {
-                    $value = str_replace('.', '', $value);
-                }
-                $data[$key] = (int)$value * 100;
+                $idGlobal = OsService::updateOrCreate(
+                    ['id' => $this->idGlobal],
+                    [
+                        'id_os' => $id,
+                        'id_service' => $service->id,
+                        'qtd_days' => $this->qtdDias,
+                        'qtd_service' => $this->qtdServices,
+                        'modelo_veiculo' => $this->modelVehicle ?? null,
+                        'passengers' => $this->passageiros,
+                        'bags' => $this->bags,
+                        'start' => $this->inicio,
+                        'finish' => $this->termino,
+                        'time' => $this->qtdHoras,
+                        'km' => $this->kmBase,
+                        'price' => $this->convertPrice($this->precoBase),
+                        'extra_price' => $this->convertPrice($this->horaExtra),
+                        'km_extra' => $this->convertPrice($this->kmExtra),
+                        'partner_cost' => $this->convertPrice($this->custoParceiro),
+                        'partner_extra_time' => $this->convertPrice($this->extraParceiro),
+                        'partner_extra_km' => $this->convertPrice($this->kmExtraParceiro),
+                        'employee_cost' => $this->convertPrice($this->custoEmployee),
+                        'employee_extra' => $this->convertPrice($this->horaExtraEmployee),
+                    ]
+                );
             }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
         }
-
-
-        if ($this->serviceTemp) {
-            $idGlobal = OsService::updateOrCreate(
-                ['id' => $this->idGlobal, 'id_service' => $this->serviceTemp->id],
-                [
-                    'id_os' => $id,
-                    'id_service' => $this->serviceTemp->id,
-                    'qtd_days' => $this->qtdDias,
-                    'qtd_service' => $this->qtdServices,
-                    'modelo_veiculo' => $this->modelVehicle,
-                    'passengers' => $this->passageiros,
-                    'bags' => $this->bags,
-                    'start' => $this->inicio,
-                    'finish' => $this->termino,
-                    'time' => $this->qtdHoras,
-                    'km' => $this->kmBase,
-                    'price' => data_get($data, 'price'),
-                    'extra_price' => data_get($data, 'extra_price'),
-                    'km_extra' => data_get($data, 'km_extra'),
-                    'partner_cost' => data_get($data, 'partner_cost'),
-                    'partner_extra_time' => data_get($data, 'partner_extra_time'),
-                    'partner_extra_km' => data_get($data, 'partner_extra_km'),
-                    'employee_cost' => data_get($data, 'employee_cost'),
-                    'employee_extra' => data_get($data, 'employee_extra'),
-                ]
-            );
-        } else {
-            // Novo serviço
-            $service = Service::create([
-                'name' => $this->nomeServico,
-                'name_english' => $this->nomeServicoIngles,
-                'blindado_armado' => $this->type === 'locacao' ? $this->armored : $this->armed,
-                'bilingual' => $this->bilingue,
-                'driver' => $this->driver ?? 0,
-                'time' => $this->qtdHoras,
-                'km' => $this->kmBase,
-                'price' => data_get($data, 'price'),
-                'extra_price' => data_get($data, 'extra_price'),
-                'km_extra' => data_get($data, 'km_extra'),
-                'partner_cost' => data_get($data, 'partner_cost'),
-                'partner_extra_time' => data_get($data, 'partner_extra_time'),
-                'partner_extra_km' => data_get($data, 'partner_extra_km'),
-                'employee_cost' => data_get($data, 'employee_cost'),
-                'employee_extra' => data_get($data, 'employee_extra'),
-                'id_category_service' => $this->categoryService,
-                'id_category_espec' => $this->type === 'locacao' ? $this->vehiclesCategory : $this->securityType,
-                'id_service_type' => $this->type === 'locacao' ? 1 : 2,
-                'id_vehicle' => $this->type === 'locacao' ? $this->typesVehicle : null,
-            ]);
-
-            $idGlobal = OsService::updateOrCreate(
-                ['id' => $this->idGlobal], // Removemos o filtro por id_service aqui
-                [
-                    'id_os' => $id,
-                    'id_service' => $service->id, // Usamos o id do novo serviço criado
-                    'qtd_days' => $this->qtdDias,
-                    'qtd_service' => $this->qtdServices,
-                    'modelo_veiculo' => $this->modelVehicle ?? null,
-                    'passengers' => $this->passageiros,
-                    'bags' => $this->bags,
-                    'start' => $this->inicio,
-                    'finish' => $this->termino,
-                    'time' => $this->qtdHoras,
-                    'km' => $this->kmBase,
-                    'price' => data_get($data, 'price'),
-                    'extra_price' => data_get($data, 'extra_price'),
-                    'km_extra' => data_get($data, 'km_extra'),
-                    'partner_cost' => data_get($data, 'partner_cost'),
-                    'partner_extra_time' => data_get($data, 'partner_extra_time'),
-                    'partner_extra_km' => data_get($data, 'partner_extra_km'),
-                    'employee_cost' => data_get($data, 'employee_cost'),
-                    'employee_extra' => data_get($data, 'employee_extra'),
-                ]
-            );
-        }
-
         $this->idGlobal = $idGlobal->id;
+        return redirect()->to(route('orcamentos.editar', ['id' => $id]));
     }
 
     #[On('osUpdated')]
     public function handleOsUpdated($id)
     {
-        $this->validate([
-            'qtdDias' => 'required',
-            'qtdServices' => 'required',
-            'precoBase' => 'required',
-        ]);
-        
-        $data = [
-            'price' => $this->precoBase,
-            'extra_price' => $this->horaExtra,
-            'km_extra' => $this->kmExtra,
-            'partner_cost' => $this->custoParceiro,
-            'partner_extra_time' => $this->extraParceiro,
-            'partner_extra_km' => $this->kmExtraParceiro,
-            'employee_cost' => $this->custoEmployee,
-            'employee_extra' => $this->horaExtraEmployee,
-        ];
-
-        foreach ($data as $key => $value) {
-            if (is_string($value)) {
-                if (strpos($value, '.')) {
-                    $value = str_replace('.', '', $value);
-                }
-                $data[$key] = (int)$value * 100;
-            }
-        }
 
         $idGlobal = OsService::updateOrCreate(
             ['id' => $this->serviceId, 'id_os' => $id],
@@ -301,18 +259,19 @@ class ServiceOsItem extends Component
                 'finish' => $this->termino,
                 'time' => $this->horaBase,
                 'km' => $this->kmBase,
-                'price' => data_get($data, 'price'),
-                'extra_price' => data_get($data, 'extra_price'),
-                'km_extra' => data_get($data, 'km_extra'),
-                'partner_cost' => data_get($data, 'partner_cost'),
-                'partner_extra_time' => data_get($data, 'partner_extra_time'),
-                'partner_extra_km' => data_get($data, 'partner_extra_km'),
-                'employee_cost' => data_get($data, 'employee_cost'),
-                'employee_extra' => data_get($data, 'employee_extra'),
+                'price' => $this->convertPrice($this->precoBase),
+                'extra_price' => $this->convertPrice($this->horaExtra),
+                'km_extra' => $this->convertPrice($this->kmExtra),
+                'partner_cost' => $this->convertPrice($this->custoParceiro),
+                'partner_extra_time' => $this->convertPrice($this->extraParceiro),
+                'partner_extra_km' => $this->convertPrice($this->kmExtraParceiro),
+                'employee_cost' => $this->convertPrice($this->custoEmployee),
+                'employee_extra' => $this->convertPrice($this->horaExtraEmployee),
             ]
         );
 
         $this->idGlobal = $idGlobal->id;
+        return redirect()->to(route('orcamentos.editar', ['id' => $id]));
     }
 
     #[On('selectUpdated')]
@@ -325,7 +284,7 @@ class ServiceOsItem extends Component
     //Preenche os campos de serviço apenas quando necessário
     public function updated($property)
     {
-        if (in_array($property, ['categoryService', 'vehiclesCategory', 'typesVehicle', 'armored', 'bilingue', 'qtdHoras', 'driver'])) {
+        if (in_array($property, ['categoryService', 'vehiclesCategory', 'typesVehicle', 'armored', 'bilingue', 'qtdHoras', 'driver', 'securityType'])) {
             $this->updateServiceData();
         } elseif (in_array($property, ['parceiro', 'qtdDias', 'qtdServices', 'precoBase', 'custoParceiro', 'custoEmployee'])) {
             $this->updateCostsAndTotal();
@@ -345,20 +304,14 @@ class ServiceOsItem extends Component
 
     public function updateCostsAndTotal()
     {
-        $precoBase = (float) str_replace(',', '.', str_replace('.', '', $this->precoBase));
-        $qtdDias = (float) str_replace(',', '.', str_replace('.', '', $this->qtdDias));
-        $qtdServices = (float) str_replace(',', '.', str_replace('.', '', $this->qtdServices));
-
-        $total = $precoBase * $qtdDias * $qtdServices;
-
-        $this->total = $total;
+        $this->total = $this->convertPrice($this->precoBase) * $this->qtdDias * $this->qtdServices;
 
         $this->dispatch('custosUpdated', $this->serviceId, [
             'qtdDias' => $this->qtdDias,
             'qtdServices' => $this->qtdServices,
-            'precoBase' => $this->precoBase,
-            'custoEmployee' => $this->custoEmployee,
-            'custoParceiro' => $this->custoParceiro,
+            'precoBase' => $this->convertPrice($this->precoBase),
+            'custoEmployee' => $this->convertPrice($this->custoEmployee),
+            'custoParceiro' => $this->convertPrice($this->custoParceiro),
             'parceiro' => $this->parceiro,
         ]);
 
@@ -385,7 +338,7 @@ class ServiceOsItem extends Component
             // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
             return Service::where('id_category_service', $this->categoryService)
                 ->where('id_category_espec', $this->securityType)
-                ->where('blindado_armado', $this->armed)
+                ->where('blindado_armado', $this->armored)
                 ->where('bilingual', $this->bilingue)
                 ->where('driver', $this->driver)
                 ->where('time', $this->qtdHoras)
@@ -397,18 +350,20 @@ class ServiceOsItem extends Component
     {
         $this->servicoCadastrado = 1;
 
-        $clonedService = clone $this->serviceTemp;
-
-        $this->precoBase = $this->serviceTemp->price / 100;
-        $this->horaExtra = $this->serviceTemp->extra_price / 100;
+        $this->precoBase = $this->serviceTemp->price;
+        $this->horaExtra = $this->serviceTemp->extra_price;
         $this->kmBase = $this->serviceTemp->km;
-        $this->kmExtra = $this->serviceTemp->km_extra / 100;
-        $this->custoParceiro = $this->serviceTemp->partner_cost / 100;
-        $this->extraParceiro = $this->serviceTemp->partner_extra_time / 100;
-        $this->kmExtraParceiro = $this->serviceTemp->partner_extra_km / 100;
-        $this->custoEmployee = $this->serviceTemp->employee_cost / 100;
-        $this->horaExtraEmployee = $this->serviceTemp->employee_extra / 100;
+        $this->kmExtra = $this->serviceTemp->km_extra;
+        $this->custoParceiro = $this->serviceTemp->partner_cost;
+        $this->extraParceiro = $this->serviceTemp->partner_extra_time;
+        $this->kmExtraParceiro = $this->serviceTemp->partner_extra_km;
+        $this->custoEmployee = $this->serviceTemp->employee_cost;
+        $this->horaExtraEmployee = $this->serviceTemp->employee_extra;
+
+        $this->dispatch('masksUpdated');
+        $this->updateCostsAndTotal();
     }
+
 
     private function zerarCamposDoServico()
     {

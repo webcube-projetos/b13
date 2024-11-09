@@ -59,7 +59,7 @@ class ServiceOsSeguranca extends Component
             $this->total = $data['total'] / 100;
         }
     }
-    
+
     public function handleClonarLinha($serviceId)
     {
         if ($serviceId != $this->serviceId) {
