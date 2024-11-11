@@ -549,7 +549,7 @@ trait MontarForm
                         'id' => 'cor',
                         'name' => 'color',
                         'function' => false,
-                        'value' => $value->passengers ?? null,
+                        'value' => $value->color ?? null,
                     ],
                     'ano' => [
                         'container_tag' => 'div',

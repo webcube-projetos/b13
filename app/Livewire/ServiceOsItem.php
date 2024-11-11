@@ -156,6 +156,11 @@ class ServiceOsItem extends Component
         $this->dispatch('deletarLinhaparent', $this->serviceId);
     }
 
+    public function convertPrice($value): int
+    {
+        return (int) round($value * 100);
+    }
+
     #[On('osCreated')]
     public function saveOS($id)
     {

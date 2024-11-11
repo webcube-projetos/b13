@@ -15,6 +15,7 @@ class Vehicle extends Model
         'id_category',
         'id_brand',
         'model',
+        'color',
         'year',
         'armored',
         'passengers',

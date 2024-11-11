@@ -7,3 +7,6 @@
 
 1.1. Orçamento PDF
 - Incluir a lógica de desconto na view do PDF de forma condicional - se tiver desconto aparece, se não tiver não aparece nem o campo desconto. 
+
+2. Empresa 
+- Criar feedback de não apagar empresa caso haja um orçamento ou ordem de serviço vinculados a ele.
