@@ -43,10 +43,10 @@
                                 <div class="row">
                                     @foreach ($dados['sessions'] as $key => $group)
                                         @if (data_get($dados, "sessions.$key.photo"))
-                                            <div class="col-lg-6 mb-4">
+                                            <div class="col-lg-5 mb-4">
                                                 <p class="fw-bold">{{ $key }}</p>
                                             </div>
-                                            <div class="col-lg-6 d-flex text-end mb-4 justify-content-end">
+                                            <div class="col-lg-5 d-flex text-end mb-4 justify-content-end">
                                                 @php
                                                     $photoValue = data_get($dados, "sessions.$key.photo.value");
                                                 @endphp
@@ -69,7 +69,19 @@
                                                     </a>
                                                 @endif
                                             </div>
-                                        @else 
+                                        @endif
+
+                                        @if (data_get($dados, "sessions.$key.status"))
+                                            @php
+                                                $statusValue = data_get($dados, "sessions.$key.status.value");
+                                            @endphp
+                                            <div class="col-lg-2 text-end mb-4">
+                                                <p class="text-sm">Ativo?</p>
+                                                <div class="form-check form-switch d-inline-block ms-auto">
+                                                    <input class="form-check-input" type="checkbox" id="status" name="status" {{$statusValue ? 'checked' : ''}}>     
+                                                </div>
+                                            </div>
+                                        @else
                                     <p class="fw-bold mt-4">{{ $key }}</p>
                                 @endif
                                 

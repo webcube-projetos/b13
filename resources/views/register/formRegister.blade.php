@@ -1,5 +1,5 @@
         @foreach ($dados['sessions'][$key] as $fields)
-            @if ($fields['name'] !== 'photo' && $fields['name'] !== 'doc_photo' && $fields['name'] !== 'cnh') 
+            @if ($fields['name'] !== 'photo' && $fields['name'] !== 'doc_photo' && $fields['name'] !== 'cnh' && $fields['name'] !== 'status') 
                 <{{ $fields['container_tag'] }} class="{{ $fields['container_class'] }}">
                     <div class="form-group">
                         <label 

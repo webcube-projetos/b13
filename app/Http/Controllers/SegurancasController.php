@@ -158,8 +158,9 @@ class SegurancasController extends Controller
                 'id_company' => $this->request->id_company ?? null,
                 'id_bank' => null,
                 'obs' => $this->request->obs ?? null,
-                'cnh' => $imgUrlCnh ?? null, // Manter a CNH existente se não houver nova selecionada
-                'photo' => $imgUrlFoto ?? null, // Manter a foto existente se não houver nova selecionada
+                'cnh' => $imgUrlCnh ?? null,
+                'photo' => $imgUrlFoto ?? null,
+                'status' => $this->request->status ? 1 : 0,
             ]
         );
 
