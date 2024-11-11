@@ -238,4 +238,16 @@ trait FinancialTrait
             ]);
         }
     }
+
+    public function convertPrice($price)
+    {
+        if (is_string($price)) {
+            if (strpos($price, '.')) {
+                $price = str_replace('.', '', $price);
+            }
+            return (int)$price * 100;
+        }
+
+        return $price;
+    }
 }

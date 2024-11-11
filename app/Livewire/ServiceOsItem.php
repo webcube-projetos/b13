@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Service;
 use App\Models\OsService;
+use App\Traits\FinancialTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
@@ -11,6 +12,8 @@ use Livewire\Component;
 
 class ServiceOsItem extends Component
 {
+    use FinancialTrait;
+
     //Gerencia se o serviço existe ou não
     public $servicoCadastrado = null;
 
