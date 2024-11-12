@@ -72,7 +72,6 @@ class VeiculosController extends Controller
 
     public function salvar()
     {
-        // Inicialize as variáveis de URL da foto e do documento
         $imgUrlFoto = null;
         $imgUrldoc_photo = null;
 
@@ -97,6 +96,7 @@ class VeiculosController extends Controller
                 'id_category' => $this->request->id_category ?? null,
                 'id_brand' => $this->request->id_brand ?? null,
                 'model' => $this->request->model ?? null,
+                'color' => $this->request->color ?? null,
                 'year' => $this->request->year ?? null,
                 'armored' => $this->request->armored ?? null,
                 'plate' => $this->request->plate ?? null,

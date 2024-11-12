@@ -159,6 +159,7 @@ class MotoristasController extends Controller
                 'obs' => $this->request->obs ?? $employee->obs ?? null,
                 'cnh' => $imgUrlCnh ?? $employee->cnh ?? null,
                 'photo' => $imgUrlFoto ?? $employee->photo ?? null,
+                'status' => $this->request->status ? 1 : 0,
             ]
         );
 
