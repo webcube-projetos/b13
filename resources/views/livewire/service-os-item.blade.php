@@ -27,12 +27,12 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="inicio">Início</label>
-                    <input type="date" class="form-control" wire:model="inicio" name="inicio[]" id="inicio"
+                    <input type="date" class="form-control" wire:model.live="inicio" name="inicio[]" id="inicio"
                         maxlength="30">
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="termino">Término</label>
-                    <input type="date" class="form-control" wire:model="termino" name="termino[]" id="termino"
+                    <input type="date" class="form-control" wire:model.live="termino" name="termino[]" id="termino"
                         maxlength="30">
                 </div>
                 <div class="col-md-2 mb-3">
@@ -85,11 +85,11 @@
                     </div>
                 @elseif ($servicoCadastrado == 2)
                     <div class="col-md-6 mb-3">
-                        <input type="text" class="form-control" placeholder="Nome" wire:model="nomeServico">
+                        <input type="text" class="form-control" placeholder="Nome" wire:model.live="nomeServico">
                     </div>
                     <div class="col-md-6 mb-3">
                         <input type="text" class="form-control" placeholder="Nome em Inglês"
-                            wire:model="nomeServicoIngles">
+                            wire:model.live="nomeServicoIngles">
                     </div>
                 @endif
                 <div class="col-md-3 mb-3">
@@ -99,17 +99,17 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="modelVehicle">Modelo de veículo</label>
-                    <input type="text" class="form-control" wire:model="modelVehicle" name="modelVehicle[]"
+                    <input type="text" class="form-control" wire:model.live="modelVehicle" name="modelVehicle[]"
                         id="modelVehicle" required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="modelVehicle">Passageiros</label>
-                    <input type="text" class="form-control" wire:model="passageiros" name="passageiros"
+                    <input type="text" class="form-control" wire:model.live="passageiros" name="passageiros"
                         id="passageiros" required>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="modelVehicle">Malas</label>
-                    <input type="text" class="form-control" wire:model="bags" name="bags" id="bags"
+                    <input type="text" class="form-control" wire:model.live="bags" name="bags" id="bags"
                         required>
                 </div>
             </div>
@@ -203,13 +203,13 @@
             </div>
             <div class="col-md-3 mb-3">
                 <label for="inicio">Início</label>
-                <input type="date" class="form-control" wire:model="inicio" name="inicio[]" id="inicio"
+                <input type="date" class="form-control" wire:model.live="inicio" name="inicio[]" id="inicio"
                     maxlength="30">
             </div>
             <div class="col-md-3 mb-3">
                 <label for="termino">Término</label>
-                <input type="date" class="form-control" wire:model="termino" name="termino[]" id="termino"
-                    maxlength="30">
+                <input type="date" class="form-control" wire:model.live="termino" name="termino[]"
+                    id="termino" maxlength="30">
             </div>
             <div class="col-md-3 mb-3">
                 <label for="qtdDias">Qtd. Dias</label>
@@ -258,11 +258,11 @@
                 </div>
             @elseif ($servicoCadastrado == 2)
                 <div class="col-md-6 mb-3">
-                    <input type="text" class="form-control" placeholder="Nome" wire:model="nomeServico">
+                    <input type="text" class="form-control" placeholder="Nome" wire:model.live="nomeServico">
                 </div>
                 <div class="col-md-6 mb-3">
                     <input type="text" class="form-control" placeholder="Nome em Inglês"
-                        wire:model="nomeServicoIngles">
+                        wire:model.live="nomeServicoIngles">
                 </div>
             @endif
 

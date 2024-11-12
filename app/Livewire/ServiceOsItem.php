@@ -162,8 +162,8 @@ class ServiceOsItem extends Component
     #[On('osCreated')]
     public function saveOS($id)
     {
-
         try {
+            DB::beginTransaction();
             if ($this->serviceTemp) {
                 $idGlobal = OsService::updateOrCreate(
                     ['id' => $this->idGlobal, 'id_service' => $this->serviceTemp->id],
@@ -238,49 +238,61 @@ class ServiceOsItem extends Component
                 );
             }
             DB::commit();
+
+            $this->idGlobal = $idGlobal->id;
+            return redirect()->to(route('orcamentos.editar', ['id' => $id]));
         } catch (\Exception $e) {
             DB::rollBack();
         }
-        $this->idGlobal = $idGlobal->id;
-        return redirect()->to(route('orcamentos.editar', ['id' => $id]));
     }
 
     #[On('osUpdated')]
     public function handleOsUpdated($id)
     {
+        try {
+            DB::beginTransaction();
 
-        $idGlobal = OsService::updateOrCreate(
-            ['id' => $this->serviceId, 'id_os' => $id],
-            [
-                'id_service' => $this->data['servicesOS'],
-                'qtd_days' => $this->qtdDias,
-                'qtd_service' => $this->qtdServices,
-                'modelo_veiculo' => $this->modelVehicle,
-                'passengers' => $this->passageiros,
-                'bags' => $this->bags,
-                'start' => $this->inicio,
-                'finish' => $this->termino,
-                'time' => $this->horaBase,
-                'km' => $this->kmBase,
-                'price' => $this->convertPrice($this->precoBase),
-                'extra_price' => $this->convertPrice($this->horaExtra),
-                'km_extra' => $this->convertPrice($this->kmExtra),
-                'partner_cost' => $this->convertPrice($this->custoParceiro),
-                'partner_extra_time' => $this->convertPrice($this->extraParceiro),
-                'partner_extra_km' => $this->convertPrice($this->kmExtraParceiro),
-                'employee_cost' => $this->convertPrice($this->custoEmployee),
-                'employee_extra' => $this->convertPrice($this->horaExtraEmployee),
-            ]
-        );
+            $idGlobal = OsService::updateOrCreate(
+                ['id' => $this->serviceId, 'id_os' => $id],
+                [
+                    'id_service' => $this->data['servicesOS'],
+                    'qtd_days' => $this->qtdDias,
+                    'qtd_service' => $this->qtdServices,
+                    'modelo_veiculo' => $this->modelVehicle,
+                    'passengers' => $this->passageiros,
+                    'bags' => $this->bags,
+                    'start' => $this->inicio,
+                    'finish' => $this->termino,
+                    'time' => $this->horaBase,
+                    'km' => $this->kmBase,
+                    'price' => $this->convertPrice($this->precoBase),
+                    'extra_price' => $this->convertPrice($this->horaExtra),
+                    'km_extra' => $this->convertPrice($this->kmExtra),
+                    'partner_cost' => $this->convertPrice($this->custoParceiro),
+                    'partner_extra_time' => $this->convertPrice($this->extraParceiro),
+                    'partner_extra_km' => $this->convertPrice($this->kmExtraParceiro),
+                    'employee_cost' => $this->convertPrice($this->custoEmployee),
+                    'employee_extra' => $this->convertPrice($this->horaExtraEmployee),
+                ]
+            );
+            DB::commit();
 
-        $this->idGlobal = $idGlobal->id;
-        return redirect()->to(route('orcamentos.editar', ['id' => $id]));
+            $this->idGlobal = $idGlobal->id;
+            return redirect()->to(route('orcamentos.editar', ['id' => $id]));
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
     }
 
     #[On('selectUpdated')]
     public function handleSelectUpdated($t, $value)
     {
+        if (!in_array($t, ['categoryService', 'vehiclesCategory', 'typesVehicle', 'armored', 'bilingue', 'qtdHoras', 'driver', 'securityType'])) {
+            return $this->skipRender();
+        }
+
         $this->{$t} = $value;
+
         $this->updateServiceData();
     }
 

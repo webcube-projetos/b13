@@ -352,7 +352,6 @@ class SelectComponent extends Component
             return $this->dispatch('selectUpdated', $this->type, $value, $this->target)->to($this->targetClass);
         }
 
-
         return $this->dispatch('selectUpdated', $this->type, $value);
     }
 }

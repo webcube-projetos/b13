@@ -51,13 +51,13 @@
 
                                 <div class="col-lg-6 mt-4">
                                     <label for="paymentMethod">Condição de pagamento</label>
-                                    <livewire:select-component type="paymentMethod"
+                                    <livewire:select-component :targetClass=$targetClass type="paymentMethod"
                                         placeholder="Selecione a condição de pagamento" name="paymentMethod"
                                         id="paymentMethod" selected='{{ $paymentMethod }}' />
                                 </div>
                                 <div class="col-lg-6 mt-4">
                                     <label for="paymentOptions">Forma de pagamento</label>
-                                    <livewire:select-component type="paymentOptions"
+                                    <livewire:select-component :targetClass=$targetClass type="paymentOptions"
                                         placeholder="Selecione a forma de pagamento" name="paymentOptions"
                                         id="paymentOptions" selected='{{ $paymentOptions }}' />
                                 </div>

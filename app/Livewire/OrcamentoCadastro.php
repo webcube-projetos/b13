@@ -26,6 +26,7 @@ class OrcamentoCadastro extends Component
     public $custoTotalParceiro = [];
     public $id;
     public $total = null;
+    public $targetClass = OrcamentoCadastro::class;
 
     use MontarForm;
 
@@ -95,16 +96,24 @@ class OrcamentoCadastro extends Component
             'client' => 'required',
         ]);
 
-        $os = OS::create([
-            'id_contact' => $this->contato,
-            'id_client' => $this->client,
-            'id_payment_method' => $this->paymentMethod,
-            'id_payment_options' => $this->paymentOptions,
-            'status' => 0,
-        ]);
+        try {
+            DB::beginTransaction();
 
-        $this->os = $os;
-        $this->dispatch('osCreated', $os->id);
+            $os = OS::create([
+                'id_contact' => $this->contato,
+                'id_client' => $this->client,
+                'id_payment_method' => $this->paymentMethod,
+                'id_payment_options' => $this->paymentOptions,
+                'status' => 0,
+            ]);
+
+            $this->os = $os;
+            $this->dispatch('osCreated', $os->id);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
     }
 
     public function editOS()
@@ -121,13 +130,12 @@ class OrcamentoCadastro extends Component
                     'status' => 0,
                 ]
             );
+
+            $this->os = $os;
+            $this->dispatch('osUpdated', $os->id);
         } catch (\Exception $e) {
             DB::rollBack();
         }
-
-
-        $this->os = $os;
-        $this->dispatch('osUpdated', $os->id);
     }
 
     public function sendOrcamento()
