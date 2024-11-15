@@ -59,7 +59,7 @@ class CampoServico extends Component
             $this->securityType = $data->securityType ?? '';
             $this->qtdHoras = $data->time ?? '';
             $this->typesVehicle = $data->service->vehicleType->id ?? '';
-            $this->id_category_espec = $data->service->categoryEspec->id ?? '';
+            $this->vehiclesCategory = $data->service->vehiclesCategory->id ?? '';
             $this->armored = $data->service->blindado_armado ?? '';
             $this->driver = $data->service->driver ?? '';
             $this->nomeServico = $data->nomeServico ?? '';
@@ -143,14 +143,6 @@ class CampoServico extends Component
 
     private function buscarServicoCadastrado()
     {
-        dump(
-            $this->qtdHoras,
-            $this->id_category_service,
-            $this->vehiclesCategory,
-            $this->typesVehicle,
-            $this->armored,
-            $this->bilingue,
-        );
         if ($this->type == 'Locação') {
             // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
             return Service::where('id_category_service', $this->id_category_service)
