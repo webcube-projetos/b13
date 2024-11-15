@@ -24,7 +24,7 @@ class CampoServico extends Component
     public $securityType;
     public $qtdHoras;
     public $id_vehicle;
-    public $id_category_espec;
+    public $vehiclesCategory;
     public $nomeServico;
     public $nomeServicoIngles;
     public $typesVehicle;
@@ -68,25 +68,11 @@ class CampoServico extends Component
         }
     }
 
-    #[On('saveOS')]
-    public function saveOS()
+    public function updated($property)
     {
-        $data = [
-            'start' => $this->inicio,
-            'finish' => $this->termino,
-            'qtd_days' => $this->qtdDias,
-            'qtd_service' => $this->qtdServices,
-            'service' => $this->bilingue,
-            'driver' => $this->driver,
-            'id_category_service' => $this->id_category_service,
-            'securityType' => $this->securityType,
-            'time' => $this->qtdHoras,
-            'id_vehicle' => $this->typesVehicle,
-            'id_category_espec' => $this->id_category_espec,
-            'blindado_armado' => $this->armored,
-        ];
-
-        $this->dispatch('servicoCreated', $this->serviceId, $data);
+        if (in_array($property, ['id_category_service', 'vehiclesCategory', 'typesVehicle', 'securityType', 'armored', 'bilingue', 'qtdHoras', 'driver'])) {
+            $this->updateServiceData();
+        }
     }
 
     #[On('selectUpdated')]
@@ -129,11 +115,25 @@ class CampoServico extends Component
         }
     }
 
-    public function updated($property)
+    #[On('saveOS')]
+    public function saveOS()
     {
-        if (in_array($property, ['id_category_service', 'vehiclesCategory', 'typesVehicle', 'securityType', 'armored', 'bilingue', 'qtdHoras', 'driver'])) {
-            $this->updateServiceData();
-        }
+        $data = [
+            'start' => $this->inicio,
+            'finish' => $this->termino,
+            'qtd_days' => $this->qtdDias,
+            'qtd_service' => $this->qtdServices,
+            'service' => $this->bilingue,
+            'driver' => $this->driver,
+            'id_category_service' => $this->id_category_service,
+            'securityType' => $this->securityType,
+            'time' => $this->qtdHoras,
+            'id_vehicle' => $this->typesVehicle,
+            'id_category_espec' => $this->id_category_espec,
+            'blindado_armado' => $this->armored,
+        ];
+
+        $this->dispatch('servicoCreated', $this->serviceId, $data);
     }
 
     public function updatedTypesVehicle($value)
@@ -143,10 +143,18 @@ class CampoServico extends Component
 
     private function buscarServicoCadastrado()
     {
+        dump(
+            $this->qtdHoras,
+            $this->id_category_service,
+            $this->vehiclesCategory,
+            $this->typesVehicle,
+            $this->armored,
+            $this->bilingue,
+        );
         if ($this->type == 'Locação') {
             // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
             return Service::where('id_category_service', $this->id_category_service)
-                ->where('id_category_espec', $this->id_category_espec)
+                ->where('id_category_espec', $this->vehiclesCategory)
                 ->where('id_vehicle', $this->typesVehicle)
                 ->where('blindado_armado', $this->armored)
                 ->where('bilingual', $this->bilingue)
@@ -155,7 +163,7 @@ class CampoServico extends Component
         } else {
             // Lógica de consulta na tabela Service, usando os critérios do usuário (exemplo):
             return Service::where('id_category_service', $this->id_category_service)
-                ->where('id_category_espec', $this->id_category_espec)
+                ->where('id_category_espec', $this->securityType)
                 ->where('blindado_armado', $this->armored)
                 ->where('bilingual', $this->bilingue)
                 ->where('driver', $this->driver)

@@ -45,11 +45,11 @@ class OrcamentoCadastro extends Component
             $orcamento = OS::find($this->id);
 
             // Carregar os dados do orçamento
+            $this->client = $orcamento->id_client;
             $this->contato = $orcamento->id_contact;
             $this->paymentMethod = $orcamento->id_payment_method;
             $this->paymentOptions = $orcamento->id_payment_options;
             $this->obs = $orcamento->obs;
-            $this->client = $orcamento->id_client;
 
             // Calcular o total inicial
             $this->total = $orcamento->services->sum(function ($service) {
@@ -105,6 +105,7 @@ class OrcamentoCadastro extends Component
                 'id_payment_method' => $this->paymentMethod,
                 'id_payment_options' => $this->paymentOptions,
                 'status' => 0,
+                'obs' => $this->obs,
             ]);
 
             $this->os = $os;
@@ -128,11 +129,14 @@ class OrcamentoCadastro extends Component
                     'id_payment_method' => $this->paymentMethod,
                     'id_payment_options' => $this->paymentOptions,
                     'status' => 0,
+                    'obs' => $this->obs,
                 ]
             );
 
             $this->os = $os;
             $this->dispatch('osUpdated', $os->id);
+            
+            DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
         }
