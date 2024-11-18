@@ -78,7 +78,22 @@
                                             <div class="col-lg-2 text-end mb-4">
                                                 <p class="text-sm">Ativo?</p>
                                                 <div class="form-check form-switch d-inline-block ms-auto">
-                                                    <input class="form-check-input" type="checkbox" id="status" name="status" {{$statusValue ? 'checked' : ''}}>     
+                                                    <input 
+                                                        class="form-check-input" 
+                                                        type="checkbox" 
+                                                        id="status" 
+                                                        name="status" 
+                                                        @php
+                                                            if(isset($statusValue)) {
+                                                                if ($statusValue === 1) {
+                                                                    echo 'checked';
+                                                                } else {
+                                                                    echo '';
+                                                                }
+                                                            } else { 
+                                                                echo 'checked';
+                                                            }   
+                                                        @endphp>     
                                                 </div>
                                             </div>
                                         @else
