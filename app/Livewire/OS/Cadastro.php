@@ -63,7 +63,6 @@ class Cadastro extends Component
     #[On('saveOS')]
     public function editOS()
     {
-        dd($this->paymentMethod);
         $os = OS::updateOrCreate(
             ['id' => $this->id],
             [
