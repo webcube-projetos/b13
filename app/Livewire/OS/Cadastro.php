@@ -32,7 +32,6 @@ class Cadastro extends Component
 
     public $targetClass = Cadastro::class;
 
-
     use MontarForm;
 
     public function mount($id = null)
@@ -40,7 +39,7 @@ class Cadastro extends Component
         $this->id = $id;
 
         if ($this->id) {
-            $orcamento  = OS::find($this->id);
+            $orcamento = OS::find($this->id);
 
             $this->contato = $orcamento->id_contact;
             $this->paymentMethod = $orcamento->id_payment_method;
@@ -50,7 +49,6 @@ class Cadastro extends Component
             $this->total = $orcamento->executions->sum('total');
         }
     }
-
 
     #[On('selectUpdated')]
     public function handleSelectUpdated($type, $value)
@@ -65,6 +63,7 @@ class Cadastro extends Component
     #[On('saveOS')]
     public function editOS()
     {
+        dd($this->paymentMethod);
         $os = OS::updateOrCreate(
             ['id' => $this->id],
             [
@@ -72,11 +71,13 @@ class Cadastro extends Component
                 'id_client' => $this->client,
                 'id_payment_method' => $this->paymentMethod,
                 'id_payment_options' => $this->paymentOptions,
+                'status' => 1,
             ]
         );
-
+        
         $this->os = $os;
-        $this->dispatch('osUpdated', $os->id);
+        //dipsatch to TabServicos.php
+        $this->dispatch('osInfo', $os->id);
     }
 
     public function render()
