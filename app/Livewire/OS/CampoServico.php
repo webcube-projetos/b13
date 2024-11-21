@@ -56,16 +56,24 @@ class CampoServico extends Component
             $this->qtdServices = $data->qtd_service ?? '';
             $this->bilingue = $data->service->bilingual ?? '';
             $this->id_category_service = $data->service->categoryService->id ?? '';
-            $this->securityType = $data->securityType ?? '';
             $this->qtdHoras = $data->time ?? '';
             $this->typesVehicle = $data->service->vehicleType->id ?? '';
-            $this->vehiclesCategory = $data->service->vehiclesCategory->id ?? '';
             $this->armored = $data->service->blindado_armado ?? '';
             $this->driver = $data->service->driver ?? '';
             $this->nomeServico = $data->nomeServico ?? '';
             $this->nomeServicoIngles = $data->nomeServicoIngles ?? '';
             $this->data = $data;
+
+            //Se o serviço for locação
+            if ($data->service->id_service_type === 1) {
+                $this->securityType = '';
+                $this->vehiclesCategory = $data->service->id_category_espec->id ?? '';
+            } else {
+                $this->vehiclesCategory = '';
+                $this->securityType = $data->service->id_category_espec->id ?? '';
+            }
         }
+       
     }
 
     public function updated($property)
@@ -119,21 +127,25 @@ class CampoServico extends Component
     public function saveOS()
     {
         $data = [
-            'start' => $this->inicio,
-            'finish' => $this->termino,
+            'start' => trim($this->inicio) ?: null,
+            'finish' => trim($this->termino) ?: null,
             'qtd_days' => $this->qtdDias,
             'qtd_service' => $this->qtdServices,
             'service' => $this->bilingue,
-            'driver' => $this->driver,
+            'driver' => trim($this->driver) ?: null,
             'id_category_service' => $this->id_category_service,
-            'securityType' => $this->securityType,
+            'securityType' => trim($this->securityType) ?: null,
             'time' => $this->qtdHoras,
             'id_vehicle' => $this->typesVehicle,
-            'id_category_espec' => $this->id_category_espec,
+            'name' => trim($this->nomeServico) ?: null,
+            'name_english' => trim($this->nomeServicoIngles) ?: null,
+            'id_category_espec' => trim($this->vehiclesCategory) ?: null,
             'blindado_armado' => $this->armored,
+            'bilingual' => $this->bilingue,
         ];
 
-        $this->dispatch('servicoCreated', $this->serviceId, $data);
+        //dispatch to Services.php
+        $this->dispatch('servicoCreated', $this->serviceId, $this->serviceTemp, $data);
     }
 
     public function updatedTypesVehicle($value)

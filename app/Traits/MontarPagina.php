@@ -204,7 +204,7 @@ trait MontarPagina
       'actions' => $actions,
     ]);
 
-    $header = collect(['Nome', 'Empresa', 'Cidade', 'Status', 'Ações']);
+    $header = collect(['Nome', 'Empresa', 'Cidade', 'Armado', 'Motorista', 'Status', 'Ações']);
 
 
     return [$config, $header];

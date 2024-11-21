@@ -69,6 +69,7 @@ class CampoValores extends Component
 
         $data['km'] = $this->kmBase;
 
+        //dispatch to Services.php
         $this->dispatch('valoresCreated', $this->serviceId, $data);
     }
 

@@ -14,6 +14,13 @@ class TabServicos extends Component
     public $totalGlobal = 0.00;
     public $id;
 
+    public $serviceInfo;
+    public $serviceId;
+
+    //control to create services
+    public $osControl = false;
+    public $serviceControl = false;
+
     public function mount($id = null)
     {
         $this->id = $id;
@@ -26,27 +33,62 @@ class TabServicos extends Component
         }
     }
 
-    #[On('OScreated')]
-    public function saveOS($id, $service)
+    //Receive to Cadastro.php
+    #[On('osInfo')]
+    public function handleOsInfo($idOs)
     {
-        $osService = OsService::find($id);
+        $this->skipRender();
 
-        if (!$osService) {
-            $osService = new OsService();
+        if($idOs > 0) {
+            $this->id = [
+                'id_os' => $idOs,
+            ];;
+            $this->osControl = true;
+            $this->saveOS();
         }
-
-        $osService->fill($service)->save();
-        $osService->os->fill($service)->save();
-
-        $this->dispatch('os-service-created', $osService->id);
-        $this->dispatch('reload-executions');
     }
 
+    #[On('osService')]
+    public function handleOsService($id, $service) 
+    {
+        $this->serviceId = $id;
+        $this->serviceInfo = $service;
+        $this->serviceControl = true;
+        $this->saveOS();
+    }
+
+    //#[On('OScreated')]
+    public function saveOS()
+    {
+        if ($this->osControl && $this->serviceControl) {
+            $osService = OsService::find($this->serviceId);
+
+            if (!$osService) {
+                $osService = new OsService();
+            }
+            
+            $this->serviceInfo = array_merge($this->serviceInfo, $this->id);
+
+            $osService->fill($this->serviceInfo)->save();
+            $osService->os->fill($this->serviceInfo)->save();
+
+            //dispatch to MotoristaItem.php
+            $this->dispatch('os-service-created', $osService->id);
+            $this->dispatch('reload-executions');
+        }
+    }
 
     public function addLinhaServicoLocacao()
     {
         $id = uniqid();
         $this->servicesOS[] = ['type' => 'Locação', 'id' => $id];
+        $this->totals[$id] = 0;
+    }
+
+    public function addLinhaServicoSeguranca()
+    {
+        $id = uniqid();
+        $this->servicesOS[] = ['type' => 'Segurança', 'id' => $id];
         $this->totals[$id] = 0;
     }
 
@@ -58,13 +100,6 @@ class TabServicos extends Component
         }));
 
         $this->servicesOS = $servicos;
-    }
-
-    public function addLinhaServicoSeguranca()
-    {
-        $id = uniqid();
-        $this->servicesOS[] = ['type' => 'Segurança', 'id' => $id];
-        $this->totals[$id] = 0;
     }
 
     public function render()
