@@ -65,7 +65,6 @@ class Financeiro extends Component
         }
     }
 
-
     public function entries()
     {
         return Financial::where('id_os', $this->id)
