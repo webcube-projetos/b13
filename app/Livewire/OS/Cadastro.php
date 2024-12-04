@@ -63,7 +63,7 @@ class Cadastro extends Component
     #[On('saveOS')]
     public function editOS()
     {
-        $os = OS::updateOrCreate(
+        /*$os = OS::updateOrCreate(
             ['id' => $this->id],
             [
                 'id_contact' => $this->contato,
@@ -72,8 +72,17 @@ class Cadastro extends Component
                 'id_payment_options' => $this->paymentOptions,
                 'status' => 1,
             ]
+        );*/
+
+        $os = OS::updateOrCreate(
+            ['id' => $this->id],
+            [
+                'id_contact' => $this->contato,
+                'id_client' => $this->client,
+                'status' => 1,
+            ]
         );
-        
+           
         $this->os = $os;
         //dipsatch to TabServicos.php
         $this->dispatch('osInfo', $os->id);

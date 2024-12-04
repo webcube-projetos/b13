@@ -17,9 +17,10 @@ class Services extends Component
     public $bilingue;
     public $armored;
     public $driver;
+
     public $serviceTemp;
     public $servicoCadastrado;
-    public $idOnServiceTable; 
+    public $idOnServiceTable;
     public $valoresComplete = false;
     public $servicoComplete = false;
 
@@ -54,7 +55,7 @@ class Services extends Component
 
         
         //Verifica se o serviço deve ser criado ou se já existe;
-        $this->servicoCadastrado ? $serviceData : false;
+        $this->servicoCadastrado = $serviceData ?: false;
 
         if ($id == $this->serviceId) {
             $this->service = array_merge($this->service, $data);
@@ -65,13 +66,11 @@ class Services extends Component
 
     public function checkIfServiceIsComplete()
     {
-        
         //Check if valores and servico is received
         if ($this->valoresComplete && $this->servicoComplete) 
         {
-            //Verifica se não tem um serviceId (id na tabela os_services) atribuido
-            if (!$this->serviceId) {
-
+            if (!$this->serviceId) 
+            {
                 //Se o serviço ainda não está cadastro
                 if(!$this->servicoCadastrado)
                 {
@@ -106,14 +105,14 @@ class Services extends Component
                 } else { 
                     //Get service id
                     $this->idOnServiceTable = [
-                        'id_service' => $this->servicoCadastrado->id,
+                        'id_service' => $this->servicoCadastrado['id'],
                     ];
                 }
 
                 //Passa o id do serviço existente
                 $this->service = array_merge($this->service, $this->idOnServiceTable);
             }
-
+           
             //dispatch to TabServicos.php
             $this->dispatch('osService', $this->serviceId, $this->service);
         }
